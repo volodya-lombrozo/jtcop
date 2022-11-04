@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class PatternTest {
+public class RuleTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -41,6 +41,6 @@ public class PatternTest {
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
     public void validatesCorrectly(String name, boolean expected) {
-        Assertions.assertEquals(expected, new Pattern(name).valid());
+        Assertions.assertEquals(expected, new PresentSimpleRule(name).valid());
     }
 }

@@ -1,14 +1,21 @@
 package com.github.lombrozo.testnames;
 
-public class Pattern {
+public class PresentSimpleRule implements Rule {
 
-    private final String name;
+    private final String test;
 
-    public Pattern(final String name) {
-        this.name = name;
+    public PresentSimpleRule(final String test) {
+        this.test = test;
     }
 
-    public boolean valid() {
+    @Override
+    public void validate() throws WrongTestName {
+        if (!valid()) {
+            throw new WrongTestName(test);
+        }
+    }
+
+     boolean valid() {
         return notContainsTest()
             && notCamelCase()
             && notUsesSpecialCharacters()
@@ -19,14 +26,14 @@ public class Pattern {
     private boolean notSpam() {
         int stack = 0;
         char prev = '!';
-        for (final char c : name.toCharArray()) {
-            if(c == prev){
+        for (final char c : test.toCharArray()) {
+            if (c == prev) {
                 stack++;
             } else {
                 stack = 0;
                 prev = c;
             }
-            if(stack > 2){
+            if (stack > 2) {
                 return false;
             }
         }
@@ -34,16 +41,16 @@ public class Pattern {
     }
 
     private boolean notContainsTest() {
-        return !name.matches(".*[Tt][Ee][Ss][Tt].*");
+        return !test.matches(".*[Tt][Ee][Ss][Tt].*");
     }
 
     private boolean notUsesSpecialCharacters() {
-        return !name.contains("$") && !name.contains("_");
+        return !test.contains("$") && !test.contains("_");
     }
 
     private boolean notCamelCase() {
         int stack = 0;
-        for (final char c : name.toCharArray()) {
+        for (final char c : test.toCharArray()) {
             if (Character.isUpperCase(c) && stack == 0) {
                 return false;
             } else if (stack != 0) {
@@ -55,7 +62,7 @@ public class Pattern {
     }
 
     private boolean presentTense() {
-        final char[] chars = name.toCharArray();
+        final char[] chars = test.toCharArray();
         char prev = '!';
         for (final char c : chars) {
             if (Character.isUpperCase(c)) {
