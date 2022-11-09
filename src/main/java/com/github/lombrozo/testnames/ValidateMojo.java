@@ -23,17 +23,10 @@ public class ValidateMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            System.out.println("getTestClasspathElements elements:");
-            project.getTestClasspathElements().forEach(System.out::println);
-            System.out.println("getTestCompileSourceRoots elements:");
-            project.getTestCompileSourceRoots().forEach(System.out::println);
-            System.out.println("________");
             final List<Path> tests = Files.walk(
                     Paths.get(project.getTestCompileSourceRoots().get(0)))
                 .filter(Files::exists)
                 .filter(Files::isRegularFile).collect(Collectors.toList());
-            System.out.println("Tests to scan: " + tests);
-
             for (final Path test : tests) {
                 new RuleForAllTests(new JavaTestCode(test)).validate();
             }
