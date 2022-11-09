@@ -41,6 +41,11 @@ public class RuleTest {
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
     public void validatesCorrectly(String name, boolean expected) {
-        Assertions.assertEquals(expected, new PresentSimpleRule(name).valid());
+        try {
+            new PresentSimpleRule(name).validate();
+            Assertions.assertTrue(expected);
+        } catch (WrongTestName ex) {
+            Assertions.assertFalse(expected);
+        }
     }
 }

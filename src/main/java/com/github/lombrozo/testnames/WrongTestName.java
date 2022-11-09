@@ -7,12 +7,25 @@ public final class WrongTestName extends Exception {
     public WrongTestName(
         final String test
     ) {
-        super(String.format("Test name '%s' doesn't follow pattern rules", test));
+        super(String.format("Test name '%s' doesn't follow naming rules", test));
+    }
+
+    public WrongTestName(
+        final String test,
+        final String explanation
+    ) {
+        super(
+            String.format(
+                "Test name '%s' doesn't follow naming rules, because %s",
+                test,
+                explanation
+            )
+        );
     }
 
     public WrongTestName(Collection<WrongTestName> all) {
         super(all.stream().map(Throwable::getMessage)
-            .collect(Collectors.joining("\n"))
+            .collect(Collectors.joining("\n", "\n", ""))
         );
     }
 }
