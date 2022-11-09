@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RuleForAllTests implements Rule {
+public final class RuleForAllTests implements Rule {
 
     private final JavaTestCode tests;
 

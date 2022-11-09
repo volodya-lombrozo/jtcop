@@ -3,7 +3,7 @@ package com.github.lombrozo.testnames;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class WrongTestName extends Exception {
+public final class WrongTestName extends Exception {
     public WrongTestName(
         final String test
     ) {

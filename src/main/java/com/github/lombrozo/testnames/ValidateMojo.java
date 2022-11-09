@@ -1,6 +1,5 @@
 package com.github.lombrozo.testnames;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,9 +29,9 @@ public class ValidateMojo extends AbstractMojo {
             for (final Path test : tests) {
                 new RuleForAllTests(new JavaTestCode(test)).validate();
             }
-        } catch (WrongTestName ex) {
+        } catch (final WrongTestName ex) {
             throw new MojoFailureException(ex);
-        } catch (Exception occasion){
+        } catch (final Exception occasion){
             throw new MojoExecutionException(occasion);
         }
     }

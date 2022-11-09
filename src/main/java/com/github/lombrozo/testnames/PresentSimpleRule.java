@@ -1,6 +1,6 @@
 package com.github.lombrozo.testnames;
 
-public class PresentSimpleRule implements Rule {
+public final class PresentSimpleRule implements Rule {
 
     private final String test;
 
