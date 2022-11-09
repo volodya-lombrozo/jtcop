@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public final class JavaTestCode {
@@ -34,8 +33,7 @@ public final class JavaTestCode {
             }
             return names;
         } catch (IOException ex) {
-            ex.printStackTrace();
+            throw new IllegalStateException(ex);
         }
-        return Collections.emptyList();
     }
 }

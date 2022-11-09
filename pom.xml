@@ -7,7 +7,7 @@
 
     <groupId>com.github.volodya-lombrozo</groupId>
     <artifactId>test-naming-conventions</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <packaging>maven-plugin</packaging>
     <description>Plugin for checking test naming rules</description>
 

@@ -3,6 +3,7 @@ package com.github.lombrozo.testnames;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.maven.plugin.AbstractMojo;
@@ -26,12 +27,20 @@ public class ValidateMojo extends AbstractMojo {
                     Paths.get(project.getTestCompileSourceRoots().get(0)))
                 .filter(Files::exists)
                 .filter(Files::isRegularFile).collect(Collectors.toList());
+            final List<WrongTestName> exceptions = new ArrayList<>();
             for (final Path test : tests) {
-                new RuleForAllTests(new JavaTestCode(test)).validate();
+                try {
+                    new RuleForAllTests(new JavaTestCode(test)).validate();
+                } catch (final WrongTestName ex) {
+                    exceptions.add(ex);
+                }
+            }
+            if (!exceptions.isEmpty()) {
+                throw new WrongTestName(exceptions);
             }
         } catch (final WrongTestName ex) {
             throw new MojoFailureException(ex);
-        } catch (final Exception occasion){
+        } catch (final Exception occasion) {
             throw new MojoExecutionException(occasion);
         }
     }
