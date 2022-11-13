@@ -23,10 +23,14 @@ public class ValidateMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            final List<Path> tests = Files.walk(
-                    Paths.get(project.getTestCompileSourceRoots().get(0)))
+            final Path start = Paths.get(project.getTestCompileSourceRoots().get(0));
+            if (!Files.exists(start)) {
+                return;
+            }
+            final List<Path> tests = Files.walk(start)
                 .filter(Files::exists)
-                .filter(Files::isRegularFile).collect(Collectors.toList());
+                .filter(Files::isRegularFile)
+                .collect(Collectors.toList());
             final List<WrongTestName> exceptions = new ArrayList<>();
             for (final Path test : tests) {
                 try {

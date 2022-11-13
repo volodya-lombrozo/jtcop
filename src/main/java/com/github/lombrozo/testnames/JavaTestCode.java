@@ -26,7 +26,9 @@ public final class JavaTestCode {
                 if (childNode instanceof ClassOrInterfaceDeclaration) {
                     final ClassOrInterfaceDeclaration clazz = (ClassOrInterfaceDeclaration) childNode;
                     clazz.getMethods().forEach(m -> {
-                        if (!m.isPrivate() && m.isAnnotationPresent("Test"))
+                        if (!m.isPrivate() && (
+                            m.isAnnotationPresent("Test")
+                                || m.isAnnotationPresent("ParameterizedTest")))
                             names.add(m.getNameAsString());
                     });
                 }
