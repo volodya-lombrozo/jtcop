@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.github.volodya-lombrozo</groupId>
     <artifactId>test-naming-conventions</artifactId>
     <version>0.1.2</version>
     <packaging>maven-plugin</packaging>
     <description>Plugin for checking test naming rules</description>
-
     <name>test-naming-conventions</name>
     <url>https://github.com/volodya-lombrozo/test-naming-conventions</url>
     <scm>
@@ -24,11 +21,10 @@
             <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
-
     <developers>
         <developer>
             <name>Volodya Lombrozo</name>
-            <email>vladimir@lombrozo.ru</email>
+            <email>volodya.lombrozo@gmail.com</email>
             <roles>
                 <role>
                     Architect
@@ -36,7 +32,6 @@
             </roles>
         </developer>
     </developers>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -62,17 +57,12 @@
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
-
-        <!--    Code parsing-->
         <dependency>
             <groupId>com.github.javaparser</groupId>
             <artifactId>javaparser-core</artifactId>
             <version>3.24.7</version>
             <scope>compile</scope>
         </dependency>
-        <!--    Code parsing-->
-
-
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
