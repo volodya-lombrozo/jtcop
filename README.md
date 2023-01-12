@@ -8,10 +8,62 @@ different [test naming patterns](https://stackoverflow.com/questions/155436/unit
 **test-naming-conventions** maven plugin helps to keep following a single common
 test naming rule across all of your test classes.
 
+## Conventions
+
+The only one convention that is supported by this plugin for now is the
+**present tense without subject**.
+
+### Present tense without subject
+
+The test method name should be a sentence that describes the test case using
+present tense without subject. For example, if you have a test that tests
+a `User` class, then the test method name should start from the verb followed by
+the any testing conditions. For example:
+
+```java
+public class UserTest {
+    @Test
+    public void createsUser() {
+        // correct
+    }
+
+    @Test
+    public void createsUserWithotName() {
+        // correct
+    }
+
+    @Test
+    public void removesUser() {
+        // correct
+    }
+}
+```
+
+The next names will be considered as invalid:
+
+```java
+public class UserTest {
+    @Test
+    public void createUser() {
+        // invalid!
+    }
+
+    @Test
+    public void userIsCreated() {
+        // invalid!
+    }
+
+    @Test
+    public void userIsRemoved() {
+        // invalid!
+    }
+}
+```
+
 ## How to use
 
 The plugin could be run using several approaches but for both of them you need
-at least Maven 3.1.+ and Java 8+.
+at least **Maven 3.1.**+ and **Java 8+**.
 
 ### Invoke the plugin directly
 
