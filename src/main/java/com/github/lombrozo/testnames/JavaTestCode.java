@@ -1,5 +1,6 @@
 package com.github.lombrozo.testnames;
 
+import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
@@ -19,7 +20,7 @@ public final class JavaTestCode {
 
     public Collection<String> names() {
         try {
-            final CompilationUnit parse = StaticJavaParser.parse(path);
+            final CompilationUnit parse = StaticJavaParser.parse(this.path);
             final List<Node> childNodes = parse.getChildNodes();
             final List<String> names = new ArrayList<>();
             for (final Node childNode : childNodes) {
@@ -34,8 +35,11 @@ public final class JavaTestCode {
                 }
             }
             return names;
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
+        } catch (IOException | ParseProblemException ex) {
+            throw new IllegalStateException(
+                String.format("Failed to parse Java class by path %s", this.path),
+                ex
+            );
         }
     }
 }
