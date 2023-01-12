@@ -1,4 +1,5 @@
 # Test Naming Conventions Plugin
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/test-naming-conventions/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/test-naming-conventions)
 
 Almost each project uses unit tests in its codebase. It is important to have a
 common pattern of naming all that tests, because otherwise the project and tests
