@@ -30,6 +30,7 @@ public class ValidateMojo extends AbstractMojo {
             final List<Path> tests = Files.walk(start)
                 .filter(Files::exists)
                 .filter(Files::isRegularFile)
+                .filter(path -> path.toString().endsWith(".java"))
                 .collect(Collectors.toList());
             final List<WrongTestName> exceptions = new ArrayList<>();
             for (final Path test : tests) {
