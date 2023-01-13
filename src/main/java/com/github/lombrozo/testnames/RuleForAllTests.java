@@ -6,7 +6,7 @@ public final class RuleForAllTests implements Rule {
 
     private final JavaTestCode tests;
 
-    public RuleForAllTests(final JavaTestCode tests) {
+    RuleForAllTests(final JavaTestCode tests) {
         this.tests = tests;
     }
 
