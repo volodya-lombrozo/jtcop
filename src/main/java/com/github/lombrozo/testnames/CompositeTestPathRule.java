@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 final class CompositeTestPathRule implements Rule {
 
@@ -21,12 +22,11 @@ final class CompositeTestPathRule implements Rule {
             return;
         }
         final List<Path> tests;
-        try {
-            tests = Files.walk(this.start)
-                .filter(Files::exists)
-                .filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
+        try (final Stream<Path> files = Files.walk(this.start)
+            .filter(Files::exists)
+            .filter(Files::isRegularFile)
+            .filter(path -> path.toString().endsWith(".java"))) {
+            tests = files.collect(Collectors.toList());
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
