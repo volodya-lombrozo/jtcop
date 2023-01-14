@@ -1,13 +1,7 @@
 package com.github.lombrozo.testnames;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -21,32 +15,13 @@ public class ValidateMojo extends AbstractMojo {
     public MavenProject project;
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoFailureException {
         try {
-            final Path start = Paths.get(project.getTestCompileSourceRoots().get(0));
-            if (!Files.exists(start)) {
-                return;
-            }
-            final List<Path> tests = Files.walk(start)
-                .filter(Files::exists)
-                .filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(".java"))
-                .collect(Collectors.toList());
-            final List<WrongTestName> exceptions = new ArrayList<>();
-            for (final Path test : tests) {
-                try {
-                    new RuleForAllTests(new JavaTestCode(test)).validate();
-                } catch (final WrongTestName ex) {
-                    exceptions.add(ex);
-                }
-            }
-            if (!exceptions.isEmpty()) {
-                throw new WrongTestName(exceptions);
-            }
+            new CompositeTestPathRule(
+                Paths.get(this.project.getTestCompileSourceRoots().get(0))
+            ).validate();
         } catch (final WrongTestName ex) {
             throw new MojoFailureException(ex);
-        } catch (final Exception occasion) {
-            throw new MojoExecutionException(occasion);
         }
     }
 }

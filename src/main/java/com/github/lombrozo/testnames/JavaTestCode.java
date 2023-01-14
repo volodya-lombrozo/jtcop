@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public final class JavaTestCode {
+public final class JavaTestCode implements Names {
     private final Path path;
 
     public JavaTestCode(final Path path) {
         this.path = path;
     }
 
+    @Override
     public Collection<String> names() {
         try {
             final CompilationUnit parse = StaticJavaParser.parse(this.path);
