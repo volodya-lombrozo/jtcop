@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public final class JavaTestCode implements Names {
+public final class JavaTestCode implements Cases {
     private final Path path;
 
     public JavaTestCode(final Path path) {
@@ -19,19 +19,22 @@ public final class JavaTestCode implements Names {
     }
 
     @Override
-    public Collection<String> names() {
+    public Collection<TestCase> all() {
         try {
             final CompilationUnit parse = StaticJavaParser.parse(this.path);
             final List<Node> childNodes = parse.getChildNodes();
-            final List<String> names = new ArrayList<>();
+            final List<TestCase> names = new ArrayList<>();
             for (final Node childNode : childNodes) {
                 if (childNode instanceof ClassOrInterfaceDeclaration) {
                     final ClassOrInterfaceDeclaration clazz = (ClassOrInterfaceDeclaration) childNode;
                     clazz.getMethods().forEach(m -> {
                         if (!m.isPrivate() && (
                             m.isAnnotationPresent("Test")
-                                || m.isAnnotationPresent("ParameterizedTest")))
-                            names.add(m.getNameAsString());
+                                || m.isAnnotationPresent("ParameterizedTest"))) {
+
+                            final String name = m.getNameAsString();
+                            names.add(new JavaParserCase(clazz.getNameAsString(), name, this.path));
+                        }
                     });
                 }
             }

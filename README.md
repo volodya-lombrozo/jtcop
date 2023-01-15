@@ -40,7 +40,7 @@ public class UserTest {
 }
 ```
 
-The next names will be considered as invalid:
+The next cases will be considered as invalid:
 
 ```java
 public class UserTest {

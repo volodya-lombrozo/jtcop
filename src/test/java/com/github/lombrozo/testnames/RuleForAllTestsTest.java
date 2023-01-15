@@ -9,7 +9,7 @@ class RuleForAllTestsTest {
     @Test
     void validatesAllWithoutExceptions() {
         try {
-            new RuleForAllTests(() -> Arrays.asList("removes", "creates")).validate();
+            new RuleForAllTests(Cases.correct()).validate();
         } catch (final WrongTestName ex) {
             Assertions.fail(ex);
         }
@@ -19,7 +19,7 @@ class RuleForAllTestsTest {
     void validatesAllWithExceptions() {
         Assertions.assertThrows(
             WrongTestName.class,
-            () -> new RuleForAllTests(() -> Arrays.asList("creates", "test")).validate()
+            () -> new RuleForAllTests(Cases.wrong()).validate()
         );
     }
 }

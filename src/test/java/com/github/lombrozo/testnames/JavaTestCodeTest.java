@@ -17,10 +17,25 @@ class JavaTestCodeTest {
         final String java = "TestSimple.java";
         final Path path = temp.resolve(java);
         Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
-        final Names names = new JavaTestCode(path);
+        final Cases cases = new JavaTestCode(path);
         MatcherAssert.assertThat(
-            names.names(),
-            Matchers.containsInAnyOrder("creates", "removes", "updates")
+            cases.all(),
+            Matchers.containsInAnyOrder(
+                new JavaParserCase(
+                    "TestSimple",
+                    "creates",
+                    path
+                ), new JavaParserCase(
+                    "TestSimple",
+                    "removes",
+                    path
+                ),
+                new JavaParserCase(
+                    "TestSimple",
+                    "updates",
+                    path
+                )
+            )
         );
     }
 
@@ -29,10 +44,16 @@ class JavaTestCodeTest {
         final String java = "TestParameterized.java";
         final Path path = temp.resolve(java);
         Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
-        final Names names = new JavaTestCode(path);
+        final Cases cases = new JavaTestCode(path);
         MatcherAssert.assertThat(
-            names.names(),
-            Matchers.containsInAnyOrder("checksCases")
+            cases.all(),
+            Matchers.containsInAnyOrder(
+                new JavaParserCase(
+                    "TestParameterized",
+                    "checksCases",
+                    path
+                )
+            )
         );
     }
 
@@ -40,7 +61,7 @@ class JavaTestCodeTest {
     void throwsExceptionIfFileNotFound(@TempDir final Path temp) throws Exception {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaTestCode(temp.resolve("TestNotFound.java")).names()
+            () -> new JavaTestCode(temp.resolve("TestNotFound.java")).all()
         );
     }
 
@@ -50,8 +71,9 @@ class JavaTestCodeTest {
         Files.write(path, "Not Java".getBytes());
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaTestCode(path).names()
+            () -> new JavaTestCode(path).all()
         );
     }
+
 
 }
