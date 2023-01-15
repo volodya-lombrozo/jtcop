@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.volodya-lombrozo</groupId>
   <artifactId>test-naming-conventions</artifactId>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <packaging>maven-plugin</packaging>
   <description>Plugin for checking test naming rules</description>
   <name>test-naming-conventions</name>
@@ -85,6 +85,12 @@
       <artifactId>javaparser-core</artifactId>
       <version>3.24.7</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.24</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>

@@ -2,7 +2,7 @@ package com.github.lombrozo.testnames;
 
 import org.junit.jupiter.api.Test;
 
-class TestExample {
+class TestSimple {
     @Test
     void creates() {
     }
