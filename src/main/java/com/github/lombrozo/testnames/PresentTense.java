@@ -1,21 +1,21 @@
 package com.github.lombrozo.testnames;
 
 public class PresentTense implements Rule{
-    private final String test;
+    private final TestCase test;
 
-    public PresentTense(final String test) {
+    public PresentTense(final TestCase test) {
         this.test = test;
     }
 
     @Override
     public void validate() throws WrongTestName {
         if(!presentTense()){
-            throw new WrongTestName(test, "the test name has to be written using present tense.");
+            throw new WrongTestName(test, "the test name has to be written using present tense");
         }
     }
 
     private boolean presentTense() {
-        final char[] chars = test.toCharArray();
+        final char[] chars = test.name().toCharArray();
         char prev = '!';
         for (final char c : chars) {
             if (Character.isUpperCase(c)) {

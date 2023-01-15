@@ -7,7 +7,7 @@ public final class PresentSimpleRule implements Rule {
 
     private final Collection<Rule> all;
 
-    public PresentSimpleRule(final String test) {
+    public PresentSimpleRule(final TestCase test) {
         this.all = Arrays.asList(
             new NotCamelCase(test),
             new NotContainsTestWord(test),

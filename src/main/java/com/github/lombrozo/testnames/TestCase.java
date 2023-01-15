@@ -2,6 +2,7 @@ package com.github.lombrozo.testnames;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import lombok.Data;
 
 public interface TestCase {
 
@@ -11,7 +12,7 @@ public interface TestCase {
 
     Path path();
 
-
+    @Data
     class FakeCase implements TestCase {
 
         private final String className;

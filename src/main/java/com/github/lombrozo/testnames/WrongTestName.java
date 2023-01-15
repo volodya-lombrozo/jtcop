@@ -5,16 +5,25 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 public final class WrongTestName extends Exception {
-    public WrongTestName(final String test) {
-        super(String.format("Test name '%s' doesn't follow naming rules", test));
-    }
-
-    public WrongTestName(final String test, final String explanation) {
+    public WrongTestName(final TestCase test) {
         super(
             String.format(
-                "Test name '%s' doesn't follow naming rules, because %s",
-                test,
-                explanation
+                "Test name '%s#%s' doesn't follow naming rules, test path: %s",
+                test.className(),
+                test.name(),
+                test.path()
+            )
+        );
+    }
+
+    public WrongTestName(final TestCase test, final String explanation) {
+        super(
+            String.format(
+                "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
+                test.className(),
+                test.name(),
+                explanation,
+                test.path()
             )
         );
     }

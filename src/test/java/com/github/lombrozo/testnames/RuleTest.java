@@ -42,7 +42,7 @@ public class RuleTest {
     })
     public void validatesCorrectly(String name, boolean expected) {
         try {
-            new PresentSimpleRule(name).validate();
+            new PresentSimpleRule(new TestCase.FakeCase(name)).validate();
             Assertions.assertTrue(expected);
         } catch (WrongTestName ex) {
             Assertions.assertFalse(expected);

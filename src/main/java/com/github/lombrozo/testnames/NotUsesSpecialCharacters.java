@@ -1,9 +1,9 @@
 package com.github.lombrozo.testnames;
 
 public class NotUsesSpecialCharacters implements Rule {
-    private final String test;
+    private final TestCase test;
 
-    public NotUsesSpecialCharacters(final String test) {
+    public NotUsesSpecialCharacters(final TestCase test) {
         this.test = test;
     }
 
@@ -11,11 +11,11 @@ public class NotUsesSpecialCharacters implements Rule {
     public void validate() throws WrongTestName {
         if (usesSpecialCharacters()) {
             throw new WrongTestName(test, "test name shouldn't contain special characters "
-                + "like '$' or '_'.");
+                + "like '$' or '_'");
         }
     }
 
     private boolean usesSpecialCharacters() {
-        return test.contains("$") || test.contains("_");
+        return test.name().contains("$") || test.name().contains("_");
     }
 }

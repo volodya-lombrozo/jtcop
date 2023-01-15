@@ -14,7 +14,7 @@ final class RuleForAllTests implements Rule {
     public void validate() throws WrongTestName {
         final Collection<TestCase> names = this.tests.all();
         for (final TestCase test : names) {
-            new PresentSimpleRule(test.name()).validate();
+            new PresentSimpleRule(test).validate();
         }
     }
 }
