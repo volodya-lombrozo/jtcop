@@ -26,13 +26,15 @@ package com.github.lombrozo.testnames;
 
 /**
  * Rule to check test case on not camel case name.
+ *
+ * @since 0.1.0
  */
 public final class NotCamelCase implements Rule {
 
     /**
      * The test case.
      */
-    final TestCase test;
+    private final TestCase test;
 
     /**
      * Ctor.
@@ -53,15 +55,22 @@ public final class NotCamelCase implements Rule {
         }
     }
 
+    /**
+     * Is not in camel case.
+     *
+     * @return The result
+     * @checkstyle ReturnCountCheck (15 lines)
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
     private boolean notCamelCase() {
         int stack = 0;
-        for (final char c : this.test.name().toCharArray()) {
-            if (Character.isUpperCase(c) && stack == 0) {
+        for (final char chr : this.test.name().toCharArray()) {
+            if (Character.isUpperCase(chr) && stack == 0) {
                 return true;
             } else if (stack != 0) {
                 stack = 0;
             }
-            stack++;
+            ++stack;
         }
         return false;
     }

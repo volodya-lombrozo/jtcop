@@ -27,10 +27,23 @@ package com.github.lombrozo.testnames;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * The rule checks if test case in present simple.
+ *
+ * @since 0.1.0
+ */
 public final class PresentSimpleRule implements Rule {
 
+    /**
+     * The rules.
+     */
     private final Collection<Rule> all;
 
+    /**
+     * Ctor.
+     *
+     * @param test The test case to check
+     */
     public PresentSimpleRule(final TestCase test) {
         this.all = Arrays.asList(
             new NotCamelCase(test),

@@ -28,7 +28,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * Wrong test case name exception.
+ *
+ * @since 0.1.0
+ */
 public final class WrongTestName extends Exception {
+
+    /**
+     * Ctor.
+     *
+     * @param test Test with violation
+     */
     public WrongTestName(final TestCase test) {
         super(
             String.format(
@@ -40,6 +51,12 @@ public final class WrongTestName extends Exception {
         );
     }
 
+    /**
+     * Ctor.
+     *
+     * @param test Test with violation
+     * @param explanation The explanation
+     */
     public WrongTestName(final TestCase test, final String explanation) {
         super(
             String.format(
@@ -52,10 +69,20 @@ public final class WrongTestName extends Exception {
         );
     }
 
+    /**
+     * Ctor.
+     *
+     * @param exceptions The exceptions
+     */
     public WrongTestName(final WrongTestName... exceptions) {
         this(Arrays.asList(exceptions));
     }
 
+    /**
+     * Ctor.
+     *
+     * @param all Other {@link WrongTestName} exceptions
+     */
     public WrongTestName(final Collection<WrongTestName> all) {
         super(
             all.stream()

@@ -24,12 +24,16 @@
 
 package com.github.lombrozo.testnames;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class RuleTest {
+/**
+ * Test case for {@link Rule}.
+ *
+ * @since 0.1.0
+ */
+final class RuleTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -64,7 +68,7 @@ public class RuleTest {
         "saves, true",
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
-    public void validatesCorrectly(final String name, final boolean expected) {
+    void validatesCorrectly(final String name, final boolean expected) {
         try {
             new PresentSimpleRule(new TestCase.FakeCase(name)).validate();
             Assertions.assertTrue(expected);

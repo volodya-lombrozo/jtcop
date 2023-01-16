@@ -32,11 +32,19 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+/**
+ * The validate mojo.
+ *
+ * @since 0.1.0
+ */
 @Mojo(name = "check", defaultPhase = LifecyclePhase.VALIDATE)
-public class ValidateMojo extends AbstractMojo {
+public final class ValidateMojo extends AbstractMojo {
 
+    /**
+     * The project to validate.
+     */
     @Parameter(defaultValue = "${project}")
-    public MavenProject project;
+    private MavenProject project;
 
     @Override
     public void execute() throws MojoFailureException {

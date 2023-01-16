@@ -66,6 +66,7 @@ public interface TestCase {
 
         /**
          * The class name.
+         * @checkstyle MemberNameCheck (2 lines)
          */
         private final String className;
 
@@ -94,6 +95,7 @@ public interface TestCase {
          * @param className The class name
          * @param name The name of test case
          * @param path The path
+         * @checkstyle ParameterNameCheck (6 lines)
          */
         FakeCase(final String className, final String name, final Path path) {
             this.className = className;

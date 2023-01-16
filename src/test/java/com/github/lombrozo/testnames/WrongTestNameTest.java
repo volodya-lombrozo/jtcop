@@ -29,7 +29,12 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
-class WrongTestNameTest {
+/**
+ * The test case for {@link WrongTestName}.
+ *
+ * @since 0.1.0
+ */
+final class WrongTestNameTest {
 
     @Test
     void createsUsingSingleParamConstructor() {
@@ -78,6 +83,5 @@ class WrongTestNameTest {
             )
         );
     }
-
 
 }

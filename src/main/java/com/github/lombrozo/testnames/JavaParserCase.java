@@ -33,10 +33,12 @@ import lombok.Data;
  * @since 0.1.0
  */
 @Data
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 final class JavaParserCase implements TestCase {
 
     /**
      * The class name.
+     * @checkstyle MemberNameCheck (2 lines)
      */
     private final String className;
 
@@ -56,6 +58,7 @@ final class JavaParserCase implements TestCase {
      * @param className The class name
      * @param name The test case name
      * @param path The path
+     * @checkstyle ParameterNameCheck (6 lines)
      */
     JavaParserCase(final String className, final String name, final Path path) {
         this.className = className;

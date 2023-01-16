@@ -36,6 +36,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Test cases code.
+ *
+ * @since 0.1.0
+ */
 public final class JavaTestCode implements Cases {
 
     /**
@@ -56,13 +61,13 @@ public final class JavaTestCode implements Cases {
     public Collection<TestCase> all() {
         try {
             final CompilationUnit parse = StaticJavaParser.parse(this.path);
-            final List<Node> childNodes = parse.getChildNodes();
-            final List<TestCase> names = new ArrayList<>();
-            for (final Node childNode : childNodes) {
-                if (childNode instanceof ClassOrInterfaceDeclaration) {
+            final List<Node> nodes = parse.getChildNodes();
+            final List<TestCase> names = new ArrayList<>(0);
+            for (final Node node : nodes) {
+                if (node instanceof ClassOrInterfaceDeclaration) {
                     this.checkTestMethods(
                         names,
-                        (ClassOrInterfaceDeclaration) childNode
+                        (ClassOrInterfaceDeclaration) node
                     );
                 }
             }
@@ -79,17 +84,17 @@ public final class JavaTestCode implements Cases {
      * Checks methods in class.
      *
      * @param names List of test cases
-     * @param childNode list child nodes
+     * @param node The child node
      */
     private void checkTestMethods(
         final List<TestCase> names,
-        final ClassOrInterfaceDeclaration childNode
+        final ClassOrInterfaceDeclaration node
     ) {
-        for (final MethodDeclaration method : childNode.getMethods()) {
+        for (final MethodDeclaration method : node.getMethods()) {
             if (JavaTestCode.isTest(method)) {
                 names.add(
                     new JavaParserCase(
-                        childNode.getNameAsString(),
+                        node.getNameAsString(),
                         method.getNameAsString(),
                         this.path
                     )
@@ -107,8 +112,8 @@ public final class JavaTestCode implements Cases {
     private static boolean isTest(final MethodDeclaration method) {
         return !method.isPrivate()
             && (
-               method.isAnnotationPresent("Test")
-               || method.isAnnotationPresent("ParameterizedTest")
+            method.isAnnotationPresent("Test")
+            || method.isAnnotationPresent("ParameterizedTest")
             );
     }
 }

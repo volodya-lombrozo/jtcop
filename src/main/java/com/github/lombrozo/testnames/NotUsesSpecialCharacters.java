@@ -24,9 +24,23 @@
 
 package com.github.lombrozo.testnames;
 
-public class NotUsesSpecialCharacters implements Rule {
+/**
+ * The rule to check if test name uses special chars.
+ *
+ * @since 0.1.0
+ */
+public final class NotUsesSpecialCharacters implements Rule {
+
+    /**
+     * The test case.
+     */
     private final TestCase test;
 
+    /**
+     * Ctor.
+     *
+     * @param test The test case to check
+     */
     public NotUsesSpecialCharacters(final TestCase test) {
         this.test = test;
     }
@@ -34,11 +48,18 @@ public class NotUsesSpecialCharacters implements Rule {
     @Override
     public void validate() throws WrongTestName {
         if (this.usesSpecialCharacters()) {
-            throw new WrongTestName(this.test, "test name shouldn't contain special characters "
-                + "like '$' or '_'");
+            throw new WrongTestName(
+                this.test,
+                "test name shouldn't contain special characters like '$' or '_'"
+            );
         }
     }
 
+    /**
+     * Is contain special chars.
+     *
+     * @return The result
+     */
     private boolean usesSpecialCharacters() {
         return this.test.name().contains("$") || this.test.name().contains("_");
     }

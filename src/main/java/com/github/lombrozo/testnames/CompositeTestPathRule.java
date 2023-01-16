@@ -45,6 +45,8 @@ final class CompositeTestPathRule implements Rule {
     private final Path start;
 
     /**
+     * Ctor.
+     *
      * @param path The start
      */
     CompositeTestPathRule(final Path path) {
@@ -57,7 +59,7 @@ final class CompositeTestPathRule implements Rule {
             return;
         }
         final List<Path> tests;
-        try (final Stream<Path> files = Files.walk(this.start)
+        try (Stream<Path> files = Files.walk(this.start)
             .filter(Files::exists)
             .filter(Files::isRegularFile)
             .filter(path -> path.toString().endsWith(".java"))) {
@@ -65,10 +67,10 @@ final class CompositeTestPathRule implements Rule {
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
-        final List<WrongTestName> exceptions = new ArrayList<>();
+        final List<WrongTestName> exceptions = new ArrayList<>(0);
         for (final Path test : tests) {
             try {
-                new RuleForAllTests(new JavaTestCode(test)).validate();
+                new AllTestsInPresentSimple(new JavaTestCode(test)).validate();
             } catch (final WrongTestName ex) {
                 exceptions.add(ex);
             }

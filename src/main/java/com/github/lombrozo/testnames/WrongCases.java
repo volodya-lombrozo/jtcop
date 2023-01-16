@@ -24,43 +24,36 @@
 
 package com.github.lombrozo.testnames;
 
+import java.util.Arrays;
+
 /**
- * Test case without a 'test' word in name.
+ * The bulk of wrong cases.
  *
- * @since 0.1.0
+ * @since 0.1.7
  */
-public final class NotContainsTestWord implements Rule {
+public class WrongCases {
 
     /**
-     * The test case.
+     * The cases.
      */
-    private final TestCase test;
+    private final Cases cases;
 
     /**
      * Ctor.
-     *
-     * @param test The test case to check
      */
-    public NotContainsTestWord(final TestCase test) {
-        this.test = test;
-    }
-
-    @Override
-    public void validate() throws WrongTestName {
-        if (this.containsTest()) {
-            throw new WrongTestName(
-                this.test,
-                "test name doesn't have to contain the word 'test'"
-            );
-        }
+    WrongCases() {
+        this.cases = () -> Arrays.asList(
+            new TestCase.FakeCase("remove"),
+            new TestCase.FakeCase("create")
+        );
     }
 
     /**
-     * Is contains the 'test' word.
+     * The value.
      *
-     * @return The result
+     * @return The correct cases
      */
-    private boolean containsTest() {
-        return this.test.name().matches(".*[Tt][Ee][Ss][Tt].*");
+    public Cases value() {
+        return this.cases;
     }
 }

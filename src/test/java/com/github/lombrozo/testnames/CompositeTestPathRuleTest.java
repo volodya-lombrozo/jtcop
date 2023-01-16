@@ -33,14 +33,27 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-class CompositeTestPathRuleTest {
+/**
+ * Test case for {@link CompositeTestPathRule}.
+ *
+ * @since 0.1.0
+ */
+final class CompositeTestPathRuleTest {
 
     @Test
     void checksSeveralFilesInDirectorySuccessfully(@TempDir final Path temp) throws Exception {
-        Files.write(temp.resolve("Test1.java"), new BytesOf(
-            new ResourceOf("TestParameterized.java")).asBytes());
-        Files.write(temp.resolve("Test2.java"), new BytesOf(
-            new ResourceOf("TestSimple.java")).asBytes());
+        Files.write(
+            temp.resolve("Test1.java"),
+            new BytesOf(
+                new ResourceOf("TestParameterized.java")
+            ).asBytes()
+        );
+        Files.write(
+            temp.resolve("Test2.java"),
+            new BytesOf(
+                new ResourceOf("TestSimple.java")
+            ).asBytes()
+        );
         try {
             new CompositeTestPathRule(temp).validate();
         } catch (final WrongTestName ex) {
@@ -76,8 +89,12 @@ class CompositeTestPathRuleTest {
 
     @Test
     void failsIfTestNameIsWrong(@TempDir final Path temp) throws Exception {
-        Files.write(temp.resolve("Test3.java"), new BytesOf(
-            new ResourceOf("TestWrongName.java")).asBytes());
+        Files.write(
+            temp.resolve("Test3.java"),
+            new BytesOf(
+                new ResourceOf("TestWrongName.java")
+            ).asBytes()
+        );
         Assertions.assertThrows(
             WrongTestName.class,
             () -> new CompositeTestPathRule(temp).validate()

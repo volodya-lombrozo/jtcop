@@ -24,9 +24,23 @@
 
 package com.github.lombrozo.testnames;
 
-public class NotSpam implements Rule {
+/**
+ * Rule to check test case on not spam.
+ *
+ * @since 0.1.0
+ */
+public final class NotSpam implements Rule {
+
+    /**
+     * The test case.
+     */
     private final TestCase test;
 
+    /**
+     * Ctor.
+     *
+     * @param test The test case
+     */
     public NotSpam(final TestCase test) {
         this.test = test;
     }
@@ -34,20 +48,29 @@ public class NotSpam implements Rule {
     @Override
     public void validate() throws WrongTestName {
         if (!this.notSpam()) {
-            throw new WrongTestName(this.test, "test name doesn't "
-                + "have to contain duplicated symbols");
+            throw new WrongTestName(
+                this.test,
+                "test name doesn't have to contain duplicated symbols"
+            );
         }
     }
 
+    /**
+     * Check symbols duplication in test case name.
+     *
+     * @return The result
+     * @checkstyle ReturnCountCheck (30 lines)
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
     private boolean notSpam() {
         int stack = 0;
         char prev = '!';
-        for (final char c : this.test.name().toCharArray()) {
-            if (c == prev) {
-                stack++;
+        for (final char chr : this.test.name().toCharArray()) {
+            if (chr == prev) {
+                ++stack;
             } else {
                 stack = 0;
-                prev = c;
+                prev = chr;
             }
             if (stack > 2) {
                 return false;

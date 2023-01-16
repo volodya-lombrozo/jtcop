@@ -34,7 +34,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-class JavaTestCodeTest {
+/**
+ * Test case for {@link JavaTestCode}.
+ *
+ * @since 0.1.0
+ */
+final class JavaTestCodeTest {
 
     @Test
     void getsNamesFromSimpleTest(@TempDir final Path temp) throws Exception {
@@ -98,6 +103,5 @@ class JavaTestCodeTest {
             () -> new JavaTestCode(path).all()
         );
     }
-
 
 }

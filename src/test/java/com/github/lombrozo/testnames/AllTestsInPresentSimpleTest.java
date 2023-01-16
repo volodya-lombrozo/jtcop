@@ -24,21 +24,30 @@
 
 package com.github.lombrozo.testnames;
 
-import java.util.Collection;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-final class RuleForAllTests implements Rule {
+/**
+ * Test case for {@link AllTestsInPresentSimple}.
+ *
+ * @since 0.1.0
+ */
+final class AllTestsInPresentSimpleTest {
 
-    private final Cases tests;
-
-    RuleForAllTests(final Cases test) {
-        this.tests = test;
+    @Test
+    void validatesAllWithoutExceptions() {
+        try {
+            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
+        } catch (final WrongTestName ex) {
+            Assertions.fail(ex);
+        }
     }
 
-    @Override
-    public void validate() throws WrongTestName {
-        final Collection<TestCase> names = this.tests.all();
-        for (final TestCase test : names) {
-            new PresentSimpleRule(test).validate();
-        }
+    @Test
+    void validatesAllWithExceptions() {
+        Assertions.assertThrows(
+            WrongTestName.class,
+            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
+        );
     }
 }

@@ -24,7 +24,6 @@
 
 package com.github.lombrozo.testnames;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -41,28 +40,4 @@ public interface Cases {
      * @return All cases as collection
      */
     Collection<TestCase> all();
-
-    /**
-     * Correct cases.
-     *
-     * @return Correct bulk as list
-     */
-    static Cases correct() {
-        return () -> Arrays.asList(
-            new TestCase.FakeCase("removes"),
-            new TestCase.FakeCase("creates")
-        );
-    }
-
-    /**
-     * Wrong cases.
-     *
-     * @return Wrong bulk as list
-     */
-    static Cases wrong() {
-        return () -> Arrays.asList(
-            new TestCase.FakeCase("remove"),
-            new TestCase.FakeCase("test")
-        );
-    }
 }

@@ -131,8 +131,10 @@
             <configuration>
               <license>file:${basedir}/LICENSE</license>
               <excludes>
+                <exclude>pmd:/src/test/resources/.*</exclude>
+                <exclude>checkstyle:/src/test/resources/.*</exclude>
+                <exclude>dependencies:org.apache.maven:maven-core:jar:3.2.5:provided</exclude>
                 <exclude>duplicatefinder:.*</exclude>
-                <exclude>checkstyle: /src/test/java/resources/.*</exclude>
               </excludes>
             </configuration>
             <executions>

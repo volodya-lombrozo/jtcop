@@ -24,16 +24,30 @@
 
 package com.github.lombrozo.testnames;
 
-public class PresentTense implements Rule{
+/**
+ * The rule checks if test case in present tense.
+ *
+ * @since 0.1.0
+ */
+public final class PresentTense implements Rule {
+
+    /**
+     * The test case.
+     */
     private final TestCase test;
 
+    /**
+     * Ctor.
+     *
+     * @param test The test case to check
+     */
     public PresentTense(final TestCase test) {
         this.test = test;
     }
 
     @Override
     public void validate() throws WrongTestName {
-        if(!this.presentTense()){
+        if (!this.presentTense()) {
             throw new WrongTestName(
                 this.test,
                 "the test name has to be written using present tense"
@@ -41,14 +55,21 @@ public class PresentTense implements Rule{
         }
     }
 
+    /**
+     * Is test case name in present tense.
+     *
+     * @return The result
+     * @checkstyle ReturnCountCheck (20 lines)
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
     private boolean presentTense() {
         final char[] chars = this.test.name().toCharArray();
         char prev = '!';
-        for (final char c : chars) {
-            if (Character.isUpperCase(c)) {
+        for (final char chr : chars) {
+            if (Character.isUpperCase(chr)) {
                 return prev == 's';
             } else {
-                prev = c;
+                prev = chr;
             }
         }
         return prev == 's';
