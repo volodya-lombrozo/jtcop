@@ -29,7 +29,7 @@ public class UserTest {
     }
 
     @Test
-    public void createsUserWithotName() {
+    public void createsUserWithoutName() {
         // correct
     }
 
