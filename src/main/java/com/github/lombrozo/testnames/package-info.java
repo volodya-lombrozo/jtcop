@@ -22,22 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
-
-import java.util.Collection;
-
 /**
- * The bulk of test cases.
+ * The main package.
  *
  * @since 0.1.0
  */
-@FunctionalInterface
-public interface Cases {
-
-    /**
-     * All cases.
-     *
-     * @return All cases as collection
-     */
-    Collection<TestCase> all();
-}
+package com.github.lombrozo.testnames;

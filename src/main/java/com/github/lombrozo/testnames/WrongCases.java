@@ -24,20 +24,36 @@
 
 package com.github.lombrozo.testnames;
 
-import java.util.Collection;
+import java.util.Arrays;
 
 /**
- * The bulk of test cases.
+ * The bulk of wrong cases.
  *
- * @since 0.1.0
+ * @since 0.1.7
  */
-@FunctionalInterface
-public interface Cases {
+public class WrongCases {
 
     /**
-     * All cases.
-     *
-     * @return All cases as collection
+     * The cases.
      */
-    Collection<TestCase> all();
+    private final Cases cases;
+
+    /**
+     * Ctor.
+     */
+    WrongCases() {
+        this.cases = () -> Arrays.asList(
+            new TestCase.FakeCase("remove"),
+            new TestCase.FakeCase("create")
+        );
+    }
+
+    /**
+     * The value.
+     *
+     * @return The correct cases
+     */
+    public Cases value() {
+        return this.cases;
+    }
 }

@@ -24,20 +24,30 @@
 
 package com.github.lombrozo.testnames;
 
-import java.util.Collection;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * The bulk of test cases.
+ * Test case for {@link AllTestsInPresentSimple}.
  *
  * @since 0.1.0
  */
-@FunctionalInterface
-public interface Cases {
+final class AllTestsInPresentSimpleTest {
 
-    /**
-     * All cases.
-     *
-     * @return All cases as collection
-     */
-    Collection<TestCase> all();
+    @Test
+    void validatesAllWithoutExceptions() {
+        try {
+            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
+        } catch (final WrongTestName ex) {
+            Assertions.fail(ex);
+        }
+    }
+
+    @Test
+    void validatesAllWithExceptions() {
+        Assertions.assertThrows(
+            WrongTestName.class,
+            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
+        );
+    }
 }

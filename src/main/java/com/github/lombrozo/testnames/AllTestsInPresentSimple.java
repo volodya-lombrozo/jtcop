@@ -27,17 +27,31 @@ package com.github.lombrozo.testnames;
 import java.util.Collection;
 
 /**
- * The bulk of test cases.
+ * The rule to check all tests on {@link PresentSimpleRule}.
  *
  * @since 0.1.0
  */
-@FunctionalInterface
-public interface Cases {
+final class AllTestsInPresentSimple implements Rule {
 
     /**
-     * All cases.
-     *
-     * @return All cases as collection
+     * All test cases.
      */
-    Collection<TestCase> all();
+    private final Cases tests;
+
+    /**
+     * Ctor.
+     *
+     * @param tests The cases to check
+     */
+    AllTestsInPresentSimple(final Cases tests) {
+        this.tests = tests;
+    }
+
+    @Override
+    public void validate() throws WrongTestName {
+        final Collection<TestCase> names = this.tests.all();
+        for (final TestCase test : names) {
+            new PresentSimpleRule(test).validate();
+        }
+    }
 }
