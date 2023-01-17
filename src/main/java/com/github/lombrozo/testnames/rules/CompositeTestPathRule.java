@@ -22,8 +22,11 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.javaparser.JavaTestCode;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.WrongTestName;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,7 +40,7 @@ import java.util.stream.Stream;
  *
  * @since 0.1.7
  */
-final class CompositeTestPathRule implements Rule {
+public final class CompositeTestPathRule implements Rule {
 
     /**
      * The start.
@@ -49,7 +52,7 @@ final class CompositeTestPathRule implements Rule {
      *
      * @param path The start
      */
-    CompositeTestPathRule(final Path path) {
+    public CompositeTestPathRule(final Path path) {
         this.start = path;
     }
 

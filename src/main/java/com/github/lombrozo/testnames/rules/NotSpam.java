@@ -22,36 +22,64 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import java.util.Collection;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
 
 /**
- * The rule to check all tests on {@link PresentSimpleRule}.
+ * Rule to check test case on not spam.
  *
  * @since 0.1.0
  */
-final class AllTestsInPresentSimple implements Rule {
+public final class NotSpam implements Rule {
 
     /**
-     * All test cases.
+     * The test case.
      */
-    private final Cases tests;
+    private final TestCase test;
 
     /**
      * Ctor.
      *
-     * @param tests The cases to check
+     * @param test The test case
      */
-    AllTestsInPresentSimple(final Cases tests) {
-        this.tests = tests;
+    public NotSpam(final TestCase test) {
+        this.test = test;
     }
 
     @Override
     public void validate() throws WrongTestName {
-        final Collection<TestCase> names = this.tests.all();
-        for (final TestCase test : names) {
-            new PresentSimpleRule(test).validate();
+        if (!this.notSpam()) {
+            throw new WrongTestName(
+                this.test,
+                "test name doesn't have to contain duplicated symbols"
+            );
         }
+    }
+
+    /**
+     * Check symbols duplication in test case name.
+     *
+     * @return The result
+     * @checkstyle ReturnCountCheck (30 lines)
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    private boolean notSpam() {
+        int stack = 0;
+        char prev = '!';
+        for (final char chr : this.test.name().toCharArray()) {
+            if (chr == prev) {
+                ++stack;
+            } else {
+                stack = 0;
+                prev = chr;
+            }
+            if (stack > 2) {
+                return false;
+            }
+        }
+        return true;
     }
 }

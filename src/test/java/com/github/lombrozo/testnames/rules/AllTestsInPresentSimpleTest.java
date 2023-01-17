@@ -22,56 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
+
+import com.github.lombrozo.testnames.WrongTestName;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Rule to check test case on not camel case name.
+ * Test case for {@link com.github.lombrozo.testnames.rules.AllTestsInPresentSimple}.
  *
  * @since 0.1.0
  */
-public final class NotCamelCase implements Rule {
+final class AllTestsInPresentSimpleTest {
 
-    /**
-     * The test case.
-     */
-    private final TestCase test;
-
-    /**
-     * Ctor.
-     *
-     * @param test The test case
-     */
-    public NotCamelCase(final TestCase test) {
-        this.test = test;
-    }
-
-    @Override
-    public void validate() throws WrongTestName {
-        if (this.notCamelCase()) {
-            throw new WrongTestName(
-                this.test,
-                "test has to be written by using Camel Case"
-            );
+    @Test
+    void validatesAllWithoutExceptions() {
+        try {
+            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
+        } catch (final WrongTestName ex) {
+            Assertions.fail(ex);
         }
     }
 
-    /**
-     * Is not in camel case.
-     *
-     * @return The result
-     * @checkstyle ReturnCountCheck (15 lines)
-     */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean notCamelCase() {
-        int stack = 0;
-        for (final char chr : this.test.name().toCharArray()) {
-            if (Character.isUpperCase(chr) && stack == 0) {
-                return true;
-            } else if (stack != 0) {
-                stack = 0;
-            }
-            ++stack;
-        }
-        return false;
+    @Test
+    void validatesAllWithExceptions() {
+        Assertions.assertThrows(
+            WrongTestName.class,
+            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
+        );
     }
 }

@@ -22,32 +22,49 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
 
 /**
- * Test case for {@link AllTestsInPresentSimple}.
+ * The rule to check if test name uses special chars.
  *
  * @since 0.1.0
  */
-final class AllTestsInPresentSimpleTest {
+public final class NotUsesSpecialCharacters implements Rule {
 
-    @Test
-    void validatesAllWithoutExceptions() {
-        try {
-            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
-        } catch (final WrongTestName ex) {
-            Assertions.fail(ex);
+    /**
+     * The test case.
+     */
+    private final TestCase test;
+
+    /**
+     * Ctor.
+     *
+     * @param test The test case to check
+     */
+    public NotUsesSpecialCharacters(final TestCase test) {
+        this.test = test;
+    }
+
+    @Override
+    public void validate() throws WrongTestName {
+        if (this.usesSpecialCharacters()) {
+            throw new WrongTestName(
+                this.test,
+                "test name shouldn't contain special characters like '$' or '_'"
+            );
         }
     }
 
-    @Test
-    void validatesAllWithExceptions() {
-        Assertions.assertThrows(
-            WrongTestName.class,
-            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
-        );
+    /**
+     * Is contain special chars.
+     *
+     * @return The result
+     */
+    private boolean usesSpecialCharacters() {
+        return this.test.name().contains("$") || this.test.name().contains("_");
     }
 }

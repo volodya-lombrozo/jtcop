@@ -22,62 +22,40 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import java.nio.file.Path;
-import lombok.Data;
+import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.TestCase;
+import java.util.Arrays;
 
 /**
- * Parser for test case.
+ * The bulk of wrong cases.
  *
- * @since 0.1.0
+ * @since 0.1.7
  */
-@Data
-@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
-final class JavaParserCase implements TestCase {
+public class WrongCases {
 
     /**
-     * The class name.
-     * @checkstyle MemberNameCheck (2 lines)
+     * The cases.
      */
-    private final String className;
-
-    /**
-     * The name of test case.
-     */
-    private final String name;
-
-    /**
-     * The path.
-     */
-    private final Path path;
+    private final Cases cases;
 
     /**
      * Ctor.
-     *
-     * @param className The class name
-     * @param name The test case name
-     * @param path The path
-     * @checkstyle ParameterNameCheck (6 lines)
      */
-    JavaParserCase(final String className, final String name, final Path path) {
-        this.className = className;
-        this.name = name;
-        this.path = path;
+    WrongCases() {
+        this.cases = () -> Arrays.asList(
+            new TestCase.FakeCase("remove"),
+            new TestCase.FakeCase("create")
+        );
     }
 
-    @Override
-    public String className() {
-        return this.className;
-    }
-
-    @Override
-    public String name() {
-        return this.name;
-    }
-
-    @Override
-    public Path path() {
-        return this.path;
+    /**
+     * The value.
+     *
+     * @return The correct cases
+     */
+    public Cases value() {
+        return this.cases;
     }
 }

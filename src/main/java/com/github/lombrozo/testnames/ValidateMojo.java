@@ -24,6 +24,7 @@
 
 package com.github.lombrozo.testnames;
 
+import com.github.lombrozo.testnames.rules.CompositeTestPathRule;
 import java.nio.file.Paths;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
@@ -30,6 +30,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.TestCase;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;

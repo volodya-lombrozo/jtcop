@@ -22,45 +22,40 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
+
+import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
+import java.util.Collection;
 
 /**
- * Test case without a 'test' word in name.
+ * The rule to check all tests on {@link PresentSimpleRule}.
  *
  * @since 0.1.0
  */
-public final class NotContainsTestWord implements Rule {
+public final class AllTestsInPresentSimple implements Rule {
 
     /**
-     * The test case.
+     * All test cases.
      */
-    private final TestCase test;
+    private final Cases tests;
 
     /**
      * Ctor.
      *
-     * @param test The test case to check
+     * @param tests The cases to check
      */
-    public NotContainsTestWord(final TestCase test) {
-        this.test = test;
+    public AllTestsInPresentSimple(final Cases tests) {
+        this.tests = tests;
     }
 
     @Override
     public void validate() throws WrongTestName {
-        if (this.containsTest()) {
-            throw new WrongTestName(
-                this.test,
-                "test name doesn't have to contain the word 'test'"
-            );
+        final Collection<TestCase> names = this.tests.all();
+        for (final TestCase test : names) {
+            new PresentSimpleRule(test).validate();
         }
-    }
-
-    /**
-     * Is contains the 'test' word.
-     *
-     * @return The result
-     */
-    private boolean containsTest() {
-        return this.test.name().matches(".*[Tt][Ee][Ss][Tt].*");
     }
 }

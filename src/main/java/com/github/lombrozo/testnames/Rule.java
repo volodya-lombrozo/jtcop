@@ -34,7 +34,7 @@ public interface Rule {
     /**
      * Validation of test name.
      *
-     * @throws WrongTestName When the test name doesn't match with rule
+     * @throws com.github.lombrozo.testnames.WrongTestName When the test name doesn't match with rule
      */
     void validate() throws WrongTestName;
 

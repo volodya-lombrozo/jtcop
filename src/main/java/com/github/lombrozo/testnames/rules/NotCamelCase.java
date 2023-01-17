@@ -22,14 +22,18 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
+
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
 
 /**
- * The rule to check if test name uses special chars.
+ * Rule to check test case on not camel case name.
  *
  * @since 0.1.0
  */
-public final class NotUsesSpecialCharacters implements Rule {
+public final class NotCamelCase implements Rule {
 
     /**
      * The test case.
@@ -39,28 +43,39 @@ public final class NotUsesSpecialCharacters implements Rule {
     /**
      * Ctor.
      *
-     * @param test The test case to check
+     * @param test The test case
      */
-    public NotUsesSpecialCharacters(final TestCase test) {
+    public NotCamelCase(final TestCase test) {
         this.test = test;
     }
 
     @Override
     public void validate() throws WrongTestName {
-        if (this.usesSpecialCharacters()) {
+        if (this.notCamelCase()) {
             throw new WrongTestName(
                 this.test,
-                "test name shouldn't contain special characters like '$' or '_'"
+                "test has to be written by using Camel Case"
             );
         }
     }
 
     /**
-     * Is contain special chars.
+     * Is not in camel case.
      *
      * @return The result
+     * @checkstyle ReturnCountCheck (15 lines)
      */
-    private boolean usesSpecialCharacters() {
-        return this.test.name().contains("$") || this.test.name().contains("_");
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    private boolean notCamelCase() {
+        int stack = 0;
+        for (final char chr : this.test.name().toCharArray()) {
+            if (Character.isUpperCase(chr) && stack == 0) {
+                return true;
+            } else if (stack != 0) {
+                stack = 0;
+            }
+            ++stack;
+        }
+        return false;
     }
 }

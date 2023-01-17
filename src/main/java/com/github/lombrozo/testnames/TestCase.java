@@ -85,7 +85,7 @@ public interface TestCase {
          *
          * @param name The name of test case
          */
-        FakeCase(final String name) {
+        public FakeCase(final String name) {
             this("FakeClass", name, Paths.get("."));
         }
 
