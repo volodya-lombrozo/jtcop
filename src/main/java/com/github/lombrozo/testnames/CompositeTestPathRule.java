@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 /**
  * The rule for composite test.
  *
- * @since 0.1.0
+ * @since 0.1.7
  */
 final class CompositeTestPathRule implements Rule {
 
