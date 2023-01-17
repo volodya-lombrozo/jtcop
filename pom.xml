@@ -65,6 +65,12 @@ SOFTWARE.
   </properties>
   <dependencies>
     <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>3.2.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>5.9.1</version>
@@ -156,7 +162,6 @@ SOFTWARE.
               <excludes>
                 <exclude>pmd:/src/test/resources/.*</exclude>
                 <exclude>checkstyle:/src/test/resources/.*</exclude>
-                <exclude>dependencies:org.apache.maven:maven-core:jar:3.2.5:provided</exclude>
                 <exclude>duplicatefinder:.*</exclude>
               </excludes>
             </configuration>
