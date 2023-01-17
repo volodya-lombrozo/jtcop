@@ -23,9 +23,8 @@
  */
 
 /**
- * The test package.
+ * Test cases for rules.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-package com.github.lombrozo.testnames;
-
+package com.github.lombrozo.testnames.rules;

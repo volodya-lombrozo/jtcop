@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.Cases;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
@@ -35,7 +36,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link JavaTestCode}.
+ * Test case for {@link com.github.lombrozo.testnames.javaparser.JavaTestCode}.
  *
  * @since 0.1.0
  */

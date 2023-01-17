@@ -22,45 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
-
 /**
- * Test case without a 'test' word in name.
+ * Rules.
+ * All rules should implement {@link com.github.lombrozo.testnames.Rule}.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-public final class NotContainsTestWord implements Rule {
-
-    /**
-     * The test case.
-     */
-    private final TestCase test;
-
-    /**
-     * Ctor.
-     *
-     * @param test The test case to check
-     */
-    public NotContainsTestWord(final TestCase test) {
-        this.test = test;
-    }
-
-    @Override
-    public void validate() throws WrongTestName {
-        if (this.containsTest()) {
-            throw new WrongTestName(
-                this.test,
-                "test name doesn't have to contain the word 'test'"
-            );
-        }
-    }
-
-    /**
-     * Is contains the 'test' word.
-     *
-     * @return The result
-     */
-    private boolean containsTest() {
-        return this.test.name().matches(".*[Tt][Ee][Ss][Tt].*");
-    }
-}
+package com.github.lombrozo.testnames.rules;

@@ -22,45 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
-
 /**
- * The rule to check if test name uses special chars.
+ * Javaparser implementation of {@link com.github.lombrozo.testnames.Cases} with related classes.
+ * You can read more about javaparser <a href="https://github.com/javaparser/javaparser">here</a>
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-public final class NotUsesSpecialCharacters implements Rule {
-
-    /**
-     * The test case.
-     */
-    private final TestCase test;
-
-    /**
-     * Ctor.
-     *
-     * @param test The test case to check
-     */
-    public NotUsesSpecialCharacters(final TestCase test) {
-        this.test = test;
-    }
-
-    @Override
-    public void validate() throws WrongTestName {
-        if (this.usesSpecialCharacters()) {
-            throw new WrongTestName(
-                this.test,
-                "test name shouldn't contain special characters like '$' or '_'"
-            );
-        }
-    }
-
-    /**
-     * Is contain special chars.
-     *
-     * @return The result
-     */
-    private boolean usesSpecialCharacters() {
-        return this.test.name().contains("$") || this.test.name().contains("_");
-    }
-}
+package com.github.lombrozo.testnames.javaparser;

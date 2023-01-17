@@ -22,60 +22,63 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.javaparser;
+
+import com.github.lombrozo.testnames.TestCase;
+import java.nio.file.Path;
+import lombok.Data;
 
 /**
- * Rule to check test case on not spam.
+ * Parser for test case.
  *
  * @since 0.1.0
  */
-public final class NotSpam implements Rule {
+@Data
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
+final class JavaParserCase implements TestCase {
 
     /**
-     * The test case.
+     * The class name.
+     * @checkstyle MemberNameCheck (2 lines)
      */
-    private final TestCase test;
+    private final String className;
+
+    /**
+     * The name of test case.
+     */
+    private final String name;
+
+    /**
+     * The path.
+     */
+    private final Path path;
 
     /**
      * Ctor.
      *
-     * @param test The test case
+     * @param className The class name
+     * @param name The test case name
+     * @param path The path
+     * @checkstyle ParameterNameCheck (6 lines)
      */
-    public NotSpam(final TestCase test) {
-        this.test = test;
+    JavaParserCase(final String className, final String name, final Path path) {
+        this.className = className;
+        this.name = name;
+        this.path = path;
     }
 
     @Override
-    public void validate() throws WrongTestName {
-        if (!this.notSpam()) {
-            throw new WrongTestName(
-                this.test,
-                "test name doesn't have to contain duplicated symbols"
-            );
-        }
+    public String className() {
+        return this.className;
     }
 
-    /**
-     * Check symbols duplication in test case name.
-     *
-     * @return The result
-     * @checkstyle ReturnCountCheck (30 lines)
-     */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean notSpam() {
-        int stack = 0;
-        char prev = '!';
-        for (final char chr : this.test.name().toCharArray()) {
-            if (chr == prev) {
-                ++stack;
-            } else {
-                stack = 0;
-                prev = chr;
-            }
-            if (stack > 2) {
-                return false;
-            }
-        }
-        return true;
+    @Override
+    public String name() {
+        return this.name;
+    }
+
+    @Override
+    public Path path() {
+        return this.path;
     }
 }

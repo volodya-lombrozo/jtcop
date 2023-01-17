@@ -22,38 +22,40 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import java.util.Arrays;
+import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
+import java.util.Collection;
 
 /**
- * The correct cases.
+ * The rule to check all tests on {@link PresentSimpleRule}.
  *
- * @since 0.1.7
+ * @since 0.1.0
  */
-class CorrectCases {
+public final class AllTestsInPresentSimple implements Rule {
 
     /**
-     * The cases.
+     * All test cases.
      */
-    private final Cases cases;
+    private final Cases tests;
 
     /**
      * Ctor.
+     *
+     * @param cases The cases to check
      */
-    CorrectCases() {
-        this.cases = () -> Arrays.asList(
-            new TestCase.FakeCase("removes"),
-            new TestCase.FakeCase("creates")
-        );
+    AllTestsInPresentSimple(final Cases cases) {
+        this.tests = cases;
     }
 
-    /**
-     * The value.
-     *
-     * @return The correct cases
-     */
-    public Cases value() {
-        return this.cases;
+    @Override
+    public void validate() throws WrongTestName {
+        final Collection<TestCase> names = this.tests.all();
+        for (final TestCase test : names) {
+            new PresentSimpleRule(test).validate();
+        }
     }
 }

@@ -22,42 +22,64 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import java.util.Arrays;
-import java.util.Collection;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
 
 /**
- * The rule checks if test case in present simple.
+ * Rule to check test case on not spam.
  *
  * @since 0.1.0
  */
-public final class PresentSimpleRule implements Rule {
+public final class NotSpam implements Rule {
 
     /**
-     * The rules.
+     * The test case.
      */
-    private final Collection<Rule> all;
+    private final TestCase test;
 
     /**
      * Ctor.
      *
-     * @param test The test case to check
+     * @param test The test case
      */
-    public PresentSimpleRule(final TestCase test) {
-        this.all = Arrays.asList(
-            new NotCamelCase(test),
-            new NotContainsTestWord(test),
-            new NotSpam(test),
-            new NotUsesSpecialCharacters(test),
-            new PresentTense(test)
-        );
+    NotSpam(final TestCase test) {
+        this.test = test;
     }
 
     @Override
     public void validate() throws WrongTestName {
-        for (final Rule rule : this.all) {
-            rule.validate();
+        if (!this.notSpam()) {
+            throw new WrongTestName(
+                this.test,
+                "test name doesn't have to contain duplicated symbols"
+            );
         }
+    }
+
+    /**
+     * Check symbols duplication in test case name.
+     *
+     * @return The result
+     * @checkstyle ReturnCountCheck (30 lines)
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    private boolean notSpam() {
+        int stack = 0;
+        char prev = '!';
+        for (final char chr : this.test.name().toCharArray()) {
+            if (chr == prev) {
+                ++stack;
+            } else {
+                stack = 0;
+                prev = chr;
+            }
+            if (stack > 2) {
+                return false;
+            }
+        }
+        return true;
     }
 }

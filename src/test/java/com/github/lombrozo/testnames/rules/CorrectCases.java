@@ -22,10 +22,40 @@
  * SOFTWARE.
  */
 
-/**
- * The test package.
- *
- * @since 0.1.0
- */
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.TestCase;
+import java.util.Arrays;
+
+/**
+ * The correct cases.
+ *
+ * @since 0.1.7
+ */
+class CorrectCases {
+
+    /**
+     * The cases.
+     */
+    private final Cases cases;
+
+    /**
+     * Ctor.
+     */
+    CorrectCases() {
+        this.cases = () -> Arrays.asList(
+            new TestCase.FakeCase("removes"),
+            new TestCase.FakeCase("creates")
+        );
+    }
+
+    /**
+     * The value.
+     *
+     * @return The correct cases
+     */
+    public Cases value() {
+        return this.cases;
+    }
+}

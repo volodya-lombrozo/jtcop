@@ -22,36 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
-
-import java.util.Collection;
-
 /**
- * The rule to check all tests on {@link PresentSimpleRule}.
- *
- * @since 0.1.0
+ * Test cases for javaparser implementation.
  */
-final class AllTestsInPresentSimple implements Rule {
-
-    /**
-     * All test cases.
-     */
-    private final Cases tests;
-
-    /**
-     * Ctor.
-     *
-     * @param tests The cases to check
-     */
-    AllTestsInPresentSimple(final Cases tests) {
-        this.tests = tests;
-    }
-
-    @Override
-    public void validate() throws WrongTestName {
-        final Collection<TestCase> names = this.tests.all();
-        for (final TestCase test : names) {
-            new PresentSimpleRule(test).validate();
-        }
-    }
-}
+package com.github.lombrozo.testnames.javaparser;

@@ -22,10 +22,33 @@
  * SOFTWARE.
  */
 
+package com.github.lombrozo.testnames.rules;
+
+import com.github.lombrozo.testnames.WrongTestName;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 /**
- * The test package.
+ * Test case for {@link com.github.lombrozo.testnames.rules.AllTestsInPresentSimple}.
  *
  * @since 0.1.0
  */
-package com.github.lombrozo.testnames;
+final class AllTestsInPresentSimpleTest {
 
+    @Test
+    void validatesAllWithoutExceptions() {
+        try {
+            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
+        } catch (final WrongTestName ex) {
+            Assertions.fail(ex);
+        }
+    }
+
+    @Test
+    void validatesAllWithExceptions() {
+        Assertions.assertThrows(
+            WrongTestName.class,
+            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
+        );
+    }
+}

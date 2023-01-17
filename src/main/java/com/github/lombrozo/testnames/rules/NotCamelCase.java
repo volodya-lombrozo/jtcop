@@ -22,38 +22,60 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import java.util.Arrays;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
 
 /**
- * The bulk of wrong cases.
+ * Rule to check test case on not camel case name.
  *
- * @since 0.1.7
+ * @since 0.1.0
  */
-public class WrongCases {
+public final class NotCamelCase implements Rule {
 
     /**
-     * The cases.
+     * The test case.
      */
-    private final Cases cases;
+    private final TestCase test;
 
     /**
      * Ctor.
+     *
+     * @param test The test case
      */
-    WrongCases() {
-        this.cases = () -> Arrays.asList(
-            new TestCase.FakeCase("remove"),
-            new TestCase.FakeCase("create")
-        );
+    NotCamelCase(final TestCase test) {
+        this.test = test;
+    }
+
+    @Override
+    public void validate() throws WrongTestName {
+        if (this.notCamelCase()) {
+            throw new WrongTestName(
+                this.test,
+                "test has to be written by using Camel Case"
+            );
+        }
     }
 
     /**
-     * The value.
+     * Is not in camel case.
      *
-     * @return The correct cases
+     * @return The result
+     * @checkstyle ReturnCountCheck (15 lines)
      */
-    public Cases value() {
-        return this.cases;
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    private boolean notCamelCase() {
+        int stack = 0;
+        for (final char chr : this.test.name().toCharArray()) {
+            if (Character.isUpperCase(chr) && stack == 0) {
+                return true;
+            } else if (stack != 0) {
+                stack = 0;
+            }
+            ++stack;
+        }
+        return false;
     }
 }

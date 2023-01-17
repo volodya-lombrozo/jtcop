@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.WrongTestName;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,7 +35,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link CompositeTestPathRule}.
+ * Test case for {@link com.github.lombrozo.testnames.rules.CompositeTestPathRule}.
  *
  * @since 0.1.0
  */

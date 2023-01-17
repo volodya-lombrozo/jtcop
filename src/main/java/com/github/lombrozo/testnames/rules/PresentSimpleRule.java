@@ -22,32 +22,45 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
- * Test case for {@link AllTestsInPresentSimple}.
+ * The rule checks if test case in present simple.
  *
  * @since 0.1.0
  */
-final class AllTestsInPresentSimpleTest {
+public final class PresentSimpleRule implements Rule {
 
-    @Test
-    void validatesAllWithoutExceptions() {
-        try {
-            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
-        } catch (final WrongTestName ex) {
-            Assertions.fail(ex);
-        }
+    /**
+     * The rules.
+     */
+    private final Collection<Rule> all;
+
+    /**
+     * Ctor.
+     *
+     * @param test The test case to check
+     */
+    PresentSimpleRule(final TestCase test) {
+        this.all = Arrays.asList(
+            new NotCamelCase(test),
+            new NotContainsTestWord(test),
+            new NotSpam(test),
+            new NotUsesSpecialCharacters(test),
+            new PresentTense(test)
+        );
     }
 
-    @Test
-    void validatesAllWithExceptions() {
-        Assertions.assertThrows(
-            WrongTestName.class,
-            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
-        );
+    @Override
+    public void validate() throws WrongTestName {
+        for (final Rule rule : this.all) {
+            rule.validate();
+        }
     }
 }

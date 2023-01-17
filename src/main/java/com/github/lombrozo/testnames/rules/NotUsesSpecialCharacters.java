@@ -22,14 +22,18 @@
  * SOFTWARE.
  */
 
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.rules;
+
+import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.WrongTestName;
 
 /**
- * The rule checks if test case in present tense.
+ * The rule to check if test name uses special chars.
  *
  * @since 0.1.0
  */
-public final class PresentTense implements Rule {
+public final class NotUsesSpecialCharacters implements Rule {
 
     /**
      * The test case.
@@ -41,37 +45,26 @@ public final class PresentTense implements Rule {
      *
      * @param test The test case to check
      */
-    public PresentTense(final TestCase test) {
+    NotUsesSpecialCharacters(final TestCase test) {
         this.test = test;
     }
 
     @Override
     public void validate() throws WrongTestName {
-        if (!this.presentTense()) {
+        if (this.usesSpecialCharacters()) {
             throw new WrongTestName(
                 this.test,
-                "the test name has to be written using present tense"
+                "test name shouldn't contain special characters like '$' or '_'"
             );
         }
     }
 
     /**
-     * Is test case name in present tense.
+     * Is contain special chars.
      *
      * @return The result
-     * @checkstyle ReturnCountCheck (20 lines)
      */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean presentTense() {
-        final char[] chars = this.test.name().toCharArray();
-        char prev = '!';
-        for (final char chr : chars) {
-            if (Character.isUpperCase(chr)) {
-                return prev == 's';
-            } else {
-                prev = chr;
-            }
-        }
-        return prev == 's';
+    private boolean usesSpecialCharacters() {
+        return this.test.name().contains("$") || this.test.name().contains("_");
     }
 }
