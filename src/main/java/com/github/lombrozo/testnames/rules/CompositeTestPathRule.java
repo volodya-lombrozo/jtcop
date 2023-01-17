@@ -24,9 +24,9 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.javaparser.JavaTestCode;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.WrongTestName;
+import com.github.lombrozo.testnames.javaparser.JavaTestCode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

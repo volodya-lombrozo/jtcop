@@ -25,8 +25,6 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Cases;
-import com.github.lombrozo.testnames.javaparser.JavaParserCase;
-import com.github.lombrozo.testnames.javaparser.JavaTestCode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;

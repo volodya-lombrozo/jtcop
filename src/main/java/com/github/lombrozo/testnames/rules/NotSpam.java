@@ -45,7 +45,7 @@ public final class NotSpam implements Rule {
      *
      * @param test The test case
      */
-    public NotSpam(final TestCase test) {
+    NotSpam(final TestCase test) {
         this.test = test;
     }
 

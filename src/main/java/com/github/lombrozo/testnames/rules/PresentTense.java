@@ -45,7 +45,7 @@ public final class PresentTense implements Rule {
      *
      * @param test The test case to check
      */
-    public PresentTense(final TestCase test) {
+    PresentTense(final TestCase test) {
         this.test = test;
     }
 

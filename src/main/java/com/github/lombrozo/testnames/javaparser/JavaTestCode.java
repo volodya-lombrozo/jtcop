@@ -89,7 +89,7 @@ public final class JavaTestCode implements Cases {
      * @param node The child node
      */
     private void checkTestMethods(
-        final List<TestCase> names,
+        final Collection<? super TestCase> names,
         final ClassOrInterfaceDeclaration node
     ) {
         for (final MethodDeclaration method : node.getMethods()) {

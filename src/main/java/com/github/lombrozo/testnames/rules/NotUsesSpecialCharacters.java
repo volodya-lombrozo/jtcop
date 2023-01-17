@@ -45,7 +45,7 @@ public final class NotUsesSpecialCharacters implements Rule {
      *
      * @param test The test case to check
      */
-    public NotUsesSpecialCharacters(final TestCase test) {
+    NotUsesSpecialCharacters(final TestCase test) {
         this.test = test;
     }
 

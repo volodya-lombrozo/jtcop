@@ -47,7 +47,7 @@ public final class PresentSimpleRule implements Rule {
      *
      * @param test The test case to check
      */
-    public PresentSimpleRule(final TestCase test) {
+    PresentSimpleRule(final TestCase test) {
         this.all = Arrays.asList(
             new NotCamelCase(test),
             new NotContainsTestWord(test),

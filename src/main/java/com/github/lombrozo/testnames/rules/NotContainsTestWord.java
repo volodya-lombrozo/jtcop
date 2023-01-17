@@ -45,7 +45,7 @@ public final class NotContainsTestWord implements Rule {
      *
      * @param test The test case to check
      */
-    public NotContainsTestWord(final TestCase test) {
+    NotContainsTestWord(final TestCase test) {
         this.test = test;
     }
 

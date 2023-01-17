@@ -45,7 +45,7 @@ public final class NotCamelCase implements Rule {
      *
      * @param test The test case
      */
-    public NotCamelCase(final TestCase test) {
+    NotCamelCase(final TestCase test) {
         this.test = test;
     }
 
