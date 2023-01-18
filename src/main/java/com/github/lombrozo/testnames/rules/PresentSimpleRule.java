@@ -27,7 +27,6 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.WrongTestName;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
