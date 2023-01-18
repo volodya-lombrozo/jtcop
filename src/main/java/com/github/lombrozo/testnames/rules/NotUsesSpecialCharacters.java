@@ -24,9 +24,12 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.WrongTestName;
+import com.github.lombrozo.testnames.WrongTestNameComplaint;
+import java.util.Collection;
 
 /**
  * The rule to check if test name uses special chars.
@@ -50,13 +53,14 @@ public final class NotUsesSpecialCharacters implements Rule {
     }
 
     @Override
-    public void complaints() throws WrongTestName {
-        if (this.usesSpecialCharacters()) {
-            throw new WrongTestName(
+    public Collection<Complaint> complaints() {
+        return new ConditionalRule(
+            this::usesSpecialCharacters,
+            new WrongTestNameComplaint(
                 this.test,
                 "test name shouldn't contain special characters like '$' or '_'"
-            );
-        }
+            )
+        ).complaints();
     }
 
     /**

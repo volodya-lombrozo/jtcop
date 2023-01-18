@@ -24,9 +24,12 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.WrongTestName;
+import com.github.lombrozo.testnames.WrongTestNameComplaint;
+import java.util.Collection;
 
 /**
  * Test case without a 'test' word in name.
@@ -50,13 +53,14 @@ public final class NotContainsTestWord implements Rule {
     }
 
     @Override
-    public void complaints() throws WrongTestName {
-        if (this.containsTest()) {
-            throw new WrongTestName(
+    public Collection<Complaint> complaints() {
+        return new ConditionalRule(
+            this::containsTest,
+            new WrongTestNameComplaint(
                 this.test,
                 "test name doesn't have to contain the word 'test'"
-            );
-        }
+            )
+        ).complaints();
     }
 
     /**

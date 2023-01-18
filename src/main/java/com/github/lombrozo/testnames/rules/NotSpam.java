@@ -55,18 +55,13 @@ public final class NotSpam implements Rule {
 
     @Override
     public Collection<Complaint> complaints() {
-        final Collection<Complaint> ret;
-        if (!this.notSpam()) {
-            ret = Collections.singleton(
-                new WrongTestNameComplaint(
-                    this.test,
-                    "test name doesn't have to contain duplicated symbols"
-                )
-            );
-        } else {
-            ret = Collections.emptyList();
-        }
-        return ret;
+        return new ConditionalRule(
+            () -> !this.notSpam(),
+            new WrongTestNameComplaint(
+                this.test,
+                "test name doesn't have to contain duplicated symbols"
+            )
+        ).complaints();
     }
 
     /**
