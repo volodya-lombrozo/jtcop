@@ -57,7 +57,7 @@ public final class CompositeTestPathRule implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
+    public void complaints() throws WrongTestName {
         if (!Files.exists(this.start)) {
             return;
         }
@@ -73,7 +73,7 @@ public final class CompositeTestPathRule implements Rule {
         final List<WrongTestName> exceptions = new ArrayList<>(0);
         for (final Path test : tests) {
             try {
-                new AllTestsInPresentSimple(new JavaTestCode(test)).validate();
+                new AllTestsInPresentSimple(new JavaTestCode(test)).complaints();
             } catch (final WrongTestName ex) {
                 exceptions.add(ex);
             }

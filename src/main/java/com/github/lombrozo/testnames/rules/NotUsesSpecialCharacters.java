@@ -50,7 +50,7 @@ public final class NotUsesSpecialCharacters implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
+    public void complaints() throws WrongTestName {
         if (this.usesSpecialCharacters()) {
             throw new WrongTestName(
                 this.test,

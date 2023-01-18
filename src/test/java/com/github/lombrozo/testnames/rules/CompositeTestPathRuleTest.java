@@ -56,7 +56,7 @@ final class CompositeTestPathRuleTest {
             ).asBytes()
         );
         try {
-            new CompositeTestPathRule(temp).validate();
+            new CompositeTestPathRule(temp).complaints();
         } catch (final WrongTestName ex) {
             Assertions.fail(ex);
         }
@@ -70,7 +70,7 @@ final class CompositeTestPathRuleTest {
         );
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new CompositeTestPathRule(temp).validate()
+            () -> new CompositeTestPathRule(temp).complaints()
         );
     }
 
@@ -82,7 +82,7 @@ final class CompositeTestPathRuleTest {
         );
         Files.createDirectories(temp.resolve("subdir").resolve("deep"));
         try {
-            new CompositeTestPathRule(temp).validate();
+            new CompositeTestPathRule(temp).complaints();
         } catch (final WrongTestName ex) {
             Assertions.fail(ex);
         }
@@ -98,7 +98,7 @@ final class CompositeTestPathRuleTest {
         );
         Assertions.assertThrows(
             WrongTestName.class,
-            () -> new CompositeTestPathRule(temp).validate()
+            () -> new CompositeTestPathRule(temp).complaints()
         );
     }
 }

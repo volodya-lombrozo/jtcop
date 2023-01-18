@@ -52,7 +52,7 @@ public final class ValidateMojo extends AbstractMojo {
         try {
             new CompositeTestPathRule(
                 Paths.get(this.project.getTestCompileSourceRoots().get(0))
-            ).validate();
+            ).complaints();
         } catch (final WrongTestName ex) {
             throw new MojoFailureException(ex);
         }

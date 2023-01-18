@@ -24,11 +24,13 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.WrongTestName;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * The rule checks if test case in present simple.
@@ -58,9 +60,10 @@ public final class PresentSimpleRule implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
-        for (final Rule rule : this.all) {
-            rule.validate();
-        }
+    public Collection<Complaint> complaints() {
+        return this.all.stream()
+            .map(Rule::complaints)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
     }
 }

@@ -24,9 +24,13 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.WrongTestName;
+import com.github.lombrozo.testnames.WrongTestNameComplaint;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Rule to check test case on not spam.
@@ -50,13 +54,19 @@ public final class NotSpam implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
+    public Collection<Complaint> complaints() {
+        final Collection<Complaint> ret;
         if (!this.notSpam()) {
-            throw new WrongTestName(
-                this.test,
-                "test name doesn't have to contain duplicated symbols"
+            ret = Collections.singleton(
+                new WrongTestNameComplaint(
+                    this.test,
+                    "test name doesn't have to contain duplicated symbols"
+                )
             );
+        } else {
+            ret = Collections.emptyList();
         }
+        return ret;
     }
 
     /**

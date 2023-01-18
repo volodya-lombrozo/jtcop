@@ -38,7 +38,7 @@ final class AllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithoutExceptions() {
         try {
-            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
+            new AllTestsInPresentSimple(new CorrectCases().value()).complaints();
         } catch (final WrongTestName ex) {
             Assertions.fail(ex);
         }
@@ -48,7 +48,7 @@ final class AllTestsInPresentSimpleTest {
     void validatesAllWithExceptions() {
         Assertions.assertThrows(
             WrongTestName.class,
-            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
+            () -> new AllTestsInPresentSimple(new WrongCases().value()).complaints()
         );
     }
 }

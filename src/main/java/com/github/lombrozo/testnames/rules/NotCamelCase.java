@@ -50,7 +50,7 @@ public final class NotCamelCase implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
+    public void complaints() throws WrongTestName {
         if (this.notCamelCase()) {
             throw new WrongTestName(
                 this.test,

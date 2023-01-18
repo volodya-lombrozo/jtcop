@@ -50,7 +50,7 @@ public final class PresentTense implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
+    public void complaints() throws WrongTestName {
         if (!this.presentTense()) {
             throw new WrongTestName(
                 this.test,

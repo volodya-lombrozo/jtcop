@@ -50,7 +50,7 @@ public final class NotContainsTestWord implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
+    public void complaints() throws WrongTestName {
         if (this.containsTest()) {
             throw new WrongTestName(
                 this.test,

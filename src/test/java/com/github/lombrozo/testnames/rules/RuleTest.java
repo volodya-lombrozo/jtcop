@@ -72,7 +72,7 @@ final class RuleTest {
     })
     void validatesCorrectly(final String name, final boolean expected) {
         try {
-            new PresentSimpleRule(new TestCase.FakeCase(name)).validate();
+            new PresentSimpleRule(new TestCase.FakeCase(name)).complaints();
             Assertions.assertTrue(expected);
         } catch (final WrongTestName ex) {
             Assertions.assertFalse(expected);
