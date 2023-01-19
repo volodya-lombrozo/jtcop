@@ -31,7 +31,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.lombrozo.testnames.Cases;
-import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.Case;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -60,11 +60,11 @@ public final class JavaTestCode implements Cases {
     }
 
     @Override
-    public Collection<TestCase> all() {
+    public Collection<Case> all() {
         try {
             final CompilationUnit parse = StaticJavaParser.parse(this.path);
             final List<Node> nodes = parse.getChildNodes();
-            final List<TestCase> names = new ArrayList<>(0);
+            final List<Case> names = new ArrayList<>(0);
             for (final Node node : nodes) {
                 if (node instanceof ClassOrInterfaceDeclaration) {
                     this.checkTestMethods(
@@ -89,7 +89,7 @@ public final class JavaTestCode implements Cases {
      * @param node The child node
      */
     private void checkTestMethods(
-        final Collection<? super TestCase> names,
+        final Collection<? super Case> names,
         final ClassOrInterfaceDeclaration node
     ) {
         for (final MethodDeclaration method : node.getMethods()) {

@@ -24,7 +24,7 @@
 
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.Case;
 import java.nio.file.Path;
 import lombok.Data;
 
@@ -35,7 +35,7 @@ import lombok.Data;
  */
 @Data
 @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
-final class JavaParserCase implements TestCase {
+final class JavaParserCase implements Case {
 
     /**
      * The class name.

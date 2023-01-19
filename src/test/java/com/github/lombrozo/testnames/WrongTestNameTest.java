@@ -40,7 +40,7 @@ final class WrongTestNameTest {
     void createsUsingSingleParamConstructor() {
         final String name = UUID.randomUUID().toString();
         MatcherAssert.assertThat(
-            new WrongTestName(new TestCase.FakeCase(name)).getMessage(),
+            new WrongTestName(new Case.FakeCase(name)).getMessage(),
             Matchers.equalTo(
                 String.format(
                     "Test name '%s#%s' doesn't follow naming rules, test path: %s",
@@ -57,7 +57,7 @@ final class WrongTestNameTest {
         final String name = UUID.randomUUID().toString();
         final String reason = UUID.randomUUID().toString();
         MatcherAssert.assertThat(
-            new WrongTestName(new TestCase.FakeCase(name), reason).getMessage(),
+            new WrongTestName(new Case.FakeCase(name), reason).getMessage(),
             Matchers.equalTo(
                 String.format(
                     "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
@@ -74,8 +74,8 @@ final class WrongTestNameTest {
     void createsUsingSeveralExceptions() {
         MatcherAssert.assertThat(
             new WrongTestName(
-                new WrongTestName(new TestCase.FakeCase("test1")),
-                new WrongTestName(new TestCase.FakeCase("test2"))
+                new WrongTestName(new Case.FakeCase("test1")),
+                new WrongTestName(new Case.FakeCase("test2"))
             ).getMessage(),
             Matchers.allOf(
                 Matchers.containsString("test1"),

@@ -40,7 +40,7 @@ public final class WrongTestName extends Exception {
      *
      * @param test Test with violation
      */
-    public WrongTestName(final TestCase test) {
+    public WrongTestName(final Case test) {
         super(
             String.format(
                 "Test name '%s#%s' doesn't follow naming rules, test path: %s",
@@ -57,7 +57,7 @@ public final class WrongTestName extends Exception {
      * @param test Test with violation
      * @param explanation The explanation
      */
-    public WrongTestName(final TestCase test, final String explanation) {
+    public WrongTestName(final Case test, final String explanation) {
         super(
             String.format(
                 "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",

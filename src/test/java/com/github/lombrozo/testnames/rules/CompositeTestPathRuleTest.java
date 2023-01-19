@@ -30,6 +30,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -55,11 +57,10 @@ final class CompositeTestPathRuleTest {
                 new ResourceOf("TestSimple.java")
             ).asBytes()
         );
-        try {
-            new CompositeTestPathRule(temp).complaints();
-        } catch (final WrongTestName ex) {
-            Assertions.fail(ex);
-        }
+        MatcherAssert.assertThat(
+            new CompositeTestPathRule(temp).complaints(),
+            Matchers.empty()
+        );
     }
 
     @Test
@@ -81,13 +82,13 @@ final class CompositeTestPathRuleTest {
             "Simple text".getBytes(StandardCharsets.UTF_8)
         );
         Files.createDirectories(temp.resolve("subdir").resolve("deep"));
-        try {
-            new CompositeTestPathRule(temp).complaints();
-        } catch (final WrongTestName ex) {
-            Assertions.fail(ex);
-        }
+        MatcherAssert.assertThat(
+            new CompositeTestPathRule(temp).complaints(),
+            Matchers.empty()
+        );
     }
 
+    //todo
     @Test
     void failsIfTestNameIsWrong(@TempDir final Path temp) throws Exception {
         Files.write(
@@ -96,9 +97,9 @@ final class CompositeTestPathRuleTest {
                 new ResourceOf("TestWrongName.java")
             ).asBytes()
         );
-        Assertions.assertThrows(
-            WrongTestName.class,
-            () -> new CompositeTestPathRule(temp).complaints()
+        MatcherAssert.assertThat(
+            new CompositeTestPathRule(temp).complaints(),
+            Matchers.hasSize(2)
         );
     }
 }

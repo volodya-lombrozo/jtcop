@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.Case;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -48,7 +48,7 @@ public final class PresentSimpleRule implements Rule {
      *
      * @param test The test case to check
      */
-    PresentSimpleRule(final TestCase test) {
+    PresentSimpleRule(final Case test) {
         this.all = Arrays.asList(
             new NotCamelCase(test),
             new NotContainsTestWord(test),

@@ -1,10 +1,10 @@
 package com.github.lombrozo.testnames;
 
 public class WrongTestNameComplaint implements Complaint {
-    private final TestCase test;
+    private final Case test;
     private final String explanation;
 
-    public WrongTestNameComplaint(final TestCase test, final String explanation) {
+    public WrongTestNameComplaint(final Case test, final String explanation) {
         this.test = test;
         this.explanation = explanation;
     }
