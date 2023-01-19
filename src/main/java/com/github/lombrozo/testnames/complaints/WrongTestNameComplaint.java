@@ -1,4 +1,7 @@
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.complaints;
+
+import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.Complaint;
 
 public class WrongTestNameComplaint implements Complaint {
     private final Case test;

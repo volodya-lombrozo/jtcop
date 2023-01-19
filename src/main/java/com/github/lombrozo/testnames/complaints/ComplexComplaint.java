@@ -1,5 +1,6 @@
-package com.github.lombrozo.testnames;
+package com.github.lombrozo.testnames.complaints;
 
+import com.github.lombrozo.testnames.Complaint;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
