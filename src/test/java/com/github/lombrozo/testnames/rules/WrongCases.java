@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Cases;
 import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.Cases;
 import java.util.Arrays;
 
 /**

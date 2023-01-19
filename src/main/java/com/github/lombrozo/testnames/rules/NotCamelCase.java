@@ -24,10 +24,10 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.complaints.WrongTestNameComplaint;
+import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
 
 /**
@@ -55,7 +55,7 @@ public final class NotCamelCase implements Rule {
     public Collection<Complaint> complaints() {
         return new ConditionalRule(
             this::notCamelCase,
-            new WrongTestNameComplaint(
+            new WrongTestName(
                 this.test,
                 "test has to be written by using Camel Case"
             )

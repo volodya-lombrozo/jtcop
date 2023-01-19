@@ -21,21 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.lombrozo.testnames.rules;
+package com.github.lombrozo.testnames.complaints;
 
 import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
-import java.util.Collection;
 
 /**
- * The rule checks if test case in present tense.
+ * When test name is wrong.
  *
- * @since 0.1.0
+ * @since 0.2
  */
-public final class PresentTense implements Rule {
+public final class WrongTestName implements Complaint {
 
     /**
      * The test case.
@@ -43,42 +39,31 @@ public final class PresentTense implements Rule {
     private final Case test;
 
     /**
-     * Ctor.
-     *
-     * @param tst The test case to check
+     * The complaint message.
      */
-    PresentTense(final Case tst) {
-        this.test = tst;
+    private final String explanation;
+
+    /**
+     * Ctor.
+     * @param test The test case
+     * @param explanation The explanation of the complaint
+     */
+    public WrongTestName(
+        final Case test,
+        final String explanation
+    ) {
+        this.test = test;
+        this.explanation = explanation;
     }
 
     @Override
-    public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            () -> !this.presentTense(),
-            new WrongTestName(
-                this.test,
-                "the test name has to be written using present tense"
-            )
-        ).complaints();
-    }
-
-    /**
-     * Is test case name in present tense.
-     *
-     * @return The result
-     * @checkstyle ReturnCountCheck (20 lines)
-     */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean presentTense() {
-        final char[] chars = this.test.name().toCharArray();
-        char prev = '!';
-        for (final char chr : chars) {
-            if (Character.isUpperCase(chr)) {
-                return prev == 's';
-            } else {
-                prev = chr;
-            }
-        }
-        return prev == 's';
+    public String message() {
+        return String.format(
+            "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
+            this.test.className(),
+            this.test.name(),
+            this.explanation,
+            this.test.path()
+        );
     }
 }

@@ -31,10 +31,12 @@ import java.util.Collection;
  *
  * @since 0.1.0
  */
+@FunctionalInterface
 public interface Rule {
 
     /**
      * Collection of complaints that Rule can produce.
+     * @return Collection of complaints
      */
     Collection<Complaint> complaints();
 

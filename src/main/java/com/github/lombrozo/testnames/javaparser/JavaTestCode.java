@@ -30,8 +30,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.lombrozo.testnames.Cases;
 import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.Cases;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -112,10 +112,7 @@ public final class JavaTestCode implements Cases {
      * @return Result as boolean
      */
     private static boolean isTest(final MethodDeclaration method) {
-        return !method.isPrivate()
-            && (
-            method.isAnnotationPresent("Test")
-            || method.isAnnotationPresent("ParameterizedTest")
-            );
+        return !method.isPrivate() && (method.isAnnotationPresent("Test")
+            || method.isAnnotationPresent("ParameterizedTest"));
     }
 }

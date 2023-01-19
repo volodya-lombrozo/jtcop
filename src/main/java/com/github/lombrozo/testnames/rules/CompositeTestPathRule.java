@@ -57,22 +57,25 @@ public final class CompositeTestPathRule implements Rule {
 
     @Override
     public Collection<Complaint> complaints() {
-        if (!Files.exists(this.start)) {
-            return Collections.emptyList();
+        final Collection<Complaint> result;
+        if (Files.exists(this.start)) {
+            try {
+                result = Files.walk(this.start)
+                    .filter(Files::exists)
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".java"))
+                    .map(JavaTestCode::new)
+                    .map(AllTestsInPresentSimple::new)
+                    .map(AllTestsInPresentSimple::complaints)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+            } catch (final IOException exception) {
+                throw new IllegalStateException(exception);
+            }
+        } else {
+            result = Collections.emptyList();
         }
-        try {
-            return Files.walk(this.start)
-                .filter(Files::exists)
-                .filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(".java"))
-                .map(JavaTestCode::new)
-                .map(AllTestsInPresentSimple::new)
-                .map(AllTestsInPresentSimple::complaints)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        } catch (final IOException io) {
-            throw new IllegalStateException(io);
-        }
+        return result;
     }
 
 }
