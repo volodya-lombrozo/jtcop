@@ -21,53 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.lombrozo.testnames.rules;
-
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
-import java.util.Collection;
-
 /**
- * Test case without a 'test' word in name.
- *
- * @since 0.1.0
+ * Package contains classes that describe test naming problems.
  */
-public final class NotContainsTestWord implements Rule {
-
-    /**
-     * The test case.
-     */
-    private final Case test;
-
-    /**
-     * Ctor.
-     *
-     * @param test The test case to check
-     */
-    NotContainsTestWord(final Case test) {
-        this.test = test;
-    }
-
-    @Override
-    public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            this::containsTest,
-            new WrongTestName(
-                this.test,
-                "test name doesn't have to contain the word 'test'"
-            )
-        ).complaints();
-    }
-
-    /**
-     * Is contains the 'test' word.
-     *
-     * @return The result
-     */
-    private boolean containsTest() {
-        return this.test.name().matches(".*[Tt][Ee][Ss][Tt].*");
-    }
-}
+package com.github.lombrozo.testnames.complaints;

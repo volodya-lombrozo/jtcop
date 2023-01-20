@@ -21,64 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.lombrozo.testnames.complaints;
 
-package com.github.lombrozo.testnames.rules;
-
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
- * The rule checks if test case in present tense.
+ * Complex complaint that aggregates several complaints.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-public final class PresentTense implements Rule {
+public final class ComplexComplaint implements Complaint {
 
     /**
-     * The test case.
+     * The complaints.
      */
-    private final Case test;
+    private final Collection<? extends Complaint> complaints;
 
     /**
      * Ctor.
      *
-     * @param tst The test case to check
+     * @param all The complaints
      */
-    PresentTense(final Case tst) {
-        this.test = tst;
+    public ComplexComplaint(final Collection<? extends Complaint> all) {
+        this.complaints = all;
     }
 
     @Override
-    public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            () -> !this.presentTense(),
-            new WrongTestName(
-                this.test,
-                "the test name has to be written using present tense"
-            )
-        ).complaints();
-    }
-
-    /**
-     * Is test case name in present tense.
-     *
-     * @return The result
-     * @checkstyle ReturnCountCheck (20 lines)
-     */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean presentTense() {
-        final char[] chars = this.test.name().toCharArray();
-        char prev = '!';
-        for (final char chr : chars) {
-            if (Character.isUpperCase(chr)) {
-                return prev == 's';
-            } else {
-                prev = chr;
-            }
-        }
-        return prev == 's';
+    public String message() {
+        return this.complaints.stream()
+            .map(Complaint::message)
+            .collect(Collectors.joining("\n", "\n", ""));
     }
 }

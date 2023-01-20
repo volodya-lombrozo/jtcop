@@ -24,9 +24,9 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.WrongTestName;
-import org.junit.jupiter.api.Assertions;
+import com.github.lombrozo.testnames.Case;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -71,11 +71,9 @@ final class RuleTest {
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
     void validatesCorrectly(final String name, final boolean expected) {
-        try {
-            new PresentSimpleRule(new TestCase.FakeCase(name)).validate();
-            Assertions.assertTrue(expected);
-        } catch (final WrongTestName ex) {
-            Assertions.assertFalse(expected);
-        }
+        MatcherAssert.assertThat(
+            new PresentSimpleRule(new Case.FakeCase(name)).complaints().isEmpty(),
+            Matchers.equalTo(expected)
+        );
     }
 }

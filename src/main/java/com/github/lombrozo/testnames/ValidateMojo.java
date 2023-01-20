@@ -24,8 +24,10 @@
 
 package com.github.lombrozo.testnames;
 
+import com.github.lombrozo.testnames.complaints.ComplexComplaint;
 import com.github.lombrozo.testnames.rules.CompositeTestPathRule;
 import java.nio.file.Paths;
+import java.util.Collection;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -49,12 +51,11 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
-        try {
-            new CompositeTestPathRule(
-                Paths.get(this.project.getTestCompileSourceRoots().get(0))
-            ).validate();
-        } catch (final WrongTestName ex) {
-            throw new MojoFailureException(ex);
+        final Collection<Complaint> complaints = new CompositeTestPathRule(
+            Paths.get(this.project.getTestCompileSourceRoots().get(0))
+        ).complaints();
+        if (!complaints.isEmpty()) {
+            throw new MojoFailureException(new ComplexComplaint(complaints).message());
         }
     }
 }

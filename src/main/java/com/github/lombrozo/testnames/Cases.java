@@ -39,5 +39,5 @@ public interface Cases {
      *
      * @return All cases as collection
      */
-    Collection<TestCase> all();
+    Collection<Case> all();
 }

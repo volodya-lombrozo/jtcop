@@ -25,10 +25,10 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.WrongTestName;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * The rule to check all tests on {@link PresentSimpleRule}.
@@ -52,10 +52,11 @@ public final class AllTestsInPresentSimple implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
-        final Collection<TestCase> names = this.tests.all();
-        for (final TestCase test : names) {
-            new PresentSimpleRule(test).validate();
-        }
+    public Collection<Complaint> complaints() {
+        return this.tests.all().stream()
+            .map(PresentSimpleRule::new)
+            .map(PresentSimpleRule::complaints)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
     }
 }

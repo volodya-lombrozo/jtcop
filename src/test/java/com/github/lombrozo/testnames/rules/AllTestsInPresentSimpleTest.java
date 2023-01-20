@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.WrongTestName;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,18 +37,18 @@ final class AllTestsInPresentSimpleTest {
 
     @Test
     void validatesAllWithoutExceptions() {
-        try {
-            new AllTestsInPresentSimple(new CorrectCases().value()).validate();
-        } catch (final WrongTestName ex) {
-            Assertions.fail(ex);
-        }
+        MatcherAssert.assertThat(
+            new AllTestsInPresentSimple(new CorrectCases().value()).complaints(),
+            Matchers.empty()
+        );
     }
 
+    //todo
     @Test
     void validatesAllWithExceptions() {
-        Assertions.assertThrows(
-            WrongTestName.class,
-            () -> new AllTestsInPresentSimple(new WrongCases().value()).validate()
+        MatcherAssert.assertThat(
+            new AllTestsInPresentSimple(new WrongCases().value()).complaints(),
+            Matchers.allOf(Matchers.hasSize(2))
         );
     }
 }

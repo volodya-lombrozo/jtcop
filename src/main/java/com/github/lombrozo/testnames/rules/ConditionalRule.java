@@ -21,64 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.function.Supplier;
 
 /**
- * The rule checks if test case in present tense.
+ * Utility rule that checks condition and returns complaints if condition is true.
  *
- * @since 0.1.0
+ * @since 0.2
  */
-public final class PresentTense implements Rule {
+public final class ConditionalRule implements Rule {
 
     /**
-     * The test case.
+     * Condition to check.
      */
-    private final Case test;
+    private final Supplier<Boolean> predicate;
 
     /**
-     * Ctor.
-     *
-     * @param tst The test case to check
+     * Complaints to return if condition is true.
      */
-    PresentTense(final Case tst) {
-        this.test = tst;
+    private final Complaint complaint;
+
+    /**
+     * Creates ConditionalRule with given predicate and complaint.
+     * @param check Condition to check
+     * @param warning Complaint to return if condition is true
+     */
+    ConditionalRule(
+        final Supplier<Boolean> check,
+        final Complaint warning
+    ) {
+        this.predicate = check;
+        this.complaint = warning;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            () -> !this.presentTense(),
-            new WrongTestName(
-                this.test,
-                "the test name has to be written using present tense"
-            )
-        ).complaints();
-    }
-
-    /**
-     * Is test case name in present tense.
-     *
-     * @return The result
-     * @checkstyle ReturnCountCheck (20 lines)
-     */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean presentTense() {
-        final char[] chars = this.test.name().toCharArray();
-        char prev = '!';
-        for (final char chr : chars) {
-            if (Character.isUpperCase(chr)) {
-                return prev == 's';
-            } else {
-                prev = chr;
-            }
+        final Collection<Complaint> res;
+        if (this.predicate.get()) {
+            res = Collections.singleton(this.complaint);
+        } else {
+            res = Collections.emptyList();
         }
-        return prev == 's';
+        return res;
     }
 }

@@ -24,14 +24,14 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.WrongTestName;
 import com.github.lombrozo.testnames.javaparser.JavaTestCode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -57,30 +57,26 @@ public final class CompositeTestPathRule implements Rule {
     }
 
     @Override
-    public void validate() throws WrongTestName {
-        if (!Files.exists(this.start)) {
-            return;
-        }
-        final List<Path> tests;
-        try (Stream<Path> files = Files.walk(this.start)
-            .filter(Files::exists)
-            .filter(Files::isRegularFile)
-            .filter(path -> path.toString().endsWith(".java"))) {
-            tests = files.collect(Collectors.toList());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        }
-        final List<WrongTestName> exceptions = new ArrayList<>(0);
-        for (final Path test : tests) {
-            try {
-                new AllTestsInPresentSimple(new JavaTestCode(test)).validate();
-            } catch (final WrongTestName ex) {
-                exceptions.add(ex);
+    public Collection<Complaint> complaints() {
+        final Collection<Complaint> result;
+        if (Files.exists(this.start)) {
+            try (Stream<Path> files = Files.walk(this.start)) {
+                result = files
+                    .filter(Files::exists)
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".java"))
+                    .map(JavaTestCode::new)
+                    .map(AllTestsInPresentSimple::new)
+                    .map(AllTestsInPresentSimple::complaints)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+            } catch (final IOException exception) {
+                throw new IllegalStateException(exception);
             }
+        } else {
+            result = Collections.emptyList();
         }
-        if (!exceptions.isEmpty()) {
-            throw new WrongTestName(exceptions);
-        }
+        return result;
     }
 
 }

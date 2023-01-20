@@ -24,18 +24,20 @@
 
 package com.github.lombrozo.testnames;
 
+import java.util.Collection;
+
 /**
  * The rule for naming.
  *
  * @since 0.1.0
  */
+@FunctionalInterface
 public interface Rule {
 
     /**
-     * Validation of test name.
-     *
-     * @throws WrongTestName When the test name doesn't match with rule
+     * Collection of complaints that Rule can produce.
+     * @return Collection of complaints
      */
-    void validate() throws WrongTestName;
+    Collection<Complaint> complaints();
 
 }

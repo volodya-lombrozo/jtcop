@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Cases;
-import com.github.lombrozo.testnames.TestCase;
 import java.util.Arrays;
 
 /**
@@ -45,8 +45,8 @@ class CorrectCases {
      */
     CorrectCases() {
         this.cases = () -> Arrays.asList(
-            new TestCase.FakeCase("removes"),
-            new TestCase.FakeCase("creates")
+            new Case.FakeCase("removes"),
+            new Case.FakeCase("creates")
         );
     }
 
