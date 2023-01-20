@@ -60,7 +60,7 @@ public final class CompositeTestPathRule implements Rule {
     public Collection<Complaint> complaints() {
         final Collection<Complaint> result;
         if (Files.exists(this.start)) {
-            try (final Stream<Path> files = Files.walk(this.start)) {
+            try (Stream<Path> files = Files.walk(this.start)) {
                 result = files
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
