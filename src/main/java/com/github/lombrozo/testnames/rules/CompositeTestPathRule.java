@@ -33,6 +33,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The rule for composite test.
@@ -59,8 +60,8 @@ public final class CompositeTestPathRule implements Rule {
     public Collection<Complaint> complaints() {
         final Collection<Complaint> result;
         if (Files.exists(this.start)) {
-            try {
-                result = Files.walk(this.start)
+            try (final Stream<Path> files = Files.walk(this.start)) {
+                result = files
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
