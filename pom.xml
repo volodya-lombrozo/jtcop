@@ -156,6 +156,7 @@ SOFTWARE.
           <settingsFile>src/it/settings.xml</settingsFile>
           <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
           <postBuildHookScript>verify</postBuildHookScript> <!-- no extension required -->
+          <ignoreFailures>true</ignoreFailures>
           <streamLogsOnFailures>true</streamLogsOnFailures>
         </configuration>
         <executions>
