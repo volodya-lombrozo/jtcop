@@ -52,7 +52,9 @@ public final class ValidateMojo extends AbstractMojo {
     /**
      * Throw an exception if the test names are invalid.
      * Prints to a log otherwise.
+     * @checkstyle MemberNameCheck (7 lines)
      */
+    @SuppressWarnings("PMD.ImmutableField")
     @Parameter(defaultValue = "true")
     private boolean failOnError = true;
 
