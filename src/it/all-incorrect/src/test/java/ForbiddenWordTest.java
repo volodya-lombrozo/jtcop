@@ -51,6 +51,5 @@ class ForbiddenWordTest {
 
     @Test
     void testAnother() {
-
     }
 }

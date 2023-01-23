@@ -49,13 +49,22 @@ public final class ValidateMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}")
     private MavenProject project;
 
+    /**
+     * Throw an exception if the test names are invalid.
+     * Prints to a log otherwise.
+     */
+    @Parameter(defaultValue = "true")
+    private boolean failOnError = true;
+
     @Override
     public void execute() throws MojoFailureException {
         final Collection<Complaint> complaints = new CompositeTestPathRule(
             Paths.get(this.project.getTestCompileSourceRoots().get(0))
         ).complaints();
-        if (!complaints.isEmpty()) {
+        if (!complaints.isEmpty() && this.failOnError) {
             throw new MojoFailureException(new ComplexComplaint(complaints).message());
+        } else if (!complaints.isEmpty()) {
+            complaints.forEach(complaint -> this.getLog().warn(complaint.message()));
         }
     }
 }

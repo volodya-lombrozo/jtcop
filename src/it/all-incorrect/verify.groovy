@@ -1,6 +1,3 @@
-import java.nio.file.Files
-import java.nio.file.Paths
-
 /*
  * MIT License
  *
@@ -24,10 +21,9 @@ import java.nio.file.Paths
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 String log = new File(basedir, 'build.log').text;
 [
-  "Test name 'ForbiddenWordTest#test' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
+  'Test name \'ForbiddenWordTest#test\' doesn\'t follow naming rules, because test name doesn\'t have to contain the word \'test\', test path:',
   "Test name 'ForbiddenWordTest#test' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
   "Test name 'ForbiddenWordTest#test1' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
   "Test name 'ForbiddenWordTest#test1' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
@@ -40,5 +36,6 @@ String log = new File(basedir, 'build.log').text;
   "Test name 'ForbiddenWordTest#createsTEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
   "Test name 'ForbiddenWordTest#createsWithAnothertest' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
   "Test name 'ForbiddenWordTest#testAnother' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#testAnother' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
-].each{ assert log.contains(it) }
+  "Test name 'ForbiddenWordTest#testAnother' doesn't follow naming rules, because the test name has to be written using present tense, test path:"
+].each { assert log.contains(it): "Log doesn't contain ['$it']" }
+true
