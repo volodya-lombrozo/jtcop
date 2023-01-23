@@ -109,7 +109,7 @@ SOFTWARE.
     <dependency>
       <groupId>com.github.javaparser</groupId>
       <artifactId>javaparser-core</artifactId>
-      <version>3.24.7</version>
+      <version>3.24.10</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
