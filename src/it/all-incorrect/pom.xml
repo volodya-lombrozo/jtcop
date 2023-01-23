@@ -26,7 +26,7 @@ SOFTWARE.
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.volodya-lombrozo</groupId>
   <artifactId>test-naming-conventions-it</artifactId>
-  <version>0.1.6</version>
+  <version>@project.version@</version>
   <packaging>maven-plugin</packaging>
   <description>Integration test</description>
   <properties>
@@ -51,20 +51,14 @@ SOFTWARE.
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.4.0</version>
-        <configuration>
-          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-          <settingsFile>src/it/settings.xml</settingsFile>
-          <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-          <postBuildHookScript>verify</postBuildHookScript> <!-- no extension required -->
-        </configuration>
+        <groupId>com.github.volodya-lombrozo</groupId>
+        <artifactId>test-naming-conventions</artifactId>
+        <version>@project.version@</version>
         <executions>
           <execution>
             <id>integration-test</id>
             <goals>
-              <goal>install</goal>
-              <goal>run</goal>
+              <goal>check</goal>
             </goals>
           </execution>
         </executions>
