@@ -147,6 +147,29 @@ SOFTWARE.
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+          <settingsFile>src/it/settings.xml</settingsFile>
+          <localRepositoryPath>${project.build.directory}/local-repo
+          </localRepositoryPath>
+          <postBuildHookScript>verify</postBuildHookScript>
+          <streamLogsOnFailures>true</streamLogsOnFailures>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>install</goal>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
   <profiles>
     <profile>
@@ -161,7 +184,9 @@ SOFTWARE.
               <license>file:${basedir}/LICENSE.txt</license>
               <excludes>
                 <exclude>pmd:/src/test/resources/.*</exclude>
+                <exclude>pmd:/src/it/.*</exclude>
                 <exclude>checkstyle:/src/test/resources/.*</exclude>
+                <exclude>checkstyle:/src/it/.*</exclude>
                 <exclude>duplicatefinder:.*</exclude>
               </excludes>
             </configuration>
