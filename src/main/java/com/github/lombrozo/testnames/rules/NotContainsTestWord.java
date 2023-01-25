@@ -29,6 +29,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * Test case without a 'test' word in name.
@@ -68,6 +69,6 @@ public final class NotContainsTestWord implements Rule {
      * @return The result
      */
     private boolean containsTest() {
-        return this.test.name().matches(".*[Tt][Ee][Ss][Tt].*");
+        return Stream.of("test", "TEST", "Test").anyMatch(this.test.name()::contains);
     }
 }
