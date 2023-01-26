@@ -43,7 +43,7 @@ import org.junit.jupiter.api.io.TempDir;
 final class JavaTestCodeTest {
 
     @Test
-    void getsNamesFromSimpleTest(@TempDir final Path temp) throws Exception {
+    void getsNames(@TempDir final Path temp) throws Exception {
         final String java = "TestSimple.java";
         final Path path = temp.resolve(java);
         Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
@@ -70,7 +70,7 @@ final class JavaTestCodeTest {
     }
 
     @Test
-    void getsNamesFromParameterizedTest(@TempDir final Path temp) throws Exception {
+    void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
         final String java = "TestParameterized.java";
         final Path path = temp.resolve(java);
         Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());

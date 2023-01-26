@@ -198,6 +198,19 @@ SOFTWARE.
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>com.github.volodya-lombrozo</groupId>
+            <artifactId>test-naming-conventions</artifactId>
+            <version>${version}</version>
+            <executions>
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
