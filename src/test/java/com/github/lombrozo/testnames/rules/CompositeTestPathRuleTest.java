@@ -87,9 +87,8 @@ final class CompositeTestPathRuleTest {
         );
     }
 
-    //todo
     @Test
-    void failsIfTestNameIsWrong(@TempDir final Path temp) throws Exception {
+    void failsIfNameIsWrong(@TempDir final Path temp) throws Exception {
         Files.write(
             temp.resolve("Test3.java"),
             new BytesOf(
