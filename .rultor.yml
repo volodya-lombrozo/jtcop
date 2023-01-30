@@ -3,7 +3,7 @@ architect:
 docker:
   image: yegor256/rultor-image:1.13.0
 merge:
-  script: |
+  script: |-
     mvn clean install -Pqulice --errors --batch-mode
 release:
   script: |-
