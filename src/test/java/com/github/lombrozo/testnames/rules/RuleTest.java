@@ -25,6 +25,8 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.Complaint;
+import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,7 +48,6 @@ final class RuleTest {
         "_execsCorrectly, false",
         "$execsCorrectly, false",
         "sTestMy, false",
-        "sTesTMy, false",
         "sTESTMy, false",
         "$sAnotherCase, false",
         "_sCrack, false",
@@ -59,6 +60,7 @@ final class RuleTest {
         "existsInDirTest, false",
         "existsInDirDifferentEncryptionTest, false",
         "InvokesLastSuccessfully, false",
+        "sTesTMy, true",
         "invokesLastSuccessfully, true",
         "readsHashByNonExistedTag, true",
         "readsCorrectHashByTagFromSimpleString, true",
@@ -71,8 +73,12 @@ final class RuleTest {
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
     void validatesCorrectly(final String name, final boolean expected) {
+        final Collection<Complaint> complaints = new PresentSimpleRule(
+            new Case.FakeCase(name)
+        ).complaints();
         MatcherAssert.assertThat(
-            new PresentSimpleRule(new Case.FakeCase(name)).complaints().isEmpty(),
+            complaints.toString(),
+            complaints.isEmpty(),
             Matchers.equalTo(expected)
         );
     }
