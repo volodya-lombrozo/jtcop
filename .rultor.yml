@@ -1,7 +1,5 @@
 architect:
   - volodya-lombrozo
-assets:
-  settings.xml: #TODO: add link to repo with settings.xml file
 merge:
   script:
     - "mvn clean install -Pqulice --errors --batch-mode"
