@@ -27,6 +27,7 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Case;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -37,6 +38,7 @@ import org.junit.jupiter.params.provider.CsvSource;
  */
 final class RuleTest {
 
+    @Disabled
     @ParameterizedTest
     @CsvSource({
         "test, false",

@@ -1,5 +1,5 @@
 architect:
-  - lombrozo
+  - volodya-lombrozo
 docker:
   image: yegor256/rultor-image:1.13.0
 merge:
