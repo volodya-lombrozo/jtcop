@@ -34,51 +34,49 @@ import lombok.Data;
  * @since 0.1.0
  */
 @Data
-@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 final class JavaParserCase implements Case {
 
     /**
      * The class name.
-     * @checkstyle MemberNameCheck (2 lines)
      */
-    private final String className;
+    private final String clazz;
 
     /**
      * The name of test case.
      */
-    private final String name;
+    private final String title;
 
     /**
      * The path.
      */
-    private final Path path;
+    private final Path file;
 
     /**
      * Ctor.
      *
-     * @param className The class name
+     * @param clss The class name
      * @param name The test case name
      * @param path The path
      * @checkstyle ParameterNameCheck (6 lines)
      */
-    JavaParserCase(final String className, final String name, final Path path) {
-        this.className = className;
-        this.name = name;
-        this.path = path;
+    JavaParserCase(final String clss, final String name, final Path path) {
+        this.clazz = clss;
+        this.title = name;
+        this.file = path;
     }
 
     @Override
     public String className() {
-        return this.className;
+        return this.clazz;
     }
 
     @Override
     public String name() {
-        return this.name;
+        return this.title;
     }
 
     @Override
     public Path path() {
-        return this.path;
+        return this.file;
     }
 }
