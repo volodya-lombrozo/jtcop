@@ -21,62 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.lombrozo.testnames.javaparser;
-
-import com.github.lombrozo.testnames.Case;
-import java.nio.file.Path;
-import lombok.Data;
-
 /**
- * Parser for test case.
+ * Test cases for {@link com.github.lombrozo.testnames.complaints} package.
  *
- * @since 0.1.0
+ * @since 0.2
  */
-@Data
-final class JavaParserCase implements Case {
-
-    /**
-     * The class name.
-     */
-    private final String clazz;
-
-    /**
-     * The name of test case.
-     */
-    private final String title;
-
-    /**
-     * The path.
-     */
-    private final Path file;
-
-    /**
-     * Ctor.
-     *
-     * @param clss The class name
-     * @param name The test case name
-     * @param path The path
-     * @checkstyle ParameterNameCheck (6 lines)
-     */
-    JavaParserCase(final String clss, final String name, final Path path) {
-        this.clazz = clss;
-        this.title = name;
-        this.file = path;
-    }
-
-    @Override
-    public String className() {
-        return this.clazz;
-    }
-
-    @Override
-    public String name() {
-        return this.title;
-    }
-
-    @Override
-    public Path path() {
-        return this.file;
-    }
-}
+package com.github.lombrozo.testnames.complaints;

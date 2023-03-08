@@ -26,17 +26,17 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
-import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Cases;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Test cases code.
@@ -53,27 +53,21 @@ public final class JavaTestCode implements Cases {
     /**
      * Ctor.
      *
-     * @param path Path to the class
+     * @param file Path to the class
      */
-    public JavaTestCode(final Path path) {
-        this.path = path;
+    public JavaTestCode(final Path file) {
+        this.path = file;
     }
 
     @Override
     public Collection<Case> all() {
         try {
-            final CompilationUnit parse = StaticJavaParser.parse(this.path);
-            final List<Node> nodes = parse.getChildNodes();
-            final List<Case> names = new ArrayList<>(0);
-            for (final Node node : nodes) {
-                if (node instanceof ClassOrInterfaceDeclaration) {
-                    this.checkTestMethods(
-                        names,
-                        (ClassOrInterfaceDeclaration) node
-                    );
-                }
-            }
-            return names;
+            return StaticJavaParser.parse(this.path)
+                .getChildNodes()
+                .stream()
+                .filter(JavaTestCode::isTestClass)
+                .flatMap(this::testCases)
+                .collect(Collectors.toList());
         } catch (final IOException | ParseProblemException ex) {
             throw new IllegalStateException(
                 String.format("Failed to parse Java class by path %s", this.path),
@@ -85,24 +79,30 @@ public final class JavaTestCode implements Cases {
     /**
      * Checks methods in class.
      *
-     * @param names List of test cases
-     * @param node The child node
+     * @param node The child node.
+     * @return Stream of test cases.
      */
-    private void checkTestMethods(
-        final Collection<? super Case> names,
-        final ClassOrInterfaceDeclaration node
-    ) {
-        for (final MethodDeclaration method : node.getMethods()) {
-            if (JavaTestCode.isTest(method)) {
-                names.add(
-                    new JavaParserCase(
-                        node.getNameAsString(),
-                        method.getNameAsString(),
-                        this.path
-                    )
-                );
-            }
-        }
+    private Stream<JavaParserCase> testCases(final Node node) {
+        final NodeWithMembers<ClassOrInterfaceDeclaration> clazz = (NodeWithMembers) node;
+        return clazz.getMethods()
+            .stream()
+            .filter(JavaTestCode::isTest)
+            .map(
+                method -> new JavaParserCase(
+                    clazz.getNameAsString(),
+                    method.getNameAsString(),
+                    this.path
+                )
+            );
+    }
+
+    /**
+     * Check whether node is class or not.
+     * @param node Any node.
+     * @return True if test class.
+     */
+    private static boolean isTestClass(final Node node) {
+        return node instanceof ClassOrInterfaceDeclaration;
     }
 
     /**

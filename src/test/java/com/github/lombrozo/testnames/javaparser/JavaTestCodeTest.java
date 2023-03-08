@@ -70,6 +70,14 @@ final class JavaTestCodeTest {
     }
 
     @Test
+    void returnsEmptyListIfItDoesNotHaveAnyCases(@TempDir final Path temp) throws Exception {
+        final String java = "TestWithoutTests.java";
+        final Path path = temp.resolve(java);
+        Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
+        MatcherAssert.assertThat(((Cases) new JavaTestCode(path)).all(), Matchers.empty());
+    }
+
+    @Test
     void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
         final String java = "TestParameterized.java";
         final Path path = temp.resolve(java);
