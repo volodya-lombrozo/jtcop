@@ -24,6 +24,7 @@
 
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -67,7 +68,7 @@ public final class JavaTestCode implements Cases {
                 .filter(JavaTestCode::isTestClass)
                 .flatMap(this::testCases)
                 .collect(Collectors.toList());
-        } catch (final IOException ex) {
+        } catch (final IOException | ParseProblemException ex) {
             throw new IllegalStateException(
                 String.format("Failed to parse Java class by path %s", this.path),
                 ex
