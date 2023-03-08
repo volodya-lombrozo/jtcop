@@ -242,7 +242,6 @@ SOFTWARE.
                 <id>jacoco-check</id>
                 <goals>
                   <goal>check</goal>
-                  <goal>report</goal>
                 </goals>
                 <configuration>
                   <rules>
@@ -283,6 +282,13 @@ SOFTWARE.
                     </rule>
                   </rules>
                 </configuration>
+              </execution>
+              <execution>
+                <id>report</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>
