@@ -1,12 +1,13 @@
-# Test Naming Conventions Plugin
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/test-naming-conventions/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/test-naming-conventions)
+# jtcop
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop)
 
 Almost each project uses unit tests in its codebase. It is important to have a
 common pattern of naming all that tests, because otherwise the project and tests
 itself become a complete mess. It's a quite large discussion about
 different [test naming patterns](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
 .
-**test-naming-conventions** maven plugin helps to keep following a single common
+**jtcop** maven plugin helps to keep following a single common
 test naming rule across all of your test classes.
 
 ## Conventions
@@ -19,7 +20,7 @@ The only one convention that is supported by this plugin for now is the
 The test method name should be a sentence that describes the test case using
 present tense without subject. For example, if you have a test that tests
 a `User` class, then the test method name should start from the verb followed by
-the any testing conditions. For example:
+any testing conditions. For example:
 
 ```java
 public class UserTest {
@@ -72,15 +73,15 @@ In order to use the plugin with the latest version just invoke the next command
 in the root of your project:
 
 ```shell
-mvn com.github.volodya-lombrozo:test-naming-conventions:check
+mvn jtcop:check
 ```
 
 After that you will see the result of the plugin execution in the console. If
-you want to use specific (older) version of the plugin, for example `0.1.4`,
+you want to use specific (older) version of the plugin, for example `0.1.8`,
 just run the next maven command with specified version:
 
 ```shell
-mvn com.github.volodya-lombrozo:test-naming-conventions:0.1.4:check
+mvn jtcop:0.1.8:check
 ```
 
 ### Add the plugin to your `pom.xml`
@@ -94,8 +95,8 @@ In order to do that, just add the next snippet to your `pom.xml`:
   <plugins>
     <plugin>
       <groupId>com.github.volodya-lombrozo</groupId>
-      <artifactId>test-naming-conventions</artifactId>
-      <version>0.1.4</version>
+      <artifactId>jtcop-maven-plugin</artifactId>
+      <version>0.1.8</version>
       <executions>
         <execution>
           <goals>

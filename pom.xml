@@ -25,20 +25,21 @@ SOFTWARE.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.volodya-lombrozo</groupId>
-  <artifactId>test-naming-conventions</artifactId>
-  <version>0.1.7</version>
+  <artifactId>jtcop-maven-plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
-  <description>Plugin for checking test naming rules</description>
-  <name>test-naming-conventions</name>
-  <url>https://github.com/volodya-lombrozo/test-naming-conventions</url>
+  <description>Plugin for checking tests in Java projects</description>
+  <name>jtcop</name>
+  <url>https://github.com/volodya-lombrozo/jtcop</url>
   <scm>
     <connection>
-      scm:git:git@github.com:volodya-lombrozo/test-naming-conventions.git
+      scm:git:git@github.com:volodya-lombrozo/jtcop.git
     </connection>
     <developerConnection>
-      scm:git:ssh://@github.com:volodya-lombrozo/test-naming-conventions.git
+      scm:git:ssh://@github.com:volodya-lombrozo/jtcop.git
     </developerConnection>
-    <url>https://github.com/volodya-lombrozo/test-naming-conventions/tree/main
+    <url>
+      https://github.com/volodya-lombrozo/jtcop/tree/main
     </url>
   </scm>
   <licenses>
