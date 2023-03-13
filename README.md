@@ -1,6 +1,6 @@
 # jtcop
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop-maven-plugin)
 
 Almost each project uses unit tests in its codebase. It is important to have a
 common pattern of naming all that tests, because otherwise the project and tests
@@ -73,15 +73,15 @@ In order to use the plugin with the latest version just invoke the next command
 in the root of your project:
 
 ```shell
-mvn jtcop:check
+mvn com.github.volodya-lombrozo:jtcop-maven-plugin:check
 ```
 
 After that you will see the result of the plugin execution in the console. If
-you want to use specific (older) version of the plugin, for example `0.1.8`,
+you want to use specific (older) version of the plugin, for example `0.1.9`,
 just run the next maven command with specified version:
 
 ```shell
-mvn jtcop:0.1.8:check
+mvn com.github.volodya-lombrozo:jtcop-maven-plugin:0.1.9:check
 ```
 
 ### Add the plugin to your `pom.xml`
@@ -96,7 +96,7 @@ In order to do that, just add the next snippet to your `pom.xml`:
     <plugin>
       <groupId>com.github.volodya-lombrozo</groupId>
       <artifactId>jtcop-maven-plugin</artifactId>
-      <version>0.1.8</version>
+      <version>0.1.9</version>
       <executions>
         <execution>
           <goals>
