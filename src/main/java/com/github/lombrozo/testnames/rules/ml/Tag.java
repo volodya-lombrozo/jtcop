@@ -1,6 +1,7 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import java.util.Arrays;
+import java.util.Collections;
 import lombok.ToString;
 
 /**
@@ -126,6 +127,12 @@ public enum Tag {
      * Example: my, your, his, her, its, our, their.
      */
     PPZ("PPZ"),
+
+    /**
+     * Personal pronoun.
+     * Example: me, you, him, her, it, us, them.
+     */
+    PRP("PRP"),
 
     /**
      * Adverb.
@@ -353,7 +360,12 @@ public enum Tag {
      * Punctuation.
      * Example: – ; : — ….
      */
-    PUNCTUATION(":");
+    PUNCTUATION(":"),
+
+    /**
+     * Unknown.
+     */
+    UNKNOWN("UNKNOWN");
 
     private final String tag;
 
@@ -366,11 +378,12 @@ public enum Tag {
     }
 
     private static Tag parse(final String tag) {
-        return Arrays.stream(Tag.values()).filter(t -> t.tag.equals(tag))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(
-                    String.format("Unknown tag: %s", tag)
-                )
-            );
+        return Arrays.stream(Tag.values())
+            .filter(t -> t.tag.equals(tag))
+            .findFirst().orElse(Tag.UNKNOWN);
+    }
+
+    boolean isVerb() {
+        return Arrays.asList(Tag.VB, Tag.VBP, Tag.VBZ).contains(this);
     }
 }

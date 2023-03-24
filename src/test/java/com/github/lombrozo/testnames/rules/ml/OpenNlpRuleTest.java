@@ -24,7 +24,7 @@ class OpenNlpRuleTest {
 
     @CsvSource({
         "buildsRequest",
-        "checks",
+        "checksCorrectName",
         "stopsBecauseCiChecksFailed",
         "locksBranch",
         "recognizesCommaAsDelimiter",
@@ -45,7 +45,7 @@ class OpenNlpRuleTest {
         "getExistAssets",
         "doesntTouchRequestAndWire",
         "saySomethingBack",
-        "answerWhenMentioned",
+        "answersWhenMentioned",
         "denyOutdatedTag",
         "rendersAbsentPages",
     })

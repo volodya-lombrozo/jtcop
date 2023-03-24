@@ -25,12 +25,14 @@ package com.github.lombrozo.testnames.complaints;
 
 import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
+import lombok.ToString;
 
 /**
  * When test name is wrong.
  *
  * @since 0.2
  */
+@ToString
 public final class WrongTestName implements Complaint {
 
     /**
