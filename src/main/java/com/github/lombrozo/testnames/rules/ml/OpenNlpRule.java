@@ -1,4 +1,4 @@
-package com.github.lombrozo.testnames.rules;
+package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
@@ -24,6 +24,9 @@ public class OpenNlpRule implements Rule {
     public Collection<Complaint> complaints() {
         final String[] tags = this.model.tag(OpenNlpRule.CAMEL.split(this.test.name()));
         System.out.println(Arrays.toString(tags));
+
+        final Tag[] parse = Tag.parse(tags);
+        System.out.println(Arrays.deepToString(parse));
         return Collections.emptyList();
     }
 }

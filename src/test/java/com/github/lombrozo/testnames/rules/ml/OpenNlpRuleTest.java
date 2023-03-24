@@ -1,18 +1,12 @@
-package com.github.lombrozo.testnames.rules;
+package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.Case;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.regex.Pattern;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
-import org.cactoos.io.InputOf;
-import org.cactoos.io.UncheckedInput;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
