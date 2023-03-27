@@ -107,12 +107,6 @@ SOFTWARE.
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.cactoos</groupId>
-      <artifactId>cactoos</artifactId>
-      <version>0.55.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.github.javaparser</groupId>
       <artifactId>javaparser-core</artifactId>
       <version>3.25.1</version>
@@ -141,6 +135,12 @@ SOFTWARE.
       <artifactId>maven-plugin-tools-annotations</artifactId>
       <version>3.8.1</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.55.0</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>
