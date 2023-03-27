@@ -1,7 +1,6 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import java.util.Arrays;
-import java.util.Collections;
 import lombok.ToString;
 
 /**

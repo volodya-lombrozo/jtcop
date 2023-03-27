@@ -33,17 +33,17 @@ class OpenNlpRuleTest {
         "repliesInGithub",
         "repliesWithLinkToRevision",
         "addsAuthor",
-        "doesntAddAuthorToEmptyReq",
+        "doesNotAddAuthorToEmptyReq",
         "validatesReleaseVersion",
         "getsReferenceVersion",
-        "postsGithubComment",
+        "makesPostOfGithubComments",
         "preventsSpam",
         "closesPullRequestForRebaseMode",
         "leavesPullRequestOpenWhenNoRebaseMode",
         "createsRelease",
         "rejectGetAssetWithNoFriends",
         "getExistAssets",
-        "doesntTouchRequestAndWire",
+        "doesNotTouchRequestAndWire",
         "saySomethingBack",
         "answersWhenMentioned",
         "denyOutdatedTag",
@@ -54,6 +54,27 @@ class OpenNlpRuleTest {
         MatcherAssert.assertThat(
             new OpenNlpRule(OpenNlpRuleTest.model, new Case.FakeCase(name)).complaints(),
             Matchers.empty()
+        );
+    }
+
+    @CsvSource({
+        "building",
+        "chicken",
+        "chickenBuildsBuilding",
+        "test",
+        "itIsTrue",
+        "common",
+        "pack",
+        "_",
+        "_&",
+        "...",
+        "___",
+    })
+    @ParameterizedTest
+    void checksWrongNames(final String name) {
+        MatcherAssert.assertThat(
+            new OpenNlpRule(OpenNlpRuleTest.model, new Case.FakeCase(name)).complaints(),
+            Matchers.not(Matchers.empty())
         );
     }
 
