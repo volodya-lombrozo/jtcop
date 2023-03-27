@@ -24,56 +24,22 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import opennlp.tools.postag.POSModel;
+import java.nio.file.Path;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Model source from the Internet.
- *
+ * Tests for {@link ModelSourceFileSystem}.
  * @since 0.10
  */
-public final class ModelSourceInternet implements ModelSource {
+class ModelSourceFileSystemTest {
 
-    /**
-     * The internet address of the model.
-     */
-    private final URL url;
-
-    /**
-     * Default constructor.
-     * Uses default URL.
-     */
-    ModelSourceInternet() {
-        this(ModelSourceInternet.defaultUrl());
-    }
-
-    /**
-     * The main constructor.
-     * @param address The internet address of the model.
-     */
-    private ModelSourceInternet(final URL address) {
-        this.url = address;
-    }
-
-    @Override
-    public POSModel model() throws IOException {
-        return new POSModel(this.url);
-    }
-
-    /**
-     * Default URL.
-     * @return The default URL.
-     */
-    private static URL defaultUrl() {
-        final String url = "https://opennlp.sourceforge.net/models-1.5/en-pos-perceptron.bin";
-        try {
-            return new URL(url);
-        } catch (final MalformedURLException ex) {
-            throw new IllegalArgumentException(
-                String.format("Default URL: '%s' is invalid", url),
-                ex
-            );
-        }
+    @Test
+    void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
+        final Path path = temp.resolve("model.bin");
+        new ModelSourceInternet().model().serialize(path);
+        MatcherAssert.assertThat(new ModelSourceFileSystem(path).model(), Matchers.notNullValue());
     }
 }

@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022-2023 Volodya
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.Case;
@@ -9,13 +32,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class PresentSimpleMLRuleTest {
+/**
+ * Tests for {@link PresentSimpleMlRule}.
+ *
+ * @since 0.10
+ */
+class PresentSimpleMlRuleTest {
 
+    /**
+     * Model for tests.
+     */
     private static POSTaggerME model;
 
     @BeforeAll
     static void setUp() throws IOException {
-        PresentSimpleMLRuleTest.model = new POSTaggerME(new ModelSourceInternet().model());
+        PresentSimpleMlRuleTest.model = new POSTaggerME(new ModelSourceInternet().model());
     }
 
     @CsvSource({
@@ -43,13 +74,13 @@ class PresentSimpleMLRuleTest {
         "saySomethingBack",
         "answersWhenMentioned",
         "denyOutdatedTag",
-        "rendersAbsentPages",
+        "rendersAbsentPages"
     })
     @ParameterizedTest
     void checksCorrectNames(final String name) {
         MatcherAssert.assertThat(
-            new PresentSimpleMLRule(
-                PresentSimpleMLRuleTest.model,
+            new PresentSimpleMlRule(
+                PresentSimpleMlRuleTest.model,
                 new Case.FakeCase(name)
             ).complaints(),
             Matchers.empty()
@@ -67,17 +98,16 @@ class PresentSimpleMLRuleTest {
         "_",
         "_&",
         "...",
-        "___",
+        "___"
     })
     @ParameterizedTest
     void checksWrongNames(final String name) {
         MatcherAssert.assertThat(
-            new PresentSimpleMLRule(
-                PresentSimpleMLRuleTest.model,
+            new PresentSimpleMlRule(
+                PresentSimpleMlRuleTest.model,
                 new Case.FakeCase(name)
             ).complaints(),
             Matchers.not(Matchers.empty())
         );
     }
-
 }

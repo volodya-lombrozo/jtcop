@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022-2023 Volodya
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.lombrozo.testnames.rules.ml;
 
 import java.util.Arrays;
@@ -305,7 +328,7 @@ public enum Tag {
      * Possessive wh-pronoun.
      * Example: whose.
      */
-    WP$("WP$"),
+    WP_DOLLAR("WP$"),
 
     /**
      * Wh-adverb.
@@ -314,13 +337,13 @@ public enum Tag {
     WRB("WRB"),
 
     /**
-     * #
+     * Hash #.
      * Example: #.
      */
     HASH("#"),
 
     /**
-     * $
+     * Dollar $.
      * Example: $.
      */
     DOLLAR("$"),
@@ -366,23 +389,44 @@ public enum Tag {
      */
     UNKNOWN("UNKNOWN");
 
+    /**
+     * Tag.
+     */
     private final String tag;
 
+    /**
+     * Ctor.
+     * @param tag Tag
+     */
     Tag(final String tag) {
         this.tag = tag;
     }
 
-    static Tag[] parse(final String[] tags) {
+    /**
+     * Is this tag a verb?
+     * @return True if this tag is a verb
+     */
+    boolean isVerb() {
+        return Arrays.asList(Tag.VB, Tag.VBP, Tag.VBZ).contains(this);
+    }
+
+    /**
+     * Parse raw tags.
+     * @param tags Raw tags
+     * @return Tags
+     */
+    static Tag[] parse(final String... tags) {
         return Arrays.stream(tags).map(Tag::parse).toArray(Tag[]::new);
     }
 
+    /**
+     * Parse raw tag.
+     * @param tag Raw tag
+     * @return Tag
+     */
     private static Tag parse(final String tag) {
         return Arrays.stream(Tag.values())
             .filter(t -> t.tag.equals(tag))
             .findFirst().orElse(Tag.UNKNOWN);
-    }
-
-    boolean isVerb() {
-        return Arrays.asList(Tag.VB, Tag.VBP, Tag.VBZ).contains(this);
     }
 }

@@ -21,23 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.rules.ml;
-
-import java.io.IOException;
-import opennlp.tools.postag.POSModel;
-
 /**
- * Model source for {@link opennlp.tools.postag.POSModel}.
- *
- * @since 0.10
+ * Rules that use machine learning.
  */
-public interface ModelSource {
-
-    /**
-     * Returns Model {@link opennlp.tools.postag.POSModel} from source.
-     * @return Model {@link opennlp.tools.postag.POSModel} from source.
-     * @throws IOException If there is a problem with reading the model.
-     */
-    POSModel model() throws IOException;
-
-}
+package com.github.lombrozo.testnames.rules.ml;
