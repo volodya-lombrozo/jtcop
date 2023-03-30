@@ -21,51 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.rules.ml;
 
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.Complaint;
-import lombok.ToString;
+import java.io.IOException;
+import java.nio.file.Path;
+import opennlp.tools.postag.POSModel;
 
 /**
- * When test name is wrong.
+ * Model source from file system.
  *
- * @since 0.2
+ * @since 0.10
  */
-@ToString
-public final class WrongTestName implements Complaint {
+public final class ModelSourceFileSystem implements ModelSource {
 
     /**
-     * The test case.
+     * The path to the model.
      */
-    private final Case test;
+    private final Path path;
 
     /**
-     * The complaint message.
+     * Constructor.
+     * Use path like "/tmp/opennlp/en-pos-perceptron.bin".
+     * @param file The path to the model.
      */
-    private final String explanation;
-
-    /**
-     * Ctor.
-     * @param test The test case
-     * @param explanation The explanation of the complaint
-     */
-    public WrongTestName(
-        final Case test,
-        final String explanation
-    ) {
-        this.test = test;
-        this.explanation = explanation;
+    ModelSourceFileSystem(final Path file) {
+        this.path = file;
     }
 
     @Override
-    public String message() {
-        return String.format(
-            "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
-            this.test.className(),
-            this.test.name(),
-            this.explanation,
-            this.test.path()
-        );
+    public POSModel model() throws IOException {
+        return new POSModel(this.path.toFile());
     }
 }

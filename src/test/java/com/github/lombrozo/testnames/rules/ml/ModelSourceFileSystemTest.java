@@ -21,51 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.rules.ml;
 
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.Complaint;
-import lombok.ToString;
+import java.io.IOException;
+import java.nio.file.Path;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- * When test name is wrong.
- *
- * @since 0.2
+ * Tests for {@link ModelSourceFileSystem}.
+ * @since 0.10
  */
-@ToString
-public final class WrongTestName implements Complaint {
+class ModelSourceFileSystemTest {
 
-    /**
-     * The test case.
-     */
-    private final Case test;
-
-    /**
-     * The complaint message.
-     */
-    private final String explanation;
-
-    /**
-     * Ctor.
-     * @param test The test case
-     * @param explanation The explanation of the complaint
-     */
-    public WrongTestName(
-        final Case test,
-        final String explanation
-    ) {
-        this.test = test;
-        this.explanation = explanation;
-    }
-
-    @Override
-    public String message() {
-        return String.format(
-            "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
-            this.test.className(),
-            this.test.name(),
-            this.explanation,
-            this.test.path()
-        );
+    @Test
+    void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
+        final Path path = temp.resolve("model.bin");
+        new ModelSourceInternet().model().serialize(path);
+        MatcherAssert.assertThat(new ModelSourceFileSystem(path).model(), Matchers.notNullValue());
     }
 }

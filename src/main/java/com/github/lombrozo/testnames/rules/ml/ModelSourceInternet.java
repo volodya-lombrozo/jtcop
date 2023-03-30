@@ -21,51 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.rules.ml;
 
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.Complaint;
-import lombok.ToString;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import opennlp.tools.postag.POSModel;
 
 /**
- * When test name is wrong.
+ * Model source from the Internet.
  *
- * @since 0.2
+ * @since 0.10
  */
-@ToString
-public final class WrongTestName implements Complaint {
+public final class ModelSourceInternet implements ModelSource {
 
     /**
-     * The test case.
+     * The internet address of the model.
      */
-    private final Case test;
+    private final URL url;
 
     /**
-     * The complaint message.
+     * Default constructor.
+     * Uses default URL.
      */
-    private final String explanation;
+    ModelSourceInternet() {
+        this(ModelSourceInternet.defaultUrl());
+    }
 
     /**
-     * Ctor.
-     * @param test The test case
-     * @param explanation The explanation of the complaint
+     * The main constructor.
+     * @param address The internet address of the model.
      */
-    public WrongTestName(
-        final Case test,
-        final String explanation
-    ) {
-        this.test = test;
-        this.explanation = explanation;
+    private ModelSourceInternet(final URL address) {
+        this.url = address;
     }
 
     @Override
-    public String message() {
-        return String.format(
-            "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
-            this.test.className(),
-            this.test.name(),
-            this.explanation,
-            this.test.path()
-        );
+    public POSModel model() throws IOException {
+        return new POSModel(this.url);
+    }
+
+    /**
+     * Default URL.
+     * @return The default URL.
+     */
+    private static URL defaultUrl() {
+        final String url = "https://opennlp.sourceforge.net/models-1.5/en-pos-perceptron.bin";
+        try {
+            return new URL(url);
+        } catch (final MalformedURLException ex) {
+            throw new IllegalArgumentException(
+                String.format("Default URL: '%s' is invalid", url),
+                ex
+            );
+        }
     }
 }

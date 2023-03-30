@@ -21,51 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.rules.ml;
 
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.Complaint;
-import lombok.ToString;
+import java.io.IOException;
+import opennlp.tools.postag.POSModel;
 
 /**
- * When test name is wrong.
+ * Model source for {@link opennlp.tools.postag.POSModel}.
  *
- * @since 0.2
+ * @since 0.10
  */
-@ToString
-public final class WrongTestName implements Complaint {
+public interface ModelSource {
 
     /**
-     * The test case.
+     * Returns Model {@link opennlp.tools.postag.POSModel} from source.
+     * @return Model {@link opennlp.tools.postag.POSModel} from source.
+     * @throws IOException If there is a problem with reading the model.
      */
-    private final Case test;
+    POSModel model() throws IOException;
 
-    /**
-     * The complaint message.
-     */
-    private final String explanation;
-
-    /**
-     * Ctor.
-     * @param test The test case
-     * @param explanation The explanation of the complaint
-     */
-    public WrongTestName(
-        final Case test,
-        final String explanation
-    ) {
-        this.test = test;
-        this.explanation = explanation;
-    }
-
-    @Override
-    public String message() {
-        return String.format(
-            "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
-            this.test.className(),
-            this.test.name(),
-            this.explanation,
-            this.test.path()
-        );
-    }
 }

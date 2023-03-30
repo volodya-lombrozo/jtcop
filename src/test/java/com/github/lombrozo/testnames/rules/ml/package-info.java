@@ -21,51 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
-
-import com.github.lombrozo.testnames.Case;
-import com.github.lombrozo.testnames.Complaint;
-import lombok.ToString;
-
 /**
- * When test name is wrong.
- *
- * @since 0.2
+ * Test cases for {@link com.github.lombrozo.testnames.rules.ml} package.
  */
-@ToString
-public final class WrongTestName implements Complaint {
-
-    /**
-     * The test case.
-     */
-    private final Case test;
-
-    /**
-     * The complaint message.
-     */
-    private final String explanation;
-
-    /**
-     * Ctor.
-     * @param test The test case
-     * @param explanation The explanation of the complaint
-     */
-    public WrongTestName(
-        final Case test,
-        final String explanation
-    ) {
-        this.test = test;
-        this.explanation = explanation;
-    }
-
-    @Override
-    public String message() {
-        return String.format(
-            "Test name '%s#%s' doesn't follow naming rules, because %s, test path: %s",
-            this.test.className(),
-            this.test.name(),
-            this.explanation,
-            this.test.path()
-        );
-    }
-}
+package com.github.lombrozo.testnames.rules.ml;
