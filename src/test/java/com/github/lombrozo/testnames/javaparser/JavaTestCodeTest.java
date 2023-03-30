@@ -25,9 +25,8 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Cases;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.InputStreamOf;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -44,26 +43,22 @@ final class JavaTestCodeTest {
 
     @Test
     void getsNames(@TempDir final Path temp) throws Exception {
-        final String java = "TestSimple.java";
-        final Path path = temp.resolve(java);
-        Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
-        final Cases cases = new JavaTestCode(path);
         MatcherAssert.assertThat(
-            cases.all(),
+            new JavaTestCode(temp, new ResourceOf("TestSimple.java").stream()).all(),
             Matchers.containsInAnyOrder(
                 new JavaParserCase(
                     "TestSimple",
                     "creates",
-                    path
+                    temp
                 ), new JavaParserCase(
                     "TestSimple",
                     "removes",
-                    path
+                    temp
                 ),
                 new JavaParserCase(
                     "TestSimple",
                     "updates",
-                    path
+                    temp
                 )
             )
         );
@@ -71,25 +66,23 @@ final class JavaTestCodeTest {
 
     @Test
     void returnsEmptyListIfItDoesNotHaveAnyCases(@TempDir final Path temp) throws Exception {
-        final String java = "TestWithoutTests.java";
-        final Path path = temp.resolve(java);
-        Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
-        MatcherAssert.assertThat(((Cases) new JavaTestCode(path)).all(), Matchers.empty());
+        MatcherAssert.assertThat(
+            new JavaTestCode(temp, new ResourceOf("TestWithoutTests.java").stream()).all(),
+            Matchers.empty()
+        );
     }
 
     @Test
     void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
         final String java = "TestParameterized.java";
-        final Path path = temp.resolve(java);
-        Files.write(path, new BytesOf(new ResourceOf(java)).asBytes());
-        final Cases cases = new JavaTestCode(path);
+        final Cases cases = new JavaTestCode(temp, new ResourceOf(java).stream());
         MatcherAssert.assertThat(
             cases.all(),
             Matchers.containsInAnyOrder(
                 new JavaParserCase(
                     "TestParameterized",
                     "checksCases",
-                    path
+                    temp
                 )
             )
         );
@@ -104,12 +97,10 @@ final class JavaTestCodeTest {
     }
 
     @Test
-    void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) throws Exception {
-        final Path path = temp.resolve("TestNotJava.txt");
-        Files.write(path, "Not Java".getBytes());
+    void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaTestCode(path).all()
+            () -> new JavaTestCode(temp, new InputStreamOf("Not Java")).all()
         );
     }
 

@@ -26,17 +26,21 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Cases;
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Test cases code.
@@ -51,24 +55,50 @@ public final class JavaTestCode implements Cases {
     private final Path path;
 
     /**
+     * Parsed Java class.
+     */
+    private final Unchecked<? extends CompilationUnit> unit;
+
+    /**
      * Ctor.
      *
      * @param file Path to the class
      */
     public JavaTestCode(final Path file) {
-        this.path = file;
+        this(file, new Sticky<>(() -> StaticJavaParser.parse(file)));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param file Path to the class
+     * @param stream Parsed Java class
+     */
+    JavaTestCode(final Path file, final InputStream stream) {
+        this(file, new Sticky<>(() -> StaticJavaParser.parse(stream)));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param path Path to the class
+     * @param unit Parsed class.
+     */
+    private JavaTestCode(final Path path, final Sticky<? extends CompilationUnit> unit) {
+        this.path = path;
+        this.unit = new Unchecked<>(unit);
     }
 
     @Override
     public Collection<Case> all() {
         try {
-            return StaticJavaParser.parse(this.path)
+            return this.unit.value()
                 .getChildNodes()
                 .stream()
                 .filter(JavaTestCode::isTestClass)
                 .flatMap(this::testCases)
                 .collect(Collectors.toList());
-        } catch (final IOException | ParseProblemException ex) {
+        } catch (final UncheckedIOException | ParseProblemException ex) {
             throw new IllegalStateException(
                 String.format("Failed to parse Java class by path %s", this.path),
                 ex
