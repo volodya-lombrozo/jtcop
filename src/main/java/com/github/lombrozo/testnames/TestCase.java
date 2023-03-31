@@ -33,7 +33,6 @@ import lombok.Data;
  */
 public interface TestCase {
 
-
     /**
      * The name of test case.
      *
@@ -68,6 +67,5 @@ public interface TestCase {
         public String name() {
             return this.name;
         }
-
     }
 }

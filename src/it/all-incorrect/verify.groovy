@@ -23,19 +23,19 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  'Test name \'ForbiddenWordTest#test\' doesn\'t follow naming rules, because test name doesn\'t have to contain the word \'test\', test path:',
-  "Test name 'ForbiddenWordTest#test' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
-  "Test name 'ForbiddenWordTest#test1' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#test1' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
-  "Test name 'ForbiddenWordTest#TEST' doesn't follow naming rules, because test has to be written by using Camel Case, test path:",
-  "Test name 'ForbiddenWordTest#TEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#TEST' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
-  "Test name 'ForbiddenWordTest#TEST1' doesn't follow naming rules, because test has to be written by using Camel Case, test path:",
-  "Test name 'ForbiddenWordTest#TEST1' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#TEST1' doesn't follow naming rules, because the test name has to be written using present tense, test path:",
-  "Test name 'ForbiddenWordTest#createsTEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#createsWithAnothertest' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#testAnother' doesn't follow naming rules, because test name doesn't have to contain the word 'test', test path:",
-  "Test name 'ForbiddenWordTest#testAnother' doesn't follow naming rules, because the test name has to be written using present tense, test path:"
+  'Test name \'test\' doesn\'t follow naming rules, because test name doesn\'t have to contain the word \'test\'',
+  "Test name 'test' doesn't follow naming rules, because the test name has to be written using present tense",
+  "Test name 'test1' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'test1' doesn't follow naming rules, because the test name has to be written using present tense",
+  "Test name 'TEST' doesn't follow naming rules, because test has to be written by using Camel Case",
+  "Test name 'TEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'TEST' doesn't follow naming rules, because the test name has to be written using present tense",
+  "Test name 'TEST1' doesn't follow naming rules, because test has to be written by using Camel Case",
+  "Test name 'TEST1' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'TEST1' doesn't follow naming rules, because the test name has to be written using present tense",
+  "Test name 'createsTEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'createsWithAnothertest' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'testAnother' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'testAnother' doesn't follow naming rules, because the test name has to be written using present tense"
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 true

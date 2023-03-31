@@ -49,19 +49,44 @@ public interface TestClass {
      */
     Collection<TestCase> all();
 
+    /**
+     * The fake test class.
+     *
+     * @since 0.2
+     */
     class Fake implements TestClass {
 
+        /**
+         * The name of test class.
+         */
         private final String name;
+
+        /**
+         * All cases.
+         */
         private final Collection<TestCase> all;
 
-        public Fake(TestCase... all) {
+        /**
+         * Primary ctor.
+         * @param all All cases
+         */
+        public Fake(final TestCase... all) {
             this(Arrays.asList(all));
         }
 
+        /**
+         * Ctor.
+         * @param all All cases
+         */
         Fake(final Collection<TestCase> all) {
             this("FakeClass", all);
         }
 
+        /**
+         * Main ctor.
+         * @param name The name of test class
+         * @param all All cases
+         */
         Fake(final String name, final Collection<TestCase> all) {
             this.name = name;
             this.all = all;
