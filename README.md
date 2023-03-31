@@ -1,6 +1,10 @@
 # jtcop
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop-maven-plugin)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/volodya-lombrozo/jtcop/blob/main/LICENSE.txt)
+[![Hits-of-Code](https://hitsofcode.com/github/volodya-lombrozo/jtcop?branch=main&label=Hits-of-Code)](https://hitsofcode.com/github/volodya-lombrozo/jtcop/view?branch=main&label=Hits-of-Code)
+![Lines of code](https://img.shields.io/tokei/lines/github/volodya-lombrozo/jtcop?branch=main&label=Lines-of-Code)
+[![codecov](https://codecov.io/gh/volodya-lombrozo/jtcop/branch/main/graph/badge.svg)](https://codecov.io/gh/volodya-lombrozo/jtcop)
 
 Almost each project uses unit tests in its codebase. It is important to have a
 common pattern of naming all that tests, because otherwise the project and tests
