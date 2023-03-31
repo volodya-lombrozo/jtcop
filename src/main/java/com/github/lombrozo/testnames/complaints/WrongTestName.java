@@ -61,10 +61,9 @@ public final class WrongTestName implements Complaint {
     @Override
     public String message() {
         return String.format(
-            "Test name '%s' doesn't follow naming rules, because %s, test path: %s",
+            "Test name '%s' doesn't follow naming rules, because %s",
             this.test.name(),
-            this.explanation,
-            this.test.path()
+            this.explanation
         );
     }
 }

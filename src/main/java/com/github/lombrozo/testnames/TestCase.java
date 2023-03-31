@@ -24,8 +24,6 @@
 
 package com.github.lombrozo.testnames;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import lombok.Data;
 
 /**
@@ -44,13 +42,6 @@ public interface TestCase {
     String name();
 
     /**
-     * The path.
-     *
-     * @return Path as string.
-     */
-    Path path();
-
-    /**
      * The fake test case.
      *
      * @since 0.1.0
@@ -64,29 +55,13 @@ public interface TestCase {
         private final String name;
 
         /**
-         * The path.
-         */
-        private final Path path;
-
-        /**
-         * Ctor.
-         *
-         * @param name The name of test case
-         */
-        public Fake(final String name) {
-            this(name, Paths.get("."));
-        }
-
-        /**
          * Primary ctor.
          *
          * @param name The name of test case
-         * @param path The path
          * @checkstyle ParameterNameCheck (6 lines)
          */
-        Fake(final String name, final Path path) {
+        public Fake(final String name) {
             this.name = name;
-            this.path = path;
         }
 
         @Override
@@ -94,9 +69,5 @@ public interface TestCase {
             return this.name;
         }
 
-        @Override
-        public Path path() {
-            return this.path;
-        }
     }
 }

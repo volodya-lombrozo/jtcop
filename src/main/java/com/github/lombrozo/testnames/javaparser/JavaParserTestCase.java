@@ -63,8 +63,4 @@ final class JavaParserTestCase implements TestCase {
         return this.title;
     }
 
-    @Override
-    public Path path() {
-        return this.file;
-    }
 }
