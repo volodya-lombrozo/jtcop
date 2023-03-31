@@ -39,7 +39,7 @@ class WrongTestNameTest {
     void buildsMessage() {
         MatcherAssert.assertThat(
             new WrongTestName(
-                new TestCase.FakeCase("Test"),
+                new TestCase.Fake("Test"),
                 "is wrong"
             ).message(),
             Matchers.equalTo(

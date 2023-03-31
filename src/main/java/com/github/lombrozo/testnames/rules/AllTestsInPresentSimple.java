@@ -24,9 +24,9 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Cases;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestClass;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -40,14 +40,14 @@ public final class AllTestsInPresentSimple implements Rule {
     /**
      * All test cases.
      */
-    private final Cases tests;
+    private final TestClass tests;
 
     /**
      * Ctor.
      *
      * @param cases The cases to check
      */
-    AllTestsInPresentSimple(final Cases cases) {
+    AllTestsInPresentSimple(final TestClass cases) {
         this.tests = cases;
     }
 

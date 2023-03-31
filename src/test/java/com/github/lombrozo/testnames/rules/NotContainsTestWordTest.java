@@ -66,6 +66,6 @@ class NotContainsTestWordTest {
     }
 
     private static Arguments args(final String name, final boolean correct) {
-        return Arguments.of(new TestCase.FakeCase(name), correct);
+        return Arguments.of(new TestCase.Fake(name), correct);
     }
 }

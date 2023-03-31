@@ -31,8 +31,8 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
-import com.github.lombrozo.testnames.Cases;
 import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.TestClass;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
@@ -47,7 +47,7 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.1.0
  */
-public final class JavaTestCode implements Cases {
+public final class JavaParserTestClass implements TestClass {
 
     /**
      * Path to java class.
@@ -64,7 +64,7 @@ public final class JavaTestCode implements Cases {
      *
      * @param file Path to the class
      */
-    public JavaTestCode(final Path file) {
+    public JavaParserTestClass(final Path file) {
         this(file, new Sticky<>(() -> StaticJavaParser.parse(file)));
     }
 
@@ -74,7 +74,7 @@ public final class JavaTestCode implements Cases {
      * @param file Path to the class
      * @param stream Parsed Java class
      */
-    JavaTestCode(final Path file, final InputStream stream) {
+    JavaParserTestClass(final Path file, final InputStream stream) {
         this(file, new Sticky<>(() -> StaticJavaParser.parse(stream)));
     }
 
@@ -84,7 +84,7 @@ public final class JavaTestCode implements Cases {
      * @param path Path to the class
      * @param unit Parsed class.
      */
-    private JavaTestCode(final Path path, final Sticky<? extends CompilationUnit> unit) {
+    private JavaParserTestClass(final Path path, final Sticky<? extends CompilationUnit> unit) {
         this.path = path;
         this.unit = new Unchecked<>(unit);
     }
@@ -95,7 +95,7 @@ public final class JavaTestCode implements Cases {
             return this.unit.value()
                 .getChildNodes()
                 .stream()
-                .filter(JavaTestCode::isTestClass)
+                .filter(JavaParserTestClass::isTestClass)
                 .flatMap(this::testCases)
                 .collect(Collectors.toList());
         } catch (final UncheckedIOException | ParseProblemException ex) {
@@ -116,7 +116,7 @@ public final class JavaTestCode implements Cases {
         final NodeWithMembers<ClassOrInterfaceDeclaration> clazz = (NodeWithMembers) node;
         return clazz.getMethods()
             .stream()
-            .filter(JavaTestCode::isTest)
+            .filter(JavaParserTestClass::isTest)
             .map(
                 method -> new JavaParserTestCase(
                     clazz.getNameAsString(),

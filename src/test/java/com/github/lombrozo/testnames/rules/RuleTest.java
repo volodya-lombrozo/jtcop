@@ -74,7 +74,7 @@ final class RuleTest {
     })
     void validatesCorrectly(final String name, final boolean expected) {
         final Collection<Complaint> complaints = new PresentSimpleRule(
-            new TestCase.FakeCase(name)
+            new TestCase.Fake(name)
         ).complaints();
         MatcherAssert.assertThat(
             complaints.toString(),

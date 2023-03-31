@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.javaparser.JavaTestCode;
+import com.github.lombrozo.testnames.javaparser.JavaParserTestClass;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -65,7 +65,7 @@ public final class CompositeTestPathRule implements Rule {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .map(JavaTestCode::new)
+                    .map(JavaParserTestClass::new)
                     .map(AllTestsInPresentSimple::new)
                     .map(AllTestsInPresentSimple::complaints)
                     .flatMap(Collection::stream)

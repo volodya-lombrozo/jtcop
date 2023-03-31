@@ -62,7 +62,7 @@ public interface TestCase {
      * @since 0.1.0
      */
     @Data
-    final class FakeCase implements TestCase {
+    final class Fake implements TestCase {
 
         /**
          * The class name.
@@ -85,7 +85,7 @@ public interface TestCase {
          *
          * @param name The name of test case
          */
-        public FakeCase(final String name) {
+        public Fake(final String name) {
             this("FakeClass", name, Paths.get("."));
         }
 
@@ -97,7 +97,7 @@ public interface TestCase {
          * @param path The path
          * @checkstyle ParameterNameCheck (6 lines)
          */
-        FakeCase(final String className, final String name, final Path path) {
+        Fake(final String className, final String name, final Path path) {
             this.className = className;
             this.name = name;
             this.path = path;

@@ -24,7 +24,7 @@
 
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.TestClass;
 import java.nio.file.Path;
 import org.cactoos.io.InputStreamOf;
 import org.cactoos.io.ResourceOf;
@@ -35,16 +35,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link com.github.lombrozo.testnames.javaparser.JavaTestCode}.
+ * Test case for {@link JavaParserTestClass}.
  *
  * @since 0.1.0
  */
-final class JavaTestCodeTest {
+final class JavaParserTestClassTest {
 
     @Test
     void getsNames(@TempDir final Path temp) throws Exception {
         MatcherAssert.assertThat(
-            new JavaTestCode(temp, new ResourceOf("TestSimple.java").stream()).all(),
+            new JavaParserTestClass(temp, new ResourceOf("TestSimple.java").stream()).all(),
             Matchers.containsInAnyOrder(
                 new JavaParserTestCase(
                     "TestSimple",
@@ -67,7 +67,7 @@ final class JavaTestCodeTest {
     @Test
     void returnsEmptyListIfItDoesNotHaveAnyCases(@TempDir final Path temp) throws Exception {
         MatcherAssert.assertThat(
-            new JavaTestCode(temp, new ResourceOf("TestWithoutTests.java").stream()).all(),
+            new JavaParserTestClass(temp, new ResourceOf("TestWithoutTests.java").stream()).all(),
             Matchers.empty()
         );
     }
@@ -75,7 +75,7 @@ final class JavaTestCodeTest {
     @Test
     void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
         final String java = "TestParameterized.java";
-        final Cases cases = new JavaTestCode(temp, new ResourceOf(java).stream());
+        final TestClass cases = new JavaParserTestClass(temp, new ResourceOf(java).stream());
         MatcherAssert.assertThat(
             cases.all(),
             Matchers.containsInAnyOrder(
@@ -92,7 +92,7 @@ final class JavaTestCodeTest {
     void throwsExceptionIfFileNotFound(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaTestCode(temp.resolve("TestNotFound.java")).all()
+            () -> new JavaParserTestClass(temp.resolve("TestNotFound.java")).all()
         );
     }
 
@@ -100,7 +100,7 @@ final class JavaTestCodeTest {
     void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaTestCode(temp, new InputStreamOf("Not Java")).all()
+            () -> new JavaParserTestClass(temp, new InputStreamOf("Not Java")).all()
         );
     }
 

@@ -81,7 +81,7 @@ class PresentSimpleMlRuleTest {
         MatcherAssert.assertThat(
             new PresentSimpleMlRule(
                 PresentSimpleMlRuleTest.model,
-                new TestCase.FakeCase(name)
+                new TestCase.Fake(name)
             ).complaints(),
             Matchers.empty()
         );
@@ -105,7 +105,7 @@ class PresentSimpleMlRuleTest {
         MatcherAssert.assertThat(
             new PresentSimpleMlRule(
                 PresentSimpleMlRuleTest.model,
-                new TestCase.FakeCase(name)
+                new TestCase.Fake(name)
             ).complaints(),
             Matchers.not(Matchers.empty())
         );

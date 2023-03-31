@@ -32,7 +32,7 @@ import java.util.Collection;
  * @since 0.1.0
  */
 @FunctionalInterface
-public interface Cases {
+public interface TestClass {
 
     /**
      * All cases.

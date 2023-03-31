@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Cases;
 import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.TestClass;
 import java.util.Arrays;
 
 /**
@@ -33,20 +33,20 @@ import java.util.Arrays;
  *
  * @since 0.1.7
  */
-public class WrongCases {
+class WrongCases {
 
     /**
      * The cases.
      */
-    private final Cases cases;
+    private final TestClass cases;
 
     /**
      * Ctor.
      */
     WrongCases() {
         this.cases = () -> Arrays.asList(
-            new TestCase.FakeCase("remove"),
-            new TestCase.FakeCase("create")
+            new TestCase.Fake("remove"),
+            new TestCase.Fake("create")
         );
     }
 
@@ -55,7 +55,7 @@ public class WrongCases {
      *
      * @return The correct cases
      */
-    public Cases value() {
+    TestClass value() {
         return this.cases;
     }
 }

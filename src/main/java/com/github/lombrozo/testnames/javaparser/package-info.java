@@ -23,7 +23,7 @@
  */
 
 /**
- * Javaparser implementation of {@link com.github.lombrozo.testnames.Cases} with related classes.
+ * JavaParser implementation of test classes and cases.
  * You can read more about javaparser <a href="https://github.com/javaparser/javaparser">here</a>
  *
  * @since 0.2.0
