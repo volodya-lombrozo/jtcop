@@ -38,7 +38,7 @@ final class AllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithoutExceptions() {
         MatcherAssert.assertThat(
-            new AllTestsInPresentSimple(new CorrectCases().value()).complaints(),
+            new AllTestsInPresentSimple(new CorrectClass().value()).complaints(),
             Matchers.empty()
         );
     }
@@ -47,7 +47,7 @@ final class AllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
-            new AllTestsInPresentSimple(new WrongCases().value()).complaints(),
+            new AllTestsInPresentSimple(new WrongClass().value()).complaints(),
             Matchers.allOf(Matchers.hasSize(2))
         );
     }

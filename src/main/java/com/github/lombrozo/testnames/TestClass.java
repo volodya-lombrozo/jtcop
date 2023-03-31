@@ -24,15 +24,23 @@
 
 package com.github.lombrozo.testnames;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * The bulk of test cases.
  *
  * @since 0.1.0
  */
-@FunctionalInterface
 public interface TestClass {
+
+    /**
+     * The name of class.
+     *
+     * @return The name of class as string
+     */
+    String name();
 
     /**
      * All cases.
@@ -40,4 +48,33 @@ public interface TestClass {
      * @return All cases as collection
      */
     Collection<TestCase> all();
+
+    class Fake implements TestClass {
+
+        private final String name;
+        private final Collection<TestCase> all;
+
+        public Fake(TestCase... all) {
+            this(Arrays.asList(all));
+        }
+
+        Fake(final Collection<TestCase> all) {
+            this("FakeClass", all);
+        }
+
+        Fake(final String name, final Collection<TestCase> all) {
+            this.name = name;
+            this.all = all;
+        }
+
+        @Override
+        public String name() {
+            return this.name;
+        }
+
+        @Override
+        public Collection<TestCase> all() {
+            return Collections.unmodifiableCollection(this.all);
+        }
+    }
 }

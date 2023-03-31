@@ -39,30 +39,28 @@ class JavaParserTestCaseTest {
     @Test
     void convertsToString() {
         MatcherAssert.assertThat(
-            new JavaParserTestCase("clazz", "name", Paths.get(".")).toString(),
-            Matchers.equalTo("JavaParserTestCase(clazz=clazz, title=name, file=.)")
+            new JavaParserTestCase("name", Paths.get(".")).toString(),
+            Matchers.equalTo("JavaParserTestCase(title=name, file=.)")
         );
     }
 
     @Test
     void hasTheSameHashCode() {
-        final String clazz = "class";
         final String name = "nm";
         final Path path = Paths.get("./.");
         MatcherAssert.assertThat(
-            new JavaParserTestCase(clazz, name, path).hashCode(),
-            Matchers.is(new JavaParserTestCase(clazz, name, path).hashCode())
+            new JavaParserTestCase(name, path).hashCode(),
+            Matchers.is(new JavaParserTestCase(name, path).hashCode())
         );
     }
 
     @Test
     void equalsIfBothTheSame() {
-        final String clazz = "claz";
         final String name = "nme";
         final Path path = Paths.get("././.");
         MatcherAssert.assertThat(
-            new JavaParserTestCase(clazz, name, path),
-            Matchers.equalTo(new JavaParserTestCase(clazz, name, path))
+            new JavaParserTestCase(name, path),
+            Matchers.equalTo(new JavaParserTestCase(name, path))
         );
     }
 }

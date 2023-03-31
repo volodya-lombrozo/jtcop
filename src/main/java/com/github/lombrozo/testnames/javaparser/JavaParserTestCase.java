@@ -37,11 +37,6 @@ import lombok.Data;
 final class JavaParserTestCase implements TestCase {
 
     /**
-     * The class name.
-     */
-    private final String clazz;
-
-    /**
      * The name of test case.
      */
     private final String title;
@@ -54,20 +49,13 @@ final class JavaParserTestCase implements TestCase {
     /**
      * Ctor.
      *
-     * @param clss The class name
      * @param name The test case name
      * @param path The path
      * @checkstyle ParameterNameCheck (6 lines)
      */
-    JavaParserTestCase(final String clss, final String name, final Path path) {
-        this.clazz = clss;
+    JavaParserTestCase(final String name, final Path path) {
         this.title = name;
         this.file = path;
-    }
-
-    @Override
-    public String className() {
-        return this.clazz;
     }
 
     @Override

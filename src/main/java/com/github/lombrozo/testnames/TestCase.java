@@ -35,12 +35,6 @@ import lombok.Data;
  */
 public interface TestCase {
 
-    /**
-     * The name of class.
-     *
-     * @return The name of class as string
-     */
-    String className();
 
     /**
      * The name of test case.
@@ -65,12 +59,6 @@ public interface TestCase {
     final class Fake implements TestCase {
 
         /**
-         * The class name.
-         * @checkstyle MemberNameCheck (2 lines)
-         */
-        private final String className;
-
-        /**
          * The name of test.
          */
         private final String name;
@@ -86,26 +74,19 @@ public interface TestCase {
          * @param name The name of test case
          */
         public Fake(final String name) {
-            this("FakeClass", name, Paths.get("."));
+            this(name, Paths.get("."));
         }
 
         /**
          * Primary ctor.
          *
-         * @param className The class name
          * @param name The name of test case
          * @param path The path
          * @checkstyle ParameterNameCheck (6 lines)
          */
-        Fake(final String className, final String name, final Path path) {
-            this.className = className;
+        Fake(final String name, final Path path) {
             this.name = name;
             this.path = path;
-        }
-
-        @Override
-        public String className() {
-            return this.className;
         }
 
         @Override

@@ -43,7 +43,7 @@ class WrongTestNameTest {
                 "is wrong"
             ).message(),
             Matchers.equalTo(
-                "Test name 'FakeClass#Test' doesn't follow naming rules, because is wrong, test path: ."
+                "Test name 'Test' doesn't follow naming rules, because is wrong, test path: ."
             )
         );
     }

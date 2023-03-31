@@ -90,6 +90,11 @@ public final class JavaParserTestClass implements TestClass {
     }
 
     @Override
+    public String name() {
+        return this.path.getFileName().toString();
+    }
+
+    @Override
     public Collection<TestCase> all() {
         try {
             return this.unit.value()
@@ -119,7 +124,6 @@ public final class JavaParserTestClass implements TestClass {
             .filter(JavaParserTestClass::isTest)
             .map(
                 method -> new JavaParserTestCase(
-                    clazz.getNameAsString(),
                     method.getNameAsString(),
                     this.path
                 )

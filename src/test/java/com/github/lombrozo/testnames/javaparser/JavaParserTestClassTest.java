@@ -47,16 +47,13 @@ final class JavaParserTestClassTest {
             new JavaParserTestClass(temp, new ResourceOf("TestSimple.java").stream()).all(),
             Matchers.containsInAnyOrder(
                 new JavaParserTestCase(
-                    "TestSimple",
                     "creates",
                     temp
                 ), new JavaParserTestCase(
-                    "TestSimple",
                     "removes",
                     temp
                 ),
                 new JavaParserTestCase(
-                    "TestSimple",
                     "updates",
                     temp
                 )
@@ -80,7 +77,6 @@ final class JavaParserTestClassTest {
             cases.all(),
             Matchers.containsInAnyOrder(
                 new JavaParserTestCase(
-                    "TestParameterized",
                     "checksCases",
                     temp
                 )
