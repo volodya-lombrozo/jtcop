@@ -24,9 +24,9 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -41,14 +41,14 @@ public final class NotContainsTestWord implements Rule {
     /**
      * The test case.
      */
-    private final Case test;
+    private final TestCase test;
 
     /**
      * Ctor.
      *
      * @param test The test case to check
      */
-    NotContainsTestWord(final Case test) {
+    NotContainsTestWord(final TestCase test) {
         this.test = test;
     }
 

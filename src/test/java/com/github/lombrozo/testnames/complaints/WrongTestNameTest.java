@@ -23,7 +23,7 @@
  */
 package com.github.lombrozo.testnames.complaints;
 
-import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.TestCase;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class WrongTestNameTest {
     void buildsMessage() {
         MatcherAssert.assertThat(
             new WrongTestName(
-                new Case.FakeCase("Test"),
+                new TestCase.FakeCase("Test"),
                 "is wrong"
             ).message(),
             Matchers.equalTo(

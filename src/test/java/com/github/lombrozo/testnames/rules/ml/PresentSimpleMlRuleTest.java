@@ -23,7 +23,7 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.TestCase;
 import java.io.IOException;
 import opennlp.tools.postag.POSTaggerME;
 import org.hamcrest.MatcherAssert;
@@ -81,7 +81,7 @@ class PresentSimpleMlRuleTest {
         MatcherAssert.assertThat(
             new PresentSimpleMlRule(
                 PresentSimpleMlRuleTest.model,
-                new Case.FakeCase(name)
+                new TestCase.FakeCase(name)
             ).complaints(),
             Matchers.empty()
         );
@@ -105,7 +105,7 @@ class PresentSimpleMlRuleTest {
         MatcherAssert.assertThat(
             new PresentSimpleMlRule(
                 PresentSimpleMlRuleTest.model,
-                new Case.FakeCase(name)
+                new TestCase.FakeCase(name)
             ).complaints(),
             Matchers.not(Matchers.empty())
         );

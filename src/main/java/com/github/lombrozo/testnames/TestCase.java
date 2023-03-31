@@ -33,7 +33,7 @@ import lombok.Data;
  *
  * @since 0.1.0
  */
-public interface Case {
+public interface TestCase {
 
     /**
      * The name of class.
@@ -62,7 +62,7 @@ public interface Case {
      * @since 0.1.0
      */
     @Data
-    final class FakeCase implements Case {
+    final class FakeCase implements TestCase {
 
         /**
          * The class name.

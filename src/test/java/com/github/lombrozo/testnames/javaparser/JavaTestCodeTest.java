@@ -46,16 +46,16 @@ final class JavaTestCodeTest {
         MatcherAssert.assertThat(
             new JavaTestCode(temp, new ResourceOf("TestSimple.java").stream()).all(),
             Matchers.containsInAnyOrder(
-                new JavaParserCase(
+                new JavaParserTestCase(
                     "TestSimple",
                     "creates",
                     temp
-                ), new JavaParserCase(
+                ), new JavaParserTestCase(
                     "TestSimple",
                     "removes",
                     temp
                 ),
-                new JavaParserCase(
+                new JavaParserTestCase(
                     "TestSimple",
                     "updates",
                     temp
@@ -79,7 +79,7 @@ final class JavaTestCodeTest {
         MatcherAssert.assertThat(
             cases.all(),
             Matchers.containsInAnyOrder(
-                new JavaParserCase(
+                new JavaParserTestCase(
                     "TestParameterized",
                     "checksCases",
                     temp

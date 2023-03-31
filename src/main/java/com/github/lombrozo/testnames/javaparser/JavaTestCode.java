@@ -31,8 +31,8 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Cases;
+import com.github.lombrozo.testnames.TestCase;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
@@ -90,7 +90,7 @@ public final class JavaTestCode implements Cases {
     }
 
     @Override
-    public Collection<Case> all() {
+    public Collection<TestCase> all() {
         try {
             return this.unit.value()
                 .getChildNodes()
@@ -112,13 +112,13 @@ public final class JavaTestCode implements Cases {
      * @param node The child node.
      * @return Stream of test cases.
      */
-    private Stream<JavaParserCase> testCases(final Node node) {
+    private Stream<JavaParserTestCase> testCases(final Node node) {
         final NodeWithMembers<ClassOrInterfaceDeclaration> clazz = (NodeWithMembers) node;
         return clazz.getMethods()
             .stream()
             .filter(JavaTestCode::isTest)
             .map(
-                method -> new JavaParserCase(
+                method -> new JavaParserTestCase(
                     clazz.getNameAsString(),
                     method.getNameAsString(),
                     this.path

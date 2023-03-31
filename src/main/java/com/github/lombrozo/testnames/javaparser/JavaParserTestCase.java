@@ -21,48 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.TestCase;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import lombok.Data;
 
 /**
- * Test case for {@link JavaParserCase}.
+ * Parser for test case.
  *
- * @since 0.2
+ * @since 0.1.0
  */
-class JavaParserCaseTest {
+@Data
+final class JavaParserTestCase implements TestCase {
 
-    @Test
-    void convertsToString() {
-        MatcherAssert.assertThat(
-            new JavaParserCase("clazz", "name", Paths.get(".")).toString(),
-            Matchers.equalTo("JavaParserCase(clazz=clazz, title=name, file=.)")
-        );
+    /**
+     * The class name.
+     */
+    private final String clazz;
+
+    /**
+     * The name of test case.
+     */
+    private final String title;
+
+    /**
+     * The path.
+     */
+    private final Path file;
+
+    /**
+     * Ctor.
+     *
+     * @param clss The class name
+     * @param name The test case name
+     * @param path The path
+     * @checkstyle ParameterNameCheck (6 lines)
+     */
+    JavaParserTestCase(final String clss, final String name, final Path path) {
+        this.clazz = clss;
+        this.title = name;
+        this.file = path;
     }
 
-    @Test
-    void hasTheSameHashCode() {
-        final String clazz = "class";
-        final String name = "nm";
-        final Path path = Paths.get("./.");
-        MatcherAssert.assertThat(
-            new JavaParserCase(clazz, name, path).hashCode(),
-            Matchers.is(new JavaParserCase(clazz, name, path).hashCode())
-        );
+    @Override
+    public String className() {
+        return this.clazz;
     }
 
-    @Test
-    void equalsIfBothTheSame() {
-        final String clazz = "claz";
-        final String name = "nme";
-        final Path path = Paths.get("././.");
-        MatcherAssert.assertThat(
-            new JavaParserCase(clazz, name, path),
-            Matchers.equalTo(new JavaParserCase(clazz, name, path))
-        );
+    @Override
+    public String name() {
+        return this.title;
+    }
+
+    @Override
+    public Path path() {
+        return this.file;
     }
 }

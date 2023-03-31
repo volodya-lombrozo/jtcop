@@ -23,8 +23,8 @@
  */
 package com.github.lombrozo.testnames.complaints;
 
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.TestCase;
 import lombok.ToString;
 
 /**
@@ -38,7 +38,7 @@ public final class WrongTestName implements Complaint {
     /**
      * The test case.
      */
-    private final Case test;
+    private final TestCase test;
 
     /**
      * The complaint message.
@@ -51,7 +51,7 @@ public final class WrongTestName implements Complaint {
      * @param explanation The explanation of the complaint
      */
     public WrongTestName(
-        final Case test,
+        final TestCase test,
         final String explanation
     ) {
         this.test = test;

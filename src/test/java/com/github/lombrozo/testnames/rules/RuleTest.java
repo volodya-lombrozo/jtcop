@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -74,7 +74,7 @@ final class RuleTest {
     })
     void validatesCorrectly(final String name, final boolean expected) {
         final Collection<Complaint> complaints = new PresentSimpleRule(
-            new Case.FakeCase(name)
+            new TestCase.FakeCase(name)
         ).complaints();
         MatcherAssert.assertThat(
             complaints.toString(),

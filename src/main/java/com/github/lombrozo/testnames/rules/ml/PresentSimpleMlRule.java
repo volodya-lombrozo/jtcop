@@ -23,9 +23,9 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Arrays;
 import java.util.Collection;
@@ -55,14 +55,14 @@ public final class PresentSimpleMlRule implements Rule {
     /**
      * The test to check.
      */
-    private final Case test;
+    private final TestCase test;
 
     /**
      * The main constructor.
      * @param tagger The Open NLP tagger
      * @param tst The test to check
      */
-    PresentSimpleMlRule(final POSTaggerME tagger, final Case tst) {
+    PresentSimpleMlRule(final POSTaggerME tagger, final TestCase tst) {
         this.model = tagger;
         this.test = tst;
     }

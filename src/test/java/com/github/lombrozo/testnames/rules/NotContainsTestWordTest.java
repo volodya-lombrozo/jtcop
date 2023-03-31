@@ -24,7 +24,7 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Case;
+import com.github.lombrozo.testnames.TestCase;
 import java.util.stream.Stream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -40,7 +40,7 @@ class NotContainsTestWordTest {
 
     @ParameterizedTest
     @MethodSource("cases")
-    void checksSeveralNames(final Case test, final boolean empty) {
+    void checksSeveralNames(final TestCase test, final boolean empty) {
         MatcherAssert.assertThat(
             new NotContainsTestWord(test).complaints().isEmpty(),
             Matchers.equalTo(empty)
@@ -66,6 +66,6 @@ class NotContainsTestWordTest {
     }
 
     private static Arguments args(final String name, final boolean correct) {
-        return Arguments.of(new Case.FakeCase(name), correct);
+        return Arguments.of(new TestCase.FakeCase(name), correct);
     }
 }

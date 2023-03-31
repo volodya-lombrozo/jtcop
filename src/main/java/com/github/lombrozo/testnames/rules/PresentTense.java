@@ -24,9 +24,9 @@
 
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Case;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
 
@@ -40,14 +40,14 @@ public final class PresentTense implements Rule {
     /**
      * The test case.
      */
-    private final Case test;
+    private final TestCase test;
 
     /**
      * Ctor.
      *
      * @param tst The test case to check
      */
-    PresentTense(final Case tst) {
+    PresentTense(final TestCase tst) {
         this.test = tst;
     }
 
