@@ -43,12 +43,11 @@ final class AllTestsInPresentSimpleTest {
         );
     }
 
-    //todo
     @Test
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
             new AllTestsInPresentSimple(new WrongClass().value()).complaints(),
-            Matchers.allOf(Matchers.hasSize(2))
+            Matchers.allOf(Matchers.hasSize(1))
         );
     }
 }

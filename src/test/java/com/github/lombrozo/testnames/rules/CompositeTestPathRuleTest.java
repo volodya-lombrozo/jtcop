@@ -97,7 +97,7 @@ final class CompositeTestPathRuleTest {
         );
         MatcherAssert.assertThat(
             new CompositeTestPathRule(temp).complaints(),
-            Matchers.hasSize(2)
+            Matchers.hasSize(1)
         );
     }
 }

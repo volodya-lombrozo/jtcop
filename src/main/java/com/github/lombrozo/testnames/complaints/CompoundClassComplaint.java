@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022-2023 Volodya
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.lombrozo.testnames.complaints;
 
 import com.github.lombrozo.testnames.Complaint;
@@ -6,15 +29,42 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import lombok.ToString;
 
-public class CompoundClassComplaint implements Complaint {
+/**
+ * Compound complaint for entire class.
+ * @since 0.2
+ */
+@ToString
+public final class CompoundClassComplaint implements Complaint {
 
+    /**
+     * Class.
+     */
     private final TestClass clazz;
+
+    /**
+     * All class complaints.
+     */
     private final Collection<Complaint> complaints;
 
-    public CompoundClassComplaint(final TestClass clazz, Complaint... complaints) {
+    /**
+     * Constructor.
+     * @param clazz Class.
+     * @param complaints Complaints.
+     */
+    CompoundClassComplaint(final TestClass clazz, final Complaint... complaints) {
+        this(clazz, Arrays.asList(complaints));
+    }
+
+    /**
+     * The main constructor.
+     * @param clazz Class.
+     * @param complaints All complaints.
+     */
+    public CompoundClassComplaint(final TestClass clazz, final Collection<Complaint> complaints) {
         this.clazz = clazz;
-        this.complaints = Arrays.asList(complaints);
+        this.complaints = complaints;
     }
 
     @Override

@@ -38,15 +38,21 @@ public interface Complaint {
      */
     String message();
 
-
+    /**
+     * Fake complaint.
+     * @since 0.2
+     */
     class Fake implements Complaint {
 
+        /**
+         * Complaint message.
+         */
         private final String text;
 
-        public Fake() {
-            this("Fake complaint message that is quite useful for test purposes");
-        }
-
+        /**
+         * Main constructor.
+         * @param message Complaint message.
+         */
         public Fake(final String message) {
             this.text = message;
         }

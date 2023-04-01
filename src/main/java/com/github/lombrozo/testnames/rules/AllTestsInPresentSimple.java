@@ -27,7 +27,10 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.complaints.CompoundClassComplaint;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -53,10 +56,17 @@ public final class AllTestsInPresentSimple implements Rule {
 
     @Override
     public Collection<Complaint> complaints() {
-        return this.tests.all().stream()
+        final List<Complaint> list = this.tests.all().stream()
             .map(PresentSimpleRule::new)
             .map(PresentSimpleRule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
+        final Collection<Complaint> result;
+        if (list.isEmpty()) {
+            result = Collections.emptyList();
+        } else {
+            result = Collections.singleton(new CompoundClassComplaint(this.tests, list));
+        }
+        return result;
     }
 }

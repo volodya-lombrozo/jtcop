@@ -52,6 +52,7 @@ public final class JavaParserTestClass implements TestClass {
     /**
      * Path to java class.
      */
+    @SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
     private final Path path;
 
     /**

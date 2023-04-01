@@ -29,6 +29,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import lombok.ToString;
 
 /**
  * The bulk of test cases.
@@ -51,6 +52,10 @@ public interface TestClass {
      */
     Collection<TestCase> all();
 
+    /**
+     * Path to the class.
+     * @return Path to the class.
+     */
     Path path();
 
     /**
@@ -58,6 +63,7 @@ public interface TestClass {
      *
      * @since 0.2
      */
+    @ToString
     class Fake implements TestClass {
 
         /**
@@ -108,7 +114,7 @@ public interface TestClass {
 
         @Override
         public Path path() {
-            return Paths.get(name);
+            return Paths.get(this.name);
         }
     }
 }
