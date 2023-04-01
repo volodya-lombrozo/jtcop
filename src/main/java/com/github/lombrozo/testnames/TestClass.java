@@ -24,6 +24,8 @@
 
 package com.github.lombrozo.testnames;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,6 +50,8 @@ public interface TestClass {
      * @return All cases as collection
      */
     Collection<TestCase> all();
+
+    Path path();
 
     /**
      * The fake test class.
@@ -100,6 +104,11 @@ public interface TestClass {
         @Override
         public Collection<TestCase> all() {
             return Collections.unmodifiableCollection(this.all);
+        }
+
+        @Override
+        public Path path() {
+            return Paths.get(name);
         }
     }
 }

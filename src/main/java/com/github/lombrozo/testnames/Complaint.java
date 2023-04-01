@@ -37,4 +37,23 @@ public interface Complaint {
      * @return The complaint message
      */
     String message();
+
+
+    class Fake implements Complaint {
+
+        private final String text;
+
+        public Fake() {
+            this("Fake complaint message that is quite useful for test purposes");
+        }
+
+        public Fake(final String message) {
+            this.text = message;
+        }
+
+        @Override
+        public String message() {
+            return this.text;
+        }
+    }
 }

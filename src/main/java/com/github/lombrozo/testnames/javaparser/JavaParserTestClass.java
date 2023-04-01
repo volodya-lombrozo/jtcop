@@ -111,6 +111,11 @@ public final class JavaParserTestClass implements TestClass {
         }
     }
 
+    @Override
+    public Path path() {
+        return this.path;
+    }
+
     /**
      * Checks methods in class.
      *
