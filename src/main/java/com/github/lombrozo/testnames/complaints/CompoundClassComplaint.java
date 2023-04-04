@@ -46,14 +46,17 @@ public final class CompoundClassComplaint implements Complaint {
     /**
      * All class complaints.
      */
-    private final Collection<Complaint> complaints;
+    private final Collection<? extends Complaint> complaints;
 
     /**
      * Constructor.
      * @param clazz Class.
      * @param complaints Complaints.
      */
-    CompoundClassComplaint(final TestClass clazz, final Complaint... complaints) {
+    CompoundClassComplaint(
+        final TestClass clazz,
+        final Complaint... complaints
+    ) {
         this(clazz, Arrays.asList(complaints));
     }
 
@@ -62,7 +65,10 @@ public final class CompoundClassComplaint implements Complaint {
      * @param clazz Class.
      * @param complaints All complaints.
      */
-    public CompoundClassComplaint(final TestClass clazz, final Collection<Complaint> complaints) {
+    public CompoundClassComplaint(
+        final TestClass clazz,
+        final Collection<? extends Complaint> complaints
+    ) {
         this.clazz = clazz;
         this.complaints = complaints;
     }

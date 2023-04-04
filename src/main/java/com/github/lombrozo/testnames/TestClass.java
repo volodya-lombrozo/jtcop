@@ -74,7 +74,7 @@ public interface TestClass {
         /**
          * All cases.
          */
-        private final Collection<TestCase> all;
+        private final Collection<? extends TestCase> all;
 
         /**
          * Primary ctor.
@@ -88,7 +88,7 @@ public interface TestClass {
          * Ctor.
          * @param all All cases
          */
-        Fake(final Collection<TestCase> all) {
+        Fake(final Collection<? extends TestCase> all) {
             this("FakeClass", all);
         }
 
@@ -97,7 +97,7 @@ public interface TestClass {
          * @param name The name of test class
          * @param all All cases
          */
-        Fake(final String name, final Collection<TestCase> all) {
+        Fake(final String name, final Collection<? extends TestCase> all) {
             this.name = name;
             this.all = all;
         }

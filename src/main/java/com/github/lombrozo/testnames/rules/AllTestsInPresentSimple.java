@@ -50,7 +50,7 @@ public final class AllTestsInPresentSimple implements Rule {
      *
      * @param cases The cases to check
      */
-    AllTestsInPresentSimple(final TestClass cases) {
+    public AllTestsInPresentSimple(final TestClass cases) {
         this.tests = cases;
     }
 
