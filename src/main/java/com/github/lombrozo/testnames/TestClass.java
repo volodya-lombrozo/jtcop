@@ -64,7 +64,7 @@ public interface TestClass {
      * @since 0.2
      */
     @ToString
-    class Fake implements TestClass {
+    final class Fake implements TestClass {
 
         /**
          * The name of test class.

@@ -53,6 +53,9 @@ public interface TestCase {
          */
         private final String name;
 
+        /**
+         * Ctor.
+         */
         public Fake() {
             this("FakeCase");
         }

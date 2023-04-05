@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022-2023 Volodya
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
@@ -11,19 +34,31 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class AllTestsHaveProductionClassRule implements Rule {
+/**
+ * The rule that checks that all tests have production class.
+ *
+ * @since 0.2
+ */
+public final class AllTestsHaveProductionClassRule implements Rule {
 
+    /**
+     * The project to check.
+     */
     private final Project project;
 
+    /**
+     * Primary ctor.
+     * @param proj The project to check.
+     */
     public AllTestsHaveProductionClassRule(final Project proj) {
         this.project = proj;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        final Map<String, ProductionClass> classes = this.project.productionClasses().stream().collect(
-            Collectors.toMap(t -> String.format("%sTest", t.name()), Function.identity())
-        );
+        final Map<String, ProductionClass> classes = this.project.productionClasses()
+            .stream()
+            .collect(Collectors.toMap(t -> String.format("%sTest", t.name()), Function.identity()));
         final Collection<Complaint> complaints = new ArrayList<>(0);
         final Collection<TestClass> tests = this.project.testClasses();
         for (final TestClass test : tests) {

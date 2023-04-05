@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.complaints.ComplexComplaint;
 import com.github.lombrozo.testnames.javaparser.JavaParserProject;
-import com.github.lombrozo.testnames.rules.CompositeTestPathRule;
 import java.nio.file.Paths;
 import java.util.Collection;
 import org.apache.maven.plugin.AbstractMojo;
