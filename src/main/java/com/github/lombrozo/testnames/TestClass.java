@@ -81,15 +81,16 @@ public interface TestClass {
          * @param all All cases
          */
         public Fake(final TestCase... all) {
-            this(Arrays.asList(all));
+            this("FakeClass", all);
         }
 
         /**
          * Ctor.
+         * @param name Class name
          * @param all All cases
          */
-        Fake(final Collection<? extends TestCase> all) {
-            this("FakeClass", all);
+        public Fake(final String name, final TestCase... all) {
+            this(name, Arrays.asList(all));
         }
 
         /**

@@ -18,7 +18,7 @@ class AllTestsHaveProductionClassRuleTest {
             new AllTestsHaveProductionClassRule(
                 new Project.Fake(
                     new ProductionClass.Fake("Identical"),
-                    new TestClass.Fake(new TestCase.Fake("IdenticalTest"))
+                    new TestClass.Fake("IdenticalTest", new TestCase.Fake())
                 )
             ).complaints(),
             Matchers.empty()

@@ -53,6 +53,10 @@ public interface TestCase {
          */
         private final String name;
 
+        public Fake() {
+            this("FakeCase");
+        }
+
         /**
          * Primary ctor.
          *

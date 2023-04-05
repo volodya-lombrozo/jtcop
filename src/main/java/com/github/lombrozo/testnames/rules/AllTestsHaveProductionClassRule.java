@@ -15,7 +15,7 @@ public class AllTestsHaveProductionClassRule implements Rule {
 
     private final Project project;
 
-    AllTestsHaveProductionClassRule(final Project proj) {
+    public AllTestsHaveProductionClassRule(final Project proj) {
         this.project = proj;
     }
 
@@ -27,7 +27,8 @@ public class AllTestsHaveProductionClassRule implements Rule {
         final Collection<Complaint> complaints = new ArrayList<>(0);
         final Collection<TestClass> tests = this.project.testClasses();
         for (final TestClass test : tests) {
-            if (!classes.containsKey(test.name())) {
+            final String name = test.name();
+            if (!classes.containsKey(name)) {
                 complaints.add(new Complaint.Fake("Test doesn't match"));
             }
         }

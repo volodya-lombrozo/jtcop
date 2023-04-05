@@ -25,6 +25,7 @@
 package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.complaints.ComplexComplaint;
+import com.github.lombrozo.testnames.javaparser.JavaParserProject;
 import com.github.lombrozo.testnames.rules.CompositeTestPathRule;
 import java.nio.file.Paths;
 import java.util.Collection;
@@ -60,9 +61,12 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
-        final Collection<Complaint> complaints = new CompositeTestPathRule(
-            Paths.get(this.project.getTestCompileSourceRoots().get(0))
-        ).complaints();
+        final Collection<Complaint> complaints = new Cop(
+            new JavaParserProject(
+                Paths.get(this.project.getCompileSourceRoots().get(0)),
+                Paths.get(this.project.getTestCompileSourceRoots().get(0))
+            )
+        ).check();
         if (!complaints.isEmpty() && this.failOnError) {
             throw new MojoFailureException(new ComplexComplaint(complaints).message());
         } else if (!complaints.isEmpty()) {
