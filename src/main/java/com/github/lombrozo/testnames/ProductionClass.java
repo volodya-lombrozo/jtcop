@@ -49,6 +49,13 @@ public interface ProductionClass {
         private final String name;
 
         /**
+         * Default ctor.
+         */
+        public Fake() {
+            this("FakeClass");
+        }
+
+        /**
          * Primary ctor.
          * @param name The name of production class.
          */

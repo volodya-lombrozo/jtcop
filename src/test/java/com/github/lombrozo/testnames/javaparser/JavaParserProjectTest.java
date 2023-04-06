@@ -21,39 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.TestClass;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test cases for {@link CompoundClassComplaint}.
+ * Tests for {@link JavaParserProject}.
+ *
  * @since 0.2
  */
-class CompoundClassComplaintTest {
+final class JavaParserProjectTest {
 
     @Test
-    void returnsSimpleMessageIfDoesNotHaveComplaints() {
+    void returnsProductionClasses(@TempDir final Path tmp) throws IOException {
+        final String name = "ProductionClass.java";
+        Files.write(tmp.resolve(name), "".getBytes(StandardCharsets.UTF_8));
+        final Collection<ProductionClass> classes = new JavaParserProject(
+            tmp,
+            tmp
+        ).productionClasses();
         MatcherAssert.assertThat(
-            new CompoundClassComplaint(new TestClass.Fake()).message(),
-            Matchers.equalTo("Class FakeClassTest has some complaints, the path FakeClassTest:")
+            classes,
+            Matchers.hasSize(1)
+        );
+        MatcherAssert.assertThat(
+            classes.iterator().next().name(),
+            Matchers.equalTo(name)
         );
     }
 
     @Test
-    void returnsCompoundMessageIfHasSeveralComplaints() {
+    void returnsNotProductionClasses(@TempDir final Path tmp) throws IOException {
+        final String name = "TestClass.java";
+        Files.write(tmp.resolve(name), "".getBytes(StandardCharsets.UTF_8));
+        final Collection<TestClass> classes = new JavaParserProject(
+            tmp,
+            tmp
+        ).testClasses();
         MatcherAssert.assertThat(
-            new CompoundClassComplaint(
-                new TestClass.Fake(),
-                new Complaint.Fake("haha"),
-                new Complaint.Fake("haha")
-            ).message(),
-            Matchers.equalTo(
-                "Class FakeClassTest has some complaints, the path FakeClassTest:\n\t1) haha\n\t2) haha"
-            )
+            classes,
+            Matchers.hasSize(1)
+        );
+        MatcherAssert.assertThat(
+            classes.iterator().next().name(),
+            Matchers.equalTo(name)
         );
     }
 }

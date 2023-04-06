@@ -54,7 +54,7 @@ final class Cop {
      * Checks the project.
      * @return The complaints.
      */
-    Collection<Complaint> check() {
+    Collection<Complaint> inspection() {
         final Collection<Complaint> res = new ArrayList<>(
             new AllTestsHaveProductionClassRule(this.project).complaints()
         );

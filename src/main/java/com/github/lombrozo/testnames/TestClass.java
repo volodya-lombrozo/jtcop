@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package com.github.lombrozo.testnames;
 
 import java.nio.file.Path;
@@ -81,7 +80,7 @@ public interface TestClass {
          * @param all All cases
          */
         public Fake(final TestCase... all) {
-            this("FakeClass", all);
+            this("FakeClassTest", all);
         }
 
         /**

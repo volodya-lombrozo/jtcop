@@ -21,39 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames;
 
-import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestClass;
+import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test cases for {@link CompoundClassComplaint}.
+ * Test for {@link Cop}.
+ *
  * @since 0.2
  */
-class CompoundClassComplaintTest {
+class CopTest {
 
     @Test
-    void returnsSimpleMessageIfDoesNotHaveComplaints() {
+    void checksSuccessfully() {
+        final Collection<Complaint> check = new Cop(
+            new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake())
+        ).inspection();
         MatcherAssert.assertThat(
-            new CompoundClassComplaint(new TestClass.Fake()).message(),
-            Matchers.equalTo("Class FakeClassTest has some complaints, the path FakeClassTest:")
+            check,
+            Matchers.empty()
         );
     }
 
     @Test
-    void returnsCompoundMessageIfHasSeveralComplaints() {
+    void checksWithComplaint() {
         MatcherAssert.assertThat(
-            new CompoundClassComplaint(
-                new TestClass.Fake(),
-                new Complaint.Fake("haha"),
-                new Complaint.Fake("haha")
-            ).message(),
-            Matchers.equalTo(
-                "Class FakeClassTest has some complaints, the path FakeClassTest:\n\t1) haha\n\t2) haha"
-            )
+            new Cop(
+                new Project.Fake(
+                    new ProductionClass.Fake("CustomClass"),
+                    new TestClass.Fake()
+                )
+            ).inspection(),
+            Matchers.hasSize(1)
         );
     }
 }

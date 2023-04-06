@@ -65,7 +65,7 @@ public final class ValidateMojo extends AbstractMojo {
                 Paths.get(this.project.getCompileSourceRoots().get(0)),
                 Paths.get(this.project.getTestCompileSourceRoots().get(0))
             )
-        ).check();
+        ).inspection();
         if (!complaints.isEmpty() && this.failOnError) {
             throw new MojoFailureException(new ComplexComplaint(complaints).message());
         } else if (!complaints.isEmpty()) {
