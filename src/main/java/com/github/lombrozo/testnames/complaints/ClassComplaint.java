@@ -77,7 +77,7 @@ public final class ClassComplaint implements Complaint {
     public String message() {
         final AtomicInteger counter = new AtomicInteger(1);
         return String.format(
-            "Class %s has some complaints, the path %s:%s",
+            "The test class %s (%s:) has encountered some problems. Please review the results for more information.%s",
             this.clazz.name(),
             this.clazz.path(),
             this.complaints.stream()

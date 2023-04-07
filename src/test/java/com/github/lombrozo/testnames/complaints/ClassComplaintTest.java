@@ -39,7 +39,9 @@ class ClassComplaintTest {
     void returnsSimpleMessageIfDoesNotHaveComplaints() {
         MatcherAssert.assertThat(
             new ClassComplaint(new TestClass.Fake()).message(),
-            Matchers.equalTo("Class FakeClassTest has some complaints, the path FakeClassTest:")
+            Matchers.equalTo(
+                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information."
+            )
         );
     }
 
@@ -52,7 +54,7 @@ class ClassComplaintTest {
                 new Complaint.Text("haha")
             ).message(),
             Matchers.equalTo(
-                "Class FakeClassTest has some complaints, the path FakeClassTest:\n\t1) haha\n\t2) haha"
+                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.\n\t1) haha\n\t2) haha"
             )
         );
     }
