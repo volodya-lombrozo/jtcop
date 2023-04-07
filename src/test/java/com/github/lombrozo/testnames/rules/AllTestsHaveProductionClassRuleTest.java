@@ -73,13 +73,29 @@ final class AllTestsHaveProductionClassRuleTest {
     }
 
     @Test
-    void filtersPackageInfoClasses() {
+    void filtersPackageInfoProductionClasses() {
         final String info = "package-info.java";
         final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
             new Project.Fake(
                 new ProductionClass.Fake(info),
                 new ProductionClass.Fake(info),
                 new ProductionClass.Fake(info)
+            )
+        ).complaints();
+        MatcherAssert.assertThat(
+            complaints,
+            Matchers.hasSize(0)
+        );
+    }
+
+    @Test
+    void filtersPackageInfoClasses() {
+        final String info = "package-info.java";
+        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+            new Project.Fake(
+                new TestClass.Fake(info),
+                new TestClass.Fake(info),
+                new TestClass.Fake(info)
             )
         ).complaints();
         MatcherAssert.assertThat(

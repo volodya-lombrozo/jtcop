@@ -58,7 +58,7 @@ public final class AllTestsHaveProductionClassRule implements Rule {
     public Collection<Complaint> complaints() {
         final Map<String, ProductionClass> classes = this.project.productionClasses()
             .stream()
-            .filter(clazz -> !"package-info.java".equals(clazz.name()))
+            .filter(clazz -> AllTestsHaveProductionClassRule.isNotPackageInfo(clazz.name()))
             .collect(
                 Collectors.toMap(
                     t -> String.format("%sTest", t.name()),
@@ -67,7 +67,9 @@ public final class AllTestsHaveProductionClassRule implements Rule {
                 )
             );
         final Collection<Complaint> complaints = new ArrayList<>(0);
-        final Collection<TestClass> tests = this.project.testClasses();
+        final Collection<TestClass> tests = this.project.testClasses().stream()
+            .filter(test -> AllTestsHaveProductionClassRule.isNotPackageInfo(test.name()))
+            .collect(Collectors.toList());
         for (final TestClass test : tests) {
             final String name = test.name();
             if (!classes.containsKey(name)) {
@@ -83,5 +85,14 @@ public final class AllTestsHaveProductionClassRule implements Rule {
             }
         }
         return complaints;
+    }
+
+    /**
+     * Checks that the name is not package-info.java.
+     * @param name The name to check.
+     * @return True if the name is not package-info.java.
+     */
+    private static boolean isNotPackageInfo(final String name) {
+        return !"package-info.java".equals(name);
     }
 }
