@@ -76,8 +76,9 @@ public final class AllTestsHaveProductionClassRule implements Rule {
                 complaints.add(
                     new Complaint.Text(
                         String.format(
-                            "Test %s doesn't have corresponding production class. Please either rename, move or create production class for it. You can read more about that rule here %s",
+                            "Test %s doesn't have corresponding production class.\n\tYou can either rename or move the test class %s:\n\tMore about that rule you can read here %s",
                             name,
+                            test.path(),
                             "https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes"
                         )
                     )

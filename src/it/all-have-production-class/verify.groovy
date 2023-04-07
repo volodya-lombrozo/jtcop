@@ -23,6 +23,6 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  'Test CorrectTest.java doesn\'t have corresponding production class. Please either rename, move or create production class for it. You can read more about that rule here',
+  'Test CorrectTest.java doesn\'t have corresponding production class.',
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 true
