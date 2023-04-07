@@ -36,7 +36,7 @@ import lombok.ToString;
  * @since 0.2
  */
 @ToString
-public final class CompoundClassComplaint implements Complaint {
+public final class ClassComplaint implements Complaint {
 
     /**
      * Class.
@@ -53,7 +53,7 @@ public final class CompoundClassComplaint implements Complaint {
      * @param clazz Class.
      * @param complaints Complaints.
      */
-    CompoundClassComplaint(
+    ClassComplaint(
         final TestClass clazz,
         final Complaint... complaints
     ) {
@@ -65,7 +65,7 @@ public final class CompoundClassComplaint implements Complaint {
      * @param clazz Class.
      * @param complaints All complaints.
      */
-    public CompoundClassComplaint(
+    public ClassComplaint(
         final TestClass clazz,
         final Collection<? extends Complaint> complaints
     ) {

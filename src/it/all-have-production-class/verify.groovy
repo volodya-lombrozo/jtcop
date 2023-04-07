@@ -21,45 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames;
-
-/**
- * Complaint abstraction.
- * You can find all complaints in package {@link com.github.lombrozo.testnames.complaints}.
- *
- * @since 0.2.0
- */
-@FunctionalInterface
-public interface Complaint {
-
-    /**
-     * The complaint message.
-     * @return The complaint message
-     */
-    String message();
-
-    /**
-     * Text complaint.
-     * @since 0.2
-     */
-    class Text implements Complaint {
-
-        /**
-         * Complaint message.
-         */
-        private final String text;
-
-        /**
-         * Main constructor.
-         * @param message Complaint message.
-         */
-        public Text(final String message) {
-            this.text = message;
-        }
-
-        @Override
-        public String message() {
-            return this.text;
-        }
-    }
-}
+String log = new File(basedir, 'build.log').text;
+[
+  'Test CorrectTest.java doesn\'t have corresponding production class. Please either rename, move or create production class for it. You can read more about that rule here',
+].each { assert log.contains(it): "Log doesn't contain ['$it']" }
+true

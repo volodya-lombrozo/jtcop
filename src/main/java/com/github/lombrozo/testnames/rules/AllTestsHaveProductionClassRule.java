@@ -64,7 +64,15 @@ public final class AllTestsHaveProductionClassRule implements Rule {
         for (final TestClass test : tests) {
             final String name = test.name();
             if (!classes.containsKey(name)) {
-                complaints.add(new Complaint.Fake("Test doesn't match"));
+                complaints.add(
+                    new Complaint.Text(
+                        String.format(
+                            "Test %s doesn't have corresponding production class. Please either rename, move or create production class for it. You can read more about that rule here %s",
+                            name,
+                            "https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes"
+                        )
+                    )
+                );
             }
         }
         return complaints;

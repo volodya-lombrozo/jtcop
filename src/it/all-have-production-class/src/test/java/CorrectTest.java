@@ -21,45 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames;
 
-/**
- * Complaint abstraction.
- * You can find all complaints in package {@link com.github.lombrozo.testnames.complaints}.
- *
- * @since 0.2.0
- */
-@FunctionalInterface
-public interface Complaint {
+import org.junit.jupiter.api.Test;
 
-    /**
-     * The complaint message.
-     * @return The complaint message
-     */
-    String message();
-
-    /**
-     * Text complaint.
-     * @since 0.2
-     */
-    class Text implements Complaint {
-
-        /**
-         * Complaint message.
-         */
-        private final String text;
-
-        /**
-         * Main constructor.
-         * @param message Complaint message.
-         */
-        public Text(final String message) {
-            this.text = message;
-        }
-
-        @Override
-        public String message() {
-            return this.text;
-        }
-    }
+class CorrectTest {
+    @Test
+    void checksSomethingImportant() {}
 }

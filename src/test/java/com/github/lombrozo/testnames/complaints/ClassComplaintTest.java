@@ -30,15 +30,15 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test cases for {@link CompoundClassComplaint}.
+ * Test cases for {@link ClassComplaint}.
  * @since 0.2
  */
-class CompoundClassComplaintTest {
+class ClassComplaintTest {
 
     @Test
     void returnsSimpleMessageIfDoesNotHaveComplaints() {
         MatcherAssert.assertThat(
-            new CompoundClassComplaint(new TestClass.Fake()).message(),
+            new ClassComplaint(new TestClass.Fake()).message(),
             Matchers.equalTo("Class FakeClassTest has some complaints, the path FakeClassTest:")
         );
     }
@@ -46,10 +46,10 @@ class CompoundClassComplaintTest {
     @Test
     void returnsCompoundMessageIfHasSeveralComplaints() {
         MatcherAssert.assertThat(
-            new CompoundClassComplaint(
+            new ClassComplaint(
                 new TestClass.Fake(),
-                new Complaint.Fake("haha"),
-                new Complaint.Fake("haha")
+                new Complaint.Text("haha"),
+                new Complaint.Text("haha")
             ).message(),
             Matchers.equalTo(
                 "Class FakeClassTest has some complaints, the path FakeClassTest:\n\t1) haha\n\t2) haha"
