@@ -28,7 +28,9 @@ import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -67,6 +69,37 @@ final class AllTestsHaveProductionClassRuleTest {
             Matchers.equalTo(
                 "Test FakeClassTest doesn't have corresponding production class. Please either rename, move or create production class for it. You can read more about that rule here https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes"
             )
+        );
+    }
+
+    @Test
+    void filtersPackageInfoClasses() {
+        final String info = "package-info.java";
+        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+            new Project.Fake(
+                new ProductionClass.Fake(info),
+                new ProductionClass.Fake(info),
+                new ProductionClass.Fake(info)
+            )
+        ).complaints();
+        MatcherAssert.assertThat(
+            complaints,
+            Matchers.hasSize(0)
+        );
+    }
+
+    @Test
+    void handlesClassesWithTheSameNames() {
+        final String name = "Hello";
+        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+            new Project.Fake(
+                Arrays.asList(new ProductionClass.Fake(name), new ProductionClass.Fake(name)),
+                Collections.singleton(new TestClass.Fake("HelloTest"))
+            )
+        ).complaints();
+        MatcherAssert.assertThat(
+            complaints,
+            Matchers.hasSize(0)
         );
     }
 }

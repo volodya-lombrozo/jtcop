@@ -58,7 +58,14 @@ public final class AllTestsHaveProductionClassRule implements Rule {
     public Collection<Complaint> complaints() {
         final Map<String, ProductionClass> classes = this.project.productionClasses()
             .stream()
-            .collect(Collectors.toMap(t -> String.format("%sTest", t.name()), Function.identity()));
+            .filter(clazz -> !"package-info.java".equals(clazz.name()))
+            .collect(
+                Collectors.toMap(
+                    t -> String.format("%sTest", t.name()),
+                    Function.identity(),
+                    (first, second) -> first
+                )
+            );
         final Collection<Complaint> complaints = new ArrayList<>(0);
         final Collection<TestClass> tests = this.project.testClasses();
         for (final TestClass test : tests) {
