@@ -53,6 +53,9 @@ final class Cop {
     /**
      * Checks the project.
      * @return The complaints.
+     * @todo #1:90min Simplify Cop.inspection() method.
+     *  We can have no indents here. In order to refactor this we can add more methods or re-design
+     *  the current solution.
      */
     Collection<Complaint> inspection() {
         final Collection<Complaint> res = new ArrayList<>(
