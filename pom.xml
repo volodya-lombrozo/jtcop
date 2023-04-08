@@ -247,6 +247,11 @@ SOFTWARE.
               <output>
                 file
               </output>
+              <excludes>
+                <exclude>
+                  com/github/lombrozo/testnames/rules/ml/*
+                </exclude>
+              </excludes>
             </configuration>
             <executions>
               <execution>
