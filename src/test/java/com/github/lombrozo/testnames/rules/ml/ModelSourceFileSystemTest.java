@@ -34,6 +34,10 @@ import org.junit.jupiter.api.io.TempDir;
 /**
  * Tests for {@link ModelSourceFileSystem}.
  * @since 0.10
+ * @todo #1:90min Enable ML tests when caching will be implemented.
+ *  For not tests related to ML take lots of time and it's hard to develop in that mode.
+ *  We have to implement a caching or increase the speed of tests in order to use them in
+ *  every-day development.
  */
 @Disabled
 class ModelSourceFileSystemTest {
