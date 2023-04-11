@@ -6,65 +6,18 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/volodya-lombrozo/jtcop?branch=main&label=Lines-of-Code)
 [![codecov](https://codecov.io/gh/volodya-lombrozo/jtcop/branch/main/graph/badge.svg)](https://codecov.io/gh/volodya-lombrozo/jtcop)
 
-Almost each project uses unit tests in its codebase. It is important to have a
-common pattern of naming all that tests, because otherwise the project and tests
-itself become a complete mess. It's a quite large discussion about
-different [test naming patterns](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
-.
-**jtcop** maven plugin helps to keep following a single common
-test naming rule across all of your test classes.
+This repository was inspired by various articles and discussion threads (such as
+these
+ones: ["Unit test naming best practices"](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
+and ["On The Layout of Tests"](https://www.yegor256.com/2023/01/19/layout-of-tests.html)),
+and it consolidates knowledge on
+best practices for organizing and naming tests. The purpose of jtcop is to
+enhance the clarity and maintainability of your tests. In other words, jtcop is
+a static linter similar to tools
+like [CheckStyle](https://checkstyle.sourceforge.io)
+or [PMD](https://pmd.github.io), but with a focus on test best practices.
 
-## Conventions
-
-The only one convention that is supported by this plugin for now is the
-**present tense without subject**.
-
-### Present tense without subject
-
-The test method name should be a sentence that describes the test case using
-present tense without subject. For example, if you have a test that tests
-a `User` class, then the test method name should start from the verb followed by
-any testing conditions. For example:
-
-```java
-public class UserTest {
-    @Test
-    public void createsUser() {
-        // correct
-    }
-
-    @Test
-    public void createsUserWithoutName() {
-        // correct
-    }
-
-    @Test
-    public void removesUser() {
-        // correct
-    }
-}
-```
-
-The next cases will be considered as invalid:
-
-```java
-public class UserTest {
-    @Test
-    public void createUser() {
-        // invalid!
-    }
-
-    @Test
-    public void userIsCreated() {
-        // invalid!
-    }
-
-    @Test
-    public void userIsRemoved() {
-        // invalid!
-    }
-}
-```
+You can read more about checks and rules in the [docs](docs/README.md).
 
 ## How to use
 
