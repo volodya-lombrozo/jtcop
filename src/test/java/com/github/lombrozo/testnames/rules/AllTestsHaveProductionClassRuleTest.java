@@ -56,6 +56,19 @@ final class AllTestsHaveProductionClassRuleTest {
     }
 
     @Test
+    void checksThatClassHasCorrespondingProductionClassWithExtension() {
+        MatcherAssert.assertThat(
+            new AllTestsHaveProductionClassRule(
+                new Project.Fake(
+                    new ProductionClass.Fake("Hello.java"),
+                    new TestClass.Fake("HelloTest.java")
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
     void checksThatDoesNotHaveCorrespondingProductionClass() {
         final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
             new Project.Fake(new TestClass.Fake())

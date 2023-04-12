@@ -61,7 +61,7 @@ public final class AllTestsHaveProductionClassRule implements Rule {
             .filter(clazz -> AllTestsHaveProductionClassRule.isNotPackageInfo(clazz.name()))
             .collect(
                 Collectors.toMap(
-                    t -> String.format("%sTest", t.name()),
+                    AllTestsHaveProductionClassRule::correspondingTestName,
                     Function.identity(),
                     (first, second) -> first
                 )
@@ -86,6 +86,22 @@ public final class AllTestsHaveProductionClassRule implements Rule {
             }
         }
         return complaints;
+    }
+
+    /**
+     * Returns the name of the test class that corresponds to the production class.
+     * @param klass The production class.
+     * @return The name of the test class.
+     */
+    private static String correspondingTestName(final ProductionClass klass) {
+        final String name = klass.name();
+        final String plain;
+        if (name.endsWith(".java")) {
+            plain = String.format("%sTest.java", name.substring(0, name.length() - 5));
+        } else {
+            plain = String.format("%sTest", name);
+        }
+        return plain;
     }
 
     /**

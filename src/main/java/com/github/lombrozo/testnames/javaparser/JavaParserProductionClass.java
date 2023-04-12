@@ -31,7 +31,7 @@ import java.nio.file.Path;
  *
  * @since 0.2
  */
-final class JavaParserProductionClass implements ProductionClass {
+public final class JavaParserProductionClass implements ProductionClass {
 
     /**
      * The path to production class.
@@ -42,7 +42,7 @@ final class JavaParserProductionClass implements ProductionClass {
      * Primary ctor.
      * @param path The path to production class.
      */
-    JavaParserProductionClass(final Path path) {
+    public JavaParserProductionClass(final Path path) {
         this.path = path;
     }
 
