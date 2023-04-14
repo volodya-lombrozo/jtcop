@@ -24,6 +24,8 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.TestClass;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -38,7 +40,12 @@ final class AllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithoutExceptions() {
         MatcherAssert.assertThat(
-            new AllTestsInPresentSimple(new CorrectClass().value()).complaints(),
+            new AllTestsInPresentSimple(
+                new TestClass.Fake(
+                    new TestCase.Fake("removes"),
+                    new TestCase.Fake("creates")
+                )
+            ).complaints(),
             Matchers.empty()
         );
     }
@@ -46,7 +53,12 @@ final class AllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
-            new AllTestsInPresentSimple(new WrongClass().value()).complaints(),
+            new AllTestsInPresentSimple(
+                new TestClass.Fake(
+                    new TestCase.Fake("remove"),
+                    new TestCase.Fake("create")
+                )
+            ).complaints(),
             Matchers.allOf(Matchers.hasSize(1))
         );
     }
