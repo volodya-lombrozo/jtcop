@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  *
  * @since 0.2
  */
-public final class AllTestsHaveProductionClassRule implements Rule {
+public final class RuleAllTestsHaveProductionClass implements Rule {
 
     /**
      * The project to check.
@@ -50,7 +50,7 @@ public final class AllTestsHaveProductionClassRule implements Rule {
      * Primary ctor.
      * @param proj The project to check.
      */
-    public AllTestsHaveProductionClassRule(final Project proj) {
+    public RuleAllTestsHaveProductionClass(final Project proj) {
         this.project = proj;
     }
 
@@ -58,17 +58,17 @@ public final class AllTestsHaveProductionClassRule implements Rule {
     public Collection<Complaint> complaints() {
         final Map<String, ProductionClass> classes = this.project.productionClasses()
             .stream()
-            .filter(clazz -> AllTestsHaveProductionClassRule.isNotPackageInfo(clazz.name()))
+            .filter(clazz -> RuleAllTestsHaveProductionClass.isNotPackageInfo(clazz.name()))
             .collect(
                 Collectors.toMap(
-                    AllTestsHaveProductionClassRule::correspondingTestName,
+                    RuleAllTestsHaveProductionClass::correspondingTestName,
                     Function.identity(),
                     (first, second) -> first
                 )
             );
         final Collection<Complaint> complaints = new ArrayList<>(0);
         final Collection<TestClass> tests = this.project.testClasses().stream()
-            .filter(test -> AllTestsHaveProductionClassRule.isNotPackageInfo(test.name()))
+            .filter(test -> RuleAllTestsHaveProductionClass.isNotPackageInfo(test.name()))
             .collect(Collectors.toList());
         for (final TestClass test : tests) {
             final String name = test.name();

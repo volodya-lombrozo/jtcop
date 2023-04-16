@@ -21,68 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.function.Supplier;
 
 /**
- * Rule to check test case on not spam.
+ * Utility rule that checks condition and returns complaints if condition is true.
  *
- * @since 0.1.0
+ * @since 0.2
  */
-public final class NotSpam implements Rule {
+public final class RuleConditional implements Rule {
 
     /**
-     * The test case.
+     * Condition to check.
      */
-    private final TestCase test;
+    private final Supplier<Boolean> predicate;
 
     /**
-     * Ctor.
-     *
-     * @param test The test case
+     * Complaints to return if condition is true.
      */
-    NotSpam(final TestCase test) {
-        this.test = test;
+    private final Complaint complaint;
+
+    /**
+     * Creates ConditionalRule with given predicate and complaint.
+     * @param check Condition to check
+     * @param warning Complaint to return if condition is true
+     */
+    RuleConditional(
+        final Supplier<Boolean> check,
+        final Complaint warning
+    ) {
+        this.predicate = check;
+        this.complaint = warning;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            () -> !this.notSpam(),
-            new WrongTestName(
-                this.test,
-                "test name doesn't have to contain duplicated symbols"
-            )
-        ).complaints();
-    }
-
-    /**
-     * Check symbols duplication in test case name.
-     *
-     * @return The result
-     * @checkstyle ReturnCountCheck (30 lines)
-     */
-    @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean notSpam() {
-        int stack = 0;
-        char prev = '!';
-        for (final char chr : this.test.name().toCharArray()) {
-            if (chr == prev) {
-                ++stack;
-            } else {
-                stack = 0;
-                prev = chr;
-            }
-            if (stack > 2) {
-                return false;
-            }
+        final Collection<Complaint> res;
+        if (this.predicate.get()) {
+            res = Collections.singleton(this.complaint);
+        } else {
+            res = Collections.emptyList();
         }
-        return true;
+        return res;
     }
 }

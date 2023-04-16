@@ -26,47 +26,48 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ClassComplaint;
+import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * The rule to check all tests on {@link PresentSimpleRule}.
+ * The rule to check if test name uses special chars.
  *
  * @since 0.1.0
  */
-public final class AllTestsInPresentSimple implements Rule {
+public final class RuleNotUsesSpecialCharacters implements Rule {
 
     /**
-     * All test cases.
+     * The test case.
      */
-    private final TestClass tests;
+    private final TestCase test;
 
     /**
      * Ctor.
      *
-     * @param cases The cases to check
+     * @param test The test case to check
      */
-    public AllTestsInPresentSimple(final TestClass cases) {
-        this.tests = cases;
+    RuleNotUsesSpecialCharacters(final TestCase test) {
+        this.test = test;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        final List<Complaint> list = this.tests.all().stream()
-            .map(PresentSimpleRule::new)
-            .map(PresentSimpleRule::complaints)
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
-        final Collection<Complaint> result;
-        if (list.isEmpty()) {
-            result = Collections.emptyList();
-        } else {
-            result = Collections.singleton(new ClassComplaint(this.tests, list));
-        }
-        return result;
+        return new RuleConditional(
+            this::usesSpecialCharacters,
+            new WrongTestName(
+                this.test,
+                "test name shouldn't contain special characters like '$' or '_'"
+            )
+        ).complaints();
+    }
+
+    /**
+     * Is contain special chars.
+     *
+     * @return The result
+     */
+    private boolean usesSpecialCharacters() {
+        return this.test.name().contains("$") || this.test.name().contains("_");
     }
 }

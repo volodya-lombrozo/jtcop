@@ -73,7 +73,7 @@ final class RuleTest {
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
     void validatesCorrectly(final String name, final boolean expected) {
-        final Collection<Complaint> complaints = new PresentSimpleRule(
+        final Collection<Complaint> complaints = new RulePresentSimple(
             new TestCase.Fake(name)
         ).complaints();
         MatcherAssert.assertThat(

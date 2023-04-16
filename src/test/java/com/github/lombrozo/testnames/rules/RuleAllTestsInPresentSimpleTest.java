@@ -31,16 +31,16 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link com.github.lombrozo.testnames.rules.AllTestsInPresentSimple}.
+ * Test case for {@link RuleAllTestsInPresentSimple}.
  *
  * @since 0.1.0
  */
-final class AllTestsInPresentSimpleTest {
+final class RuleAllTestsInPresentSimpleTest {
 
     @Test
     void validatesAllWithoutExceptions() {
         MatcherAssert.assertThat(
-            new AllTestsInPresentSimple(
+            new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
                     new TestCase.Fake("removes"),
                     new TestCase.Fake("creates")
@@ -53,7 +53,7 @@ final class AllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
-            new AllTestsInPresentSimple(
+            new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
                     new TestCase.Fake("remove"),
                     new TestCase.Fake("create")

@@ -21,54 +21,75 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.lombrozo.testnames.rules;
+package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.WrongTestName;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import opennlp.tools.postag.POSTaggerME;
 
 /**
- * Test case without a 'test' word in name.
+ * Present simple tense rule with using of ML.
  *
- * @since 0.1.0
+ * @since 0.10
  */
-public final class NotContainsTestWord implements Rule {
+public final class RulePresentSimpleMl implements Rule {
 
     /**
-     * The test case.
+     * The pattern to split camel case.
+     */
+    private static final Pattern CAMEL = Pattern.compile("(?=\\p{Lu})");
+
+    /**
+     * The Open NLP tagger.
+     */
+    private final POSTaggerME model;
+
+    /**
+     * The test to check.
      */
     private final TestCase test;
 
     /**
-     * Ctor.
-     *
-     * @param test The test case to check
+     * The main constructor.
+     * @param tagger The Open NLP tagger
+     * @param tst The test to check
      */
-    NotContainsTestWord(final TestCase test) {
-        this.test = test;
+    RulePresentSimpleMl(final POSTaggerME tagger, final TestCase tst) {
+        this.model = tagger;
+        this.test = tst;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            this::containsTest,
-            new WrongTestName(
-                this.test,
-                "test name doesn't have to contain the word 'test'"
+        final Tag[] parse = Tag.parse(
+            this.model.tag(
+                Stream
+                    .concat(
+                        Stream.of("It"),
+                        Arrays.stream(RulePresentSimpleMl.CAMEL.split(this.test.name()))
+                    ).map(s -> s.toLowerCase(Locale.ROOT))
+                    .toArray(String[]::new)
             )
-        ).complaints();
-    }
-
-    /**
-     * Is contains the 'test' word.
-     *
-     * @return The result
-     */
-    private boolean containsTest() {
-        return Stream.of("test", "TEST", "Test").anyMatch(this.test.name()::contains);
+        );
+        final Collection<Complaint> res;
+        if (parse[1].isVerb()) {
+            res = Collections.emptyList();
+        } else {
+            res = Collections.singleton(
+                new WrongTestName(
+                    this.test,
+                    "Test name should start with a verb"
+                )
+            );
+        }
+        return res;
     }
 }

@@ -33,16 +33,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * Test for {@link NotContainsTestWord}.
+ * Test for {@link RuleNotContainsTestWord}.
  * @since 0.2.0
  */
-class NotContainsTestWordTest {
+class RuleNotContainsTestWordTest {
 
     @ParameterizedTest
     @MethodSource("cases")
     void checksSeveralNames(final TestCase test, final boolean empty) {
         MatcherAssert.assertThat(
-            new NotContainsTestWord(test).complaints().isEmpty(),
+            new RuleNotContainsTestWord(test).complaints().isEmpty(),
             Matchers.equalTo(empty)
         );
     }
@@ -50,18 +50,18 @@ class NotContainsTestWordTest {
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> cases() {
         return Stream.of(
-            NotContainsTestWordTest.args("test", false),
-            NotContainsTestWordTest.args("TEST", false),
-            NotContainsTestWordTest.args("Test", false),
-            NotContainsTestWordTest.args("tesT", true),
-            NotContainsTestWordTest.args("teSt", true),
-            NotContainsTestWordTest.args("tSst", true),
-            NotContainsTestWordTest.args("tESt", true),
-            NotContainsTestWordTest.args("tEsT", true),
-            NotContainsTestWordTest.args("tEST", true),
-            NotContainsTestWordTest.args("executesTo", true),
-            NotContainsTestWordTest.args("createsTo", true),
-            NotContainsTestWordTest.args("executesTO", true)
+            RuleNotContainsTestWordTest.args("test", false),
+            RuleNotContainsTestWordTest.args("TEST", false),
+            RuleNotContainsTestWordTest.args("Test", false),
+            RuleNotContainsTestWordTest.args("tesT", true),
+            RuleNotContainsTestWordTest.args("teSt", true),
+            RuleNotContainsTestWordTest.args("tSst", true),
+            RuleNotContainsTestWordTest.args("tESt", true),
+            RuleNotContainsTestWordTest.args("tEsT", true),
+            RuleNotContainsTestWordTest.args("tEST", true),
+            RuleNotContainsTestWordTest.args("executesTo", true),
+            RuleNotContainsTestWordTest.args("createsTo", true),
+            RuleNotContainsTestWordTest.args("executesTO", true)
         );
     }
 

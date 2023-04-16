@@ -27,42 +27,62 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import java.util.Arrays;
+import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 /**
- * The rule checks if test case in present simple.
+ * Rule to check test case on not spam.
  *
  * @since 0.1.0
  */
-public final class PresentSimpleRule implements Rule {
+public final class RuleNotSpam implements Rule {
 
     /**
-     * The rules.
+     * The test case.
      */
-    private final Collection<Rule> all;
+    private final TestCase test;
 
     /**
      * Ctor.
      *
-     * @param test The test case to check
+     * @param test The test case
      */
-    PresentSimpleRule(final TestCase test) {
-        this.all = Arrays.asList(
-            new NotCamelCase(test),
-            new NotContainsTestWord(test),
-            new NotSpam(test),
-            new NotUsesSpecialCharacters(test),
-            new PresentTense(test)
-        );
+    RuleNotSpam(final TestCase test) {
+        this.test = test;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return this.all.stream()
-            .map(Rule::complaints)
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
+        return new RuleConditional(
+            () -> !this.notSpam(),
+            new WrongTestName(
+                this.test,
+                "test name doesn't have to contain duplicated symbols"
+            )
+        ).complaints();
+    }
+
+    /**
+     * Check symbols duplication in test case name.
+     *
+     * @return The result
+     * @checkstyle ReturnCountCheck (30 lines)
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    private boolean notSpam() {
+        int stack = 0;
+        char prev = '!';
+        for (final char chr : this.test.name().toCharArray()) {
+            if (chr == prev) {
+                ++stack;
+            } else {
+                stack = 0;
+                prev = chr;
+            }
+            if (stack > 2) {
+                return false;
+            }
+        }
+        return true;
     }
 }

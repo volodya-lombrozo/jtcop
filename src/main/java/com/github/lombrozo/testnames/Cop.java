@@ -23,8 +23,8 @@
  */
 package com.github.lombrozo.testnames;
 
-import com.github.lombrozo.testnames.rules.AllTestsHaveProductionClassRule;
-import com.github.lombrozo.testnames.rules.AllTestsInPresentSimple;
+import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
+import com.github.lombrozo.testnames.rules.RuleAllTestsInPresentSimple;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -59,11 +59,11 @@ final class Cop {
      */
     Collection<Complaint> inspection() {
         final Collection<Complaint> res = new ArrayList<>(
-            new AllTestsHaveProductionClassRule(this.project).complaints()
+            new RuleAllTestsHaveProductionClass(this.project).complaints()
         );
         final List<Complaint> list = this.project.testClasses().stream()
-            .map(AllTestsInPresentSimple::new)
-            .map(AllTestsInPresentSimple::complaints)
+            .map(RuleAllTestsInPresentSimple::new)
+            .map(RuleAllTestsInPresentSimple::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
         res.addAll(list);

@@ -31,11 +31,11 @@ import com.github.lombrozo.testnames.complaints.WrongTestName;
 import java.util.Collection;
 
 /**
- * Rule to check test case on not camel case name.
+ * The rule checks if test case in present tense.
  *
  * @since 0.1.0
  */
-public final class NotCamelCase implements Rule {
+public final class RulePresentTense implements Rule {
 
     /**
      * The test case.
@@ -45,40 +45,40 @@ public final class NotCamelCase implements Rule {
     /**
      * Ctor.
      *
-     * @param test The test case
+     * @param tst The test case to check
      */
-    NotCamelCase(final TestCase test) {
-        this.test = test;
+    RulePresentTense(final TestCase tst) {
+        this.test = tst;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            this::notCamelCase,
+        return new RuleConditional(
+            () -> !this.presentTense(),
             new WrongTestName(
                 this.test,
-                "test has to be written by using Camel Case"
+                "the test name has to be written using present tense"
             )
         ).complaints();
     }
 
     /**
-     * Is not in camel case.
+     * Is test case name in present tense.
      *
      * @return The result
-     * @checkstyle ReturnCountCheck (15 lines)
+     * @checkstyle ReturnCountCheck (20 lines)
      */
     @SuppressWarnings("PMD.OnlyOneReturn")
-    private boolean notCamelCase() {
-        int stack = 0;
-        for (final char chr : this.test.name().toCharArray()) {
-            if (Character.isUpperCase(chr) && stack == 0) {
-                return true;
-            } else if (stack != 0) {
-                stack = 0;
+    private boolean presentTense() {
+        final char[] chars = this.test.name().toCharArray();
+        char prev = '!';
+        for (final char chr : chars) {
+            if (Character.isUpperCase(chr)) {
+                return prev == 's';
+            } else {
+                prev = chr;
             }
-            ++stack;
         }
-        return false;
+        return prev == 's';
     }
 }

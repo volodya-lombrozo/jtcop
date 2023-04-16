@@ -36,16 +36,16 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for {@link AllTestsHaveProductionClassRule}.
+ * Test class for {@link RuleAllTestsHaveProductionClass}.
  *
  * @since 0.2
  */
-final class AllTestsHaveProductionClassRuleTest {
+final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void checksThatAllHaveCorrespondingProductionClass() {
         MatcherAssert.assertThat(
-            new AllTestsHaveProductionClassRule(
+            new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Identical"),
                     new TestClass.Fake("IdenticalTest", new TestCase.Fake())
@@ -58,7 +58,7 @@ final class AllTestsHaveProductionClassRuleTest {
     @Test
     void checksThatClassHasCorrespondingProductionClassWithExtension() {
         MatcherAssert.assertThat(
-            new AllTestsHaveProductionClassRule(
+            new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Hello.java"),
                     new TestClass.Fake("HelloTest.java")
@@ -70,7 +70,7 @@ final class AllTestsHaveProductionClassRuleTest {
 
     @Test
     void checksThatDoesNotHaveCorrespondingProductionClass() {
-        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+        final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(new TestClass.Fake())
         ).complaints();
         MatcherAssert.assertThat(
@@ -88,7 +88,7 @@ final class AllTestsHaveProductionClassRuleTest {
     @Test
     void filtersPackageInfoProductionClasses() {
         final String info = "package-info.java";
-        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+        final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(
                 new ProductionClass.Fake(info),
                 new ProductionClass.Fake(info),
@@ -104,7 +104,7 @@ final class AllTestsHaveProductionClassRuleTest {
     @Test
     void filtersPackageInfoClasses() {
         final String info = "package-info.java";
-        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+        final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(
                 new TestClass.Fake(info),
                 new TestClass.Fake(info),
@@ -120,7 +120,7 @@ final class AllTestsHaveProductionClassRuleTest {
     @Test
     void handlesClassesWithTheSameNames() {
         final String name = "Hello";
-        final Collection<Complaint> complaints = new AllTestsHaveProductionClassRule(
+        final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(
                 Arrays.asList(new ProductionClass.Fake(name), new ProductionClass.Fake(name)),
                 Collections.singleton(new TestClass.Fake("HelloTest"))

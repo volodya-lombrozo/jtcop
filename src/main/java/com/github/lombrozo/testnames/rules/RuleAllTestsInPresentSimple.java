@@ -21,52 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.complaints.ClassComplaint;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.function.Supplier;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Utility rule that checks condition and returns complaints if condition is true.
+ * The rule to check all tests on {@link RulePresentSimple}.
  *
- * @since 0.2
+ * @since 0.1.0
  */
-public final class ConditionalRule implements Rule {
+public final class RuleAllTestsInPresentSimple implements Rule {
 
     /**
-     * Condition to check.
+     * All test cases.
      */
-    private final Supplier<Boolean> predicate;
+    private final TestClass tests;
 
     /**
-     * Complaints to return if condition is true.
+     * Ctor.
+     *
+     * @param cases The cases to check
      */
-    private final Complaint complaint;
-
-    /**
-     * Creates ConditionalRule with given predicate and complaint.
-     * @param check Condition to check
-     * @param warning Complaint to return if condition is true
-     */
-    ConditionalRule(
-        final Supplier<Boolean> check,
-        final Complaint warning
-    ) {
-        this.predicate = check;
-        this.complaint = warning;
+    public RuleAllTestsInPresentSimple(final TestClass cases) {
+        this.tests = cases;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        final Collection<Complaint> res;
-        if (this.predicate.get()) {
-            res = Collections.singleton(this.complaint);
+        final List<Complaint> list = this.tests.all().stream()
+            .map(RulePresentSimple::new)
+            .map(RulePresentSimple::complaints)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
+        final Collection<Complaint> result;
+        if (list.isEmpty()) {
+            result = Collections.emptyList();
         } else {
-            res = Collections.emptyList();
+            result = Collections.singleton(new ClassComplaint(this.tests, list));
         }
-        return res;
+        return result;
     }
 }

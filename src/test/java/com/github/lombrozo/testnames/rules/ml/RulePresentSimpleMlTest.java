@@ -34,12 +34,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 /**
- * Tests for {@link PresentSimpleMlRule}.
+ * Tests for {@link RulePresentSimpleMl}.
  *
  * @since 0.10
  */
 @Disabled
-class PresentSimpleMlRuleTest {
+class RulePresentSimpleMlTest {
 
     /**
      * Model for tests.
@@ -48,7 +48,7 @@ class PresentSimpleMlRuleTest {
 
     @BeforeAll
     static void setUp() throws IOException {
-        PresentSimpleMlRuleTest.model = new POSTaggerME(new ModelSourceInternet().model());
+        RulePresentSimpleMlTest.model = new POSTaggerME(new ModelSourceInternet().model());
     }
 
     @CsvSource({
@@ -81,8 +81,8 @@ class PresentSimpleMlRuleTest {
     @ParameterizedTest
     void checksCorrectNames(final String name) {
         MatcherAssert.assertThat(
-            new PresentSimpleMlRule(
-                PresentSimpleMlRuleTest.model,
+            new RulePresentSimpleMl(
+                RulePresentSimpleMlTest.model,
                 new TestCase.Fake(name)
             ).complaints(),
             Matchers.empty()
@@ -105,8 +105,8 @@ class PresentSimpleMlRuleTest {
     @ParameterizedTest
     void checksWrongNames(final String name) {
         MatcherAssert.assertThat(
-            new PresentSimpleMlRule(
-                PresentSimpleMlRuleTest.model,
+            new RulePresentSimpleMl(
+                RulePresentSimpleMlTest.model,
                 new TestCase.Fake(name)
             ).complaints(),
             Matchers.not(Matchers.empty())

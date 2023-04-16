@@ -27,47 +27,42 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
- * The rule to check if test name uses special chars.
+ * The rule checks if test case in present simple.
  *
  * @since 0.1.0
  */
-public final class NotUsesSpecialCharacters implements Rule {
+public final class RulePresentSimple implements Rule {
 
     /**
-     * The test case.
+     * The rules.
      */
-    private final TestCase test;
+    private final Collection<Rule> all;
 
     /**
      * Ctor.
      *
      * @param test The test case to check
      */
-    NotUsesSpecialCharacters(final TestCase test) {
-        this.test = test;
+    RulePresentSimple(final TestCase test) {
+        this.all = Arrays.asList(
+            new RuleNotCamelCase(test),
+            new RuleNotContainsTestWord(test),
+            new RuleNotSpam(test),
+            new RuleNotUsesSpecialCharacters(test),
+            new RulePresentTense(test)
+        );
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return new ConditionalRule(
-            this::usesSpecialCharacters,
-            new WrongTestName(
-                this.test,
-                "test name shouldn't contain special characters like '$' or '_'"
-            )
-        ).complaints();
-    }
-
-    /**
-     * Is contain special chars.
-     *
-     * @return The result
-     */
-    private boolean usesSpecialCharacters() {
-        return this.test.name().contains("$") || this.test.name().contains("_");
+        return this.all.stream()
+            .map(Rule::complaints)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
     }
 }
