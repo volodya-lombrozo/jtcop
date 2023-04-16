@@ -40,7 +40,12 @@ class TestCaseJavaParserTest {
     void convertsToString() {
         MatcherAssert.assertThat(
             new TestCaseJavaParser("name", Paths.get(".")).toString(),
-            Matchers.equalTo("JavaParserTestCase(title=name, file=.)")
+            Matchers.equalTo(
+                String.format(
+                    "%s(title=name, file=.)",
+                    TestCaseJavaParser.class.getSimpleName()
+                )
+            )
         );
     }
 
