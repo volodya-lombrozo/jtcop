@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The cop that checks the project.
@@ -53,20 +54,16 @@ final class Cop {
     /**
      * Checks the project.
      * @return The complaints.
-     * @todo #1:90min Simplify Cop.inspection() method.
-     *  We can have no indents here. In order to refactor this we can add more methods or re-design
-     *  the current solution.
      */
     Collection<Complaint> inspection() {
-        final Collection<Complaint> res = new ArrayList<>(
-            new RuleAllTestsHaveProductionClass(this.project).complaints()
-        );
-        final List<Complaint> list = this.project.testClasses().stream()
-            .map(RuleAllTestsInPresentSimple::new)
-            .map(RuleAllTestsInPresentSimple::complaints)
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
-        res.addAll(list);
-        return res;
+        return Stream.concat(
+            new RuleAllTestsHaveProductionClass(this.project)
+                .complaints()
+                .stream(),
+            this.project.testClasses().stream()
+                .map(RuleAllTestsInPresentSimple::new)
+                .map(RuleAllTestsInPresentSimple::complaints)
+                .flatMap(Collection::stream)
+        ).collect(Collectors.toList());
     }
 }
