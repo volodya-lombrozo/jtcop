@@ -47,7 +47,7 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.1.0
  */
-public final class JavaParserTestClass implements TestClass {
+public final class TestClassJavaParser implements TestClass {
 
     /**
      * Path to java class.
@@ -63,31 +63,31 @@ public final class JavaParserTestClass implements TestClass {
     /**
      * Ctor.
      *
-     * @param file Path to the class
+     * @param klass Path to the class
      */
-    public JavaParserTestClass(final Path file) {
-        this(file, new Sticky<>(() -> StaticJavaParser.parse(file)));
+    TestClassJavaParser(final Path klass) {
+        this(klass, new Sticky<>(() -> StaticJavaParser.parse(klass)));
     }
 
     /**
      * Ctor.
      *
-     * @param file Path to the class
+     * @param klass Path to the class
      * @param stream Parsed Java class
      */
-    JavaParserTestClass(final Path file, final InputStream stream) {
-        this(file, new Sticky<>(() -> StaticJavaParser.parse(stream)));
+    TestClassJavaParser(final Path klass, final InputStream stream) {
+        this(klass, new Sticky<>(() -> StaticJavaParser.parse(stream)));
     }
 
     /**
      * Ctor.
      *
-     * @param path Path to the class
-     * @param unit Parsed class.
+     * @param klass Path to the class
+     * @param parsed Parsed class.
      */
-    private JavaParserTestClass(final Path path, final Sticky<? extends CompilationUnit> unit) {
-        this.path = path;
-        this.unit = new Unchecked<>(unit);
+    private TestClassJavaParser(final Path klass, final Sticky<? extends CompilationUnit> parsed) {
+        this.path = klass;
+        this.unit = new Unchecked<>(parsed);
     }
 
     @Override
@@ -101,7 +101,7 @@ public final class JavaParserTestClass implements TestClass {
             return this.unit.value()
                 .getChildNodes()
                 .stream()
-                .filter(JavaParserTestClass::isTestClass)
+                .filter(TestClassJavaParser::isTestClass)
                 .flatMap(this::testCases)
                 .collect(Collectors.toList());
         } catch (final UncheckedIOException | ParseProblemException ex) {
@@ -123,13 +123,13 @@ public final class JavaParserTestClass implements TestClass {
      * @param node The child node.
      * @return Stream of test cases.
      */
-    private Stream<JavaParserTestCase> testCases(final Node node) {
-        final NodeWithMembers<ClassOrInterfaceDeclaration> clazz = (NodeWithMembers) node;
-        return clazz.getMethods()
+    private Stream<TestCaseJavaParser> testCases(final Node node) {
+        return ((NodeWithMembers<ClassOrInterfaceDeclaration>) node)
+            .getMethods()
             .stream()
-            .filter(JavaParserTestClass::isTest)
+            .filter(TestClassJavaParser::isTest)
             .map(
-                method -> new JavaParserTestCase(
+                method -> new TestCaseJavaParser(
                     method.getNameAsString(),
                     this.path
                 )

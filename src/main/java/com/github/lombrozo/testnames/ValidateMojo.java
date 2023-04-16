@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames;
 
-import com.github.lombrozo.testnames.complaints.ComplexComplaint;
-import com.github.lombrozo.testnames.javaparser.JavaParserProject;
+import com.github.lombrozo.testnames.complaints.ComplaintCompound;
+import com.github.lombrozo.testnames.javaparser.ProjectJavaParser;
 import java.nio.file.Paths;
 import java.util.Collection;
 import org.apache.maven.plugin.AbstractMojo;
@@ -61,13 +61,13 @@ public final class ValidateMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoFailureException {
         final Collection<Complaint> complaints = new Cop(
-            new JavaParserProject(
+            new ProjectJavaParser(
                 Paths.get(this.project.getCompileSourceRoots().get(0)),
                 Paths.get(this.project.getTestCompileSourceRoots().get(0))
             )
         ).inspection();
         if (!complaints.isEmpty() && this.failOnError) {
-            throw new MojoFailureException(new ComplexComplaint(complaints).message());
+            throw new MojoFailureException(new ComplaintCompound(complaints).message());
         } else if (!complaints.isEmpty()) {
             complaints.forEach(complaint -> this.getLog().warn(complaint.message()));
         }

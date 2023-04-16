@@ -21,33 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.ProductionClass;
+import com.github.lombrozo.testnames.TestCase;
 import java.nio.file.Path;
+import lombok.Data;
 
 /**
- * The production class that is represented by JavaParser.
+ * Parser for test case.
  *
- * @since 0.2
+ * @since 0.1.0
  */
-public final class JavaParserProductionClass implements ProductionClass {
+@Data
+final class TestCaseJavaParser implements TestCase {
 
     /**
-     * The path to production class.
+     * The name of test case.
      */
-    private final Path path;
+    private final String title;
 
     /**
-     * Primary ctor.
-     * @param path The path to production class.
+     * The path.
      */
-    public JavaParserProductionClass(final Path path) {
-        this.path = path;
+    private final Path file;
+
+    /**
+     * Ctor.
+     *
+     * @param name The test case name
+     * @param path The path
+     * @checkstyle ParameterNameCheck (6 lines)
+     */
+    TestCaseJavaParser(final String name, final Path path) {
+        this.title = name;
+        this.file = path;
     }
 
     @Override
     public String name() {
-        return this.path.getFileName().toString();
+        return this.title;
     }
+
 }

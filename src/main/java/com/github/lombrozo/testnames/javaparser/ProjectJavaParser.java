@@ -39,7 +39,7 @@ import java.util.stream.Stream;
  *
  * @since 0.2
  */
-public final class JavaParserProject implements Project {
+public final class ProjectJavaParser implements Project {
 
     /**
      * The main path where production classes are placed.
@@ -56,7 +56,7 @@ public final class JavaParserProject implements Project {
      * @param main The main path where production classes are placed.
      * @param test The test path where test classes are placed.
      */
-    public JavaParserProject(final Path main, final Path test) {
+    public ProjectJavaParser(final Path main, final Path test) {
         this.main = main;
         this.test = test;
     }
@@ -70,7 +70,7 @@ public final class JavaParserProject implements Project {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .map(JavaParserProductionClass::new)
+                    .map(ProductionClassJavaParser::new)
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);
@@ -90,7 +90,7 @@ public final class JavaParserProject implements Project {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .map(JavaParserTestClass::new)
+                    .map(TestClassJavaParser::new)
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);

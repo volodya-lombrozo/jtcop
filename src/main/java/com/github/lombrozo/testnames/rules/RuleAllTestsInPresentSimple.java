@@ -27,7 +27,7 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ClassComplaint;
+import com.github.lombrozo.testnames.complaints.ComplaintClass;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -65,7 +65,7 @@ public final class RuleAllTestsInPresentSimple implements Rule {
         if (list.isEmpty()) {
             result = Collections.emptyList();
         } else {
-            result = Collections.singleton(new ClassComplaint(this.tests, list));
+            result = Collections.singleton(new ComplaintClass(this.tests, list));
         }
         return result;
     }

@@ -24,34 +24,38 @@
 package com.github.lombrozo.testnames.complaints;
 
 import com.github.lombrozo.testnames.Complaint;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import com.github.lombrozo.testnames.TestClass;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 /**
- * Complex complaint that aggregates several complaints.
- *
- * @since 0.2.0
+ * Test cases for {@link ComplaintClass}.
+ * @since 0.2
  */
-public final class ComplexComplaint implements Complaint {
+class ComplaintClassTest {
 
-    /**
-     * The complaints.
-     */
-    private final Collection<? extends Complaint> complaints;
-
-    /**
-     * Ctor.
-     *
-     * @param all The complaints
-     */
-    public ComplexComplaint(final Collection<? extends Complaint> all) {
-        this.complaints = all;
+    @Test
+    void returnsSimpleMessageIfDoesNotHaveComplaints() {
+        MatcherAssert.assertThat(
+            new ComplaintClass(new TestClass.Fake()).message(),
+            Matchers.equalTo(
+                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information."
+            )
+        );
     }
 
-    @Override
-    public String message() {
-        return this.complaints.stream()
-            .map(Complaint::message)
-            .collect(Collectors.joining("\n", "\n", ""));
+    @Test
+    void returnsCompoundMessageIfHasSeveralComplaints() {
+        MatcherAssert.assertThat(
+            new ComplaintClass(
+                new TestClass.Fake(),
+                new Complaint.Text("haha"),
+                new Complaint.Text("haha")
+            ).message(),
+            Matchers.equalTo(
+                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.\n\t1) haha\n\t2) haha"
+            )
+        );
     }
 }

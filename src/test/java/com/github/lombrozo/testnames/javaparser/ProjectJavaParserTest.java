@@ -36,17 +36,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests for {@link JavaParserProject}.
+ * Tests for {@link ProjectJavaParser}.
  *
  * @since 0.2
  */
-final class JavaParserProjectTest {
+final class ProjectJavaParserTest {
 
     @Test
     void returnsProductionClasses(@TempDir final Path tmp) throws IOException {
         final String name = "ProductionClass.java";
         Files.write(tmp.resolve(name), "".getBytes(StandardCharsets.UTF_8));
-        final Collection<ProductionClass> classes = new JavaParserProject(
+        final Collection<ProductionClass> classes = new ProjectJavaParser(
             tmp,
             tmp
         ).productionClasses();
@@ -64,7 +64,7 @@ final class JavaParserProjectTest {
     void returnsNotProductionClasses(@TempDir final Path tmp) throws IOException {
         final String name = "TestClass.java";
         Files.write(tmp.resolve(name), "".getBytes(StandardCharsets.UTF_8));
-        final Collection<TestClass> classes = new JavaParserProject(
+        final Collection<TestClass> classes = new ProjectJavaParser(
             tmp,
             tmp
         ).testClasses();

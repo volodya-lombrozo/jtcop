@@ -21,26 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.javaparser;
+package com.github.lombrozo.testnames.complaints;
 
-import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.TestCase;
+import lombok.ToString;
 
 /**
- * Test for {@link JavaParserProductionClass}.
+ * When test name is wrong.
  *
  * @since 0.2
  */
-class JavaParserProductionClassTest {
+@ToString
+public final class ComplaintWrongTestName implements Complaint {
 
-    @Test
-    void returnsName() {
-        final String name = "SomeJava.java";
-        MatcherAssert.assertThat(
-            new JavaParserProductionClass(Paths.get(name)).name(),
-            Matchers.equalTo(name)
+    /**
+     * The test case.
+     */
+    private final TestCase test;
+
+    /**
+     * The complaint message.
+     */
+    private final String explanation;
+
+    /**
+     * Ctor.
+     * @param tcase The tcase case
+     * @param expl The explanation of the complaint
+     */
+    public ComplaintWrongTestName(
+        final TestCase tcase,
+        final String expl
+    ) {
+        this.test = tcase;
+        this.explanation = expl;
+    }
+
+    @Override
+    public String message() {
+        return String.format(
+            "Test name '%s' doesn't follow naming rules, because %s",
+            this.test.name(),
+            this.explanation
         );
     }
 }

@@ -25,9 +25,7 @@ package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleAllTestsInPresentSimple;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

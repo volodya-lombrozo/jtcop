@@ -21,49 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestCase;
-import lombok.ToString;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 /**
- * When test name is wrong.
+ * Test case for {@link TestCaseJavaParser}.
  *
  * @since 0.2
  */
-@ToString
-public final class WrongTestName implements Complaint {
+class TestCaseJavaParserTest {
 
-    /**
-     * The test case.
-     */
-    private final TestCase test;
-
-    /**
-     * The complaint message.
-     */
-    private final String explanation;
-
-    /**
-     * Ctor.
-     * @param test The test case
-     * @param explanation The explanation of the complaint
-     */
-    public WrongTestName(
-        final TestCase test,
-        final String explanation
-    ) {
-        this.test = test;
-        this.explanation = explanation;
+    @Test
+    void convertsToString() {
+        MatcherAssert.assertThat(
+            new TestCaseJavaParser("name", Paths.get(".")).toString(),
+            Matchers.equalTo("JavaParserTestCase(title=name, file=.)")
+        );
     }
 
-    @Override
-    public String message() {
-        return String.format(
-            "Test name '%s' doesn't follow naming rules, because %s",
-            this.test.name(),
-            this.explanation
+    @Test
+    void hasTheSameHashCode() {
+        final String name = "nm";
+        final Path path = Paths.get("./.");
+        MatcherAssert.assertThat(
+            new TestCaseJavaParser(name, path).hashCode(),
+            Matchers.is(new TestCaseJavaParser(name, path).hashCode())
+        );
+    }
+
+    @Test
+    void equalsIfBothTheSame() {
+        final String name = "nme";
+        final Path path = Paths.get("././.");
+        MatcherAssert.assertThat(
+            new TestCaseJavaParser(name, path),
+            Matchers.equalTo(new TestCaseJavaParser(name, path))
         );
     }
 }

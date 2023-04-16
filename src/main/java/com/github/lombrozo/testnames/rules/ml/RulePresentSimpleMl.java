@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames.rules.ml;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.WrongTestName;
+import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -84,7 +84,7 @@ public final class RulePresentSimpleMl implements Rule {
             res = Collections.emptyList();
         } else {
             res = Collections.singleton(
-                new WrongTestName(
+                new ComplaintWrongTestName(
                     this.test,
                     "Test name should start with a verb"
                 )

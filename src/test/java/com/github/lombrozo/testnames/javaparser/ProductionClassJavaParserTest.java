@@ -21,41 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.complaints;
+package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestClass;
+import java.nio.file.Paths;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test cases for {@link ClassComplaint}.
+ * Test for {@link ProductionClassJavaParser}.
+ *
  * @since 0.2
  */
-class ClassComplaintTest {
+class ProductionClassJavaParserTest {
 
     @Test
-    void returnsSimpleMessageIfDoesNotHaveComplaints() {
+    void returnsName() {
+        final String name = "SomeJava.java";
         MatcherAssert.assertThat(
-            new ClassComplaint(new TestClass.Fake()).message(),
-            Matchers.equalTo(
-                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information."
-            )
-        );
-    }
-
-    @Test
-    void returnsCompoundMessageIfHasSeveralComplaints() {
-        MatcherAssert.assertThat(
-            new ClassComplaint(
-                new TestClass.Fake(),
-                new Complaint.Text("haha"),
-                new Complaint.Text("haha")
-            ).message(),
-            Matchers.equalTo(
-                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.\n\t1) haha\n\t2) haha"
-            )
+            new ProductionClassJavaParser(Paths.get(name)).name(),
+            Matchers.equalTo(name)
         );
     }
 }

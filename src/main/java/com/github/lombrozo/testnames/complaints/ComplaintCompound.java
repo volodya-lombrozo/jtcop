@@ -21,46 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.javaparser;
+package com.github.lombrozo.testnames.complaints;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import com.github.lombrozo.testnames.Complaint;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
- * Test case for {@link JavaParserTestCase}.
+ * Complex complaint that aggregates several complaints.
  *
- * @since 0.2
+ * @since 0.2.0
  */
-class JavaParserTestCaseTest {
+public final class ComplaintCompound implements Complaint {
 
-    @Test
-    void convertsToString() {
-        MatcherAssert.assertThat(
-            new JavaParserTestCase("name", Paths.get(".")).toString(),
-            Matchers.equalTo("JavaParserTestCase(title=name, file=.)")
-        );
+    /**
+     * The complaints.
+     */
+    private final Collection<? extends Complaint> complaints;
+
+    /**
+     * Ctor.
+     *
+     * @param all The complaints
+     */
+    public ComplaintCompound(final Collection<? extends Complaint> all) {
+        this.complaints = all;
     }
 
-    @Test
-    void hasTheSameHashCode() {
-        final String name = "nm";
-        final Path path = Paths.get("./.");
-        MatcherAssert.assertThat(
-            new JavaParserTestCase(name, path).hashCode(),
-            Matchers.is(new JavaParserTestCase(name, path).hashCode())
-        );
-    }
-
-    @Test
-    void equalsIfBothTheSame() {
-        final String name = "nme";
-        final Path path = Paths.get("././.");
-        MatcherAssert.assertThat(
-            new JavaParserTestCase(name, path),
-            Matchers.equalTo(new JavaParserTestCase(name, path))
-        );
+    @Override
+    public String message() {
+        return this.complaints.stream()
+            .map(Complaint::message)
+            .collect(Collectors.joining("\n", "\n", ""));
     }
 }

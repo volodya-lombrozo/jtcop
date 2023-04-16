@@ -35,25 +35,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link JavaParserTestClass}.
+ * Test case for {@link TestClassJavaParser}.
  *
  * @since 0.1.0
  */
-final class JavaParserTestClassTest {
+final class TestClassJavaParserTest {
 
     @Test
     void getsNames(@TempDir final Path temp) throws Exception {
         MatcherAssert.assertThat(
-            new JavaParserTestClass(temp, new ResourceOf("TestSimple.java").stream()).all(),
+            new TestClassJavaParser(temp, new ResourceOf("TestSimple.java").stream()).all(),
             Matchers.containsInAnyOrder(
-                new JavaParserTestCase(
+                new TestCaseJavaParser(
                     "creates",
                     temp
-                ), new JavaParserTestCase(
+                ), new TestCaseJavaParser(
                     "removes",
                     temp
                 ),
-                new JavaParserTestCase(
+                new TestCaseJavaParser(
                     "updates",
                     temp
                 )
@@ -64,7 +64,7 @@ final class JavaParserTestClassTest {
     @Test
     void returnsEmptyListIfItDoesNotHaveAnyCases(@TempDir final Path temp) throws Exception {
         MatcherAssert.assertThat(
-            new JavaParserTestClass(temp, new ResourceOf("TestWithoutTests.java").stream()).all(),
+            new TestClassJavaParser(temp, new ResourceOf("TestWithoutTests.java").stream()).all(),
             Matchers.empty()
         );
     }
@@ -72,11 +72,11 @@ final class JavaParserTestClassTest {
     @Test
     void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
         final String java = "TestParameterized.java";
-        final TestClass cases = new JavaParserTestClass(temp, new ResourceOf(java).stream());
+        final TestClass cases = new TestClassJavaParser(temp, new ResourceOf(java).stream());
         MatcherAssert.assertThat(
             cases.all(),
             Matchers.containsInAnyOrder(
-                new JavaParserTestCase(
+                new TestCaseJavaParser(
                     "checksCases",
                     temp
                 )
@@ -88,7 +88,7 @@ final class JavaParserTestClassTest {
     void throwsExceptionIfFileNotFound(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaParserTestClass(temp.resolve("TestNotFound.java")).all()
+            () -> new TestClassJavaParser(temp.resolve("TestNotFound.java")).all()
         );
     }
 
@@ -96,7 +96,7 @@ final class JavaParserTestClassTest {
     void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaParserTestClass(temp, new InputStreamOf("Not Java")).all()
+            () -> new TestClassJavaParser(temp, new InputStreamOf("Not Java")).all()
         );
     }
 
