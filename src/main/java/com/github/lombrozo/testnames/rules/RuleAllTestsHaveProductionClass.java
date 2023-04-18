@@ -38,6 +38,10 @@ import java.util.stream.Collectors;
  * The rule that checks that all tests have production class.
  *
  * @since 0.2
+ * @todo #1:30min Add documentation for RuleAllTestsHaveProductionClass rule.
+ *  We have to add documentation to that rule and place it under the docs/rules directory.
+ *  The documentation should contain the rule description, examples of correct and incorrect
+ *  test class names.
  */
 public final class RuleAllTestsHaveProductionClass implements Rule {
 
