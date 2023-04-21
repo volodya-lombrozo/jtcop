@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.scalar.Sticky;
@@ -115,6 +116,11 @@ public final class TestClassJavaParser implements TestClass {
     @Override
     public Path path() {
         return this.path;
+    }
+
+    @Override
+    public Collection<String> suppressed() {
+        return Collections.emptyList();
     }
 
     /**
