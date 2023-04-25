@@ -106,7 +106,7 @@ final class TestClassJavaParserTest {
         MatcherAssert.assertThat(
             new TestClassJavaParser(
                 path,
-                new ResourceOf("TestWithSuppressed.java").stream()
+                new ResourceOf("TestSimple.java").stream()
             ).suppressed(),
             Matchers.empty()
         );
