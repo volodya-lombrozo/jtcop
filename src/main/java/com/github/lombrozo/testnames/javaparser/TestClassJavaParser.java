@@ -28,11 +28,8 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations;
@@ -43,7 +40,7 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.scalar.Sticky;
@@ -134,6 +131,11 @@ public final class TestClassJavaParser implements TestClass {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves annotation values from the node.
+     * @param node JavaParser node.
+     * @return Stream of annotation values.
+     */
     private static Stream<String> annotations(final Node node) {
         final Stream<String> result;
         if (node instanceof NodeWithAnnotations<?>) {
@@ -151,12 +153,22 @@ public final class TestClassJavaParser implements TestClass {
         return result;
     }
 
+    /**
+     * Retrieves annotation value from single member expression.
+     * @param expr Single member expression.
+     * @return Annotation value.
+     */
     private static String annotationValue(final SingleMemberAnnotationExpr expr) {
         return expr.getMemberValue().asStringLiteralExpr().asString();
     }
 
-    private static boolean isJtcopAnnotation(String value) {
-        return value.toUpperCase().startsWith("JTCOP.");
+    /**
+     * Checks whether annotation is related to Jtcop.
+     * @param value Annotation value.
+     * @return True if Jtcop annotation.
+     */
+    private static boolean isJtcopAnnotation(final String value) {
+        return value.toUpperCase(Locale.ROOT).startsWith("JTCOP.");
     }
 
     /**
