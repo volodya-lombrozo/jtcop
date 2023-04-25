@@ -58,6 +58,12 @@ public interface TestClass {
     Path path();
 
     /**
+     * The suppressed rules.
+     * @return The suppressed rules.
+     */
+    Collection<String> suppressed();
+
+    /**
      * The fake test class.
      *
      * @since 0.2
@@ -115,6 +121,11 @@ public interface TestClass {
         @Override
         public Path path() {
             return Paths.get(this.name);
+        }
+
+        @Override
+        public Collection<String> suppressed() {
+            return Collections.emptyList();
         }
     }
 }

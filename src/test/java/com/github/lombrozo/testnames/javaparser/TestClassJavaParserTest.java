@@ -24,8 +24,8 @@
 
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.TestClass;
 import java.nio.file.Path;
+import java.util.Collection;
 import org.cactoos.io.InputStreamOf;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
@@ -38,6 +38,9 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link TestClassJavaParser}.
  *
  * @since 0.1.0
+ * @todo #78:30min Add test cases and implementation for classes with several annotations.
+ *  We have to add test cases and handling logic for cases where class has several annotations and
+ *  one annotation has several different values.
  */
 final class TestClassJavaParserTest {
 
@@ -71,10 +74,11 @@ final class TestClassJavaParserTest {
 
     @Test
     void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
-        final String java = "TestParameterized.java";
-        final TestClass cases = new TestClassJavaParser(temp, new ResourceOf(java).stream());
         MatcherAssert.assertThat(
-            cases.all(),
+            new TestClassJavaParser(
+                temp,
+                new ResourceOf("TestParameterized.java").stream()
+            ).all(),
             Matchers.containsInAnyOrder(
                 new TestCaseJavaParser(
                     "checksCases",
@@ -100,4 +104,27 @@ final class TestClassJavaParserTest {
         );
     }
 
+    @Test
+    void returnsEmptyListOfSuppressedRules(@TempDir final Path path) throws Exception {
+        MatcherAssert.assertThat(
+            new TestClassJavaParser(
+                path,
+                new ResourceOf("TestSimple.java").stream()
+            ).suppressed(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void returnsNonEmptyListOfSuppressedRules(@TempDir final Path path) throws Exception {
+        final Collection<String> all = new TestClassJavaParser(
+            path,
+            new ResourceOf("TestWithSuppressed.java").stream()
+        ).suppressed();
+        MatcherAssert.assertThat(all, Matchers.hasSize(1));
+        MatcherAssert.assertThat(
+            all.iterator().next(),
+            Matchers.equalTo("RuleAllTestsHaveProductionClass")
+        );
+    }
 }

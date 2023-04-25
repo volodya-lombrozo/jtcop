@@ -24,68 +24,14 @@
 
 package com.github.lombrozo.testnames;
 
-import java.util.Collection;
-import java.util.Collections;
-import lombok.Data;
+@SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass")
+class TestWithoutTest {
 
-/**
- * The test case.
- *
- * @since 0.1.0
- */
-public interface TestCase {
+    @SuppressWarnings("JTCOP.RuleNotCamelCase")
+    void supressSSS() {
+    }
 
-    /**
-     * The name of test case.
-     *
-     * @return The name of test case as string.
-     */
-    String name();
-
-    /**
-     * The suppressed rules.
-     * @return The suppressed rules.
-     */
-    Collection<String> suppressed();
-
-    /**
-     * The fake test case.
-     *
-     * @since 0.1.0
-     */
-    @Data
-    final class Fake implements TestCase {
-
-        /**
-         * The name of test.
-         */
-        private final String name;
-
-        /**
-         * Ctor.
-         */
-        public Fake() {
-            this("FakeCase");
-        }
-
-        /**
-         * Primary ctor.
-         *
-         * @param name The name of test case
-         * @checkstyle ParameterNameCheck (6 lines)
-         */
-        public Fake(final String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String name() {
-            return this.name;
-        }
-
-        @Override
-        public Collection<String> suppressed() {
-            return Collections.emptyList();
-        }
+    @SuppressWarnings("JTCOP.RuleNotContainsTestWord")
+    void cheksTest() {
     }
 }

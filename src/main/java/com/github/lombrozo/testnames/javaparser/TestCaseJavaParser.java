@@ -26,6 +26,8 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.TestCase;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Collections;
 import lombok.Data;
 
 /**
@@ -61,6 +63,11 @@ final class TestCaseJavaParser implements TestCase {
     @Override
     public String name() {
         return this.title;
+    }
+
+    @Override
+    public Collection<String> suppressed() {
+        return Collections.emptyList();
     }
 
 }
