@@ -32,6 +32,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.lombrozo.testnames.TestCase;
@@ -107,7 +108,7 @@ public final class TestClassJavaParser implements TestClass {
                 .stream()
                 .filter(TestClassJavaParser::isTestClass)
                 .flatMap(this::testCases)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         } catch (final UncheckedIOException | ParseProblemException ex) {
             throw new IllegalStateException(
                 String.format("Failed to parse Java class by path %s", this.path),
@@ -128,7 +129,7 @@ public final class TestClassJavaParser implements TestClass {
             .stream()
             .filter(TestClassJavaParser::isTestClass)
             .flatMap(TestClassJavaParser::annotations)
-            .collect(Collectors.toList());
+            .collect(Collectors.toSet());
     }
 
     /**
@@ -143,7 +144,7 @@ public final class TestClassJavaParser implements TestClass {
                 .getAnnotations().stream()
                 .filter(Expression::isSingleMemberAnnotationExpr)
                 .map(Expression::asSingleMemberAnnotationExpr)
-                .map(TestClassJavaParser::annotationValue)
+                .flatMap(TestClassJavaParser::annotationValue)
                 .filter(TestClassJavaParser::isJtcopAnnotation)
                 .map(ann -> ann.substring(6))
                 .collect(Collectors.toList()).stream();
@@ -158,8 +159,21 @@ public final class TestClassJavaParser implements TestClass {
      * @param expr Single member expression.
      * @return Annotation value.
      */
-    private static String annotationValue(final SingleMemberAnnotationExpr expr) {
-        return expr.getMemberValue().asStringLiteralExpr().asString();
+    private static Stream<String> annotationValue(final SingleMemberAnnotationExpr expr) {
+        final Stream<String> result;
+        final Expression value = expr.getMemberValue();
+        if (value.isStringLiteralExpr()) {
+            result = Stream.of(value.asStringLiteralExpr().asString());
+        } else if (value.isArrayInitializerExpr()) {
+            result = value.asArrayInitializerExpr().getValues()
+                .stream()
+                .filter(Expression::isStringLiteralExpr)
+                .map(Expression::asStringLiteralExpr)
+                .map(StringLiteralExpr::asString);
+        } else {
+            result = Stream.empty();
+        }
+        return result;
     }
 
     /**

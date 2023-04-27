@@ -127,4 +127,22 @@ final class TestClassJavaParserTest {
             Matchers.equalTo("RuleAllTestsHaveProductionClass")
         );
     }
+
+    @Test
+    void parsesTestsWithLotsOfSuppressingRules(@TempDir final Path path) throws Exception {
+        final Collection<String> all = new TestClassJavaParser(
+            path,
+            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
+        ).suppressed();
+        MatcherAssert.assertThat(all, Matchers.hasSize(3));
+        MatcherAssert.assertThat(
+            all,
+            Matchers.hasItems(
+                "RuleAllTestsHaveProductionClass",
+                "RuleNotCamelCase",
+                "RuleNotContainsTestWord"
+            )
+        );
+    }
+
 }
