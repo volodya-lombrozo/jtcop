@@ -65,6 +65,14 @@ final class TestCaseJavaParser implements TestCase {
         return this.title;
     }
 
+
+    /**
+     * The suppressed rules.
+     * @return The suppressed rules.
+     * @todo #110:30min Implement suppressed method in TestCaseJavaParser.
+     *  The method should return a list of suppressed rules. Similar to the method in TestClass.
+     *  Also we have to add tests for the method.
+     */
     @Override
     public Collection<String> suppressed() {
         return Collections.emptyList();
