@@ -38,9 +38,6 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link TestClassJavaParser}.
  *
  * @since 0.1.0
- * @todo #78:30min Add test cases and implementation for classes with several annotations.
- *  We have to add test cases and handling logic for cases where class has several annotations and
- *  one annotation has several different values.
  */
 final class TestClassJavaParserTest {
 
