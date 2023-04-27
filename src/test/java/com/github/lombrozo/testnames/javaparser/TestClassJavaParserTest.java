@@ -126,7 +126,7 @@ final class TestClassJavaParserTest {
     }
 
     @Test
-    void parsesTestsWithLotsOfSuppressingRules(@TempDir final Path path) throws Exception {
+    void parsesWithLotsOfSuppressingRules(@TempDir final Path path) throws Exception {
         final Collection<String> all = new TestClassJavaParser(
             path,
             new ResourceOf("TestWithLotsOfSuppressed.java").stream()
