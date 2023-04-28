@@ -30,6 +30,10 @@ import java.util.Collection;
  * The rule for naming.
  *
  * @since 0.1.0
+ * @todo #114:30min Redesign SuppressWarnings solution.
+ *  We are suppressing only RuleAllTestsHaveProductionClass for now because the implementation
+ *  for all rules requires redesign of the current solution. Maybe we can add more class
+ *  SuppressedRule or something like that.
  */
 @FunctionalInterface
 public interface Rule {
