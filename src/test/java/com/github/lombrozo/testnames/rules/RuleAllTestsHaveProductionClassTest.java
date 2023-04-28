@@ -89,7 +89,11 @@ final class RuleAllTestsHaveProductionClassTest {
     void doesNotCheckBecauseSuppressed() {
         MatcherAssert.assertThat(
             new RuleAllTestsHaveProductionClass(
-                new Project.Fake(TestClass.Fake.suppressed("RuleAllTestsHaveProductionClass"))
+                new Project.Fake(
+                    new TestClass.Fake(
+                        Collections.singletonList("RuleAllTestsHaveProductionClass")
+                    )
+                )
             ).complaints(),
             Matchers.empty()
         );

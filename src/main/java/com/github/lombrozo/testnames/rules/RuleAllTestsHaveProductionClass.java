@@ -109,6 +109,11 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
         return plain;
     }
 
+    /**
+     * Checks that the test class is not suppressed.
+     * @param klass The test class to check.
+     * @return True if the test class is not suppressed.
+     */
     private static boolean isNotSuppressed(final TestClass klass) {
         return !klass.suppressed().contains("RuleAllTestsHaveProductionClass");
     }

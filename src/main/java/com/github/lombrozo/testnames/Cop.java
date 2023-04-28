@@ -33,10 +33,6 @@ import java.util.stream.Stream;
  * The cop that checks the project.
  *
  * @since 0.2
- * @todo #110:30min Handle suppressed rules.
- *  We have to handle suppressed rules in the cop. Maybe it is better to add one more class or
- *  interface hierarchy for the Cop, like SuppressedCop, and then use it in the main cop, but I'm
- *  not sure here.
  */
 final class Cop {
 

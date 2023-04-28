@@ -104,6 +104,13 @@ public interface TestClass {
             this(name, Arrays.asList(all), Collections.emptyList());
         }
 
+        /**
+         * Create fake test class with suppressed rules.
+         * @param suppressed Suppressed rules
+         */
+        public Fake(final List<String> suppressed) {
+            this("FakeClassTest", Collections.emptyList(), suppressed);
+        }
 
         /**
          * Main ctor.
@@ -119,19 +126,6 @@ public interface TestClass {
             this.name = name;
             this.all = all;
             this.suppressed = suppressed;
-        }
-
-        /**
-         * Create fake test class with suppressed rules.
-         * @param suppressed Suppressed rules
-         * @return Fake test class
-         */
-        public static TestClass suppressed(String... suppressed) {
-            return new Fake(
-                "FakeClassTest",
-                Collections.emptyList(),
-                Arrays.asList(suppressed)
-            );
         }
 
         @Override
