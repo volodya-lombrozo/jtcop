@@ -86,6 +86,16 @@ final class RuleAllTestsHaveProductionClassTest {
     }
 
     @Test
+    void doesNotCheckBecauseSuppressed() {
+        MatcherAssert.assertThat(
+            new RuleAllTestsHaveProductionClass(
+                new Project.Fake(TestClass.Fake.suppressed("RuleAllTestsHaveProductionClass"))
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
     void filtersPackageInfoProductionClasses() {
         final String info = "package-info.java";
         final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
@@ -131,4 +141,5 @@ final class RuleAllTestsHaveProductionClassTest {
             Matchers.hasSize(0)
         );
     }
+
 }

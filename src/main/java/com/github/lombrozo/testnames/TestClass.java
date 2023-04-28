@@ -28,6 +28,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import lombok.ToString;
 
 /**
@@ -82,6 +83,11 @@ public interface TestClass {
         private final Collection<? extends TestCase> all;
 
         /**
+         * All suppressed rules.
+         */
+        private final List<String> suppressed;
+
+        /**
          * Primary ctor.
          * @param all All cases
          */
@@ -95,17 +101,37 @@ public interface TestClass {
          * @param all All cases
          */
         public Fake(final String name, final TestCase... all) {
-            this(name, Arrays.asList(all));
+            this(name, Arrays.asList(all), Collections.emptyList());
         }
+
 
         /**
          * Main ctor.
          * @param name The name of test class
          * @param all All cases
+         * @param suppressed All suppressed rules
          */
-        Fake(final String name, final Collection<? extends TestCase> all) {
+        Fake(
+            final String name,
+            final Collection<? extends TestCase> all,
+            final List<String> suppressed
+        ) {
             this.name = name;
             this.all = all;
+            this.suppressed = suppressed;
+        }
+
+        /**
+         * Create fake test class with suppressed rules.
+         * @param suppressed Suppressed rules
+         * @return Fake test class
+         */
+        public static TestClass suppressed(String... suppressed) {
+            return new Fake(
+                "FakeClassTest",
+                Collections.emptyList(),
+                Arrays.asList(suppressed)
+            );
         }
 
         @Override
@@ -125,7 +151,7 @@ public interface TestClass {
 
         @Override
         public Collection<String> suppressed() {
-            return Collections.emptyList();
+            return Collections.unmodifiableList(this.suppressed);
         }
     }
 }

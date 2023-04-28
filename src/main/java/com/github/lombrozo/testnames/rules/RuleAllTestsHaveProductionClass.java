@@ -76,7 +76,8 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
             .collect(Collectors.toList());
         for (final TestClass test : tests) {
             final String name = test.name();
-            if (!classes.containsKey(name)) {
+            if (!classes.containsKey(name)
+                && RuleAllTestsHaveProductionClass.isNotSuppressed(test)) {
                 complaints.add(
                     new Complaint.Text(
                         String.format(
@@ -106,6 +107,10 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
             plain = String.format("%sTest", name);
         }
         return plain;
+    }
+
+    private static boolean isNotSuppressed(final TestClass klass) {
+        return !klass.suppressed().contains("RuleAllTestsHaveProductionClass");
     }
 
     /**
