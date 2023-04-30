@@ -142,4 +142,24 @@ final class TestClassJavaParserTest {
         );
     }
 
+    @Test
+    void parsesAnnotationWithSuppressedRules(@TempDir final Path path) throws Exception {
+        final Collection<String> all = new TestClassJavaParser(
+            path,
+            new ResourceOf("SuppressedAnnotation.java").stream()
+        ).suppressed();
+        MatcherAssert.assertThat(all, Matchers.hasSize(1));
+        MatcherAssert.assertThat(all, Matchers.hasItem("RuleAllTestsHaveProductionClass"));
+    }
+
+    @Test
+    void parsesInterfaceWithSuppressedRules(@TempDir final Path path) throws Exception {
+        final Collection<String> all = new TestClassJavaParser(
+            path,
+            new ResourceOf("SuppressedInterface.java").stream()
+        ).suppressed();
+        MatcherAssert.assertThat(all, Matchers.hasSize(1));
+        MatcherAssert.assertThat(all, Matchers.hasItem("RuleAllTestsHaveProductionClass"));
+    }
+
 }

@@ -28,8 +28,8 @@ import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
@@ -192,7 +192,7 @@ public final class TestClassJavaParser implements TestClass {
      * @return Stream of test cases.
      */
     private Stream<TestCaseJavaParser> testCases(final Node node) {
-        return ((NodeWithMembers<ClassOrInterfaceDeclaration>) node)
+        return ((NodeWithMembers<TypeDeclaration<?>>) node)
             .getMethods()
             .stream()
             .filter(TestClassJavaParser::isTest)
@@ -210,7 +210,7 @@ public final class TestClassJavaParser implements TestClass {
      * @return True if test class.
      */
     private static boolean isTestClass(final Node node) {
-        return node instanceof ClassOrInterfaceDeclaration;
+        return node instanceof TypeDeclaration<?>;
     }
 
     /**
