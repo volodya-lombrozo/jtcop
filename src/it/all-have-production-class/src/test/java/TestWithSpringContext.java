@@ -21,12 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-String log = new File(basedir, 'build.log').text;
-[
-  'Test CorrectTest.java doesn\'t have corresponding production class.',
-].each { assert log.contains(it): "Log doesn't contain ['$it']" }
-[
-  'SuppressedTest.java',
-  'TestWithSpringContext',
-].each { assert !log.contains(it): "Log contains ['$it']" }
-true
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@ActiveProfiles("test")
+@SpringBootTest
+@SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass")
+public @interface TestWithSpringContext {
+}
