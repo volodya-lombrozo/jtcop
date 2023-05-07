@@ -40,8 +40,16 @@ import lombok.Data;
 @Data
 final class TestCaseJavaParser implements TestCase {
 
+    /**
+     * Method declaration.
+     */
     private final MethodDeclaration method;
 
+    /**
+     * Ctor.
+     *
+     * @param name Java method name.
+     */
     TestCaseJavaParser(final String name) {
         this(new MethodDeclaration(new NodeList<>(), new VarType(), name));
     }

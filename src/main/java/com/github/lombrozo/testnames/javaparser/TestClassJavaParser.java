@@ -102,7 +102,7 @@ public final class TestClassJavaParser implements TestClass {
                 .getChildNodes()
                 .stream()
                 .filter(TestClassJavaParser::isTestClass)
-                .flatMap(this::testCases)
+                .flatMap(TestClassJavaParser::testCases)
                 .collect(Collectors.toSet());
         } catch (final UncheckedIOException | ParseProblemException ex) {
             throw new IllegalStateException(
@@ -134,7 +134,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param node The child node.
      * @return Stream of test cases.
      */
-    private Stream<TestCaseJavaParser> testCases(final Node node) {
+    private static Stream<TestCaseJavaParser> testCases(final Node node) {
         return ((NodeWithMembers<TypeDeclaration<?>>) node)
             .getMethods()
             .stream()

@@ -23,18 +23,12 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.TestCase;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import org.cactoos.io.ResourceOf;
-import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link TestCaseJavaParser}.

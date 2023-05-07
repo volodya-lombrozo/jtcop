@@ -39,6 +39,9 @@ import java.util.stream.Stream;
  */
 final class SuppressedAnnotations {
 
+    /**
+     * Class or method declaration.
+     */
     private final Node node;
 
     /**
