@@ -24,6 +24,8 @@
 
 package com.github.lombrozo.testnames;
 
+import org.junit.jupiter.api.Test;
+
 @SuppressWarnings({
     "JTCOP.RuleAllTestsHaveProductionClass",
     "JTCOP.RuleNotCamelCase",
@@ -44,16 +46,19 @@ package com.github.lombrozo.testnames;
 class TestWithLotsOfSuppressed {
 
     @SuppressWarnings({"JTCOP.RuleNotCamelCase", "JTCOP.RuleNotContainsTestWord", "Custom"})
+    @Test
     void supressSSS() {
     }
 
     @SuppressWarnings({"JTCOP.RuleNotContainsTestWord", "JTCOP.RuleNotCamelCase", "PMD.Custom"})
+    @Test
     void cheksTest() {
     }
 
     @SuppressWarnings("JTCOP.RuleNotContainsTestWord")
     @SuppressWarnings("JTCOP.RuleNotContainsTestWord")
     @SuppressWarnings("PMD.Custom")
+    @Test
     void checksSingle() {
     }
 }

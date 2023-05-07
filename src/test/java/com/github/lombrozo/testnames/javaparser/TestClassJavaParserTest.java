@@ -24,8 +24,10 @@
 
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.TestCase;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import org.cactoos.io.InputStreamOf;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
@@ -44,19 +46,13 @@ final class TestClassJavaParserTest {
     @Test
     void getsNames(@TempDir final Path temp) throws Exception {
         MatcherAssert.assertThat(
-            new TestClassJavaParser(temp, new ResourceOf("TestSimple.java").stream()).all(),
+            new TestClassJavaParser(temp, new ResourceOf("TestSimple.java").stream())
+                .all()
+                .stream()
+                .map(TestCase::name)
+                .collect(Collectors.toSet()),
             Matchers.containsInAnyOrder(
-                new TestCaseJavaParser(
-                    "creates",
-                    temp
-                ), new TestCaseJavaParser(
-                    "removes",
-                    temp
-                ),
-                new TestCaseJavaParser(
-                    "updates",
-                    temp
-                )
+                "creates", "removes", "updates"
             )
         );
     }
@@ -75,13 +71,8 @@ final class TestClassJavaParserTest {
             new TestClassJavaParser(
                 temp,
                 new ResourceOf("TestParameterized.java").stream()
-            ).all(),
-            Matchers.containsInAnyOrder(
-                new TestCaseJavaParser(
-                    "checksCases",
-                    temp
-                )
-            )
+            ).all().stream().map(TestCase::name).collect(Collectors.toSet()),
+            Matchers.containsInAnyOrder("checksCases")
         );
     }
 

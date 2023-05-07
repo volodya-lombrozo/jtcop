@@ -30,10 +30,6 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
-import com.github.javaparser.ast.expr.StringLiteralExpr;
-import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
@@ -41,7 +37,6 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.scalar.Sticky;
@@ -128,61 +123,9 @@ public final class TestClassJavaParser implements TestClass {
             .getChildNodes()
             .stream()
             .filter(TestClassJavaParser::isTestClass)
-            .flatMap(TestClassJavaParser::annotations)
+            .map(SuppressedAnnotations::new)
+            .flatMap(SuppressedAnnotations::suppressed)
             .collect(Collectors.toSet());
-    }
-
-    /**
-     * Retrieves annotation values from the node.
-     * @param node JavaParser node.
-     * @return Stream of annotation values.
-     */
-    private static Stream<String> annotations(final Node node) {
-        final Stream<String> result;
-        if (node instanceof NodeWithAnnotations<?>) {
-            result = ((NodeWithAnnotations<?>) node)
-                .getAnnotations().stream()
-                .filter(Expression::isSingleMemberAnnotationExpr)
-                .map(Expression::asSingleMemberAnnotationExpr)
-                .flatMap(TestClassJavaParser::annotationValue)
-                .filter(TestClassJavaParser::isJtcopAnnotation)
-                .map(ann -> ann.substring(6))
-                .collect(Collectors.toList()).stream();
-        } else {
-            result = Stream.empty();
-        }
-        return result;
-    }
-
-    /**
-     * Retrieves annotation value from single member expression.
-     * @param expr Single member expression.
-     * @return Annotation value.
-     */
-    private static Stream<String> annotationValue(final SingleMemberAnnotationExpr expr) {
-        final Stream<String> result;
-        final Expression value = expr.getMemberValue();
-        if (value.isStringLiteralExpr()) {
-            result = Stream.of(value.asStringLiteralExpr().asString());
-        } else if (value.isArrayInitializerExpr()) {
-            result = value.asArrayInitializerExpr().getValues()
-                .stream()
-                .filter(Expression::isStringLiteralExpr)
-                .map(Expression::asStringLiteralExpr)
-                .map(StringLiteralExpr::asString);
-        } else {
-            result = Stream.empty();
-        }
-        return result;
-    }
-
-    /**
-     * Checks whether annotation is related to Jtcop.
-     * @param value Annotation value.
-     * @return True if Jtcop annotation.
-     */
-    private static boolean isJtcopAnnotation(final String value) {
-        return value.toUpperCase(Locale.ROOT).startsWith("JTCOP.");
     }
 
     /**
@@ -196,12 +139,7 @@ public final class TestClassJavaParser implements TestClass {
             .getMethods()
             .stream()
             .filter(TestClassJavaParser::isTest)
-            .map(
-                method -> new TestCaseJavaParser(
-                    method.getNameAsString(),
-                    this.path
-                )
-            );
+            .map(TestCaseJavaParser::new);
     }
 
     /**

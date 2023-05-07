@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.TestCase;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,12 +45,13 @@ class TestCaseJavaParserTest {
 
     @Test
     void convertsToString() {
+        final String name = "name";
         MatcherAssert.assertThat(
-            new TestCaseJavaParser("name", Paths.get(".")).toString(),
-            Matchers.equalTo(
+            new TestCaseJavaParser(name).toString(),
+            Matchers.stringContainsInOrder(
                 String.format(
-                    "%s(title=name, file=.)",
-                    TestCaseJavaParser.class.getSimpleName()
+                    "method=var %s()",
+                    name
                 )
             )
         );
@@ -58,35 +60,31 @@ class TestCaseJavaParserTest {
     @Test
     void hasTheSameHashCode() {
         final String name = "nm";
-        final Path path = Paths.get("./.");
         MatcherAssert.assertThat(
-            new TestCaseJavaParser(name, path).hashCode(),
-            Matchers.is(new TestCaseJavaParser(name, path).hashCode())
+            new TestCaseJavaParser(name).hashCode(),
+            Matchers.is(new TestCaseJavaParser(name).hashCode())
         );
     }
 
     @Test
     void equalsIfBothTheSame() {
         final String name = "nme";
-        final Path path = Paths.get("././.");
         MatcherAssert.assertThat(
-            new TestCaseJavaParser(name, path),
-            Matchers.equalTo(new TestCaseJavaParser(name, path))
+            new TestCaseJavaParser(name),
+            Matchers.equalTo(new TestCaseJavaParser(name))
         );
     }
 
     @Test
-    void parsesSuppressedAnnotations(@TempDir final Path temp) throws Exception {
-        final String name = "TestWithLotsOfSuppressed.java";
-        final Path klass = temp.resolve(name);
-        Files.write(
-            klass,
-            new TextOf(new ResourceOf(name)).asString().getBytes(StandardCharsets.UTF_8)
-        );
-        final Collection<String> suppressed = new TestCaseJavaParser(
-            "cheksTest",
-            klass
-        ).suppressed();
+    void parsesSuppressedAnnotations() throws Exception {
+        final Collection<String> suppressed = new TestClassJavaParser(
+            Paths.get("."),
+            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
+        ).all()
+            .stream()
+            .filter(method -> method.name().equals("cheksTest"))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new).suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(2));
         MatcherAssert.assertThat(
             suppressed,
@@ -95,17 +93,15 @@ class TestCaseJavaParserTest {
     }
 
     @Test
-    void parsesSingleSuppressedAnnotation(@TempDir final Path temp) throws Exception {
-        final String name = "TestWithLotsOfSuppressed.java";
-        final Path klass = temp.resolve(name);
-        Files.write(
-            klass,
-            new TextOf(new ResourceOf(name)).asString().getBytes(StandardCharsets.UTF_8)
-        );
-        final Collection<String> suppressed = new TestCaseJavaParser(
-            "checksSingle",
-            klass
-        ).suppressed();
+    void parsesSingleSuppressedAnnotation() throws Exception {
+        final Collection<String> suppressed = new TestClassJavaParser(
+            Paths.get("."),
+            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
+        ).all()
+            .stream()
+            .filter(method -> method.name().equals("checksSingle"))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new).suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(1));
         MatcherAssert.assertThat(
             suppressed,
