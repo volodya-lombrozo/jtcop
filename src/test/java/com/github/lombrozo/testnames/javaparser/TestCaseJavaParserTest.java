@@ -68,4 +68,9 @@ class TestCaseJavaParserTest {
             Matchers.equalTo(new TestCaseJavaParser(name, path))
         );
     }
+
+    @Test
+    void parsesSuppressedAnnotations() {
+        new TestCaseJavaParser()
+    }
 }
