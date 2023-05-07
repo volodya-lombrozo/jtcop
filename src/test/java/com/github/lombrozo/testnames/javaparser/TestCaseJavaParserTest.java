@@ -23,11 +23,17 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link TestCaseJavaParser}.
@@ -70,7 +76,40 @@ class TestCaseJavaParserTest {
     }
 
     @Test
-    void parsesSuppressedAnnotations() {
-        new TestCaseJavaParser()
+    void parsesSuppressedAnnotations(@TempDir final Path temp) throws Exception {
+        final String name = "TestWithLotsOfSuppressed.java";
+        final Path klass = temp.resolve(name);
+        Files.write(
+            klass,
+            new TextOf(new ResourceOf(name)).asString().getBytes(StandardCharsets.UTF_8)
+        );
+        final Collection<String> suppressed = new TestCaseJavaParser(
+            "cheksTest",
+            klass
+        ).suppressed();
+        MatcherAssert.assertThat(suppressed, Matchers.hasSize(2));
+        MatcherAssert.assertThat(
+            suppressed,
+            Matchers.hasItems("RuleNotContainsTestWord", "RuleNotCamelCase")
+        );
+    }
+
+    @Test
+    void parsesSingleSuppressedAnnotation(@TempDir final Path temp) throws Exception {
+        final String name = "TestWithLotsOfSuppressed.java";
+        final Path klass = temp.resolve(name);
+        Files.write(
+            klass,
+            new TextOf(new ResourceOf(name)).asString().getBytes(StandardCharsets.UTF_8)
+        );
+        final Collection<String> suppressed = new TestCaseJavaParser(
+            "checksSingle",
+            klass
+        ).suppressed();
+        MatcherAssert.assertThat(suppressed, Matchers.hasSize(1));
+        MatcherAssert.assertThat(
+            suppressed,
+            Matchers.hasItems("RuleNotContainsTestWord")
+        );
     }
 }

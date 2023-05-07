@@ -91,7 +91,9 @@ final class TestCaseJavaParser implements TestCase {
         try {
             List<String> res = new ArrayList<>();
             final CompilationUnit unit = StaticJavaParser.parse(this.file);
-            unit.getChildNodes().forEach(
+            unit.getChildNodes().stream().filter(
+                node -> node instanceof TypeDeclaration<?>
+            ).forEach(
                 m -> {
                     final NodeWithMembers<TypeDeclaration<?>> node = (NodeWithMembers<TypeDeclaration<?>>) m;
                     final List<MethodDeclaration> methods = node.getMethods();
@@ -99,7 +101,7 @@ final class TestCaseJavaParser implements TestCase {
                         if (method.getNameAsString().equals(this.title)) {
                             res.addAll(
                                 TestCaseJavaParser.annotations(method)
-                                    .collect(Collectors.toList()));
+                                    .collect(Collectors.toSet()));
                         }
                     }
                 });
