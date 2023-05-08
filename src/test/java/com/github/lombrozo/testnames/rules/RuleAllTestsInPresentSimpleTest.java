@@ -65,7 +65,7 @@ final class RuleAllTestsInPresentSimpleTest {
     }
 
     @Test
-    void skipsSomeSuppressedChecksOnTestCaseLevel() {
+    void skipsSomeSuppressedChecksOnCaseLevel() {
         MatcherAssert.assertThat(
             new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
