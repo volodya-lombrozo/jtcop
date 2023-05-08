@@ -60,7 +60,7 @@ final class Cop {
                 .complaints()
                 .stream(),
             this.project.testClasses().stream()
-                .map(klass-> new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass))
+                .map(klass -> new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass))
                 .map(Rule::complaints)
                 .flatMap(Collection::stream)
         ).collect(Collectors.toList());

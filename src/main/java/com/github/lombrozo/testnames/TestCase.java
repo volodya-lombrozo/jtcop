@@ -62,6 +62,11 @@ public interface TestCase {
         private final String name;
 
         /**
+         * The suppressed rules.
+         */
+        private final Collection<String> suppressed;
+
+        /**
          * Ctor.
          */
         public Fake() {
@@ -75,7 +80,17 @@ public interface TestCase {
          * @checkstyle ParameterNameCheck (6 lines)
          */
         public Fake(final String name) {
+            this(name, Collections.emptyList());
+        }
+
+        /**
+         * Ctor.
+         * @param name The name of test case
+         * @param suppressed The suppressed rules
+         */
+        public Fake(final String name, final Collection<String> suppressed) {
             this.name = name;
+            this.suppressed = suppressed;
         }
 
         @Override
@@ -85,7 +100,7 @@ public interface TestCase {
 
         @Override
         public Collection<String> suppressed() {
-            return Collections.emptyList();
+            return Collections.unmodifiableCollection(this.suppressed);
         }
     }
 }

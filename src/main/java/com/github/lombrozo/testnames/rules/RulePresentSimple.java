@@ -27,7 +27,6 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,14 +50,12 @@ public final class RulePresentSimple implements Rule {
      */
     RulePresentSimple(final TestCase test) {
         this.all = Stream.of(
-                new RuleNotCamelCase(test),
-                new RuleNotContainsTestWord(test),
-                new RuleNotSpam(test),
-                new RuleNotUsesSpecialCharacters(test),
-                new RulePresentTense(test)
-            )
-            .map(rule -> new RuleSuppressed(rule, test))
-            .collect(Collectors.toList());
+            new RuleNotCamelCase(test),
+            new RuleNotContainsTestWord(test),
+            new RuleNotSpam(test),
+            new RuleNotUsesSpecialCharacters(test),
+            new RulePresentTense(test)
+        ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
     }
 
     @Override

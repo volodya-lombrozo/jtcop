@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -60,6 +61,38 @@ final class RuleAllTestsInPresentSimpleTest {
                 )
             ).complaints(),
             Matchers.allOf(Matchers.hasSize(1))
+        );
+    }
+
+    @Test
+    void skipsSomeSuppressedChecksOnTestCaseLevel() {
+        MatcherAssert.assertThat(
+            new RuleAllTestsInPresentSimple(
+                new TestClass.Fake(
+                    new TestCase.Fake(
+                        "remove",
+                        Collections.singletonList("RulePresentTense")
+                    ),
+                    new TestCase.Fake(
+                        "create",
+                        Collections.singletonList("RulePresentTense")
+                    )
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void skipsSomeSuppressedChecksOnClassLevel() {
+        final TestClass.Fake klass = new TestClass.Fake(
+            Collections.singletonList("RuleAllTestsInPresentSimple"),
+            new TestCase.Fake("remove"),
+            new TestCase.Fake("create")
+        );
+        MatcherAssert.assertThat(
+            new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass).complaints(),
+            Matchers.empty()
         );
     }
 }

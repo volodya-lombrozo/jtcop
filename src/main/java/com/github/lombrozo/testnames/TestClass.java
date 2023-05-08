@@ -113,6 +113,15 @@ public interface TestClass {
         }
 
         /**
+         * Create fake test class with suppressed rules.
+         * @param suppressed Suppressed rules
+         * @param all All cases
+         */
+        public Fake(final List<String> suppressed, final TestCase... all) {
+            this("FakeClassTest", Arrays.asList(all), suppressed);
+        }
+
+        /**
          * Main ctor.
          * @param name The name of test class
          * @param all All cases
