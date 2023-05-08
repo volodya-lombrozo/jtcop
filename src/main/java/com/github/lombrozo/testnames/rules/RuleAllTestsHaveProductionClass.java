@@ -113,6 +113,11 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      * Checks that the test class is not suppressed.
      * @param klass The test class to check.
      * @return True if the test class is not suppressed.
+     * @todo #117:30min Remove isNotSuppressed method from RuleAllTestsHaveProductionClass.
+     *  We have to remove isNotSuppressed method from RuleAllTestsHaveProductionClass because
+     *  we already implemented the suppression mechanism in the RuleSuppressed rule.
+     *  The main point here to keep backward compatibility in order to not break the build for all
+     *  dependent projects.
      */
     private static boolean isNotSuppressed(final TestClass klass) {
         return !klass.suppressed().contains("RuleAllTestsHaveProductionClass");

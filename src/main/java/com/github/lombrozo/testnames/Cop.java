@@ -25,6 +25,7 @@ package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleAllTestsInPresentSimple;
+import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,8 +60,8 @@ final class Cop {
                 .complaints()
                 .stream(),
             this.project.testClasses().stream()
-                .map(RuleAllTestsInPresentSimple::new)
-                .map(RuleAllTestsInPresentSimple::complaints)
+                .map(klass-> new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass))
+                .map(Rule::complaints)
                 .flatMap(Collection::stream)
         ).collect(Collectors.toList());
     }

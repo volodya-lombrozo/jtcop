@@ -30,6 +30,7 @@ import com.github.lombrozo.testnames.TestCase;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The rule checks if test case in present simple.
@@ -49,13 +50,15 @@ public final class RulePresentSimple implements Rule {
      * @param test The test case to check
      */
     RulePresentSimple(final TestCase test) {
-        this.all = Arrays.asList(
-            new RuleNotCamelCase(test),
-            new RuleNotContainsTestWord(test),
-            new RuleNotSpam(test),
-            new RuleNotUsesSpecialCharacters(test),
-            new RulePresentTense(test)
-        );
+        this.all = Stream.of(
+                new RuleNotCamelCase(test),
+                new RuleNotContainsTestWord(test),
+                new RuleNotSpam(test),
+                new RuleNotUsesSpecialCharacters(test),
+                new RulePresentTense(test)
+            )
+            .map(rule -> new RuleSuppressed(rule, test))
+            .collect(Collectors.toList());
     }
 
     @Override

@@ -57,8 +57,8 @@ public final class RuleAllTestsInPresentSimple implements Rule {
     @Override
     public Collection<Complaint> complaints() {
         final List<Complaint> list = this.tests.all().stream()
-            .map(RulePresentSimple::new)
-            .map(RulePresentSimple::complaints)
+            .map(test-> new RuleSuppressed(new RulePresentSimple(test), test))
+            .map(Rule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
         final Collection<Complaint> result;
