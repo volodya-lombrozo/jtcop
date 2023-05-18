@@ -28,8 +28,10 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.type.VarType;
 import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.TestClass;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.Data;
 
 /**
@@ -44,6 +46,11 @@ final class TestCaseJavaParser implements TestCase {
      * Method declaration.
      */
     private final MethodDeclaration method;
+
+    /**
+     * Parent test class.
+     */
+    private final TestClass parent;
 
     /**
      * Ctor.
@@ -61,7 +68,20 @@ final class TestCaseJavaParser implements TestCase {
      * @checkstyle ParameterNameCheck (6 lines)
      */
     TestCaseJavaParser(final MethodDeclaration method) {
+        this(method, new TestClass.Fake());
+    }
+
+    /**
+     * Ctor.
+     * @param method Java method
+     * @param parent Parent test class
+     */
+    TestCaseJavaParser(
+        final MethodDeclaration method,
+        final TestClass parent
+    ) {
         this.method = method;
+        this.parent = parent;
     }
 
     @Override
@@ -71,6 +91,9 @@ final class TestCaseJavaParser implements TestCase {
 
     @Override
     public Collection<String> suppressed() {
-        return new SuppressedAnnotations(this.method).suppressed().collect(Collectors.toSet());
+        return Stream.concat(
+            this.parent.suppressed().stream(),
+            new SuppressedAnnotations(this.method).suppressed()
+        ).collect(Collectors.toSet());
     }
 }

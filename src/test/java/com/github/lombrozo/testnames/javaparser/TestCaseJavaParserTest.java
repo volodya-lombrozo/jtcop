@@ -73,12 +73,13 @@ class TestCaseJavaParserTest {
     void parsesSuppressedAnnotations() throws Exception {
         final Collection<String> suppressed = new TestClassJavaParser(
             Paths.get("."),
-            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
+            new ResourceOf("TestOnlyMethodsSuppressed.java").stream()
         ).all()
             .stream()
             .filter(method -> method.name().equals("cheksTest"))
             .findFirst()
-            .orElseThrow(IllegalStateException::new).suppressed();
+            .orElseThrow(IllegalStateException::new)
+            .suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(2));
         MatcherAssert.assertThat(
             suppressed,
@@ -90,16 +91,42 @@ class TestCaseJavaParserTest {
     void parsesSingleSuppressedAnnotation() throws Exception {
         final Collection<String> suppressed = new TestClassJavaParser(
             Paths.get("."),
-            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
+            new ResourceOf("TestOnlyMethodsSuppressed.java").stream()
         ).all()
             .stream()
             .filter(method -> method.name().equals("checksSingle"))
             .findFirst()
-            .orElseThrow(IllegalStateException::new).suppressed();
+            .orElseThrow(IllegalStateException::new)
+            .suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(1));
         MatcherAssert.assertThat(
             suppressed,
             Matchers.hasItems("RuleNotContainsTestWord")
+        );
+    }
+
+    @Test
+    void parsesSuppressedAnnotationsForClassAndMethodTogether()
+        throws Exception {
+        final Collection<String> suppressed = new TestClassJavaParser(
+            Paths.get("."),
+            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
+        ).all()
+            .stream()
+            .filter(method -> method.name().equals("cheksTest"))
+            .findFirst()
+            .orElseThrow(IllegalStateException::new)
+            .suppressed();
+        MatcherAssert.assertThat(suppressed, Matchers.hasSize(5));
+        MatcherAssert.assertThat(
+            suppressed,
+            Matchers.hasItems(
+                "RuleAllTestsHaveProductionClass",
+                "RuleNotContainsTestWord",
+                "RuleNotCamelCase",
+                "AnotherRule",
+                "UnknownRule"
+            )
         );
     }
 }

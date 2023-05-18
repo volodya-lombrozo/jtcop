@@ -26,31 +26,14 @@ package com.github.lombrozo.testnames;
 
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({
-    "JTCOP.RuleAllTestsHaveProductionClass",
-    "JTCOP.RuleNotCamelCase",
-    "JTCOP.RuleNotContainsTestWord",
-    "PMD.Custom",
-    "Custom"
-})
-@SuppressWarnings({
-    "JTCOP.RuleAllTestsHaveProductionClass",
-    "JTCOP.RuleNotCamelCase",
-    "JTCOP.RuleNotContainsTestWord",
-    "PMD.Custom",
-    "Custom"
-})
-@SuppressWarnings
-@SuppressWarnings()
-@SuppressWarnings("")
-class TestWithLotsOfSuppressed {
+class TestOnlyMethodsSuppressed {
 
     @SuppressWarnings({"JTCOP.RuleNotCamelCase", "JTCOP.RuleNotContainsTestWord", "Custom"})
     @Test
     void supressSSS() {
     }
 
-    @SuppressWarnings({"JTCOP.AnotherRule", "JTCOP.UnknownRule", "PMD.Custom"})
+    @SuppressWarnings({"JTCOP.RuleNotContainsTestWord", "JTCOP.RuleNotCamelCase", "PMD.Custom"})
     @Test
     void cheksTest() {
     }

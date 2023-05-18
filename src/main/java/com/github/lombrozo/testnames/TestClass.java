@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import lombok.Data;
 import lombok.ToString;
 
 /**
@@ -69,7 +70,7 @@ public interface TestClass {
      *
      * @since 0.2
      */
-    @ToString
+    @Data
     final class Fake implements TestClass {
 
         /**
