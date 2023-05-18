@@ -52,14 +52,35 @@ public final class ProjectJavaParser implements Project {
     private final Path test;
 
     /**
+     * The rules that have to be excluded from execution.
+     */
+    private final Collection<String> exclusions;
+
+    /**
+     * Ctor.
+     * @param main The main path where production classes are placed.
+     * @param test The test path where test classes are placed.
+     * @param exclusions The rules that have to be excluded from execution.
+     */
+    public ProjectJavaParser(
+        final Path main,
+        final Path test,
+        final Collection<String> exclusions
+    ) {
+        this.main = main;
+        this.test = test;
+        this.exclusions = exclusions;
+    }
+
+    /**
      * Ctor.
      * @param main The main path where production classes are placed.
      * @param test The test path where test classes are placed.
      */
-    public ProjectJavaParser(final Path main, final Path test) {
-        this.main = main;
-        this.test = test;
+    ProjectJavaParser(final Path main, final Path test) {
+        this(main, test, Collections.emptyList());
     }
+
 
     @Override
     public Collection<ProductionClass> productionClasses() {

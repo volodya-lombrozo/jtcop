@@ -27,6 +27,7 @@ package com.github.lombrozo.testnames;
 import com.github.lombrozo.testnames.complaints.ComplaintCompound;
 import com.github.lombrozo.testnames.javaparser.ProjectJavaParser;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collection;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -58,12 +59,16 @@ public final class ValidateMojo extends AbstractMojo {
     @Parameter(defaultValue = "true")
     private boolean failOnError = true;
 
+    @Parameter(property = "exclusions")
+    private String[] exclusions;
+
     @Override
     public void execute() throws MojoFailureException {
         final Collection<Complaint> complaints = new Cop(
             new ProjectJavaParser(
                 Paths.get(this.project.getCompileSourceRoots().get(0)),
-                Paths.get(this.project.getTestCompileSourceRoots().get(0))
+                Paths.get(this.project.getTestCompileSourceRoots().get(0)),
+                Arrays.asList(this.exclusions)
             )
         ).inspection();
         if (!complaints.isEmpty() && this.failOnError) {
