@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.TestCase;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.cactoos.io.InputStreamOf;
@@ -40,7 +41,11 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link TestClassJavaParser}.
  *
  * @since 0.1.0
+ * @todo #129:30min Refactor TestClassJavaParserTest in order to remove duplication of literals.
+ *  This class has a lot of duplication of literals. We should refactor it in order to remove
+ *  duplication of literals. After implementing the issue we should remove the SuppressWarnings.
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class TestClassJavaParserTest {
 
     @Test
@@ -129,6 +134,26 @@ final class TestClassJavaParserTest {
                 "RuleAllTestsHaveProductionClass",
                 "RuleNotCamelCase",
                 "RuleNotContainsTestWord"
+            )
+        );
+    }
+
+    @Test
+    void excludesProjectSuppressedRules(@TempDir final Path path) throws Exception {
+        final Collection<String> all = new TestClassJavaParser(
+            path,
+            new ResourceOf("TestWithLotsOfSuppressed.java").stream(),
+            Arrays.asList("Custom", "Project")
+        ).suppressed();
+        MatcherAssert.assertThat(all, Matchers.hasSize(5));
+        MatcherAssert.assertThat(
+            all,
+            Matchers.hasItems(
+                "RuleAllTestsHaveProductionClass",
+                "RuleNotCamelCase",
+                "RuleNotContainsTestWord",
+                "Custom",
+                "Project"
             )
         );
     }

@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.scalar.Sticky;
@@ -61,12 +62,27 @@ public final class TestClassJavaParser implements TestClass {
     private final Unchecked<? extends CompilationUnit> unit;
 
     /**
+     * Rules excluded for entire project.
+     */
+    private final Collection<String> exclusions;
+
+    /**
      * Ctor.
      *
      * @param klass Path to the class
      */
     TestClassJavaParser(final Path klass) {
         this(klass, new Sticky<>(() -> StaticJavaParser.parse(klass)));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param klass Path to the class
+     * @param exclusions Rules excluded for entire project.
+     */
+    TestClassJavaParser(final Path klass, final Collection<String> exclusions) {
+        this(klass, new Sticky<>(() -> StaticJavaParser.parse(klass)), exclusions);
     }
 
     /**
@@ -86,8 +102,39 @@ public final class TestClassJavaParser implements TestClass {
      * @param parsed Parsed class.
      */
     private TestClassJavaParser(final Path klass, final Sticky<? extends CompilationUnit> parsed) {
+        this(klass, parsed, Collections.emptySet());
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param klass Path to the class
+     * @param stream Parsed Java class
+     * @param exclusions Rules excluded for entire project.
+     */
+    TestClassJavaParser(
+        final Path klass,
+        final InputStream stream,
+        final Collection<String> exclusions
+    ) {
+        this(klass, new Sticky<>(() -> StaticJavaParser.parse(stream)), exclusions);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param klass Path to the class
+     * @param parsed Parsed class.
+     * @param exclusions Rules excluded for entire project.
+     */
+    TestClassJavaParser(
+        final Path klass,
+        final Sticky<? extends CompilationUnit> parsed,
+        final Collection<String> exclusions
+    ) {
         this.path = klass;
         this.unit = new Unchecked<>(parsed);
+        this.exclusions = exclusions;
     }
 
     @Override
@@ -119,13 +166,15 @@ public final class TestClassJavaParser implements TestClass {
 
     @Override
     public Collection<String> suppressed() {
-        return this.unit.value()
-            .getChildNodes()
-            .stream()
-            .filter(TestClassJavaParser::isTestClass)
-            .map(SuppressedAnnotations::new)
-            .flatMap(SuppressedAnnotations::suppressed)
-            .collect(Collectors.toSet());
+        return Stream.concat(
+            this.unit.value()
+                .getChildNodes()
+                .stream()
+                .filter(TestClassJavaParser::isTestClass)
+                .map(SuppressedAnnotations::new)
+                .flatMap(SuppressedAnnotations::suppressed),
+            this.exclusions.stream()
+        ).collect(Collectors.toSet());
     }
 
     /**

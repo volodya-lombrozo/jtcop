@@ -38,6 +38,10 @@ import java.util.stream.Stream;
  * The project that uses JavaParser.
  *
  * @since 0.2
+ * @todo #129:30min Add tests for test classes and suppressed rules.
+ *  We need to add tests for suppressed rules that was excluded for entire project.
+ *  In other words, the test should check that the rules are excluded for the entire project
+ *  and for all classes produced by `testClasses` method.
  */
 public final class ProjectJavaParser implements Project {
 
@@ -81,7 +85,6 @@ public final class ProjectJavaParser implements Project {
         this(main, test, Collections.emptyList());
     }
 
-
     @Override
     public Collection<ProductionClass> productionClasses() {
         final Collection<ProductionClass> res;
@@ -111,7 +114,7 @@ public final class ProjectJavaParser implements Project {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .map(TestClassJavaParser::new)
+                    .map(path -> new TestClassJavaParser(path, this.exclusions))
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);
