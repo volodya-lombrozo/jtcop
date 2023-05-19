@@ -29,11 +29,9 @@ import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.cactoos.io.InputStreamOf;
-import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -44,11 +42,7 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link TestClassJavaParser}.
  *
  * @since 0.1.0
- * @todo #129:30min Refactor TestClassJavaParserTest in order to remove duplication of literals.
- *  This class has a lot of duplication of literals. We should refactor it in order to remove
- *  duplication of literals. After implementing the issue we should remove the SuppressWarnings.
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class TestClassJavaParserTest {
 
     @Test
