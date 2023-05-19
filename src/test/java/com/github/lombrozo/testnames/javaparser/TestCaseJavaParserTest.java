@@ -26,9 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
-import java.nio.file.Paths;
 import java.util.Collection;
-import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -73,11 +71,10 @@ class TestCaseJavaParserTest {
     }
 
     @Test
-    void parsesSuppressedAnnotations() throws Exception {
-        final Collection<String> suppressed = new TestClassJavaParser(
-            Paths.get("."),
-            new ResourceOf("TestOnlyMethodsSuppressed.java").stream()
-        ).all()
+    void parsesSuppressedAnnotations() {
+        final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
+            .javaParserClass()
+            .all()
             .stream()
             .filter(method -> method.name().equals("cheksTest"))
             .findFirst()
@@ -91,11 +88,10 @@ class TestCaseJavaParserTest {
     }
 
     @Test
-    void parsesSingleSuppressedAnnotation() throws Exception {
-        final Collection<String> suppressed = new TestClassJavaParser(
-            Paths.get("."),
-            new ResourceOf("TestOnlyMethodsSuppressed.java").stream()
-        ).all()
+    void parsesSingleSuppressedAnnotation() {
+        final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
+            .javaParserClass()
+            .all()
             .stream()
             .filter(method -> method.name().equals("checksSingle"))
             .findFirst()
@@ -109,12 +105,10 @@ class TestCaseJavaParserTest {
     }
 
     @Test
-    void parsesSuppressedAnnotationsForClassAndMethodTogether()
-        throws Exception {
-        final Collection<String> suppressed = new TestClassJavaParser(
-            Paths.get("."),
-            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
-        ).all()
+    void parsesSuppressedAnnotationsForClassAndMethodTogether() {
+        final Collection<String> suppressed = JavaTestClasses.MANY_SUPPRESSED
+            .javaParserClass()
+            .all()
             .stream()
             .filter(method -> method.name().equals("cheksTest"))
             .findFirst()

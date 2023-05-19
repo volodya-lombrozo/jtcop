@@ -52,9 +52,9 @@ import org.junit.jupiter.api.io.TempDir;
 final class TestClassJavaParserTest {
 
     @Test
-    void getsNames(@TempDir final Path temp) throws Exception {
+    void getsNames() {
         MatcherAssert.assertThat(
-            new TestClassJavaParser(temp, new ResourceOf("TestSimple.java").stream())
+            JavaTestClasses.SIMPLE.javaParserClass()
                 .all()
                 .stream()
                 .map(TestCase::name)
@@ -66,20 +66,22 @@ final class TestClassJavaParserTest {
     }
 
     @Test
-    void returnsEmptyListIfItDoesNotHaveAnyCases(@TempDir final Path temp) throws Exception {
+    void returnsEmptyListIfItDoesNotHaveAnyCases() {
         MatcherAssert.assertThat(
-            new TestClassJavaParser(temp, new ResourceOf("TestWithoutTests.java").stream()).all(),
+            JavaTestClasses.WITHOUT_TESTS.javaParserClass().all(),
             Matchers.empty()
         );
     }
 
     @Test
-    void getsNamesFromParameterizedCase(@TempDir final Path temp) throws Exception {
+    void getsNamesFromParameterizedCase() {
         MatcherAssert.assertThat(
-            new TestClassJavaParser(
-                temp,
-                new ResourceOf("TestParameterized.java").stream()
-            ).all().stream().map(TestCase::name).collect(Collectors.toSet()),
+            JavaTestClasses.PARAMETERIZED
+                .javaParserClass()
+                .all()
+                .stream()
+                .map(TestCase::name)
+                .collect(Collectors.toSet()),
             Matchers.containsInAnyOrder("checksCases")
         );
     }
@@ -101,22 +103,18 @@ final class TestClassJavaParserTest {
     }
 
     @Test
-    void returnsEmptyListOfSuppressedRules(@TempDir final Path path) throws Exception {
+    void returnsEmptyListOfSuppressedRules() {
         MatcherAssert.assertThat(
-            new TestClassJavaParser(
-                path,
-                new ResourceOf("TestSimple.java").stream()
-            ).suppressed(),
+            JavaTestClasses.SIMPLE.javaParserClass().suppressed(),
             Matchers.empty()
         );
     }
 
     @Test
-    void returnsNonEmptyListOfSuppressedRules(@TempDir final Path path) throws Exception {
-        final Collection<String> all = new TestClassJavaParser(
-            path,
-            new ResourceOf("TestWithSuppressed.java").stream()
-        ).suppressed();
+    void returnsNonEmptyListOfSuppressedRules() {
+        final Collection<String> all = JavaTestClasses.SUPPRESSED_CLASS
+            .javaParserClass()
+            .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(
             all.iterator().next(),
@@ -125,11 +123,10 @@ final class TestClassJavaParserTest {
     }
 
     @Test
-    void parsesWithLotsOfSuppressingRules(@TempDir final Path path) throws Exception {
-        final Collection<String> all = new TestClassJavaParser(
-            path,
-            new ResourceOf("TestWithLotsOfSuppressed.java").stream()
-        ).suppressed();
+    void parsesWithLotsOfSuppressingRules() {
+        final Collection<String> all = JavaTestClasses.MANY_SUPPRESSED
+            .javaParserClass()
+            .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(3));
         MatcherAssert.assertThat(
             all,
@@ -142,12 +139,12 @@ final class TestClassJavaParserTest {
     }
 
     @Test
-    void excludesProjectSuppressedRules(@TempDir final Path path) throws Exception {
-        final Collection<String> all = new TestClassJavaParser(
-            path,
-            new ResourceOf("TestWithLotsOfSuppressed.java").stream(),
-            Arrays.asList("Custom", "Project")
-        ).suppressed();
+    void excludesProjectSuppressedRules() {
+        final String custom = "Custom";
+        final String project = "Project";
+        final Collection<String> all = JavaTestClasses.MANY_SUPPRESSED
+            .javaParserClass(custom, project)
+            .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(5));
         MatcherAssert.assertThat(
             all,
@@ -155,30 +152,27 @@ final class TestClassJavaParserTest {
                 RuleAllTestsHaveProductionClass.NAME,
                 RuleNotCamelCase.NAME,
                 RuleNotContainsTestWord.NAME,
-                "Custom",
-                "Project"
+                custom,
+                project
             )
         );
     }
 
     @Test
-    void parsesAnnotationWithSuppressedRules(@TempDir final Path path) throws Exception {
-        final Collection<String> all = new TestClassJavaParser(
-            path,
-            new ResourceOf("SuppressedAnnotation.java").stream()
-        ).suppressed();
+    void parsesAnnotationWithSuppressedRules() {
+        final Collection<String> all = JavaTestClasses.SUPPRESSED_ANNOTATION
+            .javaParserClass()
+            .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
     }
 
     @Test
-    void parsesInterfaceWithSuppressedRules(@TempDir final Path path) throws Exception {
-        final Collection<String> all = new TestClassJavaParser(
-            path,
-            new ResourceOf("SuppressedInterface.java").stream()
-        ).suppressed();
+    void parsesInterfaceWithSuppressedRules() {
+        final Collection<String> all = JavaTestClasses.SUPPRESSED_INTERFACE
+            .javaParserClass()
+            .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
     }
-
 }
