@@ -23,6 +23,9 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
+import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
+import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.nio.file.Paths;
 import java.util.Collection;
 import org.cactoos.io.ResourceOf;
@@ -83,7 +86,7 @@ class TestCaseJavaParserTest {
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(2));
         MatcherAssert.assertThat(
             suppressed,
-            Matchers.hasItems("RuleNotContainsTestWord", "RuleNotCamelCase")
+            Matchers.hasItems(RuleNotContainsTestWord.NAME, RuleNotCamelCase.NAME)
         );
     }
 
@@ -101,7 +104,7 @@ class TestCaseJavaParserTest {
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(1));
         MatcherAssert.assertThat(
             suppressed,
-            Matchers.hasItems("RuleNotContainsTestWord")
+            Matchers.hasItems(RuleNotContainsTestWord.NAME)
         );
     }
 
@@ -121,9 +124,9 @@ class TestCaseJavaParserTest {
         MatcherAssert.assertThat(
             suppressed,
             Matchers.hasItems(
-                "RuleAllTestsHaveProductionClass",
-                "RuleNotContainsTestWord",
-                "RuleNotCamelCase",
+                RuleAllTestsHaveProductionClass.NAME,
+                RuleNotContainsTestWord.NAME,
+                RuleNotCamelCase.NAME,
                 "AnotherRule",
                 "UnknownRule"
             )

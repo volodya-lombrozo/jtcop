@@ -38,6 +38,11 @@ import java.util.Collection;
 public final class RuleNotCamelCase implements Rule {
 
     /**
+     * The name of the rule.
+     */
+    public static final String NAME = "RuleNotCamelCase";
+
+    /**
      * The test case.
      */
     private final TestCase test;

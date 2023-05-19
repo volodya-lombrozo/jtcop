@@ -42,6 +42,11 @@ import java.util.stream.Collectors;
 public final class RuleAllTestsHaveProductionClass implements Rule {
 
     /**
+     * The name of the rule.
+     */
+    public static final String NAME = "RuleAllTestsHaveProductionClass";
+
+    /**
      * The project to check.
      */
     private final Project project;
@@ -116,7 +121,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      *  dependent projects.
      */
     private static boolean isNotSuppressed(final TestClass klass) {
-        return !klass.suppressed().contains("RuleAllTestsHaveProductionClass");
+        return !klass.suppressed().contains(RuleAllTestsHaveProductionClass.NAME);
     }
 
     /**

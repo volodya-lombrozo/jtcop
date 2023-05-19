@@ -25,6 +25,9 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
+import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
+import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
@@ -117,7 +120,7 @@ final class TestClassJavaParserTest {
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(
             all.iterator().next(),
-            Matchers.equalTo("RuleAllTestsHaveProductionClass")
+            Matchers.equalTo(RuleAllTestsHaveProductionClass.NAME)
         );
     }
 
@@ -131,9 +134,9 @@ final class TestClassJavaParserTest {
         MatcherAssert.assertThat(
             all,
             Matchers.hasItems(
-                "RuleAllTestsHaveProductionClass",
-                "RuleNotCamelCase",
-                "RuleNotContainsTestWord"
+                RuleAllTestsHaveProductionClass.NAME,
+                RuleNotCamelCase.NAME,
+                RuleNotContainsTestWord.NAME
             )
         );
     }
@@ -149,9 +152,9 @@ final class TestClassJavaParserTest {
         MatcherAssert.assertThat(
             all,
             Matchers.hasItems(
-                "RuleAllTestsHaveProductionClass",
-                "RuleNotCamelCase",
-                "RuleNotContainsTestWord",
+                RuleAllTestsHaveProductionClass.NAME,
+                RuleNotCamelCase.NAME,
+                RuleNotContainsTestWord.NAME,
                 "Custom",
                 "Project"
             )
@@ -165,7 +168,7 @@ final class TestClassJavaParserTest {
             new ResourceOf("SuppressedAnnotation.java").stream()
         ).suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
-        MatcherAssert.assertThat(all, Matchers.hasItem("RuleAllTestsHaveProductionClass"));
+        MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
     }
 
     @Test
@@ -175,7 +178,7 @@ final class TestClassJavaParserTest {
             new ResourceOf("SuppressedInterface.java").stream()
         ).suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
-        MatcherAssert.assertThat(all, Matchers.hasItem("RuleAllTestsHaveProductionClass"));
+        MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
     }
 
 }

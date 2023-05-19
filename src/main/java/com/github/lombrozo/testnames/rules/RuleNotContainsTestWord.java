@@ -39,6 +39,11 @@ import java.util.stream.Stream;
 public final class RuleNotContainsTestWord implements Rule {
 
     /**
+     * The name of the rule.
+     */
+    public static final String NAME = "RuleNotContainsTestWord";
+
+    /**
      * The test case.
      */
     private final TestCase test;

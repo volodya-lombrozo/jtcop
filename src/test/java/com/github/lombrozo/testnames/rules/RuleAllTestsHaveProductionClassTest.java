@@ -92,7 +92,7 @@ final class RuleAllTestsHaveProductionClassTest {
                 new RuleAllTestsHaveProductionClass(
                     new Project.Fake(
                         new TestClass.Fake(
-                            Collections.singletonList("RuleAllTestsHaveProductionClass")
+                            Collections.singletonList(RuleAllTestsHaveProductionClass.NAME)
                         )
                     )
                 )
