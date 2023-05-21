@@ -62,9 +62,6 @@ public final class ValidateMojo extends AbstractMojo {
 
     /**
      * The rules that have to be excluded from execution.
-     * @todo #129:90min Add integration tests for ValidateMojo exclusions.
-     *  We have to add integration tests for ValidateMojo exclusions. The integration test
-     *  will check that we don't apply rules that are excluded.
      */
     @Parameter(property = "exclusions")
     private String[] exclusions;
