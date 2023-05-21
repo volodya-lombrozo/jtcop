@@ -141,12 +141,6 @@ SOFTWARE.
       <version>3.9.0</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.cactoos</groupId>
-      <artifactId>cactoos</artifactId>
-      <version>0.55.0</version>
-      <scope>compile</scope>
-    </dependency>
   </dependencies>
   <build>
     <pluginManagement>
