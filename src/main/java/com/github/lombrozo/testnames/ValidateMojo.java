@@ -29,6 +29,7 @@ import com.github.lombrozo.testnames.javaparser.ProjectJavaParser;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -74,7 +75,10 @@ public final class ValidateMojo extends AbstractMojo {
             new ProjectJavaParser(
                 Paths.get(this.project.getCompileSourceRoots().get(0)),
                 Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                Arrays.asList(this.exclusions)
+                Arrays.stream(this.exclusions)
+                    .map(RuleName::new)
+                    .map(RuleName::withoutPrefix)
+                    .collect(Collectors.toSet())
             )
         ).inspection();
         if (!complaints.isEmpty() && this.failOnError) {

@@ -28,6 +28,7 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations;
+import com.github.lombrozo.testnames.RuleName;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,8 +65,9 @@ final class SuppressedAnnotations {
                 .filter(Expression::isSingleMemberAnnotationExpr)
                 .map(Expression::asSingleMemberAnnotationExpr)
                 .flatMap(SuppressedAnnotations::annotationValue)
-                .filter(SuppressedAnnotations::isJtcopAnnotation)
-                .map(ann -> ann.substring(6))
+                .map(RuleName::new)
+                .filter(RuleName::hasPrefix)
+                .map(RuleName::withoutPrefix)
                 .collect(Collectors.toList()).stream();
         } else {
             result = Stream.empty();
