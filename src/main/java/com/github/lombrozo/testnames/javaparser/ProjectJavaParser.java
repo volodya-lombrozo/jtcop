@@ -38,10 +38,6 @@ import java.util.stream.Stream;
  * The project that uses JavaParser.
  *
  * @since 0.2
- * @todo #129:30min Add tests for test classes and suppressed rules.
- *  We need to add tests for suppressed rules that was excluded for entire project.
- *  In other words, the test should check that the rules are excluded for the entire project
- *  and for all classes produced by `testClasses` method.
  */
 public final class ProjectJavaParser implements Project {
 
