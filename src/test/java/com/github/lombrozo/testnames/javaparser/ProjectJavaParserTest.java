@@ -24,19 +24,14 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.ProductionClass;
-import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;

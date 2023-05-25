@@ -77,7 +77,7 @@ enum JavaTestClasses {
     MANY_SUPPRESSED("TestWithLotsOfSuppressed.java"),
 
     /**
-     * Test class with mistakes in test names
+     * Test class with mistakes in test names.
      */
     WRONG_NAME("TestWrongName.java");
 
@@ -99,7 +99,6 @@ enum JavaTestClasses {
      * @param suppressed Rules excluded for entire project.
      * @return Concrete test class implementation - {@link TestClassJavaParser}.
      */
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     TestClassJavaParser javaParserClass(final String... suppressed) {
         return new TestClassJavaParser(
             Paths.get("."),
@@ -112,13 +111,13 @@ enum JavaTestClasses {
      * Returns input stream for current class.
      * @return Input stream.
      */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     InputStream inputStream() {
         try {
             return new ResourceOf(this.file).stream();
             //@checkstyle IllegalCatchCheck (1 line)
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             throw new IllegalStateException("Can't read class '%s' from filesystem", exception);
         }
     }
-
 }
