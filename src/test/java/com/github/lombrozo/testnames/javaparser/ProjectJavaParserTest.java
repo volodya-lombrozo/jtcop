@@ -24,12 +24,16 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.ProductionClass;
+import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -75,6 +79,37 @@ final class ProjectJavaParserTest {
         MatcherAssert.assertThat(
             classes.iterator().next().name(),
             Matchers.equalTo(name)
+        );
+    }
+
+    @Test
+    void ignoresAllRulesThatWasAddedToExclusions(@TempDir final Path temp) throws IOException {
+        Files.copy(JavaTestClasses.WRONG_NAME.inputStream(), temp.resolve("WrongName.java"));
+        final String[] exclusions = {"JTCOP.CustomRule", "FreeExclusion"};
+        final Collection<TestClass> classes = new ProjectJavaParser(
+            temp,
+            temp,
+            Arrays.asList(exclusions)
+        ).testClasses();
+        MatcherAssert.assertThat(classes, Matchers.hasSize(1));
+        final Set<String> clevel = classes.stream()
+            .map(TestClass::suppressed)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toSet());
+        final Set<String> mlevel = classes.stream()
+            .map(TestClass::all)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList()).stream()
+            .map(TestCase::suppressed)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toSet());
+        MatcherAssert.assertThat(
+            clevel,
+            Matchers.containsInAnyOrder(exclusions)
+        );
+        MatcherAssert.assertThat(
+            mlevel,
+            Matchers.containsInAnyOrder(exclusions)
         );
     }
 }

@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import org.cactoos.io.ResourceOf;
@@ -73,7 +74,12 @@ enum JavaTestClasses {
     /**
      * Test class with many suppressed methods and class-level suppressed annotations.
      */
-    MANY_SUPPRESSED("TestWithLotsOfSuppressed.java");
+    MANY_SUPPRESSED("TestWithLotsOfSuppressed.java"),
+
+    /**
+     * Test class with mistakes in test names.
+     */
+    WRONG_NAME("TestWrongName.java");
 
     /**
      * Java file name in resources.
@@ -93,18 +99,25 @@ enum JavaTestClasses {
      * @param suppressed Rules excluded for entire project.
      * @return Concrete test class implementation - {@link TestClassJavaParser}.
      */
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     TestClassJavaParser javaParserClass(final String... suppressed) {
+        return new TestClassJavaParser(
+            Paths.get("."),
+            this.inputStream(),
+            Arrays.asList(suppressed)
+        );
+    }
+
+    /**
+     * Returns input stream for current class.
+     * @return Input stream.
+     */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    InputStream inputStream() {
         try {
-            return new TestClassJavaParser(
-                Paths.get("."),
-                new ResourceOf(this.file).stream(),
-                Arrays.asList(suppressed)
-            );
+            return new ResourceOf(this.file).stream();
             //@checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception exception) {
             throw new IllegalStateException("Can't read class '%s' from filesystem", exception);
         }
     }
-
 }
