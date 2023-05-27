@@ -27,9 +27,11 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.type.VarType;
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Data;
@@ -38,6 +40,11 @@ import lombok.Data;
  * Parser for test case.
  *
  * @since 0.1.0
+ * @todo #67:90min Continue implementation of TestCaseJavaParser#assertions.
+ *  We have to implement the method assertions() in TestCaseJavaParser.
+ *  The method should return a list of assertions from different libraries like
+ *  Hamcrest, AssertJ, JUnit, etc. Also we have to have a list of tests that check new
+ *  functionality.
  */
 @Data
 final class TestCaseJavaParser implements TestCase {
@@ -95,5 +102,10 @@ final class TestCaseJavaParser implements TestCase {
             this.parent.suppressed().stream(),
             new SuppressedAnnotations(this.method).suppressed()
         ).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Collection<Assertion> assertions() {
+        return Collections.emptyList();
     }
 }

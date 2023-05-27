@@ -49,6 +49,12 @@ public interface TestCase {
     Collection<String> suppressed();
 
     /**
+     * The method assertions.
+     * @return The list of assertions.
+     */
+    Collection<Assertion> assertions();
+
+    /**
      * The fake test case.
      *
      * @since 0.1.0
@@ -101,6 +107,11 @@ public interface TestCase {
         @Override
         public Collection<String> suppressed() {
             return Collections.unmodifiableCollection(this.suppressed);
+        }
+
+        @Override
+        public Collection<Assertion> assertions() {
+            return Collections.emptyList();
         }
     }
 }
