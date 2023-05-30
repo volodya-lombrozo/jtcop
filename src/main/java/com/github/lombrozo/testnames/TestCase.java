@@ -78,6 +78,9 @@ public interface TestCase {
          */
         private final Collection<String> suppressed;
 
+        /**
+         * The method assertions.
+         */
         private final Collection<Assertion> assertions;
 
         /**

@@ -30,15 +30,23 @@ import com.github.lombrozo.testnames.TestCase;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 /**
  * The rule that checks that test method has assertion and the assertion message is not empty.
+ *
+ * @since 0.1.15
  */
 class RuleAssertionMessage implements Rule {
 
+    /**
+     * The test case.
+     */
     private final TestCase method;
 
+    /**
+     * Ctor.
+     * @param test The test case.
+     */
     RuleAssertionMessage(final TestCase test) {
         this.method = test;
     }
@@ -56,7 +64,6 @@ class RuleAssertionMessage implements Rule {
             .forEach(res::add);
         return Collections.unmodifiableCollection(res);
     }
-
 
     /**
      * The complaint about empty assertions.
@@ -83,6 +90,11 @@ class RuleAssertionMessage implements Rule {
         }
     }
 
+    /**
+     * The complaint about empty assertion message.
+     *
+     * @since 0.1.15
+     */
     private static final class EmptyAssertionMessage implements Complaint {
 
         /**
