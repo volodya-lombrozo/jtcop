@@ -24,6 +24,7 @@
 
 package com.github.lombrozo.testnames;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import lombok.Data;
@@ -63,6 +64,11 @@ public interface TestCase {
     final class Fake implements TestCase {
 
         /**
+         * The fake name.
+         */
+        private static final String FAKE_NAME = "FakeCase";
+
+        /**
          * The name of test.
          */
         private final String name;
@@ -72,11 +78,13 @@ public interface TestCase {
          */
         private final Collection<String> suppressed;
 
+        private final Collection<Assertion> assertions;
+
         /**
          * Ctor.
          */
         public Fake() {
-            this("FakeCase");
+            this(Fake.FAKE_NAME);
         }
 
         /**
@@ -91,12 +99,35 @@ public interface TestCase {
 
         /**
          * Ctor.
+         * @param asserts The method assertions.
+         */
+        public Fake(final Assertion... asserts) {
+            this(Fake.FAKE_NAME, Collections.emptyList(), Arrays.asList(asserts));
+        }
+
+        /**
+         * Ctor.
          * @param name The name of test case
          * @param suppressed The suppressed rules
          */
         public Fake(final String name, final Collection<String> suppressed) {
+            this(name, suppressed, Collections.emptyList());
+        }
+
+        /**
+         * Ctor.
+         * @param name The name of test case
+         * @param suppressed The suppressed rules
+         * @param assertions The method assertions
+         */
+        public Fake(
+            final String name,
+            final Collection<String> suppressed,
+            final Collection<Assertion> assertions
+        ) {
             this.name = name;
             this.suppressed = suppressed;
+            this.assertions = assertions;
         }
 
         @Override
@@ -111,7 +142,7 @@ public interface TestCase {
 
         @Override
         public Collection<Assertion> assertions() {
-            return Collections.emptyList();
+            return Collections.unmodifiableCollection(this.assertions);
         }
     }
 }

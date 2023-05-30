@@ -1,5 +1,6 @@
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
@@ -17,7 +18,7 @@ class RuleAssertionMessageTest {
     @Test
     void checksAssertionMessageWithoutComplaints() {
         MatcherAssert.assertThat(
-            new RuleAssertionMessage(new TestCase.Fake()).complaints(),
+            new RuleAssertionMessage(new TestCase.Fake(new Assertion.Fake())).complaints(),
             Matchers.empty()
         );
     }
@@ -42,7 +43,7 @@ class RuleAssertionMessageTest {
     @Test
     void checksAssertionMessageOfTestCaseWithoutAssertionMessage() {
         final Collection<Complaint> complaints = new RuleAssertionMessage(
-            new TestCase.Fake()
+            new TestCase.Fake(new Assertion.Empty())
         ).complaints();
         MatcherAssert.assertThat(
             complaints,

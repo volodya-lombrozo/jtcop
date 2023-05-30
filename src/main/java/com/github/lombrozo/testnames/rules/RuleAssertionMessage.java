@@ -46,7 +46,7 @@ class RuleAssertionMessage implements Rule {
     @Override
     public Collection<Complaint> complaints() {
         final Collection<Assertion> assertions = this.method.assertions();
-        final Collection<Complaint> res = new ArrayList<>(1);
+        final Collection<Complaint> res = new ArrayList<>(0);
         if (assertions.isEmpty()) {
             res.add(new EmptyAssertions(this.method));
         }
