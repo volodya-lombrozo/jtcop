@@ -47,7 +47,7 @@ class RuleAssertionMessageTest {
     }
 
     @Test
-    void checksAssertionMessageOfTestCaseWithoutAssertions() {
+    void checksAssertionMessageOfCaseWithoutAssertions() {
         final Collection<Complaint> complaints = new RuleAssertionMessage(
             new TestCase.Fake()
         ).complaints();
@@ -63,7 +63,7 @@ class RuleAssertionMessageTest {
     }
 
     @Test
-    void checksAssertionMessageOfTestCaseWithoutAssertionMessage() {
+    void checksAssertionMessageOfCaseWithoutAssertionMessage() {
         final Collection<Complaint> complaints = new RuleAssertionMessage(
             new TestCase.Fake(new Assertion.Empty())
         ).complaints();
