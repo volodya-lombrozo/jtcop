@@ -26,12 +26,18 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.type.VarType;
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Data;
@@ -45,6 +51,9 @@ import lombok.Data;
  *  The method should return a list of assertions from different libraries like
  *  Hamcrest, AssertJ, JUnit, etc. Also we have to have a list of tests that check new
  *  functionality.
+ * @todo #146:90min Continue implementation of TestCaseJavaParser#suppressed.
+ *  We have to refactor the method assertions() in TestCaseJavaParser.
+ *  Now it looks ugly. Moreover, we have to handle more corner cases.
  */
 @Data
 final class TestCaseJavaParser implements TestCase {
@@ -106,6 +115,33 @@ final class TestCaseJavaParser implements TestCase {
 
     @Override
     public Collection<Assertion> assertions() {
-        return Collections.emptyList();
+        final Collection<Assertion> assertions = new ArrayList<>(0);
+        final Optional<BlockStmt> body = this.method.getBody();
+        body.ifPresent(
+            blockStmt -> blockStmt.getStatements().stream()
+                .filter(Statement::isExpressionStmt)
+                .map(TestCaseJavaParser::toExpression)
+                .filter(Expression::isMethodCallExpr)
+                .map(MethodCallExpr.class::cast)
+                .filter(call -> call.getArguments().size() > 2)
+                .filter(call -> call.getName().toString().equals("assertEquals"))
+                .map(AssertionOfJavaParser::new)
+                .forEach(assertions::add)
+        );
+        return Collections.unmodifiableCollection(assertions);
+    }
+
+    /**
+     * Convert statement to expression.
+     * @param statement Statement
+     * @return Expression
+     */
+    private static Expression toExpression(final Statement statement) {
+        return statement.toExpressionStmt()
+            .orElseThrow(
+                () -> {
+                    throw new IllegalStateException("Statement is not expression");
+                }
+            ).getExpression();
     }
 }

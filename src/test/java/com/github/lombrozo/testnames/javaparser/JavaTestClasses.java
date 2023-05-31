@@ -77,6 +77,11 @@ enum JavaTestClasses {
     MANY_SUPPRESSED("TestWithLotsOfSuppressed.java"),
 
     /**
+     * Test class with assertions.
+     */
+    TEST_WITH_ASSERTIONS("TestWithAssertions.java"),
+
+    /**
      * Test class with mistakes in test names.
      */
     WRONG_NAME("TestWrongName.java");

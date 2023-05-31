@@ -23,10 +23,13 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.Assertion;
+import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.util.Collection;
+import java.util.Optional;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -124,6 +127,38 @@ class TestCaseJavaParserTest {
                 "AnotherRule",
                 "UnknownRule"
             )
+        );
+    }
+
+    @Test
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    void parsesMethodsAssertionsForJUnit() {
+        final TestClassJavaParser parser = JavaTestClasses.TEST_WITH_ASSERTIONS.javaParserClass();
+        final String method = "junit";
+        final Optional<TestCase> tested = parser.all().stream()
+            .filter(test -> method.equals(test.name()))
+            .findFirst();
+        MatcherAssert.assertThat(
+            String.format("Java class has to contain '%s' method", method),
+            tested.isPresent(),
+            Matchers.is(true)
+        );
+        final Collection<Assertion> assertions = tested.get().assertions();
+        MatcherAssert.assertThat(
+            String.format("The '%s' method has to contain at least one assertion", method),
+            assertions,
+            Matchers.hasSize(1)
+        );
+        final Assertion assertion = assertions.iterator().next();
+        MatcherAssert.assertThat(
+            String.format("The '%s' assertion has to contain an explanation", assertion),
+            assertion.explanation().isPresent(),
+            Matchers.is(true)
+        );
+        MatcherAssert.assertThat(
+            String.format("The '%s' assertion message is wrong", assertion),
+            assertion.explanation().get(),
+            Matchers.equalTo("JUnit explanation")
         );
     }
 }
