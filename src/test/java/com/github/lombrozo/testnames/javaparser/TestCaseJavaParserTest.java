@@ -131,6 +131,7 @@ class TestCaseJavaParserTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     void parsesMethodsAssertionsForJUnit() {
         final TestClassJavaParser parser = JavaTestClasses.TEST_WITH_ASSERTIONS.javaParserClass();
         final String method = "junit";
@@ -151,12 +152,12 @@ class TestCaseJavaParserTest {
         final Assertion assertion = assertions.iterator().next();
         MatcherAssert.assertThat(
             String.format("The '%s' assertion has to contain an explanation", assertion),
-            assertion.explanation(),
+            assertion.explanation().isPresent(),
             Matchers.is(true)
         );
         MatcherAssert.assertThat(
             String.format("The '%s' assertion message is wrong", assertion),
-            assertion.explanation(),
+            assertion.explanation().get(),
             Matchers.equalTo("JUnit explanation")
         );
     }

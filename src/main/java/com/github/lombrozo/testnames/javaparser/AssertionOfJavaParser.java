@@ -21,25 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.lombrozo.testnames.javaparser;
 
-package com.github.lombrozo.testnames;
+import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.lombrozo.testnames.Assertion;
+import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+/**
+ * The assertion of the test method.
+ *
+ * @since 0.1.15
+ */
+public final class AssertionOfJavaParser implements Assertion {
 
-class TestWithAssertions {
-    @Test
-    void junit() {
-        System.out.println("Hello, world!");
-        Assertions.assertEquals("1", "1", "JUnit explanation");
+    /**
+     * The method call.
+     */
+    private final MethodCallExpr call;
+
+    /**
+     * Ctor.
+     * @param method The method call.
+     */
+    AssertionOfJavaParser(final MethodCallExpr method) {
+        this.call = method;
     }
 
-    @Test
-    void junitWithSupplier() {
-        Assertions.assertEquals("1", "1", "JUnit explanation");
-    }
-
-    void junitWithoutExplanation() {
-        Assertions.assertEquals("1", "1");
+    @Override
+    public Optional<String> explanation() {
+        final Optional<String> result;
+        final NodeList<Expression> args = this.call.getArguments();
+        if (args.isEmpty() || args.size() < 3) {
+            result = Optional.empty();
+        } else {
+            result = Optional.ofNullable(args.get(2).asStringLiteralExpr().asString());
+        }
+        return result;
     }
 }
