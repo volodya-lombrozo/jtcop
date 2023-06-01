@@ -38,6 +38,11 @@ import org.junit.jupiter.api.Assertions;
  * Assertion of JUnit.
  *
  * @since 0.1.15
+ * @todo #149:90min Implement more flexible mechanism of assertions parsing.
+ *  Currently, we are using a hardcoded list of allowed methods and number of arguments
+ *  to reason about junit assertions. This is not flexible enough and doesn't count all
+ *  cases. We have to add more tests for JUnit assertions and implement a more flexible
+ *  mechanism of parsing.
  */
 final class AssertionOfJUnit implements ParsedAssertion {
 
