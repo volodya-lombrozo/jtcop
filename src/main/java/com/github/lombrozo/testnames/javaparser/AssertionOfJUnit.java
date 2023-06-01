@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022-2023 Volodya
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.NodeList;
@@ -11,7 +34,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 
-public class AssertionOfJUnit implements ParsedAssertion {
+/**
+ * Assertion of JUnit.
+ *
+ * @since 0.1.15
+ */
+final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * The method call.
@@ -23,13 +51,21 @@ public class AssertionOfJUnit implements ParsedAssertion {
      */
     private final Set<String> allowed;
 
-    public AssertionOfJUnit(final MethodCallExpr call) {
-        this(call, AssertionOfJUnit.allowedJUnitNames());
-
+    /**
+     * Constructor.
+     * @param method The method call.
+     */
+    AssertionOfJUnit(final MethodCallExpr method) {
+        this(method, AssertionOfJUnit.allowedJUnitNames());
     }
 
-    private AssertionOfJUnit(final MethodCallExpr call, final Set<String> methods) {
-        this.call = call;
+    /**
+     * Constructor.
+     * @param method The method call.
+     * @param methods The allowed methods.
+     */
+    private AssertionOfJUnit(final MethodCallExpr method, final Set<String> methods) {
+        this.call = method;
         this.allowed = methods;
     }
 
@@ -51,6 +87,10 @@ public class AssertionOfJUnit implements ParsedAssertion {
         return result;
     }
 
+    /**
+     * The allowed methods.
+     * @return The allowed JUnit methods.
+     */
     private static Set<String> allowedJUnitNames() {
         return Arrays.stream(Assertions.class.getMethods())
             .filter(AssertionOfJUnit::isAssertion)
@@ -58,6 +98,11 @@ public class AssertionOfJUnit implements ParsedAssertion {
             .collect(Collectors.toSet());
     }
 
+    /**
+     * Is JUnit assertion.
+     * @param method The method.
+     * @return True if JUnit assertion.
+     */
     private static boolean isAssertion(final Method method) {
         final int modifiers = method.getModifiers();
         return Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers);
