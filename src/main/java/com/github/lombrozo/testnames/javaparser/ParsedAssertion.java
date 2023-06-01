@@ -29,6 +29,10 @@ import com.github.lombrozo.testnames.Assertion;
  * The assertion of the parsed test method.
  *
  * @since 0.1.15
+ * @todo #149:90min Add support of Hamcrest assertions.
+ *  For now we support only JUnit assertions, the next step would be to add Harcrest assertions.
+ *  We will have to change the library scope to 'compile' and parse it the same way as
+ *  {@link AssertionOfJUnit}.
  */
 interface ParsedAssertion extends Assertion {
 

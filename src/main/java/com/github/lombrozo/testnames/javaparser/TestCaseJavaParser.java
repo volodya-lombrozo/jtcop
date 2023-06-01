@@ -51,9 +51,6 @@ import lombok.Data;
  *  The method should return a list of assertions from different libraries like
  *  Hamcrest, AssertJ, JUnit, etc. Also we have to have a list of tests that check new
  *  functionality.
- * @todo #146:90min Continue implementation of TestCaseJavaParser#suppressed.
- *  We have to refactor the method assertions() in TestCaseJavaParser.
- *  Now it looks ugly. Moreover, we have to handle more corner cases.
  */
 @Data
 final class TestCaseJavaParser implements TestCase {
@@ -123,8 +120,6 @@ final class TestCaseJavaParser implements TestCase {
                 .map(TestCaseJavaParser::toExpression)
                 .filter(Expression::isMethodCallExpr)
                 .map(MethodCallExpr.class::cast)
-                .filter(call -> call.getArguments().size() > 2)
-                .filter(call -> call.getName().toString().equals("assertEquals"))
                 .map(AssertionOfJavaParser::new)
                 .forEach(assertions::add)
         );
