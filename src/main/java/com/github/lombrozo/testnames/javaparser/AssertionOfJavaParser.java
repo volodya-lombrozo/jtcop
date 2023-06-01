@@ -24,7 +24,6 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.lombrozo.testnames.Assertion;
 import java.util.Optional;
 
 /**
@@ -32,7 +31,7 @@ import java.util.Optional;
  *
  * @since 0.1.15
  */
-public final class AssertionOfJavaParser implements Assertion {
+public final class AssertionOfJavaParser implements ParsedAssertion {
 
     /**
      * The method call.
@@ -57,5 +56,10 @@ public final class AssertionOfJavaParser implements Assertion {
             result = Optional.empty();
         }
         return result;
+    }
+
+    @Override
+    public boolean isAssertion() {
+        return new AssertionOfJUnit(this.call).isAssertion();
     }
 }

@@ -121,6 +121,7 @@ final class TestCaseJavaParser implements TestCase {
                 .filter(Expression::isMethodCallExpr)
                 .map(MethodCallExpr.class::cast)
                 .map(AssertionOfJavaParser::new)
+                .filter(ParsedAssertion::isAssertion)
                 .forEach(assertions::add)
         );
         return Collections.unmodifiableCollection(assertions);
