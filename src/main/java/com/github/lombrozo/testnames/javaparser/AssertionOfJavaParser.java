@@ -23,8 +23,6 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.lombrozo.testnames.Assertion;
 import java.util.Optional;
@@ -52,11 +50,11 @@ public final class AssertionOfJavaParser implements Assertion {
     @Override
     public Optional<String> explanation() {
         final Optional<String> result;
-        final NodeList<Expression> args = this.call.getArguments();
-        if (args.isEmpty() || args.size() < 3) {
-            result = Optional.empty();
+        final ParsedAssertion assertion = new AssertionOfJUnit(this.call);
+        if (assertion.isAssertion()) {
+            result = assertion.explanation();
         } else {
-            result = Optional.ofNullable(args.get(2).asStringLiteralExpr().asString());
+            result = Optional.empty();
         }
         return result;
     }
