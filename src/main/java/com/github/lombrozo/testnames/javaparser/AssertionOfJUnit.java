@@ -84,10 +84,21 @@ final class AssertionOfJUnit implements ParsedAssertion {
     public Optional<String> explanation() {
         final Optional<String> result;
         final NodeList<Expression> args = this.call.getArguments();
-        if (args.isEmpty() || args.size() < 3) {
-            result = Optional.empty();
+        final Optional<Expression> last = args.getLast();
+        if (last.isPresent()) {
+            result = AssertionOfJUnit.message(last.get());
         } else {
-            result = Optional.ofNullable(args.get(2).asStringLiteralExpr().asString());
+            result = Optional.empty();
+        }
+        return result;
+    }
+
+    private static Optional<String> message(final Expression expression) {
+        final Optional<String> result;
+        if (expression.isStringLiteralExpr()) {
+            result = Optional.of(expression.asStringLiteralExpr().asString());
+        } else {
+            result = Optional.empty();
         }
         return result;
     }
