@@ -82,6 +82,11 @@ enum JavaTestClasses {
     TEST_WITH_ASSERTIONS("TestWithAssertions.java"),
 
     /**
+     * Test class with JUnit assertions.
+     */
+    TEST_WITH_JUNIT_ASSERTIONS("TestWithJUnitAssertions.java"),
+
+    /**
      * Test class with mistakes in test names.
      */
     WRONG_NAME("TestWrongName.java");

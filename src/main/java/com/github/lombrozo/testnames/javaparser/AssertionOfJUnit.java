@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.NameExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -47,6 +48,12 @@ import org.junit.jupiter.api.Assertions;
 final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
+     * The explanation of the assertion.
+     * The message that can't be parsed. It could be either a constant, or a method call.
+     */
+    private static final String UNKNOWN_MESSAGE = "Unknown message";
+
+    /**
      * The method call.
      */
     private final MethodCallExpr call;
@@ -55,6 +62,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
      * The allowed methods.
      */
     private final Set<String> allowed;
+
 
     /**
      * Constructor.
@@ -97,6 +105,8 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final Optional<String> result;
         if (expression.isStringLiteralExpr()) {
             result = Optional.of(expression.asStringLiteralExpr().asString());
+        } else if (expression.isNameExpr()) {
+            result = Optional.of(AssertionOfJUnit.UNKNOWN_MESSAGE);
         } else {
             result = Optional.empty();
         }

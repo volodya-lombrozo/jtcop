@@ -25,12 +25,14 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.Optional;
+import lombok.ToString;
 
 /**
  * The assertion of the test method.
  *
  * @since 0.1.15
  */
+@ToString
 public final class AssertionOfJavaParser implements ParsedAssertion {
 
     /**
