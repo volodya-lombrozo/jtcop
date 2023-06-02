@@ -44,7 +44,107 @@ class TestWithJUnitAssertions {
     @Test
     void withMessages() {
         Assertions.assertEquals("1", "1", DEFAULT_EXPLANATION);
-        Assertions.assertTrue(true, TestWithJUnitAssertions.DEFAULT_EXPLANATION);
+        Assertions.assertEquals("1", "1", DEFAULT_SUPPLIER);
+        Assertions.assertTrue(true, DEFAULT_EXPLANATION);
+        Assertions.assertTrue(true, DEFAULT_SUPPLIER);
+        Assertions.assertFalse(false, DEFAULT_EXPLANATION);
+        Assertions.assertFalse(false, DEFAULT_SUPPLIER);
+        Assertions.assertNotEquals("1", "2", DEFAULT_EXPLANATION);
+        Assertions.assertNotEquals("1", "2", DEFAULT_SUPPLIER);
+        Assertions.assertArrayEquals(new int[]{1, 2, 3}, new int[]{1, 2, 3}, DEFAULT_EXPLANATION);
+        Assertions.assertArrayEquals(new int[]{1, 2, 3}, new int[]{1, 2, 3}, DEFAULT_SUPPLIER);
+        Assertions.assertLinesMatch(
+            Collections.EMPTY_LIST,
+            Collections.EMPTY_LIST,
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertLinesMatch(
+            Collections.EMPTY_LIST,
+            Collections.EMPTY_LIST,
+            DEFAULT_SUPPLIER
+        );
+        Assertions.assertInstanceOf(Integer.class, 1, DEFAULT_SUPPLIER);
+        Assertions.assertInstanceOf(Integer.class, 1, DEFAULT_EXPLANATION);
+        Assertions.assertNotSame(new Object(), new Object(), DEFAULT_EXPLANATION);
+        Assertions.assertNotSame(new Object(), new Object(), DEFAULT_SUPPLIER);
+        Assertions.assertSame(1, 1, DEFAULT_EXPLANATION);
+        Assertions.assertSame(1, 1, DEFAULT_SUPPLIER);
+        Assertions.assertNull(null, DEFAULT_EXPLANATION);
+        Assertions.assertNull(null, DEFAULT_SUPPLIER);
+        Assertions.assertNotNull(new Object(), DEFAULT_EXPLANATION);
+        Assertions.assertNotNull(new Object(), DEFAULT_SUPPLIER);
+        Assertions.assertTimeout(
+            Duration.ZERO,
+            () -> {
+            },
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertTimeout(
+            Duration.ZERO,
+            () -> {
+            },
+            DEFAULT_SUPPLIER
+        );
+        Assertions.assertTimeoutPreemptively(
+            Duration.ZERO,
+            () -> {
+            },
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertTimeoutPreemptively(
+            Duration.ZERO,
+            () -> {
+            },
+            DEFAULT_SUPPLIER
+        );
+        Assertions.assertThrowsExactly(
+            IllegalStateException.class,
+            () -> {
+                throw new IllegalStateException();
+            },
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertThrowsExactly(
+            IllegalStateException.class,
+            () -> {
+                throw new IllegalStateException();
+            },
+            DEFAULT_SUPPLIER
+        );
+        Assertions.assertIterableEquals(
+            new int[]{1, 2, 3},
+            new int[]{1, 2, 3},
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertIterableEquals(
+            new int[]{1, 2, 3},
+            new int[]{1, 2, 3},
+            DEFAULT_SUPPLIER
+        );
+        Assertions.assertDoesNotThrow(
+            () -> {
+            },
+            DEFAULT_SUPPLIER
+        );
+        Assertions.assertDoesNotThrow(
+            () -> {
+            },
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> {
+                throw new IllegalStateException();
+            },
+            DEFAULT_EXPLANATION
+        );
+        Assertions.assertThrows(
+            IllegalStateException.class,
+            () -> {
+                throw new IllegalStateException();
+            },
+            DEFAULT_SUPPLIER
+        );
     }
 
     @Test
