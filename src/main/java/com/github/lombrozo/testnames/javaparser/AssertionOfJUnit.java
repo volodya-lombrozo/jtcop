@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -62,7 +61,6 @@ final class AssertionOfJUnit implements ParsedAssertion {
      * The allowed methods.
      */
     private final Set<String> allowed;
-
 
     /**
      * Constructor.
@@ -101,6 +99,11 @@ final class AssertionOfJUnit implements ParsedAssertion {
         return result;
     }
 
+    /**
+     * The expression message.
+     * @param expression The expression.
+     * @return The message.
+     */
     private static Optional<String> message(final Expression expression) {
         final Optional<String> result;
         if (expression.isStringLiteralExpr()) {

@@ -40,6 +40,7 @@ import org.junit.jupiter.api.Test;
 class AssertionOfJUnitTest {
 
     @Test
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     void parsesOrdinaryAssertions() {
         final Collection<Assertion> assertions = AssertionOfJUnitTest.method("withMessages")
             .assertions();
@@ -92,7 +93,6 @@ class AssertionOfJUnitTest {
             Matchers.is(true)
         );
     }
-
 
     /**
      * Returns test case by name.
