@@ -38,9 +38,20 @@ import org.junit.jupiter.api.Test;
  */
 class AssertionOfJUnitTest {
 
+    /**
+     * Method name for test with messages.
+     */
     private static final String WITH_MESSAGES = "withMessages";
+
+    /**
+     * Method name for test without messages.
+     */
     private static final String WITHOUT_MESSAGES = "withoutMessages";
-    private static final String SPECIAL_ASSERTIONS = "specialAssertions";
+
+    /**
+     * Method name for test with special assertions.
+     */
+    private static final String SPECIAL_MESSAGES = "specialAssertions";
 
     @Test
     @Disabled
@@ -72,7 +83,7 @@ class AssertionOfJUnitTest {
     void parsesJUnitAssertionsNoneHasEmptyExplanation() {
         MatcherAssert.assertThat(
             "All assertions should have JUnit explanation text",
-            AssertionOfJUnitTest.method("withMessages")
+            AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
                 .assertions().stream()
                 .map(Assertion::explanation)
                 .filter(Optional::isPresent)
@@ -112,7 +123,7 @@ class AssertionOfJUnitTest {
     @Disabled
     void parsesAllSpecialAssertionsAllAreParsed() {
         final int expected = 6;
-        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_ASSERTIONS)
+        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
             String.format("We expect to parse %d special assertions, but was %s", expected, actual),
@@ -121,12 +132,11 @@ class AssertionOfJUnitTest {
         );
     }
 
-
     @Test
     void ignoresFailAssertion() {
         MatcherAssert.assertThat(
             "We should add fake explanations for some assertions",
-            AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_ASSERTIONS)
+            AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_MESSAGES)
                 .assertions()
                 .stream()
                 .map(Assertion::explanation)
