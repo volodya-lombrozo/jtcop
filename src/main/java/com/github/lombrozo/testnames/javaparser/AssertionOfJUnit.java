@@ -38,10 +38,6 @@ import org.junit.jupiter.api.Assertions;
  * Assertion of JUnit.
  *
  * @since 0.1.15
- * @todo #152:90min Continue with implementing more flexible mechanism of assertions parsing.
- *  We have added approximate implementation of JUnit assertions parsing.
- *  However, it is not enough. I believe we have to check all tests and cases one more time.
- *  Also it would be nice to add integration test for JUnit assertions.
  */
 final class AssertionOfJUnit implements ParsedAssertion {
 
