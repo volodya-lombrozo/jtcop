@@ -25,11 +25,10 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,27 +38,42 @@ import org.junit.jupiter.api.Test;
  */
 class AssertionOfJUnitTest {
 
+    private static final String WITH_MESSAGES = "withMessages";
+    private static final String WITHOUT_MESSAGES = "withoutMessages";
+    private static final String SPECIAL_ASSERTIONS = "specialAssertions";
+
     @Test
-    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
-    void parsesOrdinaryAssertions() {
-        final Collection<Assertion> assertions = AssertionOfJUnitTest.method("withMessages")
-            .assertions();
+    @Disabled
+    void parsesJUnitAssertionsAllPresent() {
+        final int expected = 34;
+        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
+            .assertions().size();
         MatcherAssert.assertThat(
-            String.format(
-                "All assertions should have explanation assertions without messages %s",
-                assertions.stream()
-                    .filter(opt -> !opt.explanation().isPresent())
-                    .collect(Collectors.toList())
-            ),
-            assertions
+            String.format("We expect to parse %d assertions, but was %s", expected, actual),
+            actual,
+            Matchers.is(expected)
+        );
+    }
+
+    @Test
+    void parsesJUnitAssertionsAllHaveExplanation() {
+        MatcherAssert.assertThat(
+            "All assertions should have explanation assertions",
+            AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
+                .assertions()
                 .stream()
                 .map(Assertion::explanation)
                 .allMatch(Optional::isPresent),
             Matchers.is(true)
         );
+    }
+
+    @Test
+    void parsesJUnitAssertionsNoneHasEmptyExplanation() {
         MatcherAssert.assertThat(
             "All assertions should have JUnit explanation text",
-            assertions.stream()
+            AssertionOfJUnitTest.method("withMessages")
+                .assertions().stream()
                 .map(Assertion::explanation)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -69,10 +83,23 @@ class AssertionOfJUnitTest {
     }
 
     @Test
+    @Disabled
+    void parsesAssertionsWithoutMessagesAllAreParsed() {
+        final int expected = 17;
+        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITHOUT_MESSAGES)
+            .assertions().size();
+        MatcherAssert.assertThat(
+            String.format("We expect to parse %d empty assertions, but was %s", expected, actual),
+            actual,
+            Matchers.is(expected)
+        );
+    }
+
+    @Test
     void parsesAssertionsWithoutMessage() {
         MatcherAssert.assertThat(
             "All assertions should be without assertion message",
-            AssertionOfJUnitTest.method("withoutMessages")
+            AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITHOUT_MESSAGES)
                 .assertions()
                 .stream()
                 .map(Assertion::explanation)
@@ -82,10 +109,24 @@ class AssertionOfJUnitTest {
     }
 
     @Test
+    @Disabled
+    void parsesAllSpecialAssertionsAllAreParsed() {
+        final int expected = 6;
+        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_ASSERTIONS)
+            .assertions().size();
+        MatcherAssert.assertThat(
+            String.format("We expect to parse %d special assertions, but was %s", expected, actual),
+            actual,
+            Matchers.is(expected)
+        );
+    }
+
+
+    @Test
     void ignoresFailAssertion() {
         MatcherAssert.assertThat(
             "We should add fake explanations for some assertions",
-            AssertionOfJUnitTest.method("ingoresSomeAssertionMessages")
+            AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_ASSERTIONS)
                 .assertions()
                 .stream()
                 .map(Assertion::explanation)

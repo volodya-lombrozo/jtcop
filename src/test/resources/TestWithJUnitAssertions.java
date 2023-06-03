@@ -193,7 +193,7 @@ class TestWithJUnitAssertions {
     }
 
     @Test
-    void ingoresSomeAssertionMessages() {
+    void specialAssertions() {
         Assertions.fail("JUnit explanation");
         Assertions.fail(new IllegalStateException());
         Assertions.fail();
