@@ -29,7 +29,6 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -60,6 +59,12 @@ final class AssertionOfJUnit implements ParsedAssertion {
     private final Map<String, Integer> allowed;
 
     /**
+     * Special assertions that we consider as assertions with messages.
+     */
+    private final String[] special = {"assertAll", "fail"};
+
+
+    /**
      * Constructor.
      * @param method The method call.
      */
@@ -88,7 +93,9 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final NodeList<Expression> args = this.call.getArguments();
         final Optional<Expression> last = args.getLast();
         final Integer min = this.allowed.get(this.call.getName().toString());
-        if (min < this.call.getArguments().size() && last.isPresent()) {
+        if(Arrays.asList(this.special).contains(this.call.getName().toString())) {
+            result = Optional.of(AssertionOfJUnit.UNKNOWN_MESSAGE);
+        } else if (min < args.size() && last.isPresent()) {
             result = AssertionOfJUnit.message(last.get());
         } else {
             result = Optional.empty();

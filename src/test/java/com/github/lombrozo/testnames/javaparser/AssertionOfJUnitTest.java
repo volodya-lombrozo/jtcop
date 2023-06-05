@@ -142,10 +142,15 @@ class AssertionOfJUnitTest {
 
     @Test
     void ignoresFailAssertion() {
+        final Collection<Assertion> assertions = AssertionOfJUnitTest.method(
+                AssertionOfJUnitTest.SPECIAL_MESSAGES)
+            .assertions();
         MatcherAssert.assertThat(
-            "We should add fake explanations for some assertions",
-            AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_MESSAGES)
-                .assertions()
+            String.format(
+                "We should accept special assertions as assertions with explanation, but was %s",
+                assertions
+            ),
+            assertions
                 .stream()
                 .map(Assertion::explanation)
                 .allMatch(Optional::isPresent),
