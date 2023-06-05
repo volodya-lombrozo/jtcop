@@ -25,7 +25,9 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -105,10 +107,20 @@ class AssertionOfJUnitTest {
 
     @Test
     void parsesAssertionsWithoutMessage() {
+        final Collection<Assertion> assertions = AssertionOfJUnitTest.method(
+                AssertionOfJUnitTest.WITHOUT_MESSAGES)
+            .assertions();
         MatcherAssert.assertThat(
-            "All assertions should be without assertion message",
-            AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITHOUT_MESSAGES)
-                .assertions()
+            String.format(
+                "All assertions should be without assertion message, but was: %s",
+                assertions
+                    .stream()
+                    .map(Assertion::explanation)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList())
+            ),
+            assertions
                 .stream()
                 .map(Assertion::explanation)
                 .noneMatch(Optional::isPresent),

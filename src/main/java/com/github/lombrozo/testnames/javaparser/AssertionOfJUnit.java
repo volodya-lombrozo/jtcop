@@ -29,6 +29,8 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -55,7 +57,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
     /**
      * The allowed methods.
      */
-    private final Set<String> allowed;
+    private final Map<String, Integer> allowed;
 
     /**
      * Constructor.
@@ -70,15 +72,14 @@ final class AssertionOfJUnit implements ParsedAssertion {
      * @param method The method call.
      * @param methods The allowed methods.
      */
-    private AssertionOfJUnit(final MethodCallExpr method, final Set<String> methods) {
+    private AssertionOfJUnit(final MethodCallExpr method, final Map<String, Integer> methods) {
         this.call = method;
         this.allowed = methods;
     }
 
     @Override
     public boolean isAssertion() {
-        return this.call.getArguments().size() > 2
-            && this.allowed.contains(this.call.getName().toString());
+        return this.allowed.containsKey(this.call.getName().toString());
     }
 
     @Override
@@ -86,7 +87,8 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final Optional<String> result;
         final NodeList<Expression> args = this.call.getArguments();
         final Optional<Expression> last = args.getLast();
-        if (last.isPresent()) {
+        final Integer min = this.allowed.get(this.call.getName().toString());
+        if (min < this.call.getArguments().size() && last.isPresent()) {
             result = AssertionOfJUnit.message(last.get());
         } else {
             result = Optional.empty();
@@ -115,11 +117,10 @@ final class AssertionOfJUnit implements ParsedAssertion {
      * The allowed methods.
      * @return The allowed JUnit methods.
      */
-    private static Set<String> allowedJUnitNames() {
+    private static Map<String, Integer> allowedJUnitNames() {
         return Arrays.stream(Assertions.class.getMethods())
             .filter(AssertionOfJUnit::isAssertion)
-            .map(Method::getName)
-            .collect(Collectors.toSet());
+            .collect(Collectors.toMap(Method::getName, Method::getParameterCount, Math::min));
     }
 
     /**
@@ -131,4 +132,5 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final int modifiers = method.getModifiers();
         return Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers);
     }
+
 }
