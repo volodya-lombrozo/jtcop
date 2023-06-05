@@ -28,16 +28,12 @@ import com.github.lombrozo.testnames.TestCase;
 import java.util.Optional;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link AssertionOfJUnit}.
  *
  * @since 0.1.15
- * @todo #155:90min Enable all tests in AssertionOfJUnitTest and fix all related problems.
- *  Currently, some tests are disabled because of the problems with parsing of JUnit assertions.
- *  We need to fix all problems and enable all tests. After that, we can remove this puzzle.
  */
 class AssertionOfJUnitTest {
 
@@ -57,7 +53,6 @@ class AssertionOfJUnitTest {
     private static final String SPECIAL_MESSAGES = "specialAssertions";
 
     @Test
-    @Disabled
     void parsesJUnitAssertionsAllPresent() {
         final int expected = 34;
         final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
@@ -97,7 +92,6 @@ class AssertionOfJUnitTest {
     }
 
     @Test
-    @Disabled
     void parsesAssertionsWithoutMessagesAllAreParsed() {
         final int expected = 17;
         final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITHOUT_MESSAGES)
@@ -123,7 +117,6 @@ class AssertionOfJUnitTest {
     }
 
     @Test
-    @Disabled
     void parsesAllSpecialAssertionsAllAreParsed() {
         final int expected = 6;
         final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_MESSAGES)
