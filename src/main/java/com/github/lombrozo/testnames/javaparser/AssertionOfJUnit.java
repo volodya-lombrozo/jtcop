@@ -31,7 +31,6 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 
@@ -49,20 +48,20 @@ final class AssertionOfJUnit implements ParsedAssertion {
     private static final String UNKNOWN_MESSAGE = "Unknown message";
 
     /**
+     * Special assertions that we consider as assertions with messages.
+     */
+    private static final String[] SPECIAL = {"assertAll", "fail"};
+
+    /**
      * The method call.
      */
     private final MethodCallExpr call;
 
     /**
      * The allowed methods.
+     * The key is the method name, the value is the minimum number of arguments.
      */
     private final Map<String, Integer> allowed;
-
-    /**
-     * Special assertions that we consider as assertions with messages.
-     */
-    private final String[] special = {"assertAll", "fail"};
-
 
     /**
      * Constructor.
@@ -93,7 +92,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final NodeList<Expression> args = this.call.getArguments();
         final Optional<Expression> last = args.getLast();
         final Integer min = this.allowed.get(this.call.getName().toString());
-        if(Arrays.asList(this.special).contains(this.call.getName().toString())) {
+        if (Arrays.asList(this.SPECIAL).contains(this.call.getName().toString())) {
             result = Optional.of(AssertionOfJUnit.UNKNOWN_MESSAGE);
         } else if (min < args.size() && last.isPresent()) {
             result = AssertionOfJUnit.message(last.get());

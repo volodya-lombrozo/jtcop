@@ -107,21 +107,19 @@ class AssertionOfJUnitTest {
 
     @Test
     void parsesAssertionsWithoutMessage() {
-        final Collection<Assertion> assertions = AssertionOfJUnitTest.method(
-                AssertionOfJUnitTest.WITHOUT_MESSAGES)
-            .assertions();
+        final Collection<Assertion> all = AssertionOfJUnitTest.method(
+            AssertionOfJUnitTest.WITHOUT_MESSAGES
+        ).assertions();
         MatcherAssert.assertThat(
             String.format(
                 "All assertions should be without assertion message, but was: %s",
-                assertions
-                    .stream()
+                all.stream()
                     .map(Assertion::explanation)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList())
             ),
-            assertions
-                .stream()
+            all.stream()
                 .map(Assertion::explanation)
                 .noneMatch(Optional::isPresent),
             Matchers.is(true)
@@ -142,16 +140,15 @@ class AssertionOfJUnitTest {
 
     @Test
     void ignoresFailAssertion() {
-        final Collection<Assertion> assertions = AssertionOfJUnitTest.method(
-                AssertionOfJUnitTest.SPECIAL_MESSAGES)
-            .assertions();
+        final Collection<Assertion> all = AssertionOfJUnitTest.method(
+            AssertionOfJUnitTest.SPECIAL_MESSAGES
+        ).assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We should accept special assertions as assertions with explanation, but was %s",
-                assertions
+                all
             ),
-            assertions
-                .stream()
+            all.stream()
                 .map(Assertion::explanation)
                 .allMatch(Optional::isPresent),
             Matchers.is(true)
