@@ -92,7 +92,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final NodeList<Expression> args = this.call.getArguments();
         final Optional<Expression> last = args.getLast();
         final Integer min = this.allowed.get(this.call.getName().toString());
-        if (Arrays.asList(this.SPECIAL).contains(this.call.getName().toString())) {
+        if (Arrays.asList(AssertionOfJUnit.SPECIAL).contains(this.call.getName().toString())) {
             result = Optional.of(AssertionOfJUnit.UNKNOWN_MESSAGE);
         } else if (min < args.size() && last.isPresent()) {
             result = AssertionOfJUnit.message(last.get());
