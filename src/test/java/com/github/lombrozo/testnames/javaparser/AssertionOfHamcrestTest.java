@@ -48,16 +48,16 @@ class AssertionOfHamcrestTest {
     @Disabled
     void parsesAllHamcrestAssertions() {
         final int expected = 3;
-        final Collection<Assertion> assertions = AssertionOfHamcrestTest.method(
+        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withMessages"
         ).assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect %d assertions in the test case, but was %d",
                 expected,
-                assertions.size()
+                all.size()
             ),
-            assertions,
+            all,
             Matchers.hasSize(expected)
         );
     }
@@ -65,20 +65,20 @@ class AssertionOfHamcrestTest {
     @Test
     @Disabled
     void parsesAllHamcrestMessages() {
-        final Collection<Assertion> assertions = AssertionOfHamcrestTest.method(
+        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withMessages"
         ).assertions();
         final String expected = "Hamcrest message";
         MatcherAssert.assertThat(
             String.format(
                 "We expect all assertions to have messages, but was %s",
-                assertions.stream()
+                all.stream()
                     .map(Assertion::explanation)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList())
             ),
-            assertions.stream()
+            all.stream()
                 .map(Assertion::explanation)
                 .filter(Optional::isPresent)
                 .allMatch(message -> message.equals(expected)),
@@ -89,15 +89,12 @@ class AssertionOfHamcrestTest {
     @Test
     @Disabled
     void ignoresJUnitAssertions() {
-        final Collection<Assertion> assertions = AssertionOfHamcrestTest.method(
+        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "junitAssertions"
         ).assertions();
         MatcherAssert.assertThat(
-            String.format(
-                "We expect empty assertion list, but was %d",
-                assertions
-            ),
-            assertions,
+            String.format("We expect empty assertion list, but was %s", all),
+            all,
             Matchers.empty()
         );
     }
@@ -106,16 +103,16 @@ class AssertionOfHamcrestTest {
     @Disabled
     void parsesAllHamcrestAssertionsWithoutMessages() {
         final int expected = 4;
-        final Collection<Assertion> assertions = AssertionOfHamcrestTest.method(
+        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withoutMessages"
         ).assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect %d assertions in the test case, but was %d",
                 expected,
-                assertions.size()
+                all.size()
             ),
-            assertions,
+            all,
             Matchers.hasSize(expected)
         );
     }
@@ -123,19 +120,19 @@ class AssertionOfHamcrestTest {
     @Test
     @Disabled
     void checksIfAllHamcrestAssertionsAreActuallyWithoutMessages() {
-        final Collection<Assertion> assertions = AssertionOfHamcrestTest.method(
+        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withoutMessages"
         ).assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect all assertions to have no messages, but was %s",
-                assertions.stream()
+                all.stream()
                     .map(Assertion::explanation)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList())
             ),
-            assertions.stream()
+            all.stream()
                 .map(Assertion::explanation)
                 .noneMatch(Optional::isPresent),
             Matchers.is(true)

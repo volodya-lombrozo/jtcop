@@ -31,7 +31,7 @@ import java.util.Optional;
  *
  * @since 0.1.15
  */
-public class AssertionOfHamcrest implements ParsedAssertion {
+public final class AssertionOfHamcrest implements ParsedAssertion {
 
     /**
      * The method call.
@@ -46,7 +46,6 @@ public class AssertionOfHamcrest implements ParsedAssertion {
         this.method = call;
     }
 
-
     @Override
     public Optional<String> explanation() {
         return Optional.empty();
@@ -54,6 +53,6 @@ public class AssertionOfHamcrest implements ParsedAssertion {
 
     @Override
     public boolean isAssertion() {
-        return false;
+        return "mock".equals(this.method.getName().toString());
     }
 }

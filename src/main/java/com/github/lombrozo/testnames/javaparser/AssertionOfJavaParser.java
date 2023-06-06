@@ -51,9 +51,12 @@ public final class AssertionOfJavaParser implements ParsedAssertion {
     @Override
     public Optional<String> explanation() {
         final Optional<String> result;
-        final ParsedAssertion assertion = new AssertionOfJUnit(this.call);
-        if (assertion.isAssertion()) {
-            result = assertion.explanation();
+        final ParsedAssertion junit = new AssertionOfJUnit(this.call);
+        final ParsedAssertion hamcrest = new AssertionOfHamcrest(this.call);
+        if (junit.isAssertion()) {
+            result = junit.explanation();
+        } else if (hamcrest.isAssertion()) {
+            result = hamcrest.explanation();
         } else {
             result = Optional.empty();
         }
