@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.function.Supplier;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,7 @@ class TestWithJUnitAssertions {
     /**
      * Default supplier for assertions.
      */
-    private final static String DEFAULT_SUPPLIER = () -> TestWithJUnitAssertions.DEFAULT_EXPLANATION;
+    private final static Supplier<String> DEFAULT_SUPPLIER = () -> TestWithJUnitAssertions.DEFAULT_EXPLANATION;
 
     @Test
     void withMessages() {
