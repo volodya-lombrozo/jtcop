@@ -23,11 +23,10 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -74,9 +73,10 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
 
     @Override
     public Optional<String> explanation() {
-        final Optional<Expression> first = this.method.getArguments().getFirst();
         final Optional<String> result;
-        if (first.isPresent()) {
+        final NodeList<Expression> arguments = this.method.getArguments();
+        final Optional<Expression> first = arguments.getFirst();
+        if (arguments.size() > 2 && first.isPresent()) {
             result = AssertionOfHamcrest.message(first.get());
         } else {
             result = Optional.empty();
