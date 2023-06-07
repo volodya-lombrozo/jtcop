@@ -45,7 +45,8 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
      *  It should be moved to the ParsedAssertion interface or to the separate class.
      *  When it's done, remove this puzzle.
      */
-    private static final String UNKNOWN_MESSAGE = "Unknown message. The message will be known only in runtime";
+    private static final String UNKNOWN_MESSAGE =
+        "Unknown message. The message will be known only in runtime";
 
     /**
      * The method call.
@@ -84,6 +85,11 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         return result;
     }
 
+    /**
+     * Retrieves message from Hamcrest expression.
+     * @param expression Hamcrest expression.
+     * @return Optional message.
+     */
     private static Optional<String> message(final Expression expression) {
         final Optional<String> result;
         if (expression.isStringLiteralExpr()) {

@@ -124,7 +124,8 @@ class AssertionOfHamcrestTest {
     @Disabled
     void ignoresJUnitAssertions() {
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "junitAssertions").assertions();
+            "junitAssertions"
+        ).assertions();
         MatcherAssert.assertThat(
             String.format("We expect empty assertion list, but was %s", all),
             all,
