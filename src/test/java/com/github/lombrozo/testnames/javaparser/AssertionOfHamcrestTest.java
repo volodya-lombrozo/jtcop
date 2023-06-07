@@ -61,7 +61,6 @@ class AssertionOfHamcrestTest {
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withMessages"
         ).assertions();
-        final String expected = "Hamcrest message";
         MatcherAssert.assertThat(
             String.format(
                 "We expect all assertions to have messages, but was %s",
@@ -74,7 +73,8 @@ class AssertionOfHamcrestTest {
             all.stream()
                 .map(Assertion::explanation)
                 .filter(Optional::isPresent)
-                .allMatch(message -> message.equals(expected)),
+                .map(Optional::get)
+                .noneMatch(String::isEmpty),
             Matchers.is(true)
         );
     }

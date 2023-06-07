@@ -65,6 +65,7 @@ public final class AssertionOfJavaParser implements ParsedAssertion {
 
     @Override
     public boolean isAssertion() {
-        return new AssertionOfJUnit(this.call).isAssertion();
+        return new AssertionOfJUnit(this.call).isAssertion()
+            || new AssertionOfHamcrest(this.call).isAssertion();
     }
 }
