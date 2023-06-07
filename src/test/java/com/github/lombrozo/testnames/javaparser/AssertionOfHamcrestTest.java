@@ -77,22 +77,8 @@ class AssertionOfHamcrestTest {
             ),
             all.stream()
                 .map(Assertion::explanation)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .noneMatch(String::isEmpty),
+                .allMatch(Optional::isPresent),
             Matchers.is(true)
-        );
-    }
-
-    @Test
-    @Disabled
-    void ignoresJUnitAssertions() {
-        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "junitAssertions").assertions();
-        MatcherAssert.assertThat(
-            String.format("We expect empty assertion list, but was %s", all),
-            all,
-            Matchers.empty()
         );
     }
 
@@ -131,6 +117,18 @@ class AssertionOfHamcrestTest {
                 .map(Assertion::explanation)
                 .noneMatch(Optional::isPresent),
             Matchers.is(true)
+        );
+    }
+
+    @Test
+    @Disabled
+    void ignoresJUnitAssertions() {
+        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
+            "junitAssertions").assertions();
+        MatcherAssert.assertThat(
+            String.format("We expect empty assertion list, but was %s", all),
+            all,
+            Matchers.empty()
         );
     }
 

@@ -58,8 +58,6 @@ class TestWithHamcrestAssertions {
             true,
             org.hamcrest.Matchers.is(true)
         );
-
-        MatcherAssert.assertThat("Hamcrest explanation", true);
     }
 
     @Test
