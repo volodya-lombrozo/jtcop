@@ -30,22 +30,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link AssertionOfHamcrest}.
  *
  * @since 0.1.15
- * @todo #151:90min Continue Implementation of the AssertionOfHamcrest methods.
- *  AssertionOfHamcrest should parse all hamcrest assertions and messages.
- *  Now it is not implemented. When it is done, remove @Disabled annotation from all
- *  tests in this class.
  */
 class AssertionOfHamcrestTest {
 
     @Test
-    @Disabled
     void parsesAllHamcrestAssertions() {
         final int expected = 3;
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
@@ -63,7 +57,6 @@ class AssertionOfHamcrestTest {
     }
 
     @Test
-    @Disabled
     void parsesAllHamcrestMessages() {
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withMessages"
@@ -87,7 +80,6 @@ class AssertionOfHamcrestTest {
     }
 
     @Test
-    @Disabled
     void ignoresJUnitAssertions() {
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "junitAssertions"
@@ -100,7 +92,6 @@ class AssertionOfHamcrestTest {
     }
 
     @Test
-    @Disabled
     void parsesAllHamcrestAssertionsWithoutMessages() {
         final int expected = 4;
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
@@ -118,7 +109,6 @@ class AssertionOfHamcrestTest {
     }
 
     @Test
-    @Disabled
     void checksIfAllHamcrestAssertionsAreActuallyWithoutMessages() {
         final Collection<Assertion> all = AssertionOfHamcrestTest.method(
             "withoutMessages"
