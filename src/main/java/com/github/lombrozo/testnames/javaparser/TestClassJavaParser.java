@@ -27,10 +27,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.io.InputStream;
@@ -40,6 +37,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.cactoos.scalar.Mapped;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -59,7 +57,7 @@ public final class TestClassJavaParser implements TestClass {
     /**
      * Parsed Java class.
      */
-    private final Unchecked<? extends CompilationUnit> unit;
+    private final Unchecked<JavaParserClass> unit;
 
     /**
      * Rules excluded for entire project.
@@ -133,7 +131,7 @@ public final class TestClassJavaParser implements TestClass {
         final Collection<String> exclusions
     ) {
         this.path = klass;
-        this.unit = new Unchecked<>(parsed);
+        this.unit = new Unchecked<>(new Mapped<>(JavaParserClass::new, parsed));
         this.exclusions = exclusions;
     }
 
@@ -146,10 +144,9 @@ public final class TestClassJavaParser implements TestClass {
     public Collection<TestCase> all() {
         try {
             return this.unit.value()
-                .getChildNodes()
-                .stream()
-                .filter(TestClassJavaParser::isTestClass)
-                .flatMap(this::testCases)
+                .methods()
+                .filter(TestClassJavaParser::isTest)
+                .map(method -> new TestCaseJavaParser(method, this))
                 .collect(Collectors.toSet());
         } catch (final UncheckedIOException | ParseProblemException ex) {
             throw new IllegalStateException(
@@ -167,37 +164,9 @@ public final class TestClassJavaParser implements TestClass {
     @Override
     public Collection<String> suppressed() {
         return Stream.concat(
-            this.unit.value()
-                .getChildNodes()
-                .stream()
-                .filter(TestClassJavaParser::isTestClass)
-                .map(SuppressedAnnotations::new)
-                .flatMap(SuppressedAnnotations::suppressed),
+            this.unit.value().annotations().suppressed(),
             this.exclusions.stream()
         ).collect(Collectors.toSet());
-    }
-
-    /**
-     * Checks methods in class.
-     *
-     * @param node The child node.
-     * @return Stream of test cases.
-     */
-    private Stream<TestCaseJavaParser> testCases(final Node node) {
-        return ((NodeWithMembers<TypeDeclaration<?>>) node)
-            .getMethods()
-            .stream()
-            .filter(TestClassJavaParser::isTest)
-            .map(method -> new TestCaseJavaParser(method, this));
-    }
-
-    /**
-     * Check whether node is class or not.
-     * @param node Any node.
-     * @return True if test class.
-     */
-    private static boolean isTestClass(final Node node) {
-        return node instanceof TypeDeclaration<?>;
     }
 
     /**

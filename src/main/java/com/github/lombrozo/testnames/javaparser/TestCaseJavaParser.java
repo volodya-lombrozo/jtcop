@@ -80,7 +80,7 @@ final class TestCaseJavaParser implements TestCase {
      * @param method Java method
      * @checkstyle ParameterNameCheck (6 lines)
      */
-    TestCaseJavaParser(final MethodDeclaration method) {
+    private TestCaseJavaParser(final MethodDeclaration method) {
         this(method, new TestClass.Fake());
     }
 
