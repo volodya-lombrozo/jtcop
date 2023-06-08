@@ -38,17 +38,6 @@ import java.util.Set;
 public final class AssertionOfHamcrest implements ParsedAssertion {
 
     /**
-     * The explanation of the assertion.
-     * The message that can't be parsed. It could be either a constant, or a method call.
-     * @todo #160:30min UNKNOWN_MESSAGE constant duplication.
-     *  The UNKNOWN_MESSAGE constant is duplicated in AssertionOfJUnit and AssertionOfHamcrest.
-     *  It should be moved to the ParsedAssertion interface or to the separate class.
-     *  When it's done, remove this puzzle.
-     */
-    private static final String UNKNOWN_MESSAGE =
-        "Unknown message. The message will be known only in runtime";
-
-    /**
      * The method call.
      */
     private final MethodCallExpr method;
@@ -95,7 +84,7 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         if (expression.isStringLiteralExpr()) {
             result = Optional.of(expression.asStringLiteralExpr().getValue());
         } else if (expression.isNameExpr() || expression.isMethodCallExpr()) {
-            result = Optional.of(AssertionOfHamcrest.UNKNOWN_MESSAGE);
+            result = new UnknownMessage().message();
         } else {
             result = Optional.empty();
         }

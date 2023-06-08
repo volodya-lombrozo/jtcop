@@ -42,12 +42,6 @@ import org.junit.jupiter.api.Assertions;
 final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
-     * The explanation of the assertion.
-     * The message that can't be parsed. It could be either a constant, or a method call.
-     */
-    private static final String UNKNOWN_MESSAGE = "Unknown message";
-
-    /**
      * Special assertions that we consider as assertions with messages.
      */
     private static final String[] SPECIAL = {"assertAll", "fail"};
@@ -93,7 +87,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
         final Optional<Expression> last = args.getLast();
         final Integer min = this.allowed.get(this.call.getName().toString());
         if (Arrays.asList(AssertionOfJUnit.SPECIAL).contains(this.call.getName().toString())) {
-            result = Optional.of(AssertionOfJUnit.UNKNOWN_MESSAGE);
+            result = new UnknownMessage().message();
         } else if (min < args.size() && last.isPresent()) {
             result = AssertionOfJUnit.message(last.get());
         } else {
@@ -112,7 +106,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
         if (expression.isStringLiteralExpr()) {
             result = Optional.of(expression.asStringLiteralExpr().asString());
         } else if (expression.isNameExpr()) {
-            result = Optional.of(AssertionOfJUnit.UNKNOWN_MESSAGE);
+            result = new UnknownMessage().message();
         } else {
             result = Optional.empty();
         }
