@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022-2023 Volodya
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.StaticJavaParser;
@@ -13,38 +36,78 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * JavaParser class.
+ * The utility class for working with JavaParser library.
+ *
+ * @since 0.1.15
+ */
 final class JavaParserClass {
 
-    private final NodeWithMembers<TypeDeclaration<?>> unit;
+    /**
+     * Parsed Java class.
+     */
+    private final NodeWithMembers<TypeDeclaration<?>> klass;
 
+    /**
+     * Ctor.
+     * @param stream Input stream with java class.
+     */
     JavaParserClass(final InputStream stream) {
         this(StaticJavaParser.parse(stream));
     }
 
+    /**
+     * Ctor.
+     * @param unit Compilation unit.
+     */
     JavaParserClass(final CompilationUnit unit) {
         this(JavaParserClass.fromCompilation(unit));
     }
 
+    /**
+     * Ctor.
+     * @param node Node with class.
+     */
     @SuppressWarnings("unchecked")
     private JavaParserClass(final Node node) {
         this((NodeWithMembers<TypeDeclaration<?>>) node);
     }
 
+    /**
+     * Ctor.
+     * @param unit Compilation unit.
+     */
     private JavaParserClass(final NodeWithMembers<TypeDeclaration<?>> unit) {
-        this.unit = unit;
+        this.klass = unit;
     }
 
+    /**
+     * Annotations of class.
+     * @return Annotations of class.
+     */
     SuppressedAnnotations annotations() {
-        return new SuppressedAnnotations((Node) this.unit);
+        return new SuppressedAnnotations((Node) this.klass);
     }
 
-    Stream<JavaParserMethod> methods(final Predicate<MethodDeclaration>... filters) {
-        return this.unit.getMethods()
+    /**
+     * Methods of class.
+     * @param filters Filters for methods.
+     * @return Methods of class.
+     */
+    @SafeVarargs
+    final Stream<JavaParserMethod> methods(final Predicate<MethodDeclaration>... filters) {
+        return this.klass.getMethods()
             .stream()
             .filter(method -> Stream.of(filters).allMatch(filter -> filter.test(method)))
             .map(JavaParserMethod::new);
     }
 
+    /**
+     * Prestructor of class.
+     * @param unit Compilation unit.
+     * @return Node with class.
+     */
     private static Node fromCompilation(final CompilationUnit unit) {
         final Queue<Node> all = unit.getChildNodes()
             .stream()

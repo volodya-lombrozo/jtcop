@@ -122,6 +122,10 @@ enum JavaTestClasses {
         );
     }
 
+    /**
+     * Creates {@link JavaParserClass} for current class.
+     * @return Concrete test class implementation - {@link JavaParserClass}.
+     */
     JavaParserClass toJavaParserClass() {
         return new JavaParserClass(this.inputStream());
     }
