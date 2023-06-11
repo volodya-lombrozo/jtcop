@@ -37,10 +37,6 @@ import org.junit.jupiter.api.Test;
  * Test for {@link AssertionOfHamcrest}.
  *
  * @since 0.1.15
- * @todo #160:90min Enable AssertionOfHamcrestTest#ignoresJUnitAssertions test.
- *  For now it's really hard to prepare correct test environment for ignoresJUnitAssertions test.
- *  We have to create several supportive classes which will make it convenient.
- *  When we have done it, just enable the test and remove that puzzle.
  */
 class AssertionOfHamcrestTest {
 
