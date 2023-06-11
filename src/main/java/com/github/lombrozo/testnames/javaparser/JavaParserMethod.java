@@ -29,6 +29,8 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import java.util.stream.Stream;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * JavaParser method.
@@ -36,6 +38,8 @@ import java.util.stream.Stream;
  *
  * @since 0.1.15
  */
+@ToString
+@EqualsAndHashCode
 final class JavaParserMethod {
 
     /**
