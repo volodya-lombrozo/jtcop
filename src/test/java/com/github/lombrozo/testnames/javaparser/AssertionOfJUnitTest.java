@@ -162,7 +162,7 @@ class AssertionOfJUnitTest {
      */
     private static TestCase method(final String name) {
         return JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
-            .javaParserClass().all().stream()
+            .toTestClass().all().stream()
             .filter(method -> name.equals(method.name()))
             .findFirst()
             .orElseThrow(

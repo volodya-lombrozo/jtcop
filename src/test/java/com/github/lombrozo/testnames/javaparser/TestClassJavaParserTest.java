@@ -48,7 +48,7 @@ final class TestClassJavaParserTest {
     @Test
     void getsNames() {
         MatcherAssert.assertThat(
-            JavaTestClasses.SIMPLE.javaParserClass()
+            JavaTestClasses.SIMPLE.toTestClass()
                 .all()
                 .stream()
                 .map(TestCase::name)
@@ -62,7 +62,7 @@ final class TestClassJavaParserTest {
     @Test
     void returnsEmptyListIfItDoesNotHaveAnyCases() {
         MatcherAssert.assertThat(
-            JavaTestClasses.WITHOUT_TESTS.javaParserClass().all(),
+            JavaTestClasses.WITHOUT_TESTS.toTestClass().all(),
             Matchers.empty()
         );
     }
@@ -71,7 +71,7 @@ final class TestClassJavaParserTest {
     void getsNamesFromParameterizedCase() {
         MatcherAssert.assertThat(
             JavaTestClasses.PARAMETERIZED
-                .javaParserClass()
+                .toTestClass()
                 .all()
                 .stream()
                 .map(TestCase::name)
@@ -99,7 +99,7 @@ final class TestClassJavaParserTest {
     @Test
     void returnsEmptyListOfSuppressedRules() {
         MatcherAssert.assertThat(
-            JavaTestClasses.SIMPLE.javaParserClass().suppressed(),
+            JavaTestClasses.SIMPLE.toTestClass().suppressed(),
             Matchers.empty()
         );
     }
@@ -107,7 +107,7 @@ final class TestClassJavaParserTest {
     @Test
     void returnsNonEmptyListOfSuppressedRules() {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_CLASS
-            .javaParserClass()
+            .toTestClass()
             .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(
@@ -119,7 +119,7 @@ final class TestClassJavaParserTest {
     @Test
     void parsesWithLotsOfSuppressingRules() {
         final Collection<String> all = JavaTestClasses.MANY_SUPPRESSED
-            .javaParserClass()
+            .toTestClass()
             .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(3));
         MatcherAssert.assertThat(
@@ -137,7 +137,7 @@ final class TestClassJavaParserTest {
         final String custom = "Custom";
         final String project = "Project";
         final Collection<String> all = JavaTestClasses.MANY_SUPPRESSED
-            .javaParserClass(custom, project)
+            .toTestClass(custom, project)
             .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(5));
         MatcherAssert.assertThat(
@@ -155,7 +155,7 @@ final class TestClassJavaParserTest {
     @Test
     void parsesAnnotationWithSuppressedRules() {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_ANNOTATION
-            .javaParserClass()
+            .toTestClass()
             .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
@@ -164,7 +164,7 @@ final class TestClassJavaParserTest {
     @Test
     void parsesInterfaceWithSuppressedRules() {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_INTERFACE
-            .javaParserClass()
+            .toTestClass()
             .suppressed();
         MatcherAssert.assertThat(all, Matchers.hasSize(1));
         MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));

@@ -26,18 +26,11 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.type.VarType;
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Data;
@@ -58,7 +51,7 @@ final class TestCaseJavaParser implements TestCase {
     /**
      * Method declaration.
      */
-    private final MethodDeclaration method;
+    private final JavaParserMethod method;
 
     /**
      * Parent test class.
@@ -93,51 +86,41 @@ final class TestCaseJavaParser implements TestCase {
         final MethodDeclaration method,
         final TestClass parent
     ) {
+        this(new JavaParserMethod(method), parent);
+    }
+
+    /**
+     * Ctor.
+     * @param method Java method
+     * @param parent Parent test class
+     */
+    TestCaseJavaParser(
+        final JavaParserMethod method,
+        final TestClass parent
+    ) {
         this.method = method;
         this.parent = parent;
     }
 
     @Override
     public String name() {
-        return this.method.getNameAsString();
+        return this.method.name();
     }
 
     @Override
     public Collection<String> suppressed() {
         return Stream.concat(
             this.parent.suppressed().stream(),
-            new SuppressedAnnotations(this.method).suppressed()
+            new SuppressedAnnotations(this.method.asMethodDeclaration()).suppressed()
         ).collect(Collectors.toSet());
     }
 
     @Override
     public Collection<Assertion> assertions() {
-        final Collection<Assertion> assertions = new ArrayList<>(0);
-        final Optional<BlockStmt> body = this.method.getBody();
-        body.ifPresent(
-            blockStmt -> blockStmt.getStatements().stream()
-                .filter(Statement::isExpressionStmt)
-                .map(TestCaseJavaParser::toExpression)
-                .filter(Expression::isMethodCallExpr)
-                .map(MethodCallExpr.class::cast)
-                .map(AssertionOfJavaParser::new)
-                .filter(ParsedAssertion::isAssertion)
-                .forEach(assertions::add)
-        );
-        return Collections.unmodifiableCollection(assertions);
+        return this.method.statements()
+            .map(AssertionOfJavaParser::new)
+            .filter(ParsedAssertion::isAssertion)
+            .collect(Collectors.toList());
     }
 
-    /**
-     * Convert statement to expression.
-     * @param statement Statement
-     * @return Expression
-     */
-    private static Expression toExpression(final Statement statement) {
-        return statement.toExpressionStmt()
-            .orElseThrow(
-                () -> {
-                    throw new IllegalStateException("Statement is not expression");
-                }
-            ).getExpression();
-    }
 }

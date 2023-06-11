@@ -27,7 +27,6 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.io.InputStream;
@@ -144,8 +143,7 @@ public final class TestClassJavaParser implements TestClass {
     public Collection<TestCase> all() {
         try {
             return this.unit.value()
-                .methods()
-                .filter(TestClassJavaParser::isTest)
+                .methods(new TestsOnly())
                 .map(method -> new TestCaseJavaParser(method, this))
                 .collect(Collectors.toSet());
         } catch (final UncheckedIOException | ParseProblemException ex) {
@@ -169,14 +167,4 @@ public final class TestClassJavaParser implements TestClass {
         ).collect(Collectors.toSet());
     }
 
-    /**
-     * Check if method test or parameterized test.
-     *
-     * @param method To check
-     * @return Result as boolean
-     */
-    private static boolean isTest(final MethodDeclaration method) {
-        return !method.isPrivate() && (method.isAnnotationPresent("Test")
-            || method.isAnnotationPresent("ParameterizedTest"));
-    }
 }

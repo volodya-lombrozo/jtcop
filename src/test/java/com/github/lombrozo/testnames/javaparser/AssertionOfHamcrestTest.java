@@ -26,11 +26,11 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -121,11 +121,17 @@ class AssertionOfHamcrestTest {
     }
 
     @Test
-    @Disabled
     void ignoresJUnitAssertions() {
-        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "junitAssertions"
-        ).assertions();
+        final String name = "junitAssertions";
+        final List<AssertionOfHamcrest> all = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .toJavaParserClass()
+            .methods(new ByName(name))
+            .findFirst()
+            .orElseThrow(() -> new MethodNotFound(name))
+            .statements()
+            .map(AssertionOfHamcrest::new)
+            .filter(AssertionOfHamcrest::isAssertion)
+            .collect(Collectors.toList());
         MatcherAssert.assertThat(
             String.format("We expect empty assertion list, but was %s", all),
             all,
@@ -144,7 +150,7 @@ class AssertionOfHamcrestTest {
      */
     private static TestCase method(final String name) {
         return JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
-            .javaParserClass().all().stream()
+            .toTestClass().all().stream()
             .filter(method -> name.equals(method.name()))
             .findFirst()
             .orElseThrow(
@@ -152,5 +158,12 @@ class AssertionOfHamcrestTest {
                     throw new IllegalStateException(String.format("Method not found: %s", name));
                 }
             );
+    }
+
+    private static class MethodNotFound extends IllegalStateException {
+
+        MethodNotFound(final String name) {
+            super(String.format("Method not found: %s", name));
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Predicate;
@@ -14,6 +16,10 @@ import java.util.stream.Stream;
 final class JavaParserClass {
 
     private final NodeWithMembers<TypeDeclaration<?>> unit;
+
+    JavaParserClass(final InputStream stream) {
+        this(StaticJavaParser.parse(stream));
+    }
 
     JavaParserClass(final CompilationUnit unit) {
         this(JavaParserClass.fromCompilation(unit));
@@ -32,10 +38,11 @@ final class JavaParserClass {
         return new SuppressedAnnotations((Node) this.unit);
     }
 
-    Stream<MethodDeclaration> methods(Predicate<MethodDeclaration>... filters) {
+    Stream<JavaParserMethod> methods(final Predicate<MethodDeclaration>... filters) {
         return this.unit.getMethods()
             .stream()
-            .filter(method -> Stream.of(filters).allMatch(filter -> filter.test(method)));
+            .filter(method -> Stream.of(filters).allMatch(filter -> filter.test(method)))
+            .map(JavaParserMethod::new);
     }
 
     private static Node fromCompilation(final CompilationUnit unit) {

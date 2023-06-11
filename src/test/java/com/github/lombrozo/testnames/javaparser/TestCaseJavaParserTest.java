@@ -76,7 +76,7 @@ class TestCaseJavaParserTest {
     @Test
     void parsesSuppressedAnnotations() {
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
-            .javaParserClass()
+            .toTestClass()
             .all()
             .stream()
             .filter(method -> method.name().equals("cheksTest"))
@@ -93,7 +93,7 @@ class TestCaseJavaParserTest {
     @Test
     void parsesSingleSuppressedAnnotation() {
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
-            .javaParserClass()
+            .toTestClass()
             .all()
             .stream()
             .filter(method -> method.name().equals("checksSingle"))
@@ -110,7 +110,7 @@ class TestCaseJavaParserTest {
     @Test
     void parsesSuppressedAnnotationsForClassAndMethodTogether() {
         final Collection<String> suppressed = JavaTestClasses.MANY_SUPPRESSED
-            .javaParserClass()
+            .toTestClass()
             .all()
             .stream()
             .filter(method -> method.name().equals("cheksTest"))
@@ -133,7 +133,7 @@ class TestCaseJavaParserTest {
     @Test
     @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     void parsesMethodsAssertionsForJUnit() {
-        final TestClassJavaParser parser = JavaTestClasses.TEST_WITH_ASSERTIONS.javaParserClass();
+        final TestClassJavaParser parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
         final String method = "junit";
         final Optional<TestCase> tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
