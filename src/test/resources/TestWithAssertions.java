@@ -24,6 +24,8 @@
 
 package com.github.lombrozo.testnames;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +41,42 @@ class TestWithAssertions {
         Assertions.assertEquals("1", "1", "JUnit explanation");
     }
 
+    @Test
     void junitWithoutExplanation() {
         Assertions.assertEquals("1", "1");
+    }
+
+    @Test
+    void severalFrameworks() {
+        System.out.println("Dummy statement");
+        Assertions.assertTrue(
+            true,
+            String.format("We have the reason for that - %s", "yes")
+        );
+        MatcherAssert.assertThat(
+            "We have another reason",
+            true,
+            Matchers.is(true)
+        );
+        Assertions.assertNotSame("1", "2", "JUnit explanation");
+        MatcherAssert.assertThat("We one more reason", "1", Matchers.is("2"));
+        System.out.println("Dummy statement");
+    }
+
+    @Test
+    void hamcrestAssertion() {
+        MatcherAssert.assertThat(
+            "We have another reason",
+            true,
+            Matchers.is(true)
+        );
+        MatcherAssert.assertThat("We one more reason", "1", Matchers.is("2"));
+        System.out.println("Dummy statement");
+    }
+
+    @Test
+    void assertionsWithoutMesssages() {
+        MatcherAssert.assertThat(1, Matchers.is(1));
+        Assertions.assertEquals(1, 1);
     }
 }
