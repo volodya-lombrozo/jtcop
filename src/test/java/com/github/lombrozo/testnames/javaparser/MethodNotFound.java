@@ -27,7 +27,13 @@ package com.github.lombrozo.testnames.javaparser;
  * Exception thrown when method not found.
  *
  * @since 0.1.15
+ * @todo #164:30min Move MethodNotFound class into appropriate place.
+ *  It should be placed somewhere in order to remove the JTCOP.RuleAllTestsHaveProductionClass
+ *  warning. You can read more about the check right
+ *  <a href="https://github.com/volodya-lombrozo/jtcop/blob/main/docs/rules/all-have-production-class.md">here</a>
+ *  When you move the class, please, remove the warning suppression from that class.
  */
+@SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass")
 final class MethodNotFound extends IllegalStateException {
 
     /**

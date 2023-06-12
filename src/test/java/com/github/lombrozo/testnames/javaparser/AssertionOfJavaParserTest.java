@@ -95,7 +95,7 @@ class AssertionOfJavaParserTest {
 
     @Test
     @Disabled
-    void extractMessagesFromAllAssertions() {
+    void extractsMessagesFromAllAssertions() {
         final List<AssertionOfJavaParser> all = AssertionOfJavaParserTest
             .method("severalFrameworks")
             .map(AssertionOfJavaParser::new)
