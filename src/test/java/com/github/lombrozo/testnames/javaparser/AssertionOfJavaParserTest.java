@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test;
  * Test for {@link AssertionOfJavaParser}.
  *
  * @since 0.1.15
- * @todo 164:30min Enable AssertionOfJavaParserTest#extractMessagesFromAllAssertions test.
+ * @todo #164:30min Enable AssertionOfJavaParserTest#extractMessagesFromAllAssertions test.
  *  This test is disabled because it fails. Apparently, we have the bug in the parser of JUnit
  *  assertions. We need to fix it. After that, we should enable this test:
- *  {@link AssertionOfJavaParserTest#extractMessagesFromAllAssertions()}
+ *  {@link AssertionOfJavaParserTest#extractsMessagesFromAllAssertions()}
  */
 class AssertionOfJavaParserTest {
 
