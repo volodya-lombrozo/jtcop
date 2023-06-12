@@ -31,10 +31,6 @@ import lombok.ToString;
  * The assertion of the test method.
  *
  * @since 0.1.15
- * @todo #160:90min Add unit tests for AssertionOfJavaParser.
- *  For now we don't have tests for AssertionOfJava parser and don't check how different
- *  implementations like {@link AssertionOfHamcrest} and {@link AssertionOfJUnit} work together.
- *  So, it's better to test that interaction and then remove that puzzle.
  */
 @ToString
 public final class AssertionOfJavaParser implements ParsedAssertion {
