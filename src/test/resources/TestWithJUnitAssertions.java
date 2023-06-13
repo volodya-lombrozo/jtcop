@@ -48,6 +48,8 @@ class TestWithJUnitAssertions {
         Assertions.assertEquals("1", "1", DEFAULT_SUPPLIER);
         Assertions.assertTrue(true, DEFAULT_EXPLANATION);
         Assertions.assertTrue(true, DEFAULT_SUPPLIER);
+        Assertions.assertTrue(true, "JUnit explanation");
+        Assertions.assertTrue(true, String.format("JUnit %s", "explanation"));
         Assertions.assertFalse(false, DEFAULT_EXPLANATION);
         Assertions.assertFalse(false, DEFAULT_SUPPLIER);
         Assertions.assertNotEquals("1", "2", DEFAULT_EXPLANATION);

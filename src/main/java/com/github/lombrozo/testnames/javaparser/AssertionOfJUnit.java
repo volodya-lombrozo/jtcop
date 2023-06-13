@@ -100,12 +100,17 @@ final class AssertionOfJUnit implements ParsedAssertion {
      * The expression message.
      * @param expression The expression.
      * @return The message.
+     * @todo #170:30min Code duplication between AssertionOfJUnit and AssertionOfHamcrest.
+     *  We have the same code in both classes in the 'message' method. We need to:
+     *  Extract the common code to a new class. The new class should be used by both
+     *  AssertionOfJUnit and AssertionOfHamcrest.
+     *  After that, we should remove the puzzle.
      */
     private static Optional<String> message(final Expression expression) {
         final Optional<String> result;
         if (expression.isStringLiteralExpr()) {
             result = Optional.of(expression.asStringLiteralExpr().asString());
-        } else if (expression.isNameExpr()) {
+        } else if (expression.isNameExpr() || expression.isMethodCallExpr()) {
             result = new UnknownMessage().message();
         } else {
             result = Optional.empty();

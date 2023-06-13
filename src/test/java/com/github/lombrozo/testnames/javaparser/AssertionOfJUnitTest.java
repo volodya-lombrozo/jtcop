@@ -56,7 +56,7 @@ class AssertionOfJUnitTest {
 
     @Test
     void parsesJUnitAssertionsAllPresent() {
-        final int expected = 34;
+        final int expected = 36;
         final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
