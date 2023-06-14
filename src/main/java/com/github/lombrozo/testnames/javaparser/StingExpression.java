@@ -23,51 +23,41 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
 
 /**
- * Assertion of Hamcrest.
+ * Sting expression of Java Parser.
+ * Utility class for working with JavaParser library.
+ * Extracts string expression from JavaParser expression.
  *
  * @since 0.1.15
  */
-public final class AssertionOfHamcrest implements ParsedAssertion {
+class StingExpression {
 
     /**
-     * The method call.
+     * Java Parser expression.
      */
-    private final MethodCallExpr method;
+    private final Expression expr;
 
     /**
-     * The allowed method names.
+     * Constructor.
+     * @param expression Java Parser expression.
      */
-    private final Set<String> allowed;
-
-    /**
-     * Ctor.
-     * @param call The method call.
-     */
-    AssertionOfHamcrest(final MethodCallExpr call) {
-        this.method = call;
-        this.allowed = Collections.singleton("assertThat");
+    StingExpression(final Expression expression) {
+        this.expr = expression;
     }
 
-    @Override
-    public boolean isAssertion() {
-        return this.allowed.contains(this.method.getName().toString());
-    }
-
-    @Override
-    public Optional<String> explanation() {
+    /**
+     * Get string literal from Expression if possible.
+     * @return String expression.
+     */
+    Optional<String> asString() {
         final Optional<String> result;
-        final NodeList<Expression> arguments = this.method.getArguments();
-        final Optional<Expression> first = arguments.getFirst();
-        if (arguments.size() > 2 && first.isPresent()) {
-            result = new StingExpression(first.get()).asString();
+        if (this.expr.isStringLiteralExpr()) {
+            result = Optional.of(this.expr.asStringLiteralExpr().asString());
+        } else if (this.expr.isNameExpr() || this.expr.isMethodCallExpr()) {
+            result = new UnknownMessage().message();
         } else {
             result = Optional.empty();
         }
