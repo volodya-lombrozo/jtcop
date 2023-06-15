@@ -24,7 +24,6 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
-import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -43,9 +42,8 @@ class AssertionOfHamcrestTest {
     @Test
     void parsesAllHamcrestAssertions() {
         final int expected = 3;
-        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "withMessages"
-        ).assertions();
+        final Collection<Assertion> all = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .testCase("withMessages").assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect %d assertions in the test case, but was %d",
@@ -59,9 +57,8 @@ class AssertionOfHamcrestTest {
 
     @Test
     void parsesAllHamcrestMessages() {
-        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "withMessages"
-        ).assertions();
+        final Collection<Assertion> all = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .testCase("withMessages").assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect all assertions to have messages, but was %s",
@@ -81,9 +78,8 @@ class AssertionOfHamcrestTest {
     @Test
     void parsesAllHamcrestAssertionsWithoutMessages() {
         final int expected = 4;
-        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "withoutMessages"
-        ).assertions();
+        final Collection<Assertion> all = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .testCase("withoutMessages").assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect %d assertions in the test case, but was %d",
@@ -97,9 +93,8 @@ class AssertionOfHamcrestTest {
 
     @Test
     void checksIfAllHamcrestAssertionsAreActuallyWithoutMessages() {
-        final Collection<Assertion> all = AssertionOfHamcrestTest.method(
-            "withoutMessages"
-        ).assertions();
+        final Collection<Assertion> all = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .testCase("withoutMessages").assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We expect all assertions to have no messages, but was %s",
@@ -134,26 +129,4 @@ class AssertionOfHamcrestTest {
             Matchers.empty()
         );
     }
-
-    /**
-     * Returns test case by name.
-     * @param name Name of test case.
-     * @return Test case.
-     * @todo #151:30min The method AssertionOfHamcrestTest#method is duplicated.
-     *  The method AssertionOfHamcrestTest#method is duplicated in the class AssertionOfJUnitTest.
-     *  It's better to move it to the separate class and use it from both classes.
-     *  When it's done, remove this puzzle.
-     */
-    private static TestCase method(final String name) {
-        return JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
-            .toTestClass().all().stream()
-            .filter(method -> name.equals(method.name()))
-            .findFirst()
-            .orElseThrow(
-                () -> {
-                    throw new IllegalStateException(String.format("Method not found: %s", name));
-                }
-            );
-    }
-
 }
