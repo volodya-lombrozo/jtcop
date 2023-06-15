@@ -57,7 +57,8 @@ class AssertionOfJUnitTest {
     @Test
     void parsesJUnitAssertionsAllPresent() {
         final int expected = 36;
-        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
+        final int actual = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
             String.format("We expect to parse %d assertions, but was %s", expected, actual),
@@ -70,7 +71,8 @@ class AssertionOfJUnitTest {
     void parsesJUnitAssertionsAllHaveExplanation() {
         MatcherAssert.assertThat(
             "All assertions should have explanation assertions",
-            AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
+            JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+                .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
                 .assertions()
                 .stream()
                 .map(Assertion::explanation)
@@ -83,7 +85,8 @@ class AssertionOfJUnitTest {
     void parsesJUnitAssertionsNoneHasEmptyExplanation() {
         MatcherAssert.assertThat(
             "All assertions should have JUnit explanation text",
-            AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITH_MESSAGES)
+            JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+                .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
                 .assertions().stream()
                 .map(Assertion::explanation)
                 .filter(Optional::isPresent)
@@ -96,7 +99,8 @@ class AssertionOfJUnitTest {
     @Test
     void parsesAssertionsWithoutMessagesAllAreParsed() {
         final int expected = 17;
-        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.WITHOUT_MESSAGES)
+        final int actual = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
             String.format("We expect to parse %d empty assertions, but was %s", expected, actual),
@@ -107,9 +111,9 @@ class AssertionOfJUnitTest {
 
     @Test
     void parsesAssertionsWithoutMessage() {
-        final Collection<Assertion> all = AssertionOfJUnitTest.method(
-            AssertionOfJUnitTest.WITHOUT_MESSAGES
-        ).assertions();
+        final Collection<Assertion> all = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
+            .assertions();
         MatcherAssert.assertThat(
             String.format(
                 "All assertions should be without assertion message, but was: %s",
@@ -129,7 +133,8 @@ class AssertionOfJUnitTest {
     @Test
     void parsesAllSpecialAssertionsAllAreParsed() {
         final int expected = 6;
-        final int actual = AssertionOfJUnitTest.method(AssertionOfJUnitTest.SPECIAL_MESSAGES)
+        final int actual = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
             String.format("We expect to parse %d special assertions, but was %s", expected, actual),
@@ -140,9 +145,9 @@ class AssertionOfJUnitTest {
 
     @Test
     void ignoresFailAssertion() {
-        final Collection<Assertion> all = AssertionOfJUnitTest.method(
-            AssertionOfJUnitTest.SPECIAL_MESSAGES
-        ).assertions();
+        final Collection<Assertion> all = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
+            .assertions();
         MatcherAssert.assertThat(
             String.format(
                 "We should accept special assertions as assertions with explanation, but was %s",
@@ -153,22 +158,5 @@ class AssertionOfJUnitTest {
                 .allMatch(Optional::isPresent),
             Matchers.is(true)
         );
-    }
-
-    /**
-     * Returns test case by name.
-     * @param name Name of test case.
-     * @return Test case.
-     */
-    private static TestCase method(final String name) {
-        return JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
-            .toTestClass().all().stream()
-            .filter(method -> name.equals(method.name()))
-            .findFirst()
-            .orElseThrow(
-                () -> {
-                    throw new IllegalStateException(String.format("Method not found: %s", name));
-                }
-            );
     }
 }

@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.TestCase;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -120,6 +121,18 @@ enum JavaTestClasses {
             this.inputStream(),
             Arrays.asList(suppressed)
         );
+    }
+
+    TestCase testCase(final String name) {
+        return this.toTestClass().all()
+            .stream()
+            .filter(method -> name.equals(method.name()))
+            .findFirst()
+            .orElseThrow(
+                () -> {
+                    throw new IllegalStateException(String.format("Method not found: %s", name));
+                }
+            );
     }
 
     /**
