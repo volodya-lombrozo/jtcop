@@ -165,4 +165,20 @@ enum JavaTestClasses {
             throw new IllegalStateException("Can't read class '%s' from filesystem", exception);
         }
     }
+
+    /**
+     * Exception thrown when method not found.
+     *
+     * @since 0.1.15
+     */
+    private static final class MethodNotFound extends IllegalStateException {
+
+        /**
+         * Ctor.
+         * @param name Name of method.
+         */
+        MethodNotFound(final String name) {
+            super(String.format("Method not found: %s", name));
+        }
+    }
 }
