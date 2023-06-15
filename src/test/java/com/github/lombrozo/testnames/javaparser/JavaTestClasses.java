@@ -123,13 +123,23 @@ enum JavaTestClasses {
         );
     }
 
+    /**
+     * Returns method by name.
+     * @param name Method name.
+     * @return Method.
+     */
     JavaParserMethod method(final String name) {
-        return JavaTestClasses.TEST_WITH_ASSERTIONS.toJavaParserClass()
+        return new JavaParserClass(this.inputStream())
             .methods(new ByName(name))
             .findFirst()
             .orElseThrow(() -> new MethodNotFound(name));
     }
 
+    /**
+     * Returns test case by name.
+     * @param name Test case name.
+     * @return Test case.
+     */
     TestCase testCase(final String name) {
         return this.toTestClass().all()
             .stream()
@@ -137,17 +147,9 @@ enum JavaTestClasses {
             .findFirst()
             .orElseThrow(
                 () -> {
-                    throw new IllegalStateException(String.format("Method not found: %s", name));
+                    throw new MethodNotFound(name);
                 }
             );
-    }
-
-    /**
-     * Creates {@link JavaParserClass} for current class.
-     * @return Concrete test class implementation - {@link JavaParserClass}.
-     */
-    JavaParserClass toJavaParserClass() {
-        return new JavaParserClass(this.inputStream());
     }
 
     /**

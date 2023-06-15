@@ -113,12 +113,8 @@ class AssertionOfHamcrestTest {
 
     @Test
     void ignoresJUnitAssertions() {
-        final String name = "junitAssertions";
         final List<AssertionOfHamcrest> all = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
-            .toJavaParserClass()
-            .methods(new ByName(name))
-            .findFirst()
-            .orElseThrow(() -> new MethodNotFound(name))
+            .method("junitAssertions")
             .statements()
             .map(AssertionOfHamcrest::new)
             .filter(AssertionOfHamcrest::isAssertion)
