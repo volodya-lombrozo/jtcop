@@ -100,7 +100,7 @@ class AssertionOfJUnitTest {
     void parsesAssertionsWithoutMessagesAllAreParsed() {
         final int expected = 17;
         final int actual = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
-            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
+            .testCase(AssertionOfJUnitTest.WITHOUT_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
             String.format("We expect to parse %d empty assertions, but was %s", expected, actual),
@@ -112,7 +112,7 @@ class AssertionOfJUnitTest {
     @Test
     void parsesAssertionsWithoutMessage() {
         final Collection<Assertion> all = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
-            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
+            .testCase(AssertionOfJUnitTest.WITHOUT_MESSAGES)
             .assertions();
         MatcherAssert.assertThat(
             String.format(
@@ -134,7 +134,7 @@ class AssertionOfJUnitTest {
     void parsesAllSpecialAssertionsAllAreParsed() {
         final int expected = 6;
         final int actual = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
-            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
+            .testCase(AssertionOfJUnitTest.SPECIAL_MESSAGES)
             .assertions().size();
         MatcherAssert.assertThat(
             String.format("We expect to parse %d special assertions, but was %s", expected, actual),
@@ -146,7 +146,7 @@ class AssertionOfJUnitTest {
     @Test
     void ignoresFailAssertion() {
         final Collection<Assertion> all = JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
-            .testCase(AssertionOfJUnitTest.WITH_MESSAGES)
+            .testCase(AssertionOfJUnitTest.SPECIAL_MESSAGES)
             .assertions();
         MatcherAssert.assertThat(
             String.format(
