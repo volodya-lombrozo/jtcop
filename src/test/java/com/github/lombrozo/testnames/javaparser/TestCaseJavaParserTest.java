@@ -76,12 +76,7 @@ class TestCaseJavaParserTest {
     @Test
     void parsesSuppressedAnnotations() {
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
-            .toTestClass()
-            .all()
-            .stream()
-            .filter(method -> method.name().equals("cheksTest"))
-            .findFirst()
-            .orElseThrow(IllegalStateException::new)
+            .testCase("cheksTest")
             .suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(2));
         MatcherAssert.assertThat(
@@ -93,12 +88,7 @@ class TestCaseJavaParserTest {
     @Test
     void parsesSingleSuppressedAnnotation() {
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
-            .toTestClass()
-            .all()
-            .stream()
-            .filter(method -> method.name().equals("checksSingle"))
-            .findFirst()
-            .orElseThrow(IllegalStateException::new)
+            .testCase("checksSingle")
             .suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(1));
         MatcherAssert.assertThat(
@@ -110,12 +100,7 @@ class TestCaseJavaParserTest {
     @Test
     void parsesSuppressedAnnotationsForClassAndMethodTogether() {
         final Collection<String> suppressed = JavaTestClasses.MANY_SUPPRESSED
-            .toTestClass()
-            .all()
-            .stream()
-            .filter(method -> method.name().equals("cheksTest"))
-            .findFirst()
-            .orElseThrow(IllegalStateException::new)
+            .testCase("cheksTest")
             .suppressed();
         MatcherAssert.assertThat(suppressed, Matchers.hasSize(5));
         MatcherAssert.assertThat(
