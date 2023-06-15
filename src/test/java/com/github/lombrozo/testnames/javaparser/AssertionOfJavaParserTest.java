@@ -23,11 +23,9 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -46,7 +44,9 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesJunitAssertionOnly() {
-        final List<AssertionOfJavaParser> all = AssertionOfJavaParserTest.method("junit")
+        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
+            .method("junit")
+            .statements()
             .map(AssertionOfJavaParser::new)
             .filter(AssertionOfJavaParser::isAssertion)
             .collect(Collectors.toList());
@@ -60,8 +60,9 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesHamcrestAssertionOnly() {
-        final List<AssertionOfJavaParser> all = AssertionOfJavaParserTest
+        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("hamcrestAssertion")
+            .statements()
             .map(AssertionOfJavaParser::new)
             .filter(AssertionOfJavaParser::isAssertion)
             .collect(Collectors.toList());
@@ -75,8 +76,9 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesSeveralAssertionsFromDifferentLibraries() {
-        final List<AssertionOfJavaParser> all = AssertionOfJavaParserTest
+        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("severalFrameworks")
+            .statements()
             .map(AssertionOfJavaParser::new)
             .filter(AssertionOfJavaParser::isAssertion)
             .collect(Collectors.toList());
@@ -90,8 +92,9 @@ class AssertionOfJavaParserTest {
 
     @Test
     void extractsMessagesFromAllAssertions() {
-        final List<AssertionOfJavaParser> all = AssertionOfJavaParserTest
+        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("severalFrameworks")
+            .statements()
             .map(AssertionOfJavaParser::new)
             .filter(AssertionOfJavaParser::isAssertion)
             .collect(Collectors.toList());
@@ -111,8 +114,9 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesAssertionsWithoutMessage() {
-        final List<AssertionOfJavaParser> all = AssertionOfJavaParserTest
+        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("assertionsWithoutMesssages")
+            .statements()
             .map(AssertionOfJavaParser::new)
             .filter(AssertionOfJavaParser::isAssertion)
             .collect(Collectors.toList());
@@ -128,18 +132,5 @@ class AssertionOfJavaParserTest {
                 .noneMatch(Optional::isPresent),
             Matchers.is(true)
         );
-    }
-
-    /**
-     * Returns all statements of the method with the given name.
-     * @param name Name of the method.
-     * @return All statements of the method with the given name.
-     */
-    private static Stream<MethodCallExpr> method(final String name) {
-        return JavaTestClasses.TEST_WITH_ASSERTIONS.toJavaParserClass()
-            .methods(new ByName(name))
-            .findFirst()
-            .orElseThrow(() -> new MethodNotFound(name))
-            .statements();
     }
 }

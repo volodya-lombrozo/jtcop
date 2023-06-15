@@ -24,7 +24,6 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
-import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;

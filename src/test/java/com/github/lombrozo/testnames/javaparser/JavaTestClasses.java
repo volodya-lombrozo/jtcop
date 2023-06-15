@@ -123,6 +123,13 @@ enum JavaTestClasses {
         );
     }
 
+    JavaParserMethod method(final String name) {
+        return JavaTestClasses.TEST_WITH_ASSERTIONS.toJavaParserClass()
+            .methods(new ByName(name))
+            .findFirst()
+            .orElseThrow(() -> new MethodNotFound(name));
+    }
+
     TestCase testCase(final String name) {
         return this.toTestClass().all()
             .stream()
