@@ -60,13 +60,6 @@ SOFTWARE.
             <goals>
               <goal>check</goal>
             </goals>
-            <configuration>
-              <exclusions>
-                <exclusion>
-                  JTCOP.RuleAllTestsHaveProductionClass
-                </exclusion>
-              </exclusions>
-            </configuration>
           </execution>
         </executions>
       </plugin>
