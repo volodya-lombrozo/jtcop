@@ -24,6 +24,7 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
@@ -74,7 +75,7 @@ final class RuleTest {
     })
     void validatesCorrectly(final String name, final boolean expected) {
         final Collection<Complaint> complaints = new RulePresentSimple(
-            new TestCase.Fake(name)
+            new TestCase.Fake(name, new Assertion.Fake("Some message"))
         ).complaints();
         MatcherAssert.assertThat(
             complaints.toString(),

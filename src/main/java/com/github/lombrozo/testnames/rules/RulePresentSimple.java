@@ -54,7 +54,8 @@ public final class RulePresentSimple implements Rule {
             new RuleNotContainsTestWord(test),
             new RuleNotSpam(test),
             new RuleNotUsesSpecialCharacters(test),
-            new RulePresentTense(test)
+            new RulePresentTense(test),
+            new RuleAssertionMessage(test)
         ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
     }
 

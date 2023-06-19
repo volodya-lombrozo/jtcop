@@ -111,6 +111,15 @@ public interface TestCase {
         /**
          * Ctor.
          * @param name The name of test case
+         * @param asserts Assertions of test case
+         */
+        public Fake(final String name, Assertion... asserts) {
+            this(name, Collections.emptyList(), Arrays.asList(asserts));
+        }
+
+        /**
+         * Ctor.
+         * @param name The name of test case
          * @param suppressed The suppressed rules
          */
         public Fake(final String name, final Collection<String> suppressed) {

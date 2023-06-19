@@ -24,6 +24,7 @@
 
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.util.Collections;
@@ -43,8 +44,8 @@ final class RuleAllTestsInPresentSimpleTest {
         MatcherAssert.assertThat(
             new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
-                    new TestCase.Fake("removes"),
-                    new TestCase.Fake("creates")
+                    new TestCase.Fake("removes", new Assertion.Fake()),
+                    new TestCase.Fake("creates", new Assertion.Fake())
                 )
             ).complaints(),
             Matchers.empty()
@@ -56,8 +57,8 @@ final class RuleAllTestsInPresentSimpleTest {
         MatcherAssert.assertThat(
             new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
-                    new TestCase.Fake("remove"),
-                    new TestCase.Fake("create")
+                    new TestCase.Fake("remove", new Assertion.Fake()),
+                    new TestCase.Fake("create", new Assertion.Fake())
                 )
             ).complaints(),
             Matchers.allOf(Matchers.hasSize(1))
@@ -71,11 +72,13 @@ final class RuleAllTestsInPresentSimpleTest {
                 new TestClass.Fake(
                     new TestCase.Fake(
                         "remove",
-                        Collections.singletonList("RulePresentTense")
+                        Collections.singletonList("RulePresentTense"),
+                        Collections.singletonList(new Assertion.Fake())
                     ),
                     new TestCase.Fake(
                         "create",
-                        Collections.singletonList("RulePresentTense")
+                        Collections.singletonList("RulePresentTense"),
+                        Collections.singletonList(new Assertion.Fake())
                     )
                 )
             ).complaints(),
@@ -87,8 +90,8 @@ final class RuleAllTestsInPresentSimpleTest {
     void skipsSomeSuppressedChecksOnClassLevel() {
         final TestClass.Fake klass = new TestClass.Fake(
             Collections.singletonList("RuleAllTestsInPresentSimple"),
-            new TestCase.Fake("remove"),
-            new TestCase.Fake("create")
+            new TestCase.Fake("remove", new Assertion.Fake()),
+            new TestCase.Fake("create", new Assertion.Fake())
         );
         MatcherAssert.assertThat(
             new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass).complaints(),
