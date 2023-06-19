@@ -35,11 +35,6 @@ import java.util.Collections;
  * The rule that checks that test method has assertion and the assertion message is not empty.
  *
  * @since 0.1.15
- * @todo #67:90min Add RuleAssertionMessage to the Cop checking pipeline.
- *  We have to add the RuleAssertionMessage rule to the Cop checking pipeline.
- *  For now, it's just added to repository and doesn't work during the entire check.
- *  I believe it makes sense to add this rule when it will work without any problems
- *  and we will have integration tests that check it.
  */
 class RuleAssertionMessage implements Rule {
 
