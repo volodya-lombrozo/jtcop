@@ -24,6 +24,8 @@
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 
 class AssertionsTest {
 
@@ -33,11 +35,11 @@ class AssertionsTest {
     private final static String CONSTANT = "Message";
 
     @Test
-    void checksJUnitASsertions() {
+    void checksJUnitAssertions() {
         Assertions.assertEquals("1", "1", message());
         Assertions.assertEquals("1", "1", "Message");
         Assertions.assertTrue(true, "Message");
-        Assertions.assertFalse(true, message());
+        Assertions.assertFalse(false, message());
         Assertions.assertNotNull(new Object(), CONSTANT);
         Assertions.assertNotNull(new Object(), message());
     }

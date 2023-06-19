@@ -47,6 +47,12 @@ SOFTWARE.
       <version>5.9.3</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -54,21 +60,6 @@ SOFTWARE.
         <groupId>com.github.volodya-lombrozo</groupId>
         <artifactId>jtcop-maven-plugin</artifactId>
         <version>@project.version@</version>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <exclusions>
-                <exclusion>
-                  JTCOP.RuleAllTestsHaveProductionClass
-                </exclusion>
-              </exclusions>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
