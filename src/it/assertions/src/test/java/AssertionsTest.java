@@ -87,12 +87,14 @@ class AssertionsTest {
     }
 
     @Test
+    @SuppressWarnings("JTCOP.RuleAssertionMessage")
     void ignoresJUnitAssertions() {
         Assertions.assertSame(1, 1);
         Assertions.assertSame(1, 1);
     }
 
     @Test
+    @SuppressWarnings("JTCOP.RuleAssertionMessage")
     void ignoresHamcrestAssertions() {
         MatcherAssert.assertThat(
             "1",

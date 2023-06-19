@@ -125,7 +125,7 @@ class RuleAssertionMessage implements Rule {
         @Override
         public String message() {
             return String.format(
-                "Method %s has assertion without message: %s, please add the explanation message to make the test more readable",
+                "Method '%s' has assertion without message: '%s', please add the explanation message to make the test more readable",
                 this.method.name(),
                 this.assertion
             );

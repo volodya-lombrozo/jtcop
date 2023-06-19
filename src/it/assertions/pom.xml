@@ -22,7 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.volodya-lombrozo</groupId>
   <artifactId>jtcop-it</artifactId>
@@ -60,6 +62,21 @@ SOFTWARE.
         <groupId>com.github.volodya-lombrozo</groupId>
         <artifactId>jtcop-maven-plugin</artifactId>
         <version>@project.version@</version>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <exclusions>
+                <exclusion>
+                  JTCOP.RuleAllTestsHaveProductionClass
+                </exclusion>
+              </exclusions>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

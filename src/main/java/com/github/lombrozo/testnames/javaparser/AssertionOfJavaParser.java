@@ -25,14 +25,12 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.Optional;
-import lombok.ToString;
 
 /**
  * The assertion of the test method.
  *
  * @since 0.1.15
  */
-@ToString
 public final class AssertionOfJavaParser implements ParsedAssertion {
 
     /**
@@ -67,5 +65,10 @@ public final class AssertionOfJavaParser implements ParsedAssertion {
     public boolean isAssertion() {
         return new AssertionOfJUnit(this.call).isAssertion()
             || new AssertionOfHamcrest(this.call).isAssertion();
+    }
+
+    @Override
+    public String toString() {
+        return this.call.toString();
     }
 }
