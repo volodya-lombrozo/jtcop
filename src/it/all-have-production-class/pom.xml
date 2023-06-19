@@ -62,6 +62,11 @@ SOFTWARE.
             </goals>
             <configuration>
               <failOnError>false</failOnError>
+              <exclusions>
+                <exclusion>
+                  JTCOP.RuleAssertionMessage
+                </exclusion>
+              </exclusions>
             </configuration>
           </execution>
         </executions>

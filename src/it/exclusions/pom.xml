@@ -65,6 +65,9 @@ SOFTWARE.
                 <exclusion>
                   JTCOP.RuleAllTestsHaveProductionClass
                 </exclusion>
+                <exclusion>
+                  JTCOP.RuleAssertionMessage
+                </exclusion>
               </exclusions>
             </configuration>
           </execution>

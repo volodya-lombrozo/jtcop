@@ -113,7 +113,7 @@ public interface TestCase {
          * @param name The name of test case
          * @param asserts Assertions of test case
          */
-        public Fake(final String name, Assertion... asserts) {
+        public Fake(final String name, final Assertion... asserts) {
             this(name, Collections.emptyList(), Arrays.asList(asserts));
         }
 
