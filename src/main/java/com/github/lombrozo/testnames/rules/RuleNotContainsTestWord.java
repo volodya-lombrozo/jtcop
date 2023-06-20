@@ -71,7 +71,6 @@ public final class RuleNotContainsTestWord implements Rule {
                 this.getClass(),
                 "test-word.md"
             )
-
         ).complaints();
     }
 
