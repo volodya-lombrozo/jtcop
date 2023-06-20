@@ -4,13 +4,40 @@ import com.github.lombrozo.testnames.Complaint;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * The complaint with link to the rule description.
+ *
+ * @since 0.1.15
+ */
 public class LinkedComplaint implements Complaint {
 
+    /**
+     * The complaint message.
+     */
     private final String message;
+
+    /**
+     * The suggestion how to solve the problem.
+     */
     private final String suggestion;
+
+    /**
+     * Rule name.
+     */
     private final String rule;
+
+    /**
+     * The link to the rule description.
+     */
     private final URL link;
 
+    /**
+     * Constructor.
+     * @param message The complaint message.
+     * @param suggestion The suggestion how to solve the problem
+     * @param rule The rule name
+     * @param document The document name to the rule description in the default repo.
+     */
     public LinkedComplaint(
         final String message,
         final String suggestion,
@@ -20,6 +47,13 @@ public class LinkedComplaint implements Complaint {
         this(message, suggestion, rule.getSimpleName(), LinkedComplaint.link(document));
     }
 
+    /**
+     * Constructor.
+     * @param message The complaint message.
+     * @param suggestion The suggestion how to solve the problem
+     * @param rule The rule name
+     * @param link The link to the rule description
+     */
     private LinkedComplaint(
         final String message,
         final String suggestion,
@@ -36,7 +70,7 @@ public class LinkedComplaint implements Complaint {
     public String message() {
         return new Complaint.Text(
             String.format(
-                "Problem: %s.%nPossible solution: %s.%nYou can also ignore the rule by adding @SuppressWarnings(\"JTCOP.%s\") annotation.%nRule code: %s.%nYou can read more about the rule here: %s",
+                "Problem: %s.%n\tPossible solution: %s.%n\tYou can also ignore the rule by adding @SuppressWarnings(\"JTCOP.%s\") annotation.%n\tRule code: %s.%n\tYou can read more about the rule here: %s",
                 this.message,
                 this.suggestion,
                 this.rule,
