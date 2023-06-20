@@ -84,7 +84,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
                     new LinkedComplaint(
                         String.format("Test %s doesn't have corresponding production class", name),
                         String.format(
-                            "You can either rename or move the test class %s",
+                            "Either rename or move the test class %s",
                             test.path()
                         ),
                         this.getClass(),

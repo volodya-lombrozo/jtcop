@@ -70,7 +70,7 @@ public class LinkedComplaint implements Complaint {
     public String message() {
         return new Complaint.Text(
             String.format(
-                "Problem: %s.%n\tPossible solution: %s.%n\tYou can also ignore the rule by adding @SuppressWarnings(\"JTCOP.%s\") annotation.%n\tRule code: %s.%n\tYou can read more about the rule here: %s",
+                "%s.%n\t%s.%n\tYou can also ignore the rule by adding @SuppressWarnings(\"JTCOP.%s\") annotation.%n\tRule: %s.%n\tYou can read more about the rule here: %s",
                 this.message,
                 this.suggestion,
                 this.rule,
