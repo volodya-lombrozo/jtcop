@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
+import com.github.lombrozo.testnames.complaints.LinkedComplaint;
 import java.util.Collection;
 
 /**
@@ -55,9 +56,14 @@ public final class RuleNotSpam implements Rule {
     public Collection<Complaint> complaints() {
         return new RuleConditional(
             () -> !this.notSpam(),
-            new ComplaintWrongTestName(
-                this.test,
-                "test name doesn't have to contain duplicated symbols"
+            new LinkedComplaint(
+                new ComplaintWrongTestName(
+                    this.test,
+                    "test name doesn't have to contain duplicated symbols"
+                ).message(),
+                "Remove duplicated symbols from the test name",
+                this.getClass(),
+                "not-spam.md"
             )
         ).complaints();
     }
