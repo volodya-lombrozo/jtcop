@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
+import com.github.lombrozo.testnames.complaints.LinkedComplaint;
 import java.util.Collection;
 
 /**
@@ -55,9 +56,14 @@ public final class RuleNotUsesSpecialCharacters implements Rule {
     public Collection<Complaint> complaints() {
         return new RuleConditional(
             this::usesSpecialCharacters,
-            new ComplaintWrongTestName(
-                this.test,
-                "test name shouldn't contain special characters like '$' or '_'"
+            new LinkedComplaint(
+                new ComplaintWrongTestName(
+                    this.test,
+                    "test name shouldn't contain special characters like '$' or '_'"
+                ).message(),
+                "Remove all special characters like '$' or '_' from test name",
+                this.getClass(),
+                "not-special-characters.md"
             )
         ).complaints();
     }
