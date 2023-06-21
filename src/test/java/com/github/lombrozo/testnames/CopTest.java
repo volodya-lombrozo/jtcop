@@ -24,7 +24,6 @@
 package com.github.lombrozo.testnames;
 
 import java.util.Collection;
-import java.util.Random;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
