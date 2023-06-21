@@ -39,11 +39,6 @@ import lombok.Data;
  * Parser for test case.
  *
  * @since 0.1.0
- * @todo #67:90min Continue implementation of TestCaseJavaParser#assertions.
- *  We have to implement the method assertions() in TestCaseJavaParser.
- *  The method should return a list of assertions from different libraries like
- *  Hamcrest, AssertJ, JUnit, etc. Also we have to have a list of tests that check new
- *  functionality.
  */
 @Data
 final class TestCaseJavaParser implements TestCase {
