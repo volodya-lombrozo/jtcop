@@ -114,7 +114,12 @@ final class JavaParserClass {
             .filter(node -> node instanceof TypeDeclaration<?>)
             .collect(Collectors.toCollection(LinkedList::new));
         if (all.isEmpty()) {
-            throw new IllegalStateException("Compilation unit has contain at least one class");
+            throw new IllegalStateException(
+                String.format(
+                    "Compilation unit '%s' has contain at least one class",
+                    unit
+                )
+            );
         }
         return all.element();
     }

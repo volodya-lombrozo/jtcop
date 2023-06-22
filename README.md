@@ -38,7 +38,7 @@ you want to use specific (older) version of the plugin, for example `0.1.9`,
 just run the next maven command with specified version:
 
 ```shell
-mvn com.github.volodya-lombrozo:jtcop-maven-plugin:0.1.9:check
+mvn com.github.volodya-lombrozo:jtcop-maven-plugin:0.1.16:check
 ```
 
 ### Add the plugin to your `pom.xml`
