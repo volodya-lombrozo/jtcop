@@ -42,6 +42,7 @@ final class RuleAllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithoutExceptions() {
         MatcherAssert.assertThat(
+            "All tests in present simple should not have complaints.",
             new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
                     new TestCase.Fake("removes", new Assertion.Fake()),
@@ -55,6 +56,7 @@ final class RuleAllTestsInPresentSimpleTest {
     @Test
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
+            "Test class which tests are not in present simple should have one complaint.",
             new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
                     new TestCase.Fake("remove", new Assertion.Fake()),
@@ -68,6 +70,7 @@ final class RuleAllTestsInPresentSimpleTest {
     @Test
     void skipsSomeSuppressedChecksOnCaseLevel() {
         MatcherAssert.assertThat(
+            "Should skip suppressed checks on method level.",
             new RuleAllTestsInPresentSimple(
                 new TestClass.Fake(
                     new TestCase.Fake(
@@ -94,6 +97,7 @@ final class RuleAllTestsInPresentSimpleTest {
             new TestCase.Fake("create", new Assertion.Fake())
         );
         MatcherAssert.assertThat(
+            "Should skip suppressed checks on class level.",
             new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass).complaints(),
             Matchers.empty()
         );
