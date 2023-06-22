@@ -37,11 +37,11 @@ class CopTest {
 
     @Test
     void checksSuccessfully() {
-        final Collection<Complaint> check = new Cop(
-            new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake())
-        ).inspection();
         MatcherAssert.assertThat(
-            check,
+            "Cop should not find any complaints.",
+            new Cop(
+                new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake())
+            ).inspection(),
             Matchers.empty()
         );
     }
@@ -49,6 +49,7 @@ class CopTest {
     @Test
     void checksWithComplaint() {
         MatcherAssert.assertThat(
+            "Cop should find one complaint.",
             new Cop(
                 new Project.Fake(
                     new ProductionClass.Fake("CustomClass"),

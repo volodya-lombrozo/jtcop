@@ -41,6 +41,7 @@ class RuleAssertionMessageTest {
     @Test
     void checksAssertionMessageWithoutComplaints() {
         MatcherAssert.assertThat(
+            "Fake assertion message should not have complaints.",
             new RuleAssertionMessage(new TestCase.Fake(new Assertion.Fake())).complaints(),
             Matchers.empty()
         );
@@ -52,11 +53,13 @@ class RuleAssertionMessageTest {
             new TestCase.Fake()
         ).complaints();
         MatcherAssert.assertThat(
+            "Case without assertions should have one complaint.",
             complaints,
             Matchers.hasSize(1)
         );
         final Complaint next = complaints.iterator().next();
         MatcherAssert.assertThat(
+            "Complaint should have message about missing assertion.",
             next.message(),
             Matchers.containsString("doesn't have assertion statements")
         );
@@ -68,10 +71,12 @@ class RuleAssertionMessageTest {
             new TestCase.Fake(new Assertion.Empty())
         ).complaints();
         MatcherAssert.assertThat(
+            "Case without assertion message should have one complaint.",
             complaints,
             Matchers.hasSize(1)
         );
         MatcherAssert.assertThat(
+            "Complaint should have message about missing assertion message.",
             complaints.iterator().next().message(),
             Matchers.containsString("has assertion without message")
         );

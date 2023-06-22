@@ -41,7 +41,14 @@ class RuleNotContainsTestWordTest {
     @ParameterizedTest
     @MethodSource("cases")
     void checksSeveralNames(final TestCase test, final boolean empty) {
+        final String msg;
+        if (empty) {
+            msg = "We expect that test name doesn't contain 'test' word, but %s contains it";
+        } else {
+            msg = "We expect that test name contains 'test' word, but %s doesn't contain it";
+        }
         MatcherAssert.assertThat(
+            String.format(msg, test.name()),
             new RuleNotContainsTestWord(test).complaints().isEmpty(),
             Matchers.equalTo(empty)
         );
