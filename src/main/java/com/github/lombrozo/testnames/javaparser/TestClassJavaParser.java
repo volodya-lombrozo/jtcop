@@ -129,8 +129,22 @@ public final class TestClassJavaParser implements TestClass {
         final Sticky<? extends CompilationUnit> parsed,
         final Collection<String> exclusions
     ) {
-        this.path = klass;
-        this.unit = new Unchecked<>(new Mapped<>(JavaParserClass::new, parsed));
+        this(klass, new Unchecked<>(new Mapped<>(JavaParserClass::new, parsed)), exclusions);
+    }
+
+    /**
+     * Constructor.
+     * @param path Path to the class
+     * @param unit Parsed class.
+     * @param exclusions Rules excluded for entire project.
+     */
+    TestClassJavaParser(
+        final Path path,
+        final Unchecked<JavaParserClass> unit,
+        final Collection<String> exclusions
+    ) {
+        this.path = path;
+        this.unit = unit;
         this.exclusions = exclusions;
     }
 
@@ -166,5 +180,4 @@ public final class TestClassJavaParser implements TestClass {
             this.exclusions.stream()
         ).collect(Collectors.toSet());
     }
-
 }

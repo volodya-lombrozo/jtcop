@@ -146,4 +146,14 @@ class TestCaseJavaParserTest {
             Matchers.equalTo("JUnit explanation")
         );
     }
+
+    @Test
+    void parsesPackageJava() {
+        final TestClassJavaParser parser = JavaTestClasses.PACKAGE_INFO.toTestClass();
+        MatcherAssert.assertThat(
+            "Java package has to be parsed, but doesn't have to contain test cases",
+            parser.all(),
+            Matchers.hasSize(0)
+        );
+    }
 }

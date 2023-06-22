@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
@@ -107,6 +108,11 @@ final class JavaParserClass {
      * Prestructor of class.
      * @param unit Compilation unit.
      * @return Node with class.
+     * @todo #187:90min Provide refactoring for JavaParserClass and TestClassJavaParser.
+     *  The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
+     *  and have similar methods. The refactoring should be provided to make the code more
+     *  readable and maintainable. Also we have to count the different cases like records and
+     *  package-info classes, inner classes and so on. For each case we must have a test.
      */
     private static Node fromCompilation(final CompilationUnit unit) {
         final Queue<Node> all = unit.getChildNodes()
@@ -114,14 +120,8 @@ final class JavaParserClass {
             .filter(node -> node instanceof TypeDeclaration<?>)
             .collect(Collectors.toCollection(LinkedList::new));
         if (all.isEmpty()) {
-            throw new IllegalStateException(
-                String.format(
-                    "Compilation unit '%s' has contain at least one class",
-                    unit
-                )
-            );
+            all.add(new ClassOrInterfaceDeclaration());
         }
         return all.element();
     }
-
 }

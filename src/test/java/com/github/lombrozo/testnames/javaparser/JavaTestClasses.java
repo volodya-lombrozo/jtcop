@@ -83,6 +83,11 @@ enum JavaTestClasses {
     TEST_WITH_ASSERTIONS("TestWithAssertions.java"),
 
     /**
+     * Package info class.
+     */
+    PACKAGE_INFO("package-info.java"),
+
+    /**
      * Test class with JUnit assertions.
      */
     TEST_WITH_JUNIT_ASSERTIONS("TestWithJUnitAssertions.java"),
