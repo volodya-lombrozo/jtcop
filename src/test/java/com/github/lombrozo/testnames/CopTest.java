@@ -23,7 +23,6 @@
  */
 package com.github.lombrozo.testnames;
 
-import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
