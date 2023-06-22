@@ -34,7 +34,7 @@ mvn com.github.volodya-lombrozo:jtcop-maven-plugin:check
 ```
 
 After that you will see the result of the plugin execution in the console. If
-you want to use specific (older) version of the plugin, for example `0.1.9`,
+you want to use specific (older) version of the plugin, for example `0.1.16`,
 just run the next maven command with specified version:
 
 ```shell
@@ -53,7 +53,7 @@ In order to do that, just add the next snippet to your `pom.xml`:
     <plugin>
       <groupId>com.github.volodya-lombrozo</groupId>
       <artifactId>jtcop-maven-plugin</artifactId>
-      <version>0.1.9</version>
+      <version>0.1.16</version>
       <executions>
         <execution>
           <goals>
