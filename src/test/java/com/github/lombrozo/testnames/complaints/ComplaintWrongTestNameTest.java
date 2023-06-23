@@ -38,6 +38,7 @@ class ComplaintWrongTestNameTest {
     @Test
     void buildsMessage() {
         MatcherAssert.assertThat(
+            "ComplaintWrongTestName builds wrong message",
             new ComplaintWrongTestName(
                 new TestCase.Fake("Test"),
                 "is wrong"

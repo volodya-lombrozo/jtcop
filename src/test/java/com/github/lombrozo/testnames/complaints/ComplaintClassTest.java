@@ -37,25 +37,28 @@ class ComplaintClassTest {
 
     @Test
     void returnsSimpleMessageIfDoesNotHaveComplaints() {
+        final String expected = "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.";
         MatcherAssert.assertThat(
+            String.format("ComplaintClass returns wrong message, expected: %s", expected),
             new ComplaintClass(new TestClass.Fake()).message(),
-            Matchers.equalTo(
-                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information."
-            )
+            Matchers.equalTo(expected)
         );
     }
 
     @Test
     void returnsCompoundMessageIfHasSeveralComplaints() {
+        final String expected = "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.\n\t1) haha\n\t2) haha";
         MatcherAssert.assertThat(
+            String.format(
+                "ComplaintClass returns wrong message for several complaints, expected: %s",
+                expected
+            ),
             new ComplaintClass(
                 new TestClass.Fake(),
                 new Complaint.Text("haha"),
                 new Complaint.Text("haha")
             ).message(),
-            Matchers.equalTo(
-                "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.\n\t1) haha\n\t2) haha"
-            )
+            Matchers.equalTo(expected)
         );
     }
 }
