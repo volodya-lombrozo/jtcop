@@ -55,10 +55,19 @@ final class ProjectJavaParserTest {
             tmp
         ).productionClasses();
         MatcherAssert.assertThat(
+            String.format(
+                "Project has to have exactly one production class, but was %d",
+                classes.size()
+            ),
             classes,
             Matchers.hasSize(1)
         );
         MatcherAssert.assertThat(
+            String.format(
+                "Production class name is wrong. Expected: %s, but was: %s",
+                name,
+                classes.iterator().next().name()
+            ),
             classes.iterator().next().name(),
             Matchers.equalTo(name)
         );
@@ -73,10 +82,16 @@ final class ProjectJavaParserTest {
             tmp
         ).testClasses();
         MatcherAssert.assertThat(
+            String.format("Project has to have exactly one test class, but was %d", classes.size()),
             classes,
             Matchers.hasSize(1)
         );
         MatcherAssert.assertThat(
+            String.format(
+                "Test class name is wrong. Expected: %s, but was: %s",
+                name,
+                classes.iterator().next().name()
+            ),
             classes.iterator().next().name(),
             Matchers.equalTo(name)
         );
@@ -104,10 +119,18 @@ final class ProjectJavaParserTest {
             .flatMap(Collection::stream)
             .collect(Collectors.toSet());
         MatcherAssert.assertThat(
+            String.format(
+                "The class level suppression list is wrong. Expected: %s, but was: %s",
+                Arrays.toString(exclusions), clevel
+            ),
             clevel,
             Matchers.containsInAnyOrder(exclusions)
         );
         MatcherAssert.assertThat(
+            String.format(
+                "The method level suppression list is wrong. Expected: %s, but was: %s",
+                Arrays.toString(exclusions), mlevel
+            ),
             mlevel,
             Matchers.containsInAnyOrder(exclusions)
         );

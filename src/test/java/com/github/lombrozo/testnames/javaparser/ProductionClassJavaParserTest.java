@@ -39,6 +39,7 @@ class ProductionClassJavaParserTest {
     void returnsName() {
         final String name = "SomeJava.java";
         MatcherAssert.assertThat(
+            "ProductionClassJavaParser returns wrong name",
             new ProductionClassJavaParser(Paths.get(name)).name(),
             Matchers.equalTo(name)
         );
