@@ -45,6 +45,7 @@ final class RuleAllTestsHaveProductionClassTest {
     @Test
     void checksThatAllHaveCorrespondingProductionClass() {
         MatcherAssert.assertThat(
+            "Should not have complaints, because all tests have corresponding production class",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Identical"),
@@ -58,6 +59,7 @@ final class RuleAllTestsHaveProductionClassTest {
     @Test
     void checksThatClassHasCorrespondingProductionClassWithExtension() {
         MatcherAssert.assertThat(
+            "Should not have complaints, because all tests have corresponding production class",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Hello.java"),
@@ -74,10 +76,12 @@ final class RuleAllTestsHaveProductionClassTest {
             new Project.Fake(new TestClass.Fake())
         ).complaints();
         MatcherAssert.assertThat(
+            "Should have complaints, because doesn't have corresponding production class",
             complaints,
             Matchers.hasSize(1)
         );
         MatcherAssert.assertThat(
+            "Should have complaint with correct message",
             complaints.iterator().next().message(),
             Matchers.containsString(
                 "Test FakeClassTest doesn't have corresponding production class."
@@ -88,6 +92,7 @@ final class RuleAllTestsHaveProductionClassTest {
     @Test
     void doesNotCheckBecauseSuppressed() {
         MatcherAssert.assertThat(
+            "Should not have complaints, because suppressed",
             new RuleSuppressed(
                 new RuleAllTestsHaveProductionClass(
                     new Project.Fake(
@@ -112,8 +117,12 @@ final class RuleAllTestsHaveProductionClassTest {
             )
         ).complaints();
         MatcherAssert.assertThat(
+            String.format(
+                "Should filter package-info.java production classes, but some complaints was found %s",
+                complaints
+            ),
             complaints,
-            Matchers.hasSize(0)
+            Matchers.empty()
         );
     }
 
@@ -128,8 +137,12 @@ final class RuleAllTestsHaveProductionClassTest {
             )
         ).complaints();
         MatcherAssert.assertThat(
+            String.format(
+                "Should filter package-ingo.java test classes, but some complaints was found %s",
+                complaints
+            ),
             complaints,
-            Matchers.hasSize(0)
+            Matchers.empty()
         );
     }
 
@@ -143,8 +156,9 @@ final class RuleAllTestsHaveProductionClassTest {
             )
         ).complaints();
         MatcherAssert.assertThat(
+            String.format("Should not have complaints, but was %s", complaints),
             complaints,
-            Matchers.hasSize(0)
+            Matchers.empty()
         );
     }
 
