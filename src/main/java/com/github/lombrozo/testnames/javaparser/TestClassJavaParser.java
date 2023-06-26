@@ -73,6 +73,14 @@ public final class TestClassJavaParser implements TestClass {
         this(klass, TestClassJavaParser.parse(klass));
     }
 
+    TestClassJavaParser(
+        final Path path,
+        final JavaParserClass parsed,
+        final Collection<String> exclusions
+    ) {
+        this(path, new Unchecked<>(() -> parsed), exclusions);
+    }
+
     /**
      * Ctor.
      *

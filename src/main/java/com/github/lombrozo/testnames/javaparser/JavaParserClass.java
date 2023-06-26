@@ -30,7 +30,9 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Predicate;
@@ -48,7 +50,15 @@ final class JavaParserClass {
     /**
      * Parsed Java class.
      */
-    private final NodeWithMembers<TypeDeclaration<?>> klass;
+    private final Node klass;
+
+    /**
+     * Ctor.
+     * @param stream Input stream with java class.
+     */
+    JavaParserClass(final Path stream) {
+        this(JavaParserClass.parse(stream));
+    }
 
     /**
      * Ctor.
@@ -68,18 +78,9 @@ final class JavaParserClass {
 
     /**
      * Ctor.
-     * @param node Node with class.
-     */
-    @SuppressWarnings("unchecked")
-    private JavaParserClass(final Node node) {
-        this((NodeWithMembers<TypeDeclaration<?>>) node);
-    }
-
-    /**
-     * Ctor.
      * @param unit Compilation unit.
      */
-    private JavaParserClass(final NodeWithMembers<TypeDeclaration<?>> unit) {
+    private JavaParserClass(final Node unit) {
         this.klass = unit;
     }
 
@@ -98,7 +99,7 @@ final class JavaParserClass {
      */
     @SafeVarargs
     final Stream<JavaParserMethod> methods(final Predicate<MethodDeclaration>... filters) {
-        return this.klass.getMethods()
+        return ((NodeWithMembers<TypeDeclaration<?>>) this.klass).getMethods()
             .stream()
             .filter(method -> Stream.of(filters).allMatch(filter -> filter.test(method)))
             .map(JavaParserMethod::new);
@@ -123,5 +124,28 @@ final class JavaParserClass {
             all.add(new ClassOrInterfaceDeclaration());
         }
         return all.element();
+    }
+
+    private static CompilationUnit parse(final Path path) {
+        try {
+            return StaticJavaParser.parse(path);
+        } catch (final IOException ex) {
+            throw new IllegalStateException(
+                String.format("Can't parse java file: %s", path.toAbsolutePath()),
+                ex
+            );
+        }
+    }
+
+    boolean isAnnotation() {
+        return false;
+    }
+
+    boolean isInterface() {
+        return false;
+    }
+
+    boolean isPackageInfo() {
+        return false;
     }
 }

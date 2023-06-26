@@ -110,7 +110,13 @@ public final class ProjectJavaParser implements Project {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .map(path -> new TestClassJavaParser(path, this.exclusions))
+                    .filter(path -> {
+                        final JavaParserClass parsed = new JavaParserClass(path);
+                        return !parsed.isAnnotation()
+                            && !parsed.isInterface()
+                            && !parsed.isPackageInfo();
+                    })
+                    .map(klass -> new TestClassJavaParser(klass, this.exclusions))
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);
