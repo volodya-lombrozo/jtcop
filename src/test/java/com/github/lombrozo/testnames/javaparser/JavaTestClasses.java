@@ -88,6 +88,11 @@ enum JavaTestClasses {
     PACKAGE_INFO("package-info.java"),
 
     /**
+     * Annotation.
+     */
+    ANNOTATION_DECLARATION("AnnotationDeclaration.java"),
+
+    /**
      * Test class with JUnit assertions.
      */
     TEST_WITH_JUNIT_ASSERTIONS("TestWithJUnitAssertions.java"),

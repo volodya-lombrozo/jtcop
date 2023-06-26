@@ -161,5 +161,4 @@ final class RuleAllTestsHaveProductionClassTest {
             Matchers.empty()
         );
     }
-
 }

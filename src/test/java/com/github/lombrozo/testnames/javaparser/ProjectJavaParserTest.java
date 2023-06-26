@@ -135,4 +135,52 @@ final class ProjectJavaParserTest {
             Matchers.containsInAnyOrder(exclusions)
         );
     }
+
+    @Test
+    void ignoresAnnotations(@TempDir final Path temp) throws IOException {
+        Files.copy(
+            JavaTestClasses.PACKAGE_INFO.inputStream(),
+            temp.resolve("AnnotationDeclaration.java")
+        );
+        final Collection<TestClass> classes = new ProjectJavaParser(
+            temp,
+            temp
+        ).testClasses();
+        MatcherAssert.assertThat(
+            String.format("Project has to ignore annotations, but was: %s", classes),
+            classes,
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void ignoresPackageInfoClasses(@TempDir final Path temp) throws IOException {
+        Files.copy(JavaTestClasses.PACKAGE_INFO.inputStream(), temp.resolve("package-info.java"));
+        final Collection<TestClass> classes = new ProjectJavaParser(
+            temp,
+            temp
+        ).testClasses();
+        MatcherAssert.assertThat(
+            String.format("Project has to ignore package-info.java classes, but was: %s", classes),
+            classes,
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void ignoresInterfaces(@TempDir final Path temp) throws IOException {
+        Files.copy(
+            JavaTestClasses.SUPPRESSED_INTERFACE.inputStream(),
+            temp.resolve("SuppressedInterface.java")
+        );
+        final Collection<TestClass> classes = new ProjectJavaParser(
+            temp,
+            temp
+        ).testClasses();
+        MatcherAssert.assertThat(
+            String.format("Project has to ignore interfaces, but was: %s", classes),
+            classes,
+            Matchers.empty()
+        );
+    }
 }
