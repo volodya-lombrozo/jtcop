@@ -34,6 +34,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.scalar.Mapped;
@@ -69,7 +70,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param klass Path to the class
      */
     TestClassJavaParser(final Path klass) {
-        this(klass, new Sticky<>(() -> StaticJavaParser.parse(klass)));
+        this(klass, TestClassJavaParser.parse(klass));
     }
 
     /**
@@ -79,7 +80,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param exclusions Rules excluded for entire project.
      */
     TestClassJavaParser(final Path klass, final Collection<String> exclusions) {
-        this(klass, new Sticky<>(() -> StaticJavaParser.parse(klass)), exclusions);
+        this(klass, TestClassJavaParser.parse(klass), exclusions);
     }
 
     /**
@@ -89,7 +90,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param stream Parsed Java class
      */
     TestClassJavaParser(final Path klass, final InputStream stream) {
-        this(klass, new Sticky<>(() -> StaticJavaParser.parse(stream)));
+        this(klass, TestClassJavaParser.parse(stream));
     }
 
     /**
@@ -98,8 +99,8 @@ public final class TestClassJavaParser implements TestClass {
      * @param klass Path to the class
      * @param parsed Parsed class.
      */
-    private TestClassJavaParser(final Path klass, final Sticky<? extends CompilationUnit> parsed) {
-        this(klass, parsed, Collections.emptySet());
+    private TestClassJavaParser(final Path klass, final Sticky<JavaParserClass> parsed) {
+        this(klass, new Unchecked<>(parsed), Collections.emptySet());
     }
 
     /**
@@ -114,7 +115,7 @@ public final class TestClassJavaParser implements TestClass {
         final InputStream stream,
         final Collection<String> exclusions
     ) {
-        this(klass, new Sticky<>(() -> StaticJavaParser.parse(stream)), exclusions);
+        this(klass, TestClassJavaParser.parse(stream), exclusions);
     }
 
     /**
@@ -126,10 +127,10 @@ public final class TestClassJavaParser implements TestClass {
      */
     TestClassJavaParser(
         final Path klass,
-        final Sticky<? extends CompilationUnit> parsed,
+        final Sticky<JavaParserClass> parsed,
         final Collection<String> exclusions
     ) {
-        this(klass, new Unchecked<>(new Mapped<>(JavaParserClass::new, parsed)), exclusions);
+        this(klass, new Unchecked<>(parsed), exclusions);
     }
 
     /**
@@ -179,5 +180,23 @@ public final class TestClassJavaParser implements TestClass {
             this.unit.value().annotations().suppressed(),
             this.exclusions.stream()
         ).collect(Collectors.toSet());
+    }
+
+    /**
+     * Parse Java class.
+     * @param path Path to the class
+     * @return Parsed class.
+     */
+    private static Sticky<JavaParserClass> parse(final Path path) {
+        return new Sticky<>(() -> new JavaParserClass(StaticJavaParser.parse(path)));
+    }
+
+    /**
+     * Parse Java class.
+     * @param stream Raw class.
+     * @return Parsed class.
+     */
+    private static Sticky<JavaParserClass> parse(final InputStream stream) {
+        return new Sticky<>(() -> new JavaParserClass(StaticJavaParser.parse(stream)));
     }
 }
