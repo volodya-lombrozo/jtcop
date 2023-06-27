@@ -21,16 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-String log = new File(basedir, 'build.log').text;
-[
-  'Test CorrectTest.java doesn\'t have corresponding production class.',
-].each { assert log.contains(it): "Log doesn't contain ['$it']" }
-[
-  'SuppressedTest.java',
-  'SuppressedInterface.java',
-  'SuppressedAnnotation.java',
-  'MyAnnotation.java',
-  'MyInterface.java',
-  'package-info.java',
-].each { assert !log.contains(it): "Log contains ['$it']" }
-true
+package com.github.lombrozo.testnames.complaints;
+
+public @interface MyAnnotation {
+}
