@@ -76,7 +76,7 @@ final class ProjectJavaParserTest {
     @Test
     void returnsNotProductionClasses(@TempDir final Path tmp) throws IOException {
         final String name = "TestClass.java";
-        Files.write(tmp.resolve(name), "".getBytes(StandardCharsets.UTF_8));
+        Files.write(tmp.resolve(name), "final class TestClass{}".getBytes(StandardCharsets.UTF_8));
         final Collection<TestClass> classes = new ProjectJavaParser(
             tmp,
             tmp

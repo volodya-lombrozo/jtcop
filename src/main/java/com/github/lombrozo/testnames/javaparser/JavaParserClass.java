@@ -26,6 +26,8 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.PackageDeclaration;
+import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
@@ -138,14 +140,17 @@ final class JavaParserClass {
     }
 
     boolean isAnnotation() {
-        return false;
+        return this.klass instanceof AnnotationDeclaration;
     }
 
     boolean isInterface() {
-        return false;
+        return this.klass instanceof ClassOrInterfaceDeclaration
+            && ((ClassOrInterfaceDeclaration) this.klass).isInterface();
     }
 
     boolean isPackageInfo() {
-        return false;
+        return this.klass instanceof ClassOrInterfaceDeclaration
+            && ((ClassOrInterfaceDeclaration) this.klass).getNameAsString()
+            .equals("empty");
     }
 }
