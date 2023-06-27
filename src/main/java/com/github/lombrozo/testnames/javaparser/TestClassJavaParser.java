@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
-import com.github.javaparser.ast.CompilationUnit;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.io.InputStream;
@@ -34,10 +33,8 @@ import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.cactoos.scalar.Mapped;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -71,14 +68,6 @@ public final class TestClassJavaParser implements TestClass {
      */
     TestClassJavaParser(final Path klass) {
         this(klass, TestClassJavaParser.parse(klass));
-    }
-
-    TestClassJavaParser(
-        final Path path,
-        final JavaParserClass parsed,
-        final Collection<String> exclusions
-    ) {
-        this(path, new Unchecked<>(() -> parsed), exclusions);
     }
 
     /**

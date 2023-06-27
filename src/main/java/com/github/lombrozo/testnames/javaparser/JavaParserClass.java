@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -108,6 +107,46 @@ final class JavaParserClass {
     }
 
     /**
+     * Checks if the class is an annotation.
+     * @return True if an annotation
+     */
+    boolean isAnnotation() {
+        return this.klass instanceof AnnotationDeclaration;
+    }
+
+    /**
+     * Checks if the class is an interface.
+     * @return True if an interface
+     */
+    boolean isInterface() {
+        return this.klass instanceof ClassOrInterfaceDeclaration
+            && this.cast().isInterface();
+    }
+
+    /**
+     * Checks if the class is a package-info.java.
+     * @return True if a package-info.java
+     */
+    boolean isPackageInfo() {
+        return this.klass instanceof ClassOrInterfaceDeclaration
+            && "empty".equals(this.cast().getNameAsString());
+    }
+
+    /**
+     * Cast the class to ClassOrInterfaceDeclaration.
+     * @return ClassOrInterfaceDeclaration
+     */
+    private ClassOrInterfaceDeclaration cast() {
+        if (this.klass instanceof ClassOrInterfaceDeclaration) {
+            return (ClassOrInterfaceDeclaration) this.klass;
+        } else {
+            throw new IllegalStateException(
+                String.format("Can't cast %s to ClassOrInterfaceDeclaration", this.klass)
+            );
+        }
+    }
+
+    /**
      * Prestructor of class.
      * @param unit Compilation unit.
      * @return Node with class.
@@ -128,6 +167,11 @@ final class JavaParserClass {
         return all.element();
     }
 
+    /**
+     * Parse java by path.
+     * @param path Path to java file
+     * @return Compilation unit.
+     */
     private static CompilationUnit parse(final Path path) {
         try {
             return StaticJavaParser.parse(path);
@@ -139,18 +183,4 @@ final class JavaParserClass {
         }
     }
 
-    boolean isAnnotation() {
-        return this.klass instanceof AnnotationDeclaration;
-    }
-
-    boolean isInterface() {
-        return this.klass instanceof ClassOrInterfaceDeclaration
-            && ((ClassOrInterfaceDeclaration) this.klass).isInterface();
-    }
-
-    boolean isPackageInfo() {
-        return this.klass instanceof ClassOrInterfaceDeclaration
-            && ((ClassOrInterfaceDeclaration) this.klass).getNameAsString()
-            .equals("empty");
-    }
 }
