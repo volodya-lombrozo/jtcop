@@ -21,62 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.bytecode;
-
-import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.TestClass;
-import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Collections;
-import javassist.CtClass;
-
 /**
- * Bytecode test class.
- *
- * @since 0.1.17
+ * Tests for {@link com.github.lombrozo.testnames.bytecode} package.
  */
-final class BytecodeTestClass implements TestClass {
-
-    /**
-     * Path to the test class.
-     */
-    private final Path file;
-
-    /**
-     * Pared class.
-     */
-    private final CtClass klass;
-
-    /**
-     * Constructor.
-     * @param path Path to the test class.
-     * @param clazz Pared class.
-     */
-    BytecodeTestClass(
-        final Path path,
-        final CtClass clazz
-    ) {
-        this.file = path;
-        this.klass = clazz;
-    }
-
-    @Override
-    public String name() {
-        return this.klass.getSimpleName();
-    }
-
-    @Override
-    public Collection<TestCase> all() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Path path() {
-        return this.file;
-    }
-
-    @Override
-    public Collection<String> suppressed() {
-        return Collections.emptyList();
-    }
-}
+package com.github.lombrozo.testnames.bytecode;
