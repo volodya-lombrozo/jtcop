@@ -43,6 +43,7 @@ import org.junit.jupiter.api.io.TempDir;
 class BytecodeProjectTest {
 
     @Test
+    @SuppressWarnings("JTCOP.RuleNotContainsTestWord")
     void parsesGeneratedTestClasses(@TempDir final Path temp) throws Exception {
         final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
         Files.write(temp.resolve("RuleTest.class"), new BytesOf(resource).asBytes());
