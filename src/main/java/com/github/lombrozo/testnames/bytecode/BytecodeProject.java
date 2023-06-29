@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,7 +25,17 @@ public class BytecodeProject implements Project {
 
     @Override
     public Collection<ProductionClass> productionClasses() {
-        return Collections.emptyList();
+        try (final Stream<Path> stream = Files.walk(this.classes)) {
+            return stream.map(BytecodeClass::new)
+                .filter(BytecodeClass::isClass)
+                .map(BytecodeClass::toProductionClass)
+                .collect(Collectors.toList());
+        } catch (final IOException ex) {
+            throw new IllegalStateException(
+                String.format("Can't read production classes from %s", this.classes),
+                ex
+            );
+        }
     }
 
     @Override
