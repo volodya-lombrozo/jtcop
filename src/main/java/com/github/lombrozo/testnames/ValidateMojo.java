@@ -41,6 +41,11 @@ import org.apache.maven.project.MavenProject;
  * The validate mojo.
  *
  * @since 0.1.0
+ * @todo #178:90min Add BytecodeProject to the Cop.
+ *  The Cop should be able to work with both ProjectJavaParser and BytecodeProject together.
+ *  It will be able to check the test names in the compiled classes.
+ *  We also have to add integration tests for the RuleAllTestsHaveProductionClass that will be
+ *  able to check the test names in the compiled classes.
  */
 @Mojo(name = "check", defaultPhase = LifecyclePhase.VALIDATE)
 public final class ValidateMojo extends AbstractMojo {
