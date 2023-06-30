@@ -161,4 +161,32 @@ final class RuleAllTestsHaveProductionClassTest {
             Matchers.empty()
         );
     }
+
+    @Test
+    void handlesTestsWithUnderscores() {
+        MatcherAssert.assertThat(
+            "Should not have complaints, because all tests have corresponding production class, but with underscores",
+            new RuleAllTestsHaveProductionClass(
+                new Project.Fake(
+                    new ProductionClass.Fake("IdenticalName"),
+                    new TestClass.Fake("Identical_Name_Test", new TestCase.Fake())
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void handlesTestsWithAmpersands() {
+        MatcherAssert.assertThat(
+            "Should not have complaints, because all tests have corresponding production class, but with ampersands",
+            new RuleAllTestsHaveProductionClass(
+                new Project.Fake(
+                    new ProductionClass.Fake("EObool$EOnot"),
+                    new TestClass.Fake("EOboolEOnotTest", new TestCase.Fake())
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
 }
