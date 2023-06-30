@@ -163,7 +163,7 @@ final class RuleAllTestsHaveProductionClassTest {
     }
 
     @Test
-    void handlesTestsWithUnderscores() {
+    void handlesCasesWithUnderscores() {
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class, but with underscores",
             new RuleAllTestsHaveProductionClass(
@@ -177,7 +177,7 @@ final class RuleAllTestsHaveProductionClassTest {
     }
 
     @Test
-    void handlesTestsWithDollarSign() {
+    void handlesCasesWithDollarSign() {
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class, but with dollar sign",
             new RuleAllTestsHaveProductionClass(
