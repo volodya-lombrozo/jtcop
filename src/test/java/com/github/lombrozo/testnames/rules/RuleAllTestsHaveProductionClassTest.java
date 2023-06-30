@@ -177,13 +177,13 @@ final class RuleAllTestsHaveProductionClassTest {
     }
 
     @Test
-    void handlesTestsWithAmpersands() {
+    void handlesTestsWithDollarSign() {
         MatcherAssert.assertThat(
-            "Should not have complaints, because all tests have corresponding production class, but with ampersands",
+            "Should not have complaints, because all tests have corresponding production class, but with dollar sign",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("EObool$EOnot"),
-                    new TestClass.Fake("EOboolEOnotTest", new TestCase.Fake())
+                    new TestClass.Fake("EObool$EOnot$Test", new TestCase.Fake())
                 )
             ).complaints(),
             Matchers.empty()

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -46,6 +47,16 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      * The name of the rule.
      */
     public static final String NAME = "RuleAllTestsHaveProductionClass";
+
+    /**
+     * The pattern to replace the underscore sign "_".
+     */
+    private static final Pattern UNDERSCORE = Pattern.compile("_");
+
+    /**
+     * The pattern to replace the dollar sign "$".
+     */
+    private static final Pattern DOLLAR = Pattern.compile("\\$");
 
     /**
      * The project to check.
@@ -77,7 +88,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
             .filter(test -> RuleAllTestsHaveProductionClass.isNotPackageInfo(test.name()))
             .collect(Collectors.toList());
         for (final TestClass test : tests) {
-            final String name = test.name();
+            final String name = RuleAllTestsHaveProductionClass.clean(test.name());
             if (!classes.containsKey(name)
                 && RuleAllTestsHaveProductionClass.isNotSuppressed(test)) {
                 complaints.add(
@@ -97,6 +108,17 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
     }
 
     /**
+     * Removes that not important part of the name.
+     * @param original The original name.
+     * @return The cleaned name.
+     */
+    private static String clean(final CharSequence original) {
+        return RuleAllTestsHaveProductionClass.DOLLAR.matcher(
+            RuleAllTestsHaveProductionClass.UNDERSCORE.matcher(original).replaceAll("")
+        ).replaceAll("");
+    }
+
+    /**
      * Returns the name of the test class that corresponds to the production class.
      * @param klass The production class.
      * @return The name of the test class.
@@ -109,7 +131,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
         } else {
             plain = String.format("%sTest", name);
         }
-        return plain;
+        return RuleAllTestsHaveProductionClass.clean(plain);
     }
 
     /**
