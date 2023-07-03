@@ -24,8 +24,10 @@
 
 package com.github.lombrozo.testnames;
 
+import com.github.lombrozo.testnames.bytecode.BytecodeProject;
 import com.github.lombrozo.testnames.complaints.ComplaintCompound;
 import com.github.lombrozo.testnames.javaparser.ProjectJavaParser;
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
@@ -71,16 +73,31 @@ public final class ValidateMojo extends AbstractMojo {
     @Parameter(property = "exclusions")
     private String[] exclusions;
 
+    /**
+     * The directory with the generated sources.
+     */
+    @Parameter(defaultValue = "${project.build.directory}/generated-sources")
+    private File sources;
+
+    /**
+     * The directory with the generated test sources.
+     */
+    @Parameter(defaultValue = "${project.build.directory}/generated-test-sources")
+    private File tests;
+
     @Override
     public void execute() throws MojoFailureException {
         final Collection<Complaint> complaints = new Cop(
-            new ProjectJavaParser(
-                Paths.get(this.project.getCompileSourceRoots().get(0)),
-                Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                Arrays.stream(this.exclusions)
-                    .map(RuleName::new)
-                    .map(RuleName::withoutPrefix)
-                    .collect(Collectors.toSet())
+            new Project.Combined(
+                new BytecodeProject(this.sources, this.tests),
+                new ProjectJavaParser(
+                    Paths.get(this.project.getCompileSourceRoots().get(0)),
+                    Paths.get(this.project.getTestCompileSourceRoots().get(0)),
+                    Arrays.stream(this.exclusions)
+                        .map(RuleName::new)
+                        .map(RuleName::withoutPrefix)
+                        .collect(Collectors.toSet())
+                )
             )
         ).inspection();
         if (!complaints.isEmpty() && this.failOnError) {

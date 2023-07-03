@@ -185,6 +185,7 @@ SOFTWARE.
           </localRepositoryPath>
           <postBuildHookScript>verify</postBuildHookScript>
           <streamLogsOnFailures>true</streamLogsOnFailures>
+          <showErrors>true</showErrors>
         </configuration>
         <executions>
           <execution>

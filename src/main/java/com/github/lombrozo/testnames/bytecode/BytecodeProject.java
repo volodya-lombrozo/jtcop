@@ -26,10 +26,12 @@ package com.github.lombrozo.testnames.bytecode;
 import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.TestClass;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,7 +41,7 @@ import java.util.stream.Stream;
  *
  * @since 0.1.17
  */
-final class BytecodeProject implements Project {
+public final class BytecodeProject implements Project {
 
     /**
      * Production classes path.
@@ -56,7 +58,16 @@ final class BytecodeProject implements Project {
      * @param classes Production classes path.
      * @param tests Test classes path.
      */
-    BytecodeProject(
+    public BytecodeProject(final File classes, final File tests) {
+        this(classes.toPath(), tests.toPath());
+    }
+
+    /**
+     * Constructor.
+     * @param classes Production classes path.
+     * @param tests Test classes path.
+     */
+    public BytecodeProject(
         final Path classes,
         final Path tests
     ) {
@@ -66,31 +77,43 @@ final class BytecodeProject implements Project {
 
     @Override
     public Collection<ProductionClass> productionClasses() {
-        try (Stream<Path> stream = Files.walk(this.classes)) {
-            return stream.map(BytecodeClass::new)
-                .filter(BytecodeClass::isClass)
-                .map(BytecodeClass::toProductionClass)
-                .collect(Collectors.toList());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(
-                String.format("Can't read production classes from %s", this.classes),
-                ex
-            );
+        final Collection<ProductionClass> res;
+        if (Files.exists(this.classes)) {
+            try (Stream<Path> stream = Files.walk(this.classes)) {
+                res = stream.map(BytecodeClass::new)
+                    .filter(BytecodeClass::isClass)
+                    .map(BytecodeClass::toProductionClass)
+                    .collect(Collectors.toList());
+            } catch (final IOException ex) {
+                throw new IllegalStateException(
+                    String.format("Can't read production classes from %s", this.classes),
+                    ex
+                );
+            }
+        } else {
+            res = Collections.emptyList();
         }
+        return res;
     }
 
     @Override
     public Collection<TestClass> testClasses() {
-        try (Stream<Path> stream = Files.walk(this.tests)) {
-            return stream.map(BytecodeClass::new)
-                .filter(BytecodeClass::isClass)
-                .map(BytecodeClass::toTest)
-                .collect(Collectors.toList());
-        } catch (final IOException ex) {
-            throw new IllegalStateException(
-                String.format("Can't read test classes from %s", this.tests),
-                ex
-            );
+        final Collection<TestClass> result;
+        if (Files.exists(this.tests)) {
+            try (Stream<Path> stream = Files.walk(this.tests)) {
+                result = stream.map(BytecodeClass::new)
+                    .filter(BytecodeClass::isClass)
+                    .map(BytecodeClass::toTest)
+                    .collect(Collectors.toList());
+            } catch (final IOException ex) {
+                throw new IllegalStateException(
+                    String.format("Can't read test classes from %s", this.tests),
+                    ex
+                );
+            }
+        } else {
+            result = Collections.emptyList();
         }
+        return result;
     }
 }
