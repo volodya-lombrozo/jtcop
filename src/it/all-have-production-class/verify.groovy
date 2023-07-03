@@ -32,5 +32,8 @@ String log = new File(basedir, 'build.log').text;
   'MyAnnotation.java',
   'MyInterface.java',
   'package-info.java',
+  'ComplaintClass.java',
+  'Cop.class',
+  'RuleName.class'
 ].each { assert !log.contains(it): "Log contains ['$it']" }
 true
