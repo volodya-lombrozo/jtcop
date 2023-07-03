@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * Project.
@@ -109,6 +110,51 @@ public interface Project {
         @Override
         public Collection<TestClass> testClasses() {
             return Collections.unmodifiableCollection(this.tests);
+        }
+    }
+
+    /**
+     * Combined project.
+     *
+     * @since 0.1.17
+     */
+    class Combined implements Project {
+
+        /**
+         * All projects.
+         */
+        private final Collection<? extends Project> projects;
+
+        /**
+         * Constructor.
+         * @param projects All projects.
+         */
+        public Combined(final Project... projects) {
+            this(Arrays.asList(projects));
+        }
+
+        /**
+         * Constructor.
+         * @param projects All projects.
+         */
+        Combined(final Collection<? extends Project> projects) {
+            this.projects = projects;
+        }
+
+        @Override
+        public Collection<ProductionClass> productionClasses() {
+            return this.projects.stream()
+                .map(Project::productionClasses)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        }
+
+        @Override
+        public Collection<TestClass> testClasses() {
+            return this.projects.stream()
+                .map(Project::testClasses)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
         }
     }
 }
