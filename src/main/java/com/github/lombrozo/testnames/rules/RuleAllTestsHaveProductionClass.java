@@ -128,7 +128,9 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
         final String plain;
         if (name.endsWith(".java")) {
             plain = String.format("%sTest.java", name.substring(0, name.length() - 5));
-        } else {
+        }else if (name.endsWith(".class")){
+            plain = String.format("%sTest.class", name.substring(0, name.length() - 6));
+        }else {
             plain = String.format("%sTest", name);
         }
         return RuleAllTestsHaveProductionClass.clean(plain);
