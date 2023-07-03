@@ -85,6 +85,20 @@ final class RuleAllTestsHaveProductionClassTest {
     }
 
     @Test
+    void checksThatClassHasCorrespondingProductionClassWithDifferentExtensions() {
+        MatcherAssert.assertThat(
+            "Should not have complaints, because all tests have corresponding production class, even if they have different extensions",
+            new RuleAllTestsHaveProductionClass(
+                new Project.Fake(
+                    new ProductionClass.Fake("ComplaintClass.java"),
+                    new TestClass.Fake("ComplaintClassTest.class")
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
     void checksThatDoesNotHaveCorrespondingProductionClass() {
         final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(new TestClass.Fake())

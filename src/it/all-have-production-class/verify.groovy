@@ -23,7 +23,7 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  'Test CorrectTest.java doesn\'t have corresponding production class.',
+  'Test CorrectTest doesn\'t have corresponding production class.',
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 [
   'SuppressedTest.java',

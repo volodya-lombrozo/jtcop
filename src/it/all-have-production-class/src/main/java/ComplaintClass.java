@@ -22,11 +22,5 @@
  * SOFTWARE.
  */
 
-import org.junit.jupiter.api.Test;
-
 public final class ComplaintClass {
-
-    @Test
-    void checksSomethingImportant() {}
-
 }
