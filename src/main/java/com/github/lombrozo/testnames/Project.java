@@ -66,6 +66,13 @@ public interface Project {
 
         /**
          * Ctor.
+         */
+        public Fake() {
+            this(new ProductionClass.Fake());
+        }
+
+        /**
+         * Ctor.
          * @param classes All production classes.
          */
         public Fake(final ProductionClass... classes) {
