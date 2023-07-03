@@ -24,6 +24,7 @@
 package com.github.lombrozo.testnames.bytecode;
 
 import com.github.lombrozo.testnames.ProductionClass;
+import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.TestClass;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -88,6 +89,30 @@ class BytecodeProjectTest {
             ),
             name,
             Matchers.equalTo(expected)
+        );
+    }
+
+    @Test
+    void handlesAbsentFolder(@TempDir Path temp) {
+        final Path absent = temp.resolve("absent");
+        final Project project = new BytecodeProject(absent, absent);
+        final Collection<ProductionClass> prod = project.productionClasses();
+        final Collection<TestClass> tests = project.testClasses();
+        MatcherAssert.assertThat(
+            String.format(
+                "Project with absent folder should return empty production classes, but was %s",
+                prod
+            ),
+            prod,
+            Matchers.empty()
+        );
+        MatcherAssert.assertThat(
+            String.format(
+                "Project with absent folder should return empty test classes, but was %s",
+                tests
+            ),
+            tests,
+            Matchers.empty()
         );
     }
 }
