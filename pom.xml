@@ -263,6 +263,9 @@ SOFTWARE.
                 <exclude>
                   com/github/lombrozo/testnames/rules/ml/*
                 </exclude>
+                <exclude>
+                  it/**
+                </exclude>
               </excludes>
             </configuration>
             <executions>
