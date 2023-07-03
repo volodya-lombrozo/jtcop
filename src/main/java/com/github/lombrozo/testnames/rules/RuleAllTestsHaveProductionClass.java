@@ -78,7 +78,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
             .filter(clazz -> RuleAllTestsHaveProductionClass.isNotPackageInfo(clazz.name()))
             .collect(
                 Collectors.toMap(
-                    RuleAllTestsHaveProductionClass::correspondingTestName,
+                    RuleAllTestsHaveProductionClass::correspondingTest,
                     Function.identity(),
                     (first, second) -> first
                 )
@@ -108,32 +108,31 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
     }
 
     /**
+     * Returns the name of the test class that corresponds to the production class.
+     * @param clazz Production class.
+     * @return The name of the test class that corresponds to the production class.
+     */
+    private static String correspondingTest(final ProductionClass clazz) {
+        return String.format("%sTest", RuleAllTestsHaveProductionClass.clean(clazz.name()));
+    }
+
+    /**
      * Removes that not important part of the name.
      * @param original The original name.
      * @return The cleaned name.
      */
-    private static String clean(final CharSequence original) {
-        return RuleAllTestsHaveProductionClass.DOLLAR.matcher(
-            RuleAllTestsHaveProductionClass.UNDERSCORE.matcher(original).replaceAll("")
-        ).replaceAll("");
-    }
-
-    /**
-     * Returns the name of the test class that corresponds to the production class.
-     * @param klass The production class.
-     * @return The name of the test class.
-     */
-    private static String correspondingTestName(final ProductionClass klass) {
-        final String name = klass.name();
+    private static String clean(final String original) {
         final String plain;
-        if (name.endsWith(".java")) {
-            plain = String.format("%sTest.java", name.substring(0, name.length() - 5));
-        }else if (name.endsWith(".class")){
-            plain = String.format("%sTest.class", name.substring(0, name.length() - 6));
-        }else {
-            plain = String.format("%sTest", name);
+        if (original.endsWith(".java")) {
+            plain = original.substring(0, original.length() - 5);
+        } else if (original.endsWith(".class")) {
+            plain = original.substring(0, original.length() - 6);
+        } else {
+            plain = original;
         }
-        return RuleAllTestsHaveProductionClass.clean(plain);
+        return RuleAllTestsHaveProductionClass.DOLLAR.matcher(
+            RuleAllTestsHaveProductionClass.UNDERSCORE.matcher(plain).replaceAll("")
+        ).replaceAll("");
     }
 
     /**
