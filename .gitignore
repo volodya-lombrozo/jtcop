@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 !src/test/resources/generated/*.class
+!src/it/all-have-production-class/target/**/*.class
 
 # Log file
 *.log
@@ -29,3 +30,4 @@ hs_err_pid*
 
 # Maven
 target
+!src/it/all-have-production-class/target
