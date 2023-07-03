@@ -93,7 +93,7 @@ class BytecodeProjectTest {
     }
 
     @Test
-    void handlesAbsentFolder(@TempDir Path temp) {
+    void handlesAbsentFolder(@TempDir final Path temp) {
         final Path absent = temp.resolve("absent");
         final Project project = new BytecodeProject(absent, absent);
         final Collection<ProductionClass> prod = project.productionClasses();
