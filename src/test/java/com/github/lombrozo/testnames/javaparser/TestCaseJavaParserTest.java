@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import org.hamcrest.MatcherAssert;
@@ -45,6 +46,7 @@ class TestCaseJavaParserTest {
     void convertsToString() {
         final String name = "name";
         MatcherAssert.assertThat(
+            "Test case should be converted to string which contains its name",
             new TestCaseJavaParser(name).toString(),
             Matchers.stringContainsInOrder(
                 String.format(
@@ -59,6 +61,7 @@ class TestCaseJavaParserTest {
     void hasTheSameHashCode() {
         final String name = "nm";
         MatcherAssert.assertThat(
+            "Test cases with the same name should have the same hash code",
             new TestCaseJavaParser(name).hashCode(),
             Matchers.is(new TestCaseJavaParser(name).hashCode())
         );
@@ -68,6 +71,7 @@ class TestCaseJavaParserTest {
     void equalsIfBothTheSame() {
         final String name = "nme";
         MatcherAssert.assertThat(
+            "Test cases with the same name should be equal",
             new TestCaseJavaParser(name),
             Matchers.equalTo(new TestCaseJavaParser(name))
         );
@@ -75,44 +79,60 @@ class TestCaseJavaParserTest {
 
     @Test
     void parsesSuppressedAnnotations() {
+        final String test = "cheksTest";
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
-            .testCase("cheksTest")
+            .testCase(test)
             .suppressed();
-        MatcherAssert.assertThat(suppressed, Matchers.hasSize(2));
-        MatcherAssert.assertThat(
-            suppressed,
-            Matchers.hasItems(RuleNotContainsTestWord.NAME, RuleNotCamelCase.NAME)
+        final String[] expected = {RuleNotContainsTestWord.NAME, RuleNotCamelCase.NAME};
+        final String msg = String.format(
+            "The '%s' method has to contain %d suppressed annotations %s, but was %s",
+            test, expected.length,
+            Arrays.toString(expected),
+            suppressed
         );
+        MatcherAssert.assertThat(msg, suppressed, Matchers.hasSize(2));
+        MatcherAssert.assertThat(msg, suppressed, Matchers.hasItems(expected));
     }
 
     @Test
     void parsesSingleSuppressedAnnotation() {
+        final String test = "checksSingle";
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
-            .testCase("checksSingle")
+            .testCase(test)
             .suppressed();
-        MatcherAssert.assertThat(suppressed, Matchers.hasSize(1));
-        MatcherAssert.assertThat(
-            suppressed,
-            Matchers.hasItems(RuleNotContainsTestWord.NAME)
+        final String expected = RuleNotContainsTestWord.NAME;
+        final String msg = String.format(
+            "The '%s' method has to contain single suppressed annotation '%s', but was %s",
+            test,
+            expected,
+            suppressed
         );
+        MatcherAssert.assertThat(msg, suppressed, Matchers.hasSize(1));
+        MatcherAssert.assertThat(msg, suppressed, Matchers.hasItems(expected));
     }
 
     @Test
     void parsesSuppressedAnnotationsForClassAndMethodTogether() {
+        final String test = "cheksTest";
         final Collection<String> suppressed = JavaTestClasses.MANY_SUPPRESSED
-            .testCase("cheksTest")
+            .testCase(test)
             .suppressed();
-        MatcherAssert.assertThat(suppressed, Matchers.hasSize(5));
-        MatcherAssert.assertThat(
-            suppressed,
-            Matchers.hasItems(
-                RuleAllTestsHaveProductionClass.NAME,
-                RuleNotContainsTestWord.NAME,
-                RuleNotCamelCase.NAME,
-                "AnotherRule",
-                "UnknownRule"
-            )
+        final String[] expected = {
+            RuleAllTestsHaveProductionClass.NAME,
+            RuleNotContainsTestWord.NAME,
+            RuleNotCamelCase.NAME,
+            "AnotherRule",
+            "UnknownRule",
+        };
+        final String msg = String.format(
+            "The '%s' method has to contain %d suppressed annotations %s, but was %s",
+            test,
+            expected.length,
+            Arrays.toString(expected),
+            suppressed
         );
+        MatcherAssert.assertThat(msg, suppressed, Matchers.hasSize(5));
+        MatcherAssert.assertThat(msg, suppressed, Matchers.hasItems(expected));
     }
 
     @Test
