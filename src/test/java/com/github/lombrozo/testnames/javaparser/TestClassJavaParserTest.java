@@ -29,7 +29,9 @@ import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.cactoos.io.InputStreamOf;
 import org.hamcrest.MatcherAssert;
@@ -47,44 +49,66 @@ final class TestClassJavaParserTest {
 
     @Test
     void getsNames() {
+        final String[] expected = {"creates", "removes", "updates"};
+        final Set<String> all = JavaTestClasses.SIMPLE.toTestClass()
+            .all()
+            .stream()
+            .map(TestCase::name)
+            .collect(Collectors.toSet());
         MatcherAssert.assertThat(
-            JavaTestClasses.SIMPLE.toTestClass()
-                .all()
-                .stream()
-                .map(TestCase::name)
-                .collect(Collectors.toSet()),
-            Matchers.containsInAnyOrder(
-                "creates", "removes", "updates"
-            )
+            String.format(
+                "We expected that test class will contain only three test cases: %s, but was %s",
+                Arrays.toString(expected),
+                all
+            ),
+            all,
+            Matchers.containsInAnyOrder(expected)
         );
     }
 
     @Test
     void returnsEmptyListIfItDoesNotHaveAnyCases() {
+        final Collection<TestCase> all = JavaTestClasses.WITHOUT_TESTS.toTestClass().all();
         MatcherAssert.assertThat(
-            JavaTestClasses.WITHOUT_TESTS.toTestClass().all(),
+            String.format(
+                "We expected that test class %s will not contain any test cases, but was %s",
+                JavaTestClasses.WITHOUT_TESTS,
+                all
+            ),
+            all,
             Matchers.empty()
         );
     }
 
     @Test
     void getsNamesFromParameterizedCase() {
+        final String cases = "checksCases";
         MatcherAssert.assertThat(
+            String.format(
+                "We expected that test class %s will contain only one test case %s",
+                JavaTestClasses.PARAMETERIZED,
+                cases
+            ),
             JavaTestClasses.PARAMETERIZED
                 .toTestClass()
                 .all()
                 .stream()
                 .map(TestCase::name)
                 .collect(Collectors.toSet()),
-            Matchers.containsInAnyOrder("checksCases")
+            Matchers.containsInAnyOrder(cases)
         );
     }
 
     @Test
     void throwsExceptionIfFileNotFound(@TempDir final Path temp) {
+        final Path test = temp.resolve("TestNotFound.java");
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new TestClassJavaParser(temp.resolve("TestNotFound.java")).all()
+            () -> new TestClassJavaParser(test).all(),
+            String.format(
+                "We expected that exception will be thrown, because file %s not found",
+                test
+            )
         );
     }
 
@@ -92,7 +116,11 @@ final class TestClassJavaParserTest {
     void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new TestClassJavaParser(temp, new InputStreamOf("Not Java")).all()
+            () -> new TestClassJavaParser(temp, new InputStreamOf("Not Java")).all(),
+            String.format(
+                "We expected that exception will be thrown, because file %s is not Java",
+                temp
+            )
         );
     }
 
@@ -157,8 +185,17 @@ final class TestClassJavaParserTest {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_ANNOTATION
             .toTestClass()
             .suppressed();
-        MatcherAssert.assertThat(all, Matchers.hasSize(1));
-        MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
+        final String expected = RuleAllTestsHaveProductionClass.NAME;
+        MatcherAssert.assertThat(
+            String.format("Expected only %s rule, but was %s", expected, all),
+            all,
+            Matchers.hasSize(1)
+        );
+        MatcherAssert.assertThat(
+            String.format("Expected exactly %s rule, but was %s", expected, all),
+            all,
+            Matchers.hasItem(expected)
+        );
     }
 
     @Test
@@ -166,7 +203,16 @@ final class TestClassJavaParserTest {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_INTERFACE
             .toTestClass()
             .suppressed();
-        MatcherAssert.assertThat(all, Matchers.hasSize(1));
-        MatcherAssert.assertThat(all, Matchers.hasItem(RuleAllTestsHaveProductionClass.NAME));
+        final String expected = RuleAllTestsHaveProductionClass.NAME;
+        MatcherAssert.assertThat(
+            String.format("Expected only %s rule, but was %s", expected, all),
+            all,
+            Matchers.hasSize(1)
+        );
+        MatcherAssert.assertThat(
+            String.format("Expected exactly %s rule, but was %s", expected, all),
+            all,
+            Matchers.hasItem(expected)
+        );
     }
 }

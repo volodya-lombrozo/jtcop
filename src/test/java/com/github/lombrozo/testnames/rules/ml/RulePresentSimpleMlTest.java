@@ -81,6 +81,7 @@ class RulePresentSimpleMlTest {
     @ParameterizedTest
     void checksCorrectNames(final String name) {
         MatcherAssert.assertThat(
+            String.format("Name '%s' has to be correct", name),
             new RulePresentSimpleMl(
                 RulePresentSimpleMlTest.model,
                 new TestCase.Fake(name)
@@ -105,6 +106,7 @@ class RulePresentSimpleMlTest {
     @ParameterizedTest
     void checksWrongNames(final String name) {
         MatcherAssert.assertThat(
+            String.format("Name '%s' has to be incorrect", name),
             new RulePresentSimpleMl(
                 RulePresentSimpleMlTest.model,
                 new TestCase.Fake(name)
