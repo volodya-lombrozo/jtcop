@@ -65,6 +65,13 @@ public interface TestClass {
     Collection<String> suppressed();
 
     /**
+     * The parents of test class.
+     * All classes which declared as interfaces or parent classes of the test class.
+     * @return The parents of test class.
+     */
+    Collection<Class<?>> parents();
+
+    /**
      * The fake test class.
      *
      * @since 0.2
@@ -155,6 +162,11 @@ public interface TestClass {
         @Override
         public Collection<String> suppressed() {
             return Collections.unmodifiableList(this.suppressed);
+        }
+
+        @Override
+        public Collection<Class<?>> parents() {
+            return Collections.emptyList();
         }
     }
 }

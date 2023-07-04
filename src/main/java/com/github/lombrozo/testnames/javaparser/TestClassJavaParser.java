@@ -179,6 +179,11 @@ public final class TestClassJavaParser implements TestClass {
         ).collect(Collectors.toSet());
     }
 
+    @Override
+    public Collection<Class<?>> parents() {
+        return Collections.emptyList();
+    }
+
     /**
      * Parse Java class.
      * @param path Path to the class

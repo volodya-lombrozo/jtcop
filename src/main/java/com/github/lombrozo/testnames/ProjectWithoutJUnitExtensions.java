@@ -21,67 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.bytecode;
 
-import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.TestClass;
-import java.nio.file.Path;
+package com.github.lombrozo.testnames;
+
 import java.util.Collection;
-import java.util.Collections;
-import javassist.CtClass;
 
-/**
- * Bytecode test class.
- *
- * @since 0.1.17
- */
-final class BytecodeTestClass implements TestClass {
+public class ProjectWithoutJUnitExtensions implements Project {
 
-    /**
-     * Path to the test class.
-     */
-    private final Path file;
+    private final Project original;
 
-    /**
-     * Pared class.
-     */
-    private final CtClass klass;
-
-    /**
-     * Constructor.
-     * @param path Path to the test class.
-     * @param clazz Pared class.
-     */
-    BytecodeTestClass(
-        final Path path,
-        final CtClass clazz
-    ) {
-        this.file = path;
-        this.klass = clazz;
+    public ProjectWithoutJUnitExtensions(final Project original) {
+        this.original = original;
     }
 
     @Override
-    public String name() {
-        return this.klass.getSimpleName();
+    public Collection<ProductionClass> productionClasses() {
+        return this.original.productionClasses();
     }
 
     @Override
-    public Collection<TestCase> all() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Path path() {
-        return this.file;
-    }
-
-    @Override
-    public Collection<String> suppressed() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public Collection<Class<?>> parents() {
-        return Collections.emptyList();
+    public Collection<TestClass> testClasses() {
+        return this.original.testClasses();
     }
 }
