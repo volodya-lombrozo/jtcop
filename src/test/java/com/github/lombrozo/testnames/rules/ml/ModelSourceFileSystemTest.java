@@ -46,6 +46,10 @@ class ModelSourceFileSystemTest {
     void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
         final Path path = temp.resolve("model.bin");
         new ModelSourceInternet().model().serialize(path);
-        MatcherAssert.assertThat(new ModelSourceFileSystem(path).model(), Matchers.notNullValue());
+        MatcherAssert.assertThat(
+            String.format("Model from %s is null", path),
+            new ModelSourceFileSystem(path).model(),
+            Matchers.notNullValue()
+        );
     }
 }

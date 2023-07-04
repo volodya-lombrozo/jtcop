@@ -106,7 +106,11 @@ final class ProjectJavaParserTest {
             temp,
             Arrays.asList(exclusions)
         ).testClasses();
-        MatcherAssert.assertThat(classes, Matchers.hasSize(1));
+        MatcherAssert.assertThat(
+            String.format("Project has to have exactly one test class, but was %d", classes.size()),
+            classes,
+            Matchers.hasSize(1)
+        );
         final Set<String> clevel = classes.stream()
             .map(TestClass::suppressed)
             .flatMap(Collection::stream)
