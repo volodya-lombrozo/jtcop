@@ -25,6 +25,8 @@
 package com.github.lombrozo.testnames;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * The project without JUnit extensions.
@@ -53,6 +55,23 @@ public class ProjectWithoutJUnitExtensions implements Project {
 
     @Override
     public Collection<TestClass> testClasses() {
-        return this.original.testClasses();
+        return Collections.unmodifiableCollection(
+            this.original.testClasses().stream()
+                .filter(this::isNotJUnitExtension)
+                .collect(Collectors.toList())
+        );
+    }
+
+    /**
+     * Is JUnit extension.
+     * @param testClass Test class.
+     * @return True if JUnit extension.
+     */
+    private boolean isNotJUnitExtension(final TestClass testClass) {
+        return testClass.parents()
+            .stream()
+            .map(Class::getPackage)
+            .map(Package::getName)
+            .noneMatch(name -> name.startsWith("org.junit.jupiter.api.extension"));
     }
 }

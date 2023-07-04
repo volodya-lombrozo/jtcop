@@ -181,7 +181,7 @@ public final class TestClassJavaParser implements TestClass {
 
     @Override
     public Collection<Class<?>> parents() {
-        return Collections.emptyList();
+        return this.unit.value().parents();
     }
 
     /**

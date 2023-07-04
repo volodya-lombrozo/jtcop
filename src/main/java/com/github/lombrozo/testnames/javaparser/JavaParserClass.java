@@ -34,6 +34,8 @@ import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Predicate;
@@ -130,6 +132,15 @@ final class JavaParserClass {
     boolean isPackageInfo() {
         return this.klass instanceof ClassOrInterfaceDeclaration
             && "empty".equals(this.cast().getNameAsString());
+    }
+
+    /**
+     * Returns all parents of the class.
+     *
+     * @return All parents of the class.
+     */
+    Collection<Class<?>> parents() {
+        return Collections.emptyList();
     }
 
     /**
