@@ -21,25 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-String log = new File(basedir, 'build.log').text;
-[
-  'Test CorrectTest doesn\'t have corresponding production class.',
-].each { assert log.contains(it): "Log doesn't contain ['$it']" }
-[
-  'SuppressedTest doesn\'t have corresponding production class',
-  'SuppressedInterface',
-  'SuppressedAnnotation',
-  'MyAnnotation',
-  'MyInterface',
-  'package-info',
-  'ComplaintClass',
-  'Cop',
-  'RuleNameTest doesn\'t have corresponding production class',
-  'JUnitAfterAllCallback',
-  'JUnitAfterEachCallback',
-  'JUnitBeforeAllCallback',
-  'JUnitBeforeEachCallback',
-  'JUnitCondition',
-  'JUnitParameterResolver',
-].each { assert !log.contains(it): "Log contains ['$it']" }
-true
+package com.github.lombrozo.testnames.rules;
+
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
+
+public class JUnitParameterResolver implements ParameterResolver {
+    @Override
+    public boolean supportsParameter(final ParameterContext parameterContext,
+        final ExtensionContext extensionContext
+    ) throws ParameterResolutionException {
+        return false;
+    }
+
+    @Override
+    public Object resolveParameter(final ParameterContext parameterContext,
+        final ExtensionContext extensionContext
+    ) throws ParameterResolutionException {
+        return null;
+    }
+}

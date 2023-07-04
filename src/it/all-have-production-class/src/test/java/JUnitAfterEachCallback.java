@@ -21,25 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-String log = new File(basedir, 'build.log').text;
-[
-  'Test CorrectTest doesn\'t have corresponding production class.',
-].each { assert log.contains(it): "Log doesn't contain ['$it']" }
-[
-  'SuppressedTest doesn\'t have corresponding production class',
-  'SuppressedInterface',
-  'SuppressedAnnotation',
-  'MyAnnotation',
-  'MyInterface',
-  'package-info',
-  'ComplaintClass',
-  'Cop',
-  'RuleNameTest doesn\'t have corresponding production class',
-  'JUnitAfterAllCallback',
-  'JUnitAfterEachCallback',
-  'JUnitBeforeAllCallback',
-  'JUnitBeforeEachCallback',
-  'JUnitCondition',
-  'JUnitParameterResolver',
-].each { assert !log.contains(it): "Log contains ['$it']" }
-true
+package com.github.lombrozo.testnames.rules;
+
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
+public class JUnitAfterEachCallback implements AfterEachCallback {
+    @Override
+    public void afterEach(final ExtensionContext extensionContext) {
+
+    }
+}
