@@ -26,11 +26,23 @@ package com.github.lombrozo.testnames;
 
 import java.util.Collection;
 
+/**
+ * The project without JUnit extensions.
+ *
+ * @since 0.1.17
+ */
 public class ProjectWithoutJUnitExtensions implements Project {
 
+    /**
+     * Original project.
+     */
     private final Project original;
 
-    public ProjectWithoutJUnitExtensions(final Project original) {
+    /**
+     * Constructor.
+     * @param original Original project.
+     */
+    ProjectWithoutJUnitExtensions(final Project original) {
         this.original = original;
     }
 

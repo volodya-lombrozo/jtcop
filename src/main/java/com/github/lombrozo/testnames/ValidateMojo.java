@@ -88,15 +88,17 @@ public final class ValidateMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoFailureException {
         final Collection<Complaint> complaints = new Cop(
-            new Project.Combined(
-                new BytecodeProject(this.sources, this.tests),
-                new ProjectJavaParser(
-                    Paths.get(this.project.getCompileSourceRoots().get(0)),
-                    Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                    Arrays.stream(this.exclusions)
-                        .map(RuleName::new)
-                        .map(RuleName::withoutPrefix)
-                        .collect(Collectors.toSet())
+            new ProjectWithoutJUnitExtensions(
+                new Project.Combined(
+                    new BytecodeProject(this.sources, this.tests),
+                    new ProjectJavaParser(
+                        Paths.get(this.project.getCompileSourceRoots().get(0)),
+                        Paths.get(this.project.getTestCompileSourceRoots().get(0)),
+                        Arrays.stream(this.exclusions)
+                            .map(RuleName::new)
+                            .map(RuleName::withoutPrefix)
+                            .collect(Collectors.toSet())
+                    )
                 )
             )
         ).inspection();

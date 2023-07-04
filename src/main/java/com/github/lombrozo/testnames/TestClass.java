@@ -80,6 +80,11 @@ public interface TestClass {
     final class Fake implements TestClass {
 
         /**
+         * The default name of the Fake test class.
+         */
+        private static final String DEFAULT_NAME = "FakeClassTest";
+
+        /**
          * The name of test class.
          */
         private final String name;
@@ -95,11 +100,36 @@ public interface TestClass {
         private final List<String> suppressed;
 
         /**
+         * The parents of test class.
+         */
+        private final Collection<Class<?>> parents;
+
+        /**
          * Primary ctor.
+         */
+        public Fake() {
+            this(Fake.DEFAULT_NAME, Collections.emptyList(), Collections.emptyList());
+        }
+
+        /**
+         * Constructor.
          * @param all All cases
          */
         public Fake(final TestCase... all) {
-            this("FakeClassTest", all);
+            this(Fake.DEFAULT_NAME, all);
+        }
+
+        /**
+         * Primary ctor.
+         * @param parents The parents of test class
+         */
+        public Fake(final Class<?>... parents) {
+            this(
+                Fake.DEFAULT_NAME,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                Arrays.asList(parents)
+            );
         }
 
         /**
@@ -129,7 +159,7 @@ public interface TestClass {
         }
 
         /**
-         * Main ctor.
+         * Constructor.
          * @param name The name of test class
          * @param all All cases
          * @param suppressed All suppressed rules
@@ -139,9 +169,26 @@ public interface TestClass {
             final Collection<? extends TestCase> all,
             final List<String> suppressed
         ) {
+            this(name, all, suppressed, Collections.emptyList());
+        }
+
+        /**
+         * Main ctor.
+         * @param name The name of test class
+         * @param all All cases
+         * @param suppressed All suppressed rules
+         * @param parents The parents of test class
+         */
+        Fake(
+            final String name,
+            final Collection<? extends TestCase> all,
+            final List<String> suppressed,
+            final Collection<Class<?>> parents
+        ) {
             this.name = name;
             this.all = all;
             this.suppressed = suppressed;
+            this.parents = parents;
         }
 
         @Override
@@ -166,7 +213,7 @@ public interface TestClass {
 
         @Override
         public Collection<Class<?>> parents() {
-            return Collections.emptyList();
+            return Collections.unmodifiableCollection(this.parents);
         }
     }
 }
