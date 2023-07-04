@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -185,6 +186,33 @@ final class ProjectJavaParserTest {
             String.format("Project has to ignore interfaces, but was: %s", classes),
             classes,
             Matchers.empty()
+        );
+    }
+
+    @Test
+    void returnsClassParents(@TempDir final Path temp) throws IOException {
+        Files.copy(
+            JavaTestClasses.JUNIT_CALLBACK.inputStream(),
+            temp.resolve("JUnitCallback.java")
+        );
+        final Collection<TestClass> classes = new ProjectJavaParser(temp, temp).testClasses();
+        MatcherAssert.assertThat(
+            String.format("Project has to return exactly one class, but was: %s", classes),
+            classes,
+            Matchers.hasSize(1)
+        );
+        final Collection<Class<?>> parents = classes.iterator().next().parents();
+        MatcherAssert.assertThat(
+            String.format("Class has to have exactly one parent, but was: %s", parents),
+            parents,
+            Matchers.hasSize(1)
+        );
+        final Class<AfterAllCallback> expected = AfterAllCallback.class;
+        final Class<?> actual = parents.iterator().next();
+        MatcherAssert.assertThat(
+            String.format("Parent has to be %s, but was: %s", expected, actual),
+            actual,
+            Matchers.equalTo(expected)
         );
     }
 }

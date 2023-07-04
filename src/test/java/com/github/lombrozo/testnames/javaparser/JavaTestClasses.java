@@ -73,6 +73,11 @@ enum JavaTestClasses {
     SUPPRESSED_INTERFACE("SuppressedInterface.java"),
 
     /**
+     * Java class which implements JUnit extension interface.
+     */
+    JUNIT_CALLBACK("JUnitAfterAllCallback.java"),
+
+    /**
      * Test class with many suppressed methods and class-level suppressed annotations.
      */
     MANY_SUPPRESSED("TestWithLotsOfSuppressed.java"),
