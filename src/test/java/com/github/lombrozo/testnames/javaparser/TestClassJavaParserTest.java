@@ -126,8 +126,14 @@ final class TestClassJavaParserTest {
 
     @Test
     void returnsEmptyListOfSuppressedRules() {
+        final Collection<String> suppressed = JavaTestClasses.SIMPLE.toTestClass().suppressed();
         MatcherAssert.assertThat(
-            JavaTestClasses.SIMPLE.toTestClass().suppressed(),
+            String.format(
+                "We expected that test class %s will not contain any suppressed rules, but was %s",
+                JavaTestClasses.SIMPLE,
+                suppressed
+            ),
+            suppressed,
             Matchers.empty()
         );
     }
@@ -137,8 +143,14 @@ final class TestClassJavaParserTest {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_CLASS
             .toTestClass()
             .suppressed();
-        MatcherAssert.assertThat(all, Matchers.hasSize(1));
+        final String msg = String.format(
+            "We expected that test class %s will contain only one suppressed rule %s",
+            JavaTestClasses.SUPPRESSED_CLASS,
+            RuleAllTestsHaveProductionClass.NAME
+        );
+        MatcherAssert.assertThat(msg, all, Matchers.hasSize(1));
         MatcherAssert.assertThat(
+            msg,
             all.iterator().next(),
             Matchers.equalTo(RuleAllTestsHaveProductionClass.NAME)
         );
@@ -149,35 +161,43 @@ final class TestClassJavaParserTest {
         final Collection<String> all = JavaTestClasses.MANY_SUPPRESSED
             .toTestClass()
             .suppressed();
-        MatcherAssert.assertThat(all, Matchers.hasSize(3));
-        MatcherAssert.assertThat(
-            all,
-            Matchers.hasItems(
-                RuleAllTestsHaveProductionClass.NAME,
-                RuleNotCamelCase.NAME,
-                RuleNotContainsTestWord.NAME
-            )
+        final String[] expected = {
+            RuleAllTestsHaveProductionClass.NAME,
+            RuleNotCamelCase.NAME,
+            RuleNotContainsTestWord.NAME,
+        };
+        final String msg = String.format(
+            "We expected that test class %s will contain only three suppressed rules: %s, but was %s",
+            JavaTestClasses.MANY_SUPPRESSED,
+            Arrays.toString(expected),
+            all
         );
+        MatcherAssert.assertThat(msg, all, Matchers.hasSize(3));
+        MatcherAssert.assertThat(msg, all, Matchers.hasItems(expected));
     }
 
     @Test
     void excludesProjectSuppressedRules() {
         final String custom = "Custom";
         final String project = "Project";
+        final String[] expected = {
+            custom,
+            project,
+            RuleAllTestsHaveProductionClass.NAME,
+            RuleNotCamelCase.NAME,
+            RuleNotContainsTestWord.NAME,
+        };
         final Collection<String> all = JavaTestClasses.MANY_SUPPRESSED
             .toTestClass(custom, project)
             .suppressed();
-        MatcherAssert.assertThat(all, Matchers.hasSize(5));
-        MatcherAssert.assertThat(
-            all,
-            Matchers.hasItems(
-                RuleAllTestsHaveProductionClass.NAME,
-                RuleNotCamelCase.NAME,
-                RuleNotContainsTestWord.NAME,
-                custom,
-                project
-            )
+        final String msg = String.format(
+            "We expected that test class %s will contain exactly five suppressed rules: %s, but was %s",
+            JavaTestClasses.MANY_SUPPRESSED,
+            Arrays.toString(expected),
+            all
         );
+        MatcherAssert.assertThat(msg, all, Matchers.hasSize(5));
+        MatcherAssert.assertThat(msg, all, Matchers.hasItems(expected));
     }
 
     @Test
@@ -186,15 +206,12 @@ final class TestClassJavaParserTest {
             .toTestClass()
             .suppressed();
         final String expected = RuleAllTestsHaveProductionClass.NAME;
+        final String msg = String.format("Expected exactly %s rule, but was %s", expected, all);
         MatcherAssert.assertThat(
-            String.format("Expected only %s rule, but was %s", expected, all),
-            all,
-            Matchers.hasSize(1)
+            msg, all, Matchers.hasSize(1)
         );
         MatcherAssert.assertThat(
-            String.format("Expected exactly %s rule, but was %s", expected, all),
-            all,
-            Matchers.hasItem(expected)
+            msg, all, Matchers.hasItem(expected)
         );
     }
 
@@ -204,15 +221,8 @@ final class TestClassJavaParserTest {
             .toTestClass()
             .suppressed();
         final String expected = RuleAllTestsHaveProductionClass.NAME;
-        MatcherAssert.assertThat(
-            String.format("Expected only %s rule, but was %s", expected, all),
-            all,
-            Matchers.hasSize(1)
-        );
-        MatcherAssert.assertThat(
-            String.format("Expected exactly %s rule, but was %s", expected, all),
-            all,
-            Matchers.hasItem(expected)
-        );
+        final String msg = String.format("Expected only %s rule, but was %s", expected, all);
+        MatcherAssert.assertThat(msg, all, Matchers.hasSize(1));
+        MatcherAssert.assertThat(msg, all, Matchers.hasItem(expected));
     }
 }
