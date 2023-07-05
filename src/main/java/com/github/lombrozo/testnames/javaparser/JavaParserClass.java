@@ -39,6 +39,7 @@ import com.github.javaparser.metamodel.ClassOrInterfaceTypeMetaModel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -148,35 +149,34 @@ final class JavaParserClass {
      * TODO!
      */
     Collection<Class<?>> parents() {
-        final ClassOrInterfaceDeclaration cast = cast();
+        final ClassOrInterfaceDeclaration cast = this.cast();
+        final Collection<String> all = imports();
+        final List<Class<?>> result = new ArrayList<>();
         for (final ClassOrInterfaceType type : cast.getImplementedTypes()) {
             if (type.isClassOrInterfaceType()) {
-// Classloader. load
-//                Javaparser klass.parent.imports
-                final Optional<Node> parentNode = cast.getParentNode();
-                if (parentNode.isPresent()) {
-                    final Node node = parentNode.get();
-                    final CompilationUnit unit = (CompilationUnit) node;
-                    final NodeList<ImportDeclaration> imports = unit.getImports();
-                    final List<Class<?>> res = imports.stream()
-                        .map(ImportDeclaration::getNameAsString)
-                        .filter(s -> s.contains(type.getNameAsString()))
-                        .map(
-                            imp ->
-                            {
-                                try {
-                                    return this.getClass().getClassLoader().loadClass(
-                                        imp);
-                                } catch (final ClassNotFoundException ex) {
-                                    throw new RuntimeException(ex);
-                                }
-                            }
-                        ).collect(Collectors.toList());
-                    return res;
+                final String name = type.getNameWithScope();
+                try {
+                    result.add(this.getClass().getClassLoader().loadClass(
+                        all.stream().filter(s -> s.contains(name)).findFirst().orElse(name)));
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         }
-        return Collections.emptyList();
+        return result;
+    }
+
+    private Collection<String> imports() {
+        return this.cast()
+            .getParentNode()
+            .map(
+                node -> ((CompilationUnit) node)
+                    .getImports()
+                    .stream()
+                    .map(ImportDeclaration::getNameAsString)
+                    .collect(Collectors.toList())
+            )
+            .orElse(Collections.emptyList());
     }
 
     /**

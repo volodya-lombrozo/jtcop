@@ -38,6 +38,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.ExecutionCondition;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -234,7 +235,7 @@ final class ProjectJavaParserTest {
             parents,
             Matchers.hasSize(1)
         );
-        final Class<AfterAllCallback> expected = AfterAllCallback.class;
+        final Class<ExecutionCondition> expected = ExecutionCondition.class;
         final Class<?> actual = parents.iterator().next();
         MatcherAssert.assertThat(
             String.format("Parent has to be %s, but was: %s", expected, actual),
