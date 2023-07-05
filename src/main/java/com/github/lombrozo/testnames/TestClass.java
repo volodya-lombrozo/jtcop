@@ -68,6 +68,10 @@ public interface TestClass {
      * The parents of test class.
      * All classes which declared as interfaces or parent classes of the test class.
      * @return The parents of test class.
+     * @todo #193:30min Replace with isJUnitExtension method.
+     *  The method isJUnitExtension should be implemented in TestClass interface instead of
+     *  parents() method. The method should return true if the test class is a JUnit extension.
+     *  By this we will increase the encapsulation of the implementations of TestClass interface.
      */
     Collection<Class<?>> parents();
 
