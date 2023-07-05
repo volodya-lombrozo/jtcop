@@ -190,10 +190,37 @@ final class ProjectJavaParserTest {
     }
 
     @Test
-    void returnsClassParents(@TempDir final Path temp) throws IOException {
+    void returnsClassParentsForJUnitCallback(@TempDir final Path temp) throws IOException {
         Files.copy(
             JavaTestClasses.JUNIT_CALLBACK.inputStream(),
             temp.resolve("JUnitCallback.java")
+        );
+        final Collection<TestClass> classes = new ProjectJavaParser(temp, temp).testClasses();
+        MatcherAssert.assertThat(
+            String.format("Project has to return exactly one class, but was: %s", classes),
+            classes,
+            Matchers.hasSize(1)
+        );
+        final Collection<Class<?>> parents = classes.iterator().next().parents();
+        MatcherAssert.assertThat(
+            String.format("Class has to have exactly one parent, but was: %s", parents),
+            parents,
+            Matchers.hasSize(1)
+        );
+        final Class<AfterAllCallback> expected = AfterAllCallback.class;
+        final Class<?> actual = parents.iterator().next();
+        MatcherAssert.assertThat(
+            String.format("Parent has to be %s, but was: %s", expected, actual),
+            actual,
+            Matchers.equalTo(expected)
+        );
+    }
+
+    @Test
+    void returnsClassParentsForJUnitExtension(@TempDir final Path temp) throws IOException {
+        Files.copy(
+            JavaTestClasses.JUNIT_CONDITION.inputStream(),
+            temp.resolve("JUnitCondition.java")
         );
         final Collection<TestClass> classes = new ProjectJavaParser(temp, temp).testClasses();
         MatcherAssert.assertThat(
