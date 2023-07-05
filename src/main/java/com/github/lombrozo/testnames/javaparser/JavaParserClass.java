@@ -25,18 +25,25 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.metamodel.ClassOrInterfaceTypeMetaModel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -138,8 +145,37 @@ final class JavaParserClass {
      * Returns all parents of the class.
      *
      * @return All parents of the class.
+     * TODO!
      */
     Collection<Class<?>> parents() {
+        final ClassOrInterfaceDeclaration cast = cast();
+        for (final ClassOrInterfaceType type : cast.getImplementedTypes()) {
+            if (type.isClassOrInterfaceType()) {
+// Classloader. load
+//                Javaparser klass.parent.imports
+                final Optional<Node> parentNode = cast.getParentNode();
+                if (parentNode.isPresent()) {
+                    final Node node = parentNode.get();
+                    final CompilationUnit unit = (CompilationUnit) node;
+                    final NodeList<ImportDeclaration> imports = unit.getImports();
+                    final List<Class<?>> res = imports.stream()
+                        .map(ImportDeclaration::getNameAsString)
+                        .filter(s -> s.contains(type.getNameAsString()))
+                        .map(
+                            imp ->
+                            {
+                                try {
+                                    return this.getClass().getClassLoader().loadClass(
+                                        imp);
+                                } catch (final ClassNotFoundException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        ).collect(Collectors.toList());
+                    return res;
+                }
+            }
+        }
         return Collections.emptyList();
     }
 
