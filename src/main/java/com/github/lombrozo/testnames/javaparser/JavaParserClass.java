@@ -27,15 +27,12 @@ import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
-import com.github.javaparser.metamodel.ClassOrInterfaceTypeMetaModel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -47,6 +44,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -146,26 +144,40 @@ final class JavaParserClass {
      * Returns all parents of the class.
      *
      * @return All parents of the class.
-     * TODO!
      */
     Collection<Class<?>> parents() {
-        final ClassOrInterfaceDeclaration cast = this.cast();
-        final Collection<String> all = imports();
-        final List<Class<?>> result = new ArrayList<>();
-        for (final ClassOrInterfaceType type : cast.getImplementedTypes()) {
-            if (type.isClassOrInterfaceType()) {
-                final String name = type.getNameWithScope();
-                try {
-                    result.add(this.getClass().getClassLoader().loadClass(
-                        all.stream().filter(s -> s.contains(name)).findFirst().orElse(name)));
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        }
-        return result;
+        final Collection<String> all = this.imports();
+        return this.cast().getImplementedTypes().stream()
+            .filter(ClassOrInterfaceType::isClassOrInterfaceType)
+            .map(ClassOrInterfaceType::getNameWithScope)
+            .map(name -> all.stream().filter(s -> s.contains(name)).findFirst().orElse(name))
+            .map(this::load)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toList());
     }
 
+    /**
+     * Loads class from the classpath.
+     * @param name Name of the class.
+     * @return Loaded class.
+     */
+    private Optional<Class<?>> load(final String name) {
+        try {
+            return Optional.ofNullable(this.getClass().getClassLoader().loadClass(name));
+        } catch (final ClassNotFoundException ex) {
+            Logger.getLogger(this.getClass().getName())
+                .warning(
+                    String.format("Can't find class %s in classpath", name)
+                );
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * All the imports of the current class.
+     * @return All the imports of the current class.
+     */
     private Collection<String> imports() {
         return this.cast()
             .getParentNode()
