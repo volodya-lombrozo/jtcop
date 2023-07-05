@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  *
  * @since 0.1.17
  */
-public class ProjectWithoutJUnitExtensions implements Project {
+final class ProjectWithoutJUnitExtensions implements Project {
 
     /**
      * Original project.
@@ -57,18 +57,18 @@ public class ProjectWithoutJUnitExtensions implements Project {
     public Collection<TestClass> testClasses() {
         return Collections.unmodifiableCollection(
             this.original.testClasses().stream()
-                .filter(this::isNotJUnitExtension)
+                .filter(ProjectWithoutJUnitExtensions::isNotJUnitExtension)
                 .collect(Collectors.toList())
         );
     }
 
     /**
      * Is JUnit extension.
-     * @param testClass Test class.
+     * @param klass Test class.
      * @return True if JUnit extension.
      */
-    private boolean isNotJUnitExtension(final TestClass testClass) {
-        return testClass.parents()
+    private static boolean isNotJUnitExtension(final TestClass klass) {
+        return klass.parents()
             .stream()
             .map(Class::getPackage)
             .map(Package::getName)

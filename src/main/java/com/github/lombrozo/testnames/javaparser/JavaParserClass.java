@@ -36,11 +36,9 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.function.Predicate;
@@ -163,15 +161,19 @@ final class JavaParserClass {
      * @return Loaded class.
      */
     private Optional<Class<?>> load(final String name) {
+        Optional<Class<?>> res;
         try {
-            return Optional.ofNullable(this.getClass().getClassLoader().loadClass(name));
+            res = Optional.ofNullable(
+                Thread.currentThread().getContextClassLoader().loadClass(name)
+            );
         } catch (final ClassNotFoundException ex) {
             Logger.getLogger(this.getClass().getName())
                 .warning(
                     String.format("Can't find class %s in classpath", name)
                 );
-            return Optional.empty();
+            res = Optional.empty();
         }
+        return res;
     }
 
     /**

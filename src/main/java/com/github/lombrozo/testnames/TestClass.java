@@ -75,6 +75,7 @@ public interface TestClass {
      * The fake test class.
      *
      * @since 0.2
+     * @checkstyle ParameterNumberCheck (500 lines)
      */
     @Data
     final class Fake implements TestClass {

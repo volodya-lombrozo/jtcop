@@ -45,7 +45,7 @@ class ProjectWithoutJUnitExtensionsTest {
     void returnsProductionClassesFromOrigin() {
         final ProductionClass[] expected = {
             new ProductionClass.Fake(),
-            new ProductionClass.Fake()
+            new ProductionClass.Fake(),
         };
         final Project project = new ProjectWithoutJUnitExtensions(new Project.Fake(expected));
         final Collection<ProductionClass> actual = project.productionClasses();
@@ -91,7 +91,7 @@ class ProjectWithoutJUnitExtensionsTest {
     void skipsNotJUnitExtensions() {
         final TestClass[] expected = {
             new TestClass.Fake("SomeTest"),
-            new TestClass.Fake("AnotherTest")
+            new TestClass.Fake("AnotherTest"),
         };
         final Collection<TestClass> actual = new ProjectWithoutJUnitExtensions(
             new Project.Fake(expected)
