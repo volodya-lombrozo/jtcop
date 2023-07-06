@@ -27,12 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.AfterAllCallback;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 
 /**
  * Test case for {@link ProjectWithoutJUnitExtensions}.
@@ -64,17 +59,9 @@ class ProjectWithoutJUnitExtensionsTest {
     void filtersJUnitExtensions() {
         final Collection<TestClass> actual = new ProjectWithoutJUnitExtensions(
             new Project.Fake(
-                new TestClass.Fake(
-                    BeforeAll.class,
-                    BeforeEachCallback.class,
-                    AfterEachCallback.class
-                ),
-                new TestClass.Fake(
-                    BeforeAllCallback.class
-                ),
-                new TestClass.Fake(
-                    AfterAllCallback.class
-                )
+                new TestClass.Fake(true),
+                new TestClass.Fake(true),
+                new TestClass.Fake(true)
             )
         ).testClasses();
         MatcherAssert.assertThat(

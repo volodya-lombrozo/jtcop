@@ -68,10 +68,6 @@ final class ProjectWithoutJUnitExtensions implements Project {
      * @return True if JUnit extension.
      */
     private static boolean isNotJUnitExtension(final TestClass klass) {
-        return klass.parents()
-            .stream()
-            .map(Class::getPackage)
-            .map(Package::getName)
-            .noneMatch(name -> name.startsWith("org.junit.jupiter.api.extension"));
+        return !klass.isJUnitExtension();
     }
 }

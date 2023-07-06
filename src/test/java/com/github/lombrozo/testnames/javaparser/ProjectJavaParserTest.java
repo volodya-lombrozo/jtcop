@@ -202,18 +202,10 @@ final class ProjectJavaParserTest {
             classes,
             Matchers.hasSize(1)
         );
-        final Collection<Class<?>> parents = classes.iterator().next().parents();
         MatcherAssert.assertThat(
-            String.format("Class has to have exactly one parent, but was: %s", parents),
-            parents,
-            Matchers.hasSize(1)
-        );
-        final Class<AfterAllCallback> expected = AfterAllCallback.class;
-        final Class<?> actual = parents.iterator().next();
-        MatcherAssert.assertThat(
-            String.format("Parent has to be %s, but was: %s", expected, actual),
-            actual,
-            Matchers.equalTo(expected)
+            "Class has to be JUnit extension, but was not",
+            classes.iterator().next().isJUnitExtension(),
+            Matchers.is(true)
         );
     }
 
@@ -229,18 +221,10 @@ final class ProjectJavaParserTest {
             classes,
             Matchers.hasSize(1)
         );
-        final Collection<Class<?>> parents = classes.iterator().next().parents();
         MatcherAssert.assertThat(
-            String.format("Class has to have exactly one parent, but was: %s", parents),
-            parents,
-            Matchers.hasSize(1)
-        );
-        final Class<ExecutionCondition> expected = ExecutionCondition.class;
-        final Class<?> actual = parents.iterator().next();
-        MatcherAssert.assertThat(
-            String.format("Parent has to be %s, but was: %s", expected, actual),
-            actual,
-            Matchers.equalTo(expected)
+            "Class has to be JUnit extension, but was not",
+            classes.iterator().next().isJUnitExtension(),
+            Matchers.is(true)
         );
     }
 }

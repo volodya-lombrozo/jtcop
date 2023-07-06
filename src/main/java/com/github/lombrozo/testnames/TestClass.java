@@ -65,17 +65,6 @@ public interface TestClass {
     Collection<String> suppressed();
 
     /**
-     * The parents of test class.
-     * All classes which declared as interfaces or parent classes of the test class.
-     * @return The parents of test class.
-     * @todo #193:30min Replace with isJUnitExtension method.
-     *  The method isJUnitExtension should be implemented in TestClass interface instead of
-     *  parents() method. The method should return true if the test class is a JUnit extension.
-     *  By this we will increase the encapsulation of the implementations of TestClass interface.
-     */
-    Collection<Class<?>> parents();
-
-    /**
      * Returns true if the test class is a JUnit extension.
      * @return True if the test class is a JUnit extension, false otherwise.
      */
@@ -111,9 +100,9 @@ public interface TestClass {
         private final List<String> suppressed;
 
         /**
-         * The parents of test class.
+         * Is JUnit extension.
          */
-        private final Collection<Class<?>> parents;
+        private final boolean extension;
 
         /**
          * Primary ctor.
@@ -132,14 +121,14 @@ public interface TestClass {
 
         /**
          * Primary ctor.
-         * @param parents The parents of test class
+         * @param extension Is JUnit extension
          */
-        public Fake(final Class<?>... parents) {
+        public Fake(final boolean extension) {
             this(
                 Fake.DEFAULT_NAME,
                 Collections.emptyList(),
                 Collections.emptyList(),
-                Arrays.asList(parents)
+                extension
             );
         }
 
@@ -180,7 +169,7 @@ public interface TestClass {
             final Collection<? extends TestCase> all,
             final List<String> suppressed
         ) {
-            this(name, all, suppressed, Collections.emptyList());
+            this(name, all, suppressed, false);
         }
 
         /**
@@ -188,18 +177,18 @@ public interface TestClass {
          * @param name The name of test class
          * @param all All cases
          * @param suppressed All suppressed rules
-         * @param parents The parents of test class
+         * @param extension The JUnit extension flag
          */
         Fake(
             final String name,
             final Collection<? extends TestCase> all,
             final List<String> suppressed,
-            final Collection<Class<?>> parents
+            final boolean extension
         ) {
             this.name = name;
             this.all = all;
             this.suppressed = suppressed;
-            this.parents = parents;
+            this.extension = extension;
         }
 
         @Override
@@ -223,13 +212,8 @@ public interface TestClass {
         }
 
         @Override
-        public Collection<Class<?>> parents() {
-            return Collections.unmodifiableCollection(this.parents);
-        }
-
-        @Override
         public boolean isJUnitExtension() {
-            return true;
+            return this.extension;
         }
     }
 }

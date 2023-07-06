@@ -85,11 +85,6 @@ final class BytecodeTestClass implements TestClass {
     }
 
     @Override
-    public Collection<Class<?>> parents() {
-        return Collections.emptyList();
-    }
-
-    @Override
     public boolean isJUnitExtension() {
         return false;
     }

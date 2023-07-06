@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
+import com.github.lombrozo.JUnitExtension;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.io.InputStream;
@@ -180,13 +181,10 @@ public final class TestClassJavaParser implements TestClass {
     }
 
     @Override
-    public Collection<Class<?>> parents() {
-        return this.unit.value().parents();
-    }
-
-    @Override
     public boolean isJUnitExtension() {
-        return false;
+        return this.unit.value().parents().stream()
+            .map(JUnitExtension::new)
+            .anyMatch(JUnitExtension::isJUnitExtension);
     }
 
     /**
