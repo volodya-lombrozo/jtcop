@@ -184,6 +184,11 @@ public final class TestClassJavaParser implements TestClass {
         return this.unit.value().parents();
     }
 
+    @Override
+    public boolean isJUnitExtension() {
+        return false;
+    }
+
     /**
      * Parse Java class.
      * @param path Path to the class

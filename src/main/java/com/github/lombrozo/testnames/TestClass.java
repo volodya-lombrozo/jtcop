@@ -76,6 +76,12 @@ public interface TestClass {
     Collection<Class<?>> parents();
 
     /**
+     * Returns true if the test class is a JUnit extension.
+     * @return True if the test class is a JUnit extension, false otherwise.
+     */
+    boolean isJUnitExtension();
+
+    /**
      * The fake test class.
      *
      * @since 0.2
@@ -219,6 +225,11 @@ public interface TestClass {
         @Override
         public Collection<Class<?>> parents() {
             return Collections.unmodifiableCollection(this.parents);
+        }
+
+        @Override
+        public boolean isJUnitExtension() {
+            return true;
         }
     }
 }
