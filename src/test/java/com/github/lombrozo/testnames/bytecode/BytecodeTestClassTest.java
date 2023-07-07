@@ -24,7 +24,10 @@
 package com.github.lombrozo.testnames.bytecode;
 
 import com.github.lombrozo.testnames.TestClass;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -39,14 +42,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class BytecodeTestClassTest {
 
     @Test
-    void checksIfBytecodeIsJUnitExtension(@TempDir final Path temp) {
+    void checksIfBytecodeIsJUnitExtension(@TempDir final Path temp) throws Exception {
+        final ResourceOf resource = new ResourceOf("generated/OnlineCondition.class");
+        Files.write(temp.resolve("OnlineCondition.class"), new BytesOf(resource).asBytes());
         final TestClass test = new BytecodeProject(temp, temp)
             .testClasses()
             .iterator()
             .next();
         MatcherAssert.assertThat(
             String.format(
-                "We expected that test class will be JUnit extension, but was %s",
+                "We expected that test class will be JUnit extension, but wasn't: %s",
                 test
             ),
             test.isJUnitExtension(),
@@ -55,7 +60,9 @@ class BytecodeTestClassTest {
     }
 
     @Test
-    void checksIfBytecodeIsNotJUnitExtension(@TempDir final Path temp) {
+    void checksIfBytecodeIsNotJUnitExtension(@TempDir final Path temp) throws Exception {
+        final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
+        Files.write(temp.resolve("RuleTest.class"), new BytesOf(resource).asBytes());
         final TestClass test = new BytecodeProject(temp, temp)
             .testClasses()
             .iterator()
