@@ -23,12 +23,16 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
+import com.github.lombrozo.testnames.JUnitExtension;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Stream;
 import javassist.CtClass;
+import javassist.NotFoundException;
 
 /**
  * Bytecode test class.
@@ -86,6 +90,22 @@ final class BytecodeTestClass implements TestClass {
 
     @Override
     public boolean isJUnitExtension() {
-        return false;
+        try {
+            return Stream.concat(
+                    Arrays.stream(this.klass.getInterfaces()),
+                    Stream.of(this.klass.getSuperclass())
+                )
+                .map(CtClass::getName)
+                .map(JUnitExtension::new)
+                .anyMatch(JUnitExtension::isJUnitExtension);
+        } catch (final NotFoundException ex) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't get interfaces or parent of class %s",
+                    this.klass.getName()
+                ),
+                ex
+            );
+        }
     }
 }

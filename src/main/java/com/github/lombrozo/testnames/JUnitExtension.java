@@ -47,7 +47,7 @@ public final class JUnitExtension {
      * Constructor.
      * @param name The fully qualified name of the JUnit extension.
      */
-    private JUnitExtension(final String name) {
+    public JUnitExtension(final String name) {
         this.name = name;
     }
 
