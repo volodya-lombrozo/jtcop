@@ -38,10 +38,6 @@ import javassist.NotFoundException;
  * Bytecode test class.
  *
  * @since 0.1.17
- * @todo #208:90min Implement isJUnitExtension method in BytecodeTestClass.
- *  This method should return true if the test class is a JUnit extension.
- *  For example, if the test class implements the {@link org.junit.jupiter.api.extension.Extension}
- *  interface. When this method is implemented, remove that puzzle.
  */
 final class BytecodeTestClass implements TestClass {
 
@@ -91,7 +87,8 @@ final class BytecodeTestClass implements TestClass {
     @Override
     public boolean isJUnitExtension() {
         try {
-            return Stream.concat(
+            return Stream
+                .concat(
                     Arrays.stream(this.klass.getInterfaces()),
                     Stream.of(this.klass.getSuperclass())
                 )

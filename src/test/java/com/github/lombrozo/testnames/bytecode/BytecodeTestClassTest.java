@@ -75,5 +75,4 @@ class BytecodeTestClassTest {
             Matchers.is(false)
         );
     }
-
 }
