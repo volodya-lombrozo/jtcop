@@ -33,7 +33,7 @@ import java.util.Collections;
  *
  * @since 0.1.17
  */
-public class RuleCorrectTestName implements Rule {
+public final class RuleCorrectTestName implements Rule {
     @Override
     public Collection<Complaint> complaints() {
         return Collections.emptyList();

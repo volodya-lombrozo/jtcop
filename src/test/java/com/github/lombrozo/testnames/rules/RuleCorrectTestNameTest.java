@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.rules;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -39,6 +40,15 @@ import org.junit.jupiter.params.provider.ValueSource;
  *  puzzle and enable all the tests inside {@link RuleCorrectTestNameTest}.
  */
 class RuleCorrectTestNameTest {
+
+    @Test
+    void createsCorrectly() {
+        MatcherAssert.assertThat(
+            "We expect that RuleCorrectTestName creates correctly, without any exceptions",
+            new RuleCorrectTestName(),
+            Matchers.notNullValue()
+        );
+    }
 
     @Disabled
     @ParameterizedTest
@@ -109,7 +119,7 @@ class RuleCorrectTestNameTest {
             "StrangeTestName",
             "StrangeTestCaseName",
             "StrangeTestsCaseName",
-            "StrangeCaseTestsName",
+            "StrangeCaseTestsName"
         }
     )
     void checksIncorrectUnitNames(final String name) {
