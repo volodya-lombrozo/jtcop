@@ -23,12 +23,14 @@
  */
 package com.github.lombrozo.testnames.rules;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Unit test for {@link RuleUnitTestName}.
  *
  * @since 0.1.17
+ * @todo #195:30min Continue implementing RuleUnitTestName.
+ *  The rule should successfully check that the name of a unit test class
+ *  ends or starts with "Test". When the rule is ready, remove the
+ *  puzzle and enable all the tests inside {@link RuleUnitTestNameTest}.
  */
 class RuleUnitTestNameTest {
 

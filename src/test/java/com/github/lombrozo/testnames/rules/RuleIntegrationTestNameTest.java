@@ -23,12 +23,14 @@
  */
 package com.github.lombrozo.testnames.rules;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Unit test for {@link RuleIntegrationTestName}.
  *
  * @since 0.1.17
+ * @todo #195:30min Continue implementing RuleIntegrationTestName.
+ *  The rule should successfully check that the name of an integration test class
+ *  ends with "IT" or "ITCase". When the rule is ready, remove the
+ *  puzzle and enable all the tests inside {@link RuleIntegrationTestNameTest}.
  */
 class RuleIntegrationTestNameTest {
 
