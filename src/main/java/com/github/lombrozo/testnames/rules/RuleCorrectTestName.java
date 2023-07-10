@@ -29,11 +29,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * The rule that checks the correct name of a unit test class.
+ * The rule that checks the correct name of an integration test class.
  *
  * @since 0.1.17
  */
-public class RuleUnitTestName implements Rule {
+public class RuleCorrectTestName implements Rule {
     @Override
     public Collection<Complaint> complaints() {
         return Collections.emptyList();
