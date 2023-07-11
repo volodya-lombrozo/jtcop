@@ -66,10 +66,17 @@ public final class RuleCorrectTestName implements Rule {
         if (RuleCorrectTestName.isIncorrectName(name)) {
             complaints = Collections.singleton(
                 new ComplaintLinked(
-                    "",
-                    "",
-                    RuleCorrectTestName.class,
-                    ""
+                    String.format(
+                        "Test class name should start or end with one of the following prefixes: %s",
+                        Arrays.toString(RuleCorrectTestName.ALLOWED_PREFIXES)
+                    ),
+                    String.format(
+                        "Please rename the %s test class to start or end with one of the following prefixes: %s",
+                        name,
+                        Arrays.toString(RuleCorrectTestName.ALLOWED_PREFIXES)
+                    ),
+                    this.getClass(),
+                    "test-class-name.md"
                 )
             );
         } else {
