@@ -27,8 +27,8 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
-import com.github.lombrozo.testnames.complaints.LinkedComplaint;
 import java.util.Collection;
 
 /**
@@ -56,7 +56,7 @@ public final class RulePresentTense implements Rule {
     public Collection<Complaint> complaints() {
         return new RuleConditional(
             () -> !this.presentTense(),
-            new LinkedComplaint(
+            new ComplaintLinked(
                 new ComplaintWrongTestName(
                     this.test,
                     "the test name has to be written using present tense"

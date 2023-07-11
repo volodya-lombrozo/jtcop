@@ -32,7 +32,7 @@ import java.net.URL;
  *
  * @since 0.1.15
  */
-public final class LinkedComplaint implements Complaint {
+public final class ComplaintLinked implements Complaint {
 
     /**
      * The complaint message.
@@ -62,13 +62,13 @@ public final class LinkedComplaint implements Complaint {
      * @param document The document name to the rule description in the default repo.
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public LinkedComplaint(
+    public ComplaintLinked(
         final String complaint,
         final String suggestion,
         final Class<?> rule,
         final String document
     ) {
-        this(complaint, suggestion, rule.getSimpleName(), LinkedComplaint.url(document));
+        this(complaint, suggestion, rule.getSimpleName(), ComplaintLinked.url(document));
     }
 
     /**
@@ -79,7 +79,7 @@ public final class LinkedComplaint implements Complaint {
      * @param link The link to the rule description
      * @checkstyle ParameterNumberCheck (10 lines)
      */
-    private LinkedComplaint(
+    private ComplaintLinked(
         final String complaint,
         final String suggestion,
         final String rule,

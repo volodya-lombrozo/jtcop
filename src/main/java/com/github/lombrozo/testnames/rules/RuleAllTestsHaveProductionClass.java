@@ -28,7 +28,7 @@ import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.LinkedComplaint;
+import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -92,7 +92,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
             if (!classes.containsKey(name)
                 && RuleAllTestsHaveProductionClass.isNotSuppressed(test)) {
                 complaints.add(
-                    new LinkedComplaint(
+                    new ComplaintLinked(
                         String.format("Test %s doesn't have corresponding production class", name),
                         String.format(
                             "Either rename or move the test class %s",

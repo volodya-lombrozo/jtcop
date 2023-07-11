@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.LinkedComplaint;
+import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,11 +41,22 @@ import java.util.Collections;
  */
 public final class RuleCorrectTestName implements Rule {
 
+    /**
+     * Allowed prefixes for integration and unit test class names.
+     */
     private static final String[] ALLOWED_PREFIXES = {"IT", "ITCase", "Test", "Tests", "TestCase"};
+
+    /**
+     * The test class to check.
+     */
     private final TestClass test;
 
-    RuleCorrectTestName(final TestClass test) {
-        this.test = test;
+    /**
+     * Constructor.
+     * @param klass The test class to check.
+     */
+    RuleCorrectTestName(final TestClass klass) {
+        this.test = klass;
     }
 
     @Override
@@ -54,7 +65,7 @@ public final class RuleCorrectTestName implements Rule {
         final String name = this.test.name();
         if (RuleCorrectTestName.isIncorrectName(name)) {
             complaints = Collections.singleton(
-                new LinkedComplaint(
+                new ComplaintLinked(
                     "",
                     "",
                     RuleCorrectTestName.class,
@@ -67,8 +78,13 @@ public final class RuleCorrectTestName implements Rule {
         return complaints;
     }
 
+    /**
+     * Checks if the name of the test class is incorrect.
+     * @param name The name of the test class.
+     * @return True if the name is incorrect.
+     */
     private static boolean isIncorrectName(final String name) {
-        return Arrays.stream(RuleCorrectTestName.ALLOWED_PREFIXES).noneMatch(
-            prefix -> name.startsWith(prefix) || name.endsWith(prefix));
+        return Arrays.stream(RuleCorrectTestName.ALLOWED_PREFIXES)
+            .noneMatch(prefix -> name.startsWith(prefix) || name.endsWith(prefix));
     }
 }
