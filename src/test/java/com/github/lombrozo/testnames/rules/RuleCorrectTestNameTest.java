@@ -25,7 +25,6 @@ package com.github.lombrozo.testnames.rules;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -34,10 +33,6 @@ import org.junit.jupiter.params.provider.ValueSource;
  * Unit test for {@link RuleCorrectTestName}.
  *
  * @since 0.1.17
- * @todo #195:30min Continue implementing RuleIntegrationTestName.
- *  The rule should successfully check that the name of an integration test class
- *  ends with "IT" or "ITCase". When the rule is ready, remove the
- *  puzzle and enable all the tests inside {@link RuleCorrectTestNameTest}.
  */
 class RuleCorrectTestNameTest {
 
@@ -50,7 +45,6 @@ class RuleCorrectTestNameTest {
         );
     }
 
-    @Disabled
     @ParameterizedTest
     @ValueSource(strings = {"RulesIT", "RulesITCase", "ITCaseRules", "ITRules"})
     void checksCorrectITNames(final String name) {
@@ -64,7 +58,6 @@ class RuleCorrectTestNameTest {
         );
     }
 
-    @Disabled
     @ParameterizedTest
     @ValueSource(
         strings = {
@@ -87,7 +80,6 @@ class RuleCorrectTestNameTest {
         );
     }
 
-    @Disabled
     @ParameterizedTest
     @ValueSource(
         strings = {
@@ -109,7 +101,6 @@ class RuleCorrectTestNameTest {
         );
     }
 
-    @Disabled
     @ParameterizedTest
     @ValueSource(
         strings = {
