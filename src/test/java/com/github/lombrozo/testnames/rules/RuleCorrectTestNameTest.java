@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.TestClass;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class RuleCorrectTestNameTest {
     void createsCorrectly() {
         MatcherAssert.assertThat(
             "We expect that RuleCorrectTestName creates correctly, without any exceptions",
-            new RuleCorrectTestName(),
+            new RuleCorrectTestName(new TestClass.Fake("CorrectTest")),
             Matchers.notNullValue()
         );
     }
@@ -53,7 +54,7 @@ class RuleCorrectTestNameTest {
                 "We expect that %s is a correct name for an integration test class",
                 name
             ),
-            new RuleCorrectTestName().complaints(),
+            new RuleCorrectTestName(new TestClass.Fake(name)).complaints(),
             Matchers.empty()
         );
     }
@@ -75,7 +76,7 @@ class RuleCorrectTestNameTest {
                 "We expect that %s is a correct name for a unit test class",
                 name
             ),
-            new RuleCorrectTestName().complaints(),
+            new RuleCorrectTestName(new TestClass.Fake(name)).complaints(),
             Matchers.empty()
         );
     }
@@ -96,7 +97,7 @@ class RuleCorrectTestNameTest {
                 "We expect that %s is a incorrect name for an integration test class",
                 name
             ),
-            new RuleCorrectTestName().complaints(),
+            new RuleCorrectTestName(new TestClass.Fake(name)).complaints(),
             Matchers.not(Matchers.empty())
         );
     }
@@ -119,7 +120,7 @@ class RuleCorrectTestNameTest {
                 "We expect that %s is a incorrect name for a unit test class",
                 name
             ),
-            new RuleCorrectTestName().complaints(),
+            new RuleCorrectTestName(new TestClass.Fake(name)).complaints(),
             Matchers.not(Matchers.empty())
         );
     }

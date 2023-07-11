@@ -25,6 +25,9 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.complaints.LinkedComplaint;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -37,8 +40,35 @@ import java.util.Collections;
  *  pipeline. We also have to add integration tests for the RuleCorrectTestName.
  */
 public final class RuleCorrectTestName implements Rule {
+
+    private static final String[] ALLOWED_PREFIXES = {"IT", "ITCase", "Test", "Tests", "TestCase"};
+    private final TestClass test;
+
+    RuleCorrectTestName(final TestClass test) {
+        this.test = test;
+    }
+
     @Override
     public Collection<Complaint> complaints() {
-        return Collections.emptyList();
+        final Collection<Complaint> complaints;
+        final String name = this.test.name();
+        if (RuleCorrectTestName.isIncorrectName(name)) {
+            complaints = Collections.singleton(
+                new LinkedComplaint(
+                    "",
+                    "",
+                    RuleCorrectTestName.class,
+                    ""
+                )
+            );
+        } else {
+            complaints = Collections.emptySet();
+        }
+        return complaints;
+    }
+
+    private static boolean isIncorrectName(final String name) {
+        return Arrays.stream(RuleCorrectTestName.ALLOWED_PREFIXES).noneMatch(
+            prefix -> name.startsWith(prefix) || name.endsWith(prefix));
     }
 }
