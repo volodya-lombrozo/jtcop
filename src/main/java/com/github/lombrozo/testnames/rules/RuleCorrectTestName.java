@@ -35,9 +35,6 @@ import java.util.Collections;
  * The rule that checks the correct name of an integration test class.
  *
  * @since 0.1.17
- * @todo #195:30min Apply RuleCorrectTestName to the Cop checking pipeline.
- *  When the RuleCorrectTestName is will be ready, it should be applied to the Cop checking
- *  pipeline. We also have to add integration tests for the RuleCorrectTestName.
  */
 public final class RuleCorrectTestName implements Rule {
 
