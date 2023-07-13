@@ -55,7 +55,7 @@ public final class RuleCorrectTestName implements Rule {
      * Constructor.
      * @param klass The test class to check.
      */
-    RuleCorrectTestName(final TestClass klass) {
+    public RuleCorrectTestName(final TestClass klass) {
         this.test = klass;
     }
 

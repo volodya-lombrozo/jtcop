@@ -25,6 +25,7 @@ package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleAllTestsInPresentSimple;
+import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -60,9 +61,21 @@ final class Cop {
                 .complaints()
                 .stream(),
             this.project.testClasses().stream()
-                .map(klass -> new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass))
+                .flatMap(Cop::classLevelRules)
                 .map(Rule::complaints)
                 .flatMap(Collection::stream)
         ).collect(Collectors.toList());
+    }
+
+    /**
+     * Creates the class-level rules.
+     * @param klass The test class to check.
+     * @return The class-level rules.
+     */
+    private static Stream<Rule> classLevelRules(final TestClass klass) {
+        return Stream.of(
+            new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass),
+            new RuleSuppressed(new RuleCorrectTestName(klass), klass)
+        );
     }
 }

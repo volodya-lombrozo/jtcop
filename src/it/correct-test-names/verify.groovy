@@ -23,23 +23,23 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  "Please rename the IncorrectITCaseName test class to start or end with one of the following prefixes",
-  "Please rename the IncorrectITName test class to start or end with one of the following prefixes",
-  "Please rename the IncorrectName test class to start or end with one of the following prefixes",
-  "Please rename the IncorrectTestCaseName test class to start or end with one of the following prefixes",
-  "Please rename the IncorrectTestName test class to start or end with one of the following prefixes",
-  "Please rename the IncorrectTestsName test class to start or end with one of the following prefixes",
+  "Please rename the IncorrectITCaseName.java test class to start or end with one of the following prefixes",
+  "Please rename the IncorrectITName.java test class to start or end with one of the following prefixes",
+  "Please rename the IncorrectName.java test class to start or end with one of the following prefixes",
+  "Please rename the IncorrectTestCaseName.java test class to start or end with one of the following prefixes",
+  "Please rename the IncorrectTestName.java test class to start or end with one of the following prefixes",
+  "Please rename the IncorrectTestsName.java test class to start or end with one of the following prefixes",
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 [
-  "Please rename the CorrectNameIT test class",
-  "Please rename the CorrectNameITCase test class",
-  "Please rename the CorrectNameTestCase test class",
-  "Please rename the CorrectNameTest test class",
-  "Please rename the CorrectNameTests test class",
-  "Please rename the TestsCorrectName test class",
-  "Please rename the TestCorrectName test class",
-  "Please rename the TestCaseCorrectName test class",
-  "Please rename the ITCaseCorrectName test class",
-  "Please rename the ITCorrectName test class",
+  "Please rename the CorrectNameIT.java test class",
+  "Please rename the CorrectNameITCase.java test class",
+  "Please rename the CorrectNameTestCase.java test class",
+  "Please rename the CorrectNameTest.java test class",
+  "Please rename the CorrectNameTests.java test class",
+  "Please rename the TestsCorrectName.java test class",
+  "Please rename the TestCorrectName.java test class",
+  "Please rename the TestCaseCorrectName.java test class",
+  "Please rename the ITCaseCorrectName.java test class",
+  "Please rename the ITCorrectName.java test class",
 ].each { assert !log.contains(it): "Log contains ['$it']" }
 true
