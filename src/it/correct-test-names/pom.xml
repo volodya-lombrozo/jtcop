@@ -63,6 +63,7 @@ SOFTWARE.
           </execution>
         </executions>
         <configuration>
+          <failOnError>false</failOnError>
           <exclusions>
             <exclusion>
               JTCOP.RuleAllTestsHaveProductionClass

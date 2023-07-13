@@ -47,7 +47,18 @@ class RuleCorrectTestNameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"RulesIT", "RulesITCase", "ITCaseRules", "ITRules"})
+    @ValueSource(
+        strings = {
+            "RulesIT",
+            "RulesITCase",
+            "ITCaseRules",
+            "ITRules",
+            "RulesIT.java",
+            "RulesITCase.class",
+            "ITCaseRules.java",
+            "ITRules.class"
+        }
+    )
     void checksCorrectITNames(final String name) {
         MatcherAssert.assertThat(
             String.format(
@@ -67,7 +78,13 @@ class RuleCorrectTestNameTest {
             "TestCaseRules",
             "TestRules",
             "TestsRules",
-            "RuleTests"
+            "RuleTests",
+            "RulesTest.java",
+            "RulesTestCase.class",
+            "TestCaseRules.java",
+            "TestRules.class",
+            "TestsRules.java",
+            "RuleTests.class"
         }
     )
     void checksCorrectUnitNames(final String name) {
@@ -88,7 +105,12 @@ class RuleCorrectTestNameTest {
             "RulesCase",
             "CaseRules",
             "StrangeITName",
-            "StrangeITCaseName"
+            "StrangeITCaseName",
+            "Rules.class",
+            "RulesCase.class",
+            "CaseRules.class",
+            "StrangeITName.java",
+            "StrangeITCaseName.java"
         }
     )
     void checksIncorrectITNames(final String name) {
@@ -111,7 +133,14 @@ class RuleCorrectTestNameTest {
             "StrangeTestName",
             "StrangeTestCaseName",
             "StrangeTestsCaseName",
-            "StrangeCaseTestsName"
+            "StrangeCaseTestsName",
+            "Complaints.java",
+            "ComplaintsCase.java",
+            "CaseComplaints.java",
+            "StrangeTestName.java",
+            "StrangeTestCaseName.class",
+            "StrangeTestsCaseName.class",
+            "StrangeCaseTestsName.class"
         }
     )
     void checksIncorrectUnitNames(final String name) {

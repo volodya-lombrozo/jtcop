@@ -91,7 +91,25 @@ public final class RuleCorrectTestName implements Rule {
      * @return True if the name is incorrect.
      */
     private static boolean isIncorrectName(final String name) {
+        final String clear = RuleCorrectTestName.withoutExtension(name);
         return Arrays.stream(RuleCorrectTestName.ALLOWED_PREFIXES)
-            .noneMatch(prefix -> name.startsWith(prefix) || name.endsWith(prefix));
+            .noneMatch(prefix -> clear.startsWith(prefix) || clear.endsWith(prefix));
+    }
+
+    /**
+     * Removes extension from the name if it exists.
+     * @param with The name of the test class with extension.
+     * @return The name of the test class without extension.
+     */
+    private static String withoutExtension(final String with) {
+        final String result;
+        if (with.endsWith(".java")) {
+            result = with.substring(0, with.length() - 5);
+        } else if (with.endsWith(".class")) {
+            result = with.substring(0, with.length() - 6);
+        } else {
+            result = with;
+        }
+        return result;
     }
 }
