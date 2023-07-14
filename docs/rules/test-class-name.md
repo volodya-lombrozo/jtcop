@@ -1,4 +1,6 @@
 # Test Class Name
+Rule codename: _RuleCorrectTestName_
+___
 
 The test class name should start or end with one of the next prefixes:
 - `Test`
@@ -61,5 +63,8 @@ public class UserTestCaseTest {
     // invalid!
 }
 ```
+
+In order to suppress this rule, you can use the following annotation
+`@SuppressWarnings("JTCOP.RuleCorrectTestName")`.
 
 You can read more about that rule [here](https://www.yegor256.com/2023/01/19/layout-of-tests.html#integration-tests).
