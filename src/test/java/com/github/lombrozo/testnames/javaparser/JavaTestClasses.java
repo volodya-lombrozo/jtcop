@@ -115,7 +115,12 @@ enum JavaTestClasses {
     /**
      * Test class with mistakes in test names.
      */
-    WRONG_NAME("TestWrongName.java");
+    WRONG_NAME("TestWrongName.java"),
+
+    /**
+     * Enum class.
+     */
+    ENUM("EnumInTests.java");
 
     /**
      * Java file name in resources.
