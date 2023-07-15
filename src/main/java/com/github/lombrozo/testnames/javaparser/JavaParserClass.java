@@ -31,6 +31,7 @@ import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.nodeTypes.NodeWithImplements;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import java.io.IOException;
@@ -145,7 +146,7 @@ final class JavaParserClass {
      */
     Collection<Class<?>> parents() {
         final Collection<String> all = this.imports();
-        return this.cast().getImplementedTypes().stream()
+        return this.implement().getImplementedTypes().stream()
             .filter(ClassOrInterfaceType::isClassOrInterfaceType)
             .map(ClassOrInterfaceType::getNameWithScope)
             .map(name -> all.stream().filter(s -> s.contains(name)).findFirst().orElse(name))
@@ -181,7 +182,7 @@ final class JavaParserClass {
      * @return All the imports of the current class.
      */
     private Collection<String> imports() {
-        return this.cast()
+        return this.klass
             .getParentNode()
             .map(
                 node -> ((CompilationUnit) node)
@@ -191,6 +192,20 @@ final class JavaParserClass {
                     .collect(Collectors.toList())
             )
             .orElse(Collections.emptyList());
+    }
+
+    /**
+     * Cast the class to NodeWithImplements.
+     * @return NodeWithImplements
+     */
+    private NodeWithImplements<?> implement() {
+        if (this.klass instanceof NodeWithImplements<?>) {
+            return (NodeWithImplements<?>) this.klass;
+        } else {
+            throw new IllegalStateException(
+                String.format("Can't cast %s to NodeWithImplements", this.klass)
+            );
+        }
     }
 
     /**
