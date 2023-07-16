@@ -34,7 +34,7 @@ import org.cactoos.io.ResourceOf;
  *
  * @since 0.1.14
  */
-@SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass")
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 enum JavaTestClasses {
 
     /**
