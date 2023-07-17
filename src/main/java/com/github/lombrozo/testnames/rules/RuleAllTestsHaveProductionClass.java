@@ -63,6 +63,9 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      */
     private final Project project;
 
+    /**
+     * Test class to check.
+     */
     private final TestClass test;
 
     /**

@@ -63,7 +63,6 @@ final class Cop {
             .collect(Collectors.toList());
     }
 
-
     /**
      * Creates the class-level rules.
      * @param klass The test class to check.
