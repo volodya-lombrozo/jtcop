@@ -45,13 +45,15 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void checksThatAllHaveCorrespondingProductionClass() {
+        final TestClass.Fake test = new TestClass.Fake("IdenticalTest", new TestCase.Fake());
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Identical"),
-                    new TestClass.Fake("IdenticalTest", new TestCase.Fake())
-                )
+                    test
+                ),
+                test
             ).complaints(),
             Matchers.empty()
         );
@@ -59,13 +61,15 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void checksThatClassHasCorrespondingProductionClassWithExtension() {
+        final TestClass.Fake test = new TestClass.Fake("HelloTest.java");
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class, even with .java extension",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Hello.java"),
-                    new TestClass.Fake("HelloTest.java")
-                )
+                    test
+                ),
+                test
             ).complaints(),
             Matchers.empty()
         );
@@ -73,13 +77,15 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void checksThatClassHasCorrespondingProductionClassWithClassExtension() {
+        final TestClass.Fake test = new TestClass.Fake("HelloTest.class");
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class, even with .class extension",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("Hello.class"),
-                    new TestClass.Fake("HelloTest.class")
-                )
+                    test
+                ),
+                test
             ).complaints(),
             Matchers.empty()
         );
@@ -91,9 +97,9 @@ final class RuleAllTestsHaveProductionClassTest {
             "Should not have complaints, because all tests have corresponding production class, even if they have different extensions",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
-                    new ProductionClass.Fake("ComplaintClass.java"),
-                    new TestClass.Fake("ComplaintClassTest.class")
-                )
+                    new ProductionClass.Fake("ComplaintClass.java")
+                ),
+                new TestClass.Fake("ComplaintClassTest.class")
             ).complaints(),
             Matchers.empty()
         );
@@ -101,8 +107,10 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void checksThatDoesNotHaveCorrespondingProductionClass() {
+        final TestClass.Fake test = new TestClass.Fake();
         final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
-            new Project.Fake(new TestClass.Fake())
+            new Project.Fake(test),
+            test
         ).complaints();
         MatcherAssert.assertThat(
             "Should have complaints, because doesn't have corresponding production class",
@@ -124,10 +132,9 @@ final class RuleAllTestsHaveProductionClassTest {
             "Should not have complaints, because suppressed",
             new RuleSuppressed(
                 new RuleAllTestsHaveProductionClass(
-                    new Project.Fake(
-                        new TestClass.Fake(
-                            Collections.singletonList(RuleAllTestsHaveProductionClass.NAME)
-                        )
+                    new Project.Fake(),
+                    new TestClass.Fake(
+                        Collections.singletonList(RuleAllTestsHaveProductionClass.NAME)
                     )
                 )
             ).complaints(),
@@ -143,7 +150,8 @@ final class RuleAllTestsHaveProductionClassTest {
                 new ProductionClass.Fake(info),
                 new ProductionClass.Fake(info),
                 new ProductionClass.Fake(info)
-            )
+            ),
+            new TestClass.Fake(info)
         ).complaints();
         MatcherAssert.assertThat(
             String.format(
@@ -158,12 +166,14 @@ final class RuleAllTestsHaveProductionClassTest {
     @Test
     void filtersPackageInfoClasses() {
         final String info = "package-info.java";
+        final TestClass.Fake fake = new TestClass.Fake(info);
         final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(
-                new TestClass.Fake(info),
+                fake,
                 new TestClass.Fake(info),
                 new TestClass.Fake(info)
-            )
+            ),
+            fake
         ).complaints();
         MatcherAssert.assertThat(
             String.format(
@@ -178,11 +188,13 @@ final class RuleAllTestsHaveProductionClassTest {
     @Test
     void handlesClassesWithTheSameNames() {
         final String name = "Hello";
+        final TestClass.Fake test = new TestClass.Fake("HelloTest");
         final Collection<Complaint> complaints = new RuleAllTestsHaveProductionClass(
             new Project.Fake(
                 Arrays.asList(new ProductionClass.Fake(name), new ProductionClass.Fake(name)),
-                Collections.singleton(new TestClass.Fake("HelloTest"))
-            )
+                Collections.singleton(test)
+            ),
+            test
         ).complaints();
         MatcherAssert.assertThat(
             String.format("Should not have complaints, but was %s", complaints),
@@ -193,13 +205,15 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void handlesCasesWithUnderscores() {
+        final TestClass.Fake test = new TestClass.Fake("Identical_Name_Test", new TestCase.Fake());
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class, but with underscores",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("IdenticalName"),
-                    new TestClass.Fake("Identical_Name_Test", new TestCase.Fake())
-                )
+                    test
+                ),
+                test
             ).complaints(),
             Matchers.empty()
         );
@@ -207,13 +221,15 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void handlesCasesWithDollarSign() {
+        final TestClass.Fake test = new TestClass.Fake("EObool$EOnot$Test", new TestCase.Fake());
         MatcherAssert.assertThat(
             "Should not have complaints, because all tests have corresponding production class, but with dollar sign",
             new RuleAllTestsHaveProductionClass(
                 new Project.Fake(
                     new ProductionClass.Fake("EObool$EOnot"),
-                    new TestClass.Fake("EObool$EOnot$Test", new TestCase.Fake())
-                )
+                    test
+                ),
+                test
             ).complaints(),
             Matchers.empty()
         );

@@ -26,12 +26,14 @@ package com.github.lombrozo.testnames.complaints;
 import com.github.lombrozo.testnames.Complaint;
 import java.net.MalformedURLException;
 import java.net.URL;
+import lombok.ToString;
 
 /**
  * The complaint with link to the rule description.
  *
  * @since 0.1.15
  */
+@ToString
 public final class ComplaintLinked implements Complaint {
 
     /**

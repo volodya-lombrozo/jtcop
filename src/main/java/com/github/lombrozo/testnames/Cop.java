@@ -56,24 +56,22 @@ final class Cop {
      * @return The complaints.
      */
     Collection<Complaint> inspection() {
-        return Stream.concat(
-            new RuleAllTestsHaveProductionClass(this.project)
-                .complaints()
-                .stream(),
-            this.project.testClasses().stream()
-                .flatMap(Cop::classLevelRules)
-                .map(Rule::complaints)
-                .flatMap(Collection::stream)
-        ).collect(Collectors.toList());
+        return this.project.testClasses().stream()
+            .flatMap(this::classLevelRules)
+            .map(Rule::complaints)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
     }
+
 
     /**
      * Creates the class-level rules.
      * @param klass The test class to check.
      * @return The class-level rules.
      */
-    private static Stream<Rule> classLevelRules(final TestClass klass) {
+    private Stream<Rule> classLevelRules(final TestClass klass) {
         return Stream.of(
+            new RuleSuppressed(new RuleAllTestsHaveProductionClass(this.project, klass), klass),
             new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass),
             new RuleSuppressed(new RuleCorrectTestName(klass), klass)
         );

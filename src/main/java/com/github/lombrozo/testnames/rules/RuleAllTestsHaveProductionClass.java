@@ -63,12 +63,16 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      */
     private final Project project;
 
+    private final TestClass test;
+
     /**
      * Primary ctor.
      * @param proj The project to check.
+     * @param test The test to check.
      */
-    public RuleAllTestsHaveProductionClass(final Project proj) {
+    public RuleAllTestsHaveProductionClass(final Project proj, final TestClass test) {
         this.project = proj;
+        this.test = test;
     }
 
     @Override
@@ -84,25 +88,21 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
                 )
             );
         final Collection<Complaint> complaints = new ArrayList<>(0);
-        final Collection<TestClass> tests = this.project.testClasses().stream()
-            .filter(test -> RuleAllTestsHaveProductionClass.isNotPackageInfo(test.name()))
-            .collect(Collectors.toList());
-        for (final TestClass test : tests) {
-            final String name = RuleAllTestsHaveProductionClass.clean(test.name());
-            if (!classes.containsKey(name)
-                && RuleAllTestsHaveProductionClass.isNotSuppressed(test)) {
-                complaints.add(
-                    new ComplaintLinked(
-                        String.format("Test %s doesn't have corresponding production class", name),
-                        String.format(
-                            "Either rename or move the test class %s",
-                            test.path()
-                        ),
-                        this.getClass(),
-                        "all-have-production-class.md"
-                    )
-                );
-            }
+        final String name = RuleAllTestsHaveProductionClass.clean(this.test.name());
+        if (!classes.containsKey(name)
+            && RuleAllTestsHaveProductionClass.isNotSuppressed(this.test)
+            && RuleAllTestsHaveProductionClass.isNotPackageInfo(this.test.name())) {
+            complaints.add(
+                new ComplaintLinked(
+                    String.format("Test %s doesn't have corresponding production class", name),
+                    String.format(
+                        "Either rename or move the test class %s",
+                        this.test.path()
+                    ),
+                    this.getClass(),
+                    "all-have-production-class.md"
+                )
+            );
         }
         return complaints;
     }
