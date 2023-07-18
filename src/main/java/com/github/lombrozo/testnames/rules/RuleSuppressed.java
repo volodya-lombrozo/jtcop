@@ -34,12 +34,6 @@ import java.util.Collections;
  * Suppressed rule.
  *
  * @since 0.1.14
- * @todo #117:30min Continue refactoring of RuleSuppressed class.
- *  We can't apply RuleSuppressed for all cases like RuleAllTestsHaveProduction class (separate
- *  issue.) Moreover, as it was investigated all suppress annotations have to be treated as
- *  tree like structure. For example, if we have @SuppressWarnings("RulePresentTense")
- *  on a class level then we have to apply that suppressing for all test cases in that class.
- *  Current implementation of RuleSuppressed doesn't solve that problem.
  */
 public final class RuleSuppressed implements Rule {
     /**
