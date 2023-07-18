@@ -26,47 +26,44 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintClass;
+import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * The rule to check all tests on {@link RulePresentSimple}.
+ * The rule checks if test case in present simple.
  *
  * @since 0.1.0
  */
-public final class RuleAllTestsInPresentSimple implements Rule {
+public final class RuleCorrectTestCase implements Rule {
 
     /**
-     * All test cases.
+     * The rules.
      */
-    private final TestClass tests;
+    private final Collection<Rule> all;
 
     /**
      * Ctor.
      *
-     * @param cases The cases to check
+     * @param test The test case to check
      */
-    public RuleAllTestsInPresentSimple(final TestClass cases) {
-        this.tests = cases;
+    RuleCorrectTestCase(final TestCase test) {
+        this.all = Stream.of(
+            new RuleNotCamelCase(test),
+            new RuleNotContainsTestWord(test),
+            new RuleNotSpam(test),
+            new RuleNotUsesSpecialCharacters(test),
+            new RulePresentTense(test),
+            new RuleAssertionMessage(test)
+        ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        final List<Complaint> list = this.tests.all().stream()
-            .map(test -> new RuleSuppressed(new RulePresentSimple(test), test))
+        return this.all.stream()
             .map(Rule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
-        final Collection<Complaint> result;
-        if (list.isEmpty()) {
-            result = Collections.emptyList();
-        } else {
-            result = Collections.singleton(new ComplaintClass(this.tests, list));
-        }
-        return result;
     }
 }

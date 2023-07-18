@@ -24,7 +24,7 @@
 package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
-import com.github.lombrozo.testnames.rules.RuleAllTestsInPresentSimple;
+import com.github.lombrozo.testnames.rules.RuleCorrectTestCases;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
@@ -71,8 +71,8 @@ final class Cop {
     private Stream<Rule> classLevelRules(final TestClass klass) {
         return Stream.of(
             new RuleSuppressed(new RuleAllTestsHaveProductionClass(this.project, klass), klass),
-            new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass),
-            new RuleSuppressed(new RuleCorrectTestName(klass), klass)
+            new RuleSuppressed(new RuleCorrectTestName(klass), klass),
+            new RuleSuppressed(new RuleCorrectTestCases(klass), klass)
         );
     }
 }

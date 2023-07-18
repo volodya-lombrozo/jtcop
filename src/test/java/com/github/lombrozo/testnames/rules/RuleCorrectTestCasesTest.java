@@ -33,17 +33,17 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link RuleAllTestsInPresentSimple}.
+ * Test case for {@link RuleCorrectTestCases}.
  *
  * @since 0.1.0
  */
-final class RuleAllTestsInPresentSimpleTest {
+final class RuleCorrectTestCasesTest {
 
     @Test
     void validatesAllWithoutExceptions() {
         MatcherAssert.assertThat(
             "All tests in present simple should not have complaints.",
-            new RuleAllTestsInPresentSimple(
+            new RuleCorrectTestCases(
                 new TestClass.Fake(
                     new TestCase.Fake("removes", new Assertion.Fake()),
                     new TestCase.Fake("creates", new Assertion.Fake())
@@ -57,7 +57,7 @@ final class RuleAllTestsInPresentSimpleTest {
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
             "Test class which tests are not in present simple should have one complaint.",
-            new RuleAllTestsInPresentSimple(
+            new RuleCorrectTestCases(
                 new TestClass.Fake(
                     new TestCase.Fake("remove", new Assertion.Fake()),
                     new TestCase.Fake("create", new Assertion.Fake())
@@ -71,7 +71,7 @@ final class RuleAllTestsInPresentSimpleTest {
     void skipsSomeSuppressedChecksOnCaseLevel() {
         MatcherAssert.assertThat(
             "Should skip suppressed checks on method level.",
-            new RuleAllTestsInPresentSimple(
+            new RuleCorrectTestCases(
                 new TestClass.Fake(
                     new TestCase.Fake(
                         "remove",
@@ -92,13 +92,13 @@ final class RuleAllTestsInPresentSimpleTest {
     @Test
     void skipsSomeSuppressedChecksOnClassLevel() {
         final TestClass.Fake klass = new TestClass.Fake(
-            Collections.singletonList("RuleAllTestsInPresentSimple"),
+            Collections.singletonList("RuleCorrectTestCases"),
             new TestCase.Fake("remove", new Assertion.Fake()),
             new TestCase.Fake("create", new Assertion.Fake())
         );
         MatcherAssert.assertThat(
             "Should skip suppressed checks on class level.",
-            new RuleSuppressed(new RuleAllTestsInPresentSimple(klass), klass).complaints(),
+            new RuleSuppressed(new RuleCorrectTestCases(klass), klass).complaints(),
             Matchers.empty()
         );
     }

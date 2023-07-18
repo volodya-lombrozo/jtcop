@@ -74,7 +74,7 @@ final class RuleTest {
         "returnsRelativePathOfCurrentWorkingDirectory, true"
     })
     void validatesCorrectly(final String name, final boolean expected) {
-        final Collection<Complaint> complaints = new RulePresentSimple(
+        final Collection<Complaint> complaints = new RuleCorrectTestCase(
             new TestCase.Fake(name, new Assertion.Fake("Some message"))
         ).complaints();
         MatcherAssert.assertThat(
