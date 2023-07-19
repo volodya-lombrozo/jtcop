@@ -35,6 +35,9 @@ import java.util.Collections;
  * Checks that test class has only methods annotated with @Test annotation.
  *
  * @since 0.1.19
+ * @todo #194:90min Incorporate this rule into the Cop class.
+ *  This rule should be incorporated into the Cop class. When this is done, we should add
+ *  integration tests for that rule and remove this puzzle.
  */
 public class RuleOnlyTestMethods implements Rule {
 
