@@ -102,7 +102,7 @@ public interface TestClass {
         /**
          * Test class characteristics.
          */
-        private final TestClassCharacteristics characteristics;
+        private final TestClassCharacteristics props;
 
         /**
          * Primary ctor.
@@ -160,14 +160,14 @@ public interface TestClass {
 
         /**
          * Constructor.
-         * @param characteristics Test class characteristics
+         * @param props Test class characteristics
          */
-        public Fake(final TestClassCharacteristics characteristics) {
+        public Fake(final TestClassCharacteristics props) {
             this(
                 Fake.DEFAULT_NAME,
                 Collections.emptyList(),
                 Collections.emptyList(),
-                characteristics
+                props
             );
         }
 
@@ -190,18 +190,18 @@ public interface TestClass {
          * @param name The name of test class
          * @param all All cases
          * @param suppressed All suppressed rules
-         * @param characteristics Test class characteristics
+         * @param props Test class characteristics
          */
         Fake(
             final String name,
             final Collection<? extends TestCase> all,
             final List<String> suppressed,
-            final TestClassCharacteristics characteristics
+            final TestClassCharacteristics props
         ) {
             this.name = name;
             this.all = all;
             this.suppressed = suppressed;
-            this.characteristics = characteristics;
+            this.props = props;
         }
 
         @Override
@@ -226,7 +226,7 @@ public interface TestClass {
 
         @Override
         public TestClassCharacteristics characteristics() {
-            return this.characteristics;
+            return this.props;
         }
     }
 }

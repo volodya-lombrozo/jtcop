@@ -57,5 +57,4 @@ class RuleOnlyTestMethodsTest {
             Matchers.hasSize(1)
         );
     }
-
 }

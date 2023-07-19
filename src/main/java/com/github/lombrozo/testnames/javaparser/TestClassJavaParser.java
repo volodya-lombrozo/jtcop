@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
-import com.github.lombrozo.testnames.JUnitExtension;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.TestClassCharacteristics;

@@ -85,3 +85,4 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
         return this.klass.getMethods().length;
     }
 }
+

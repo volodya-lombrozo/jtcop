@@ -23,6 +23,9 @@
  */
 package com.github.lombrozo.testnames;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * Test class characteristics.
  *
@@ -48,7 +51,14 @@ public interface TestClassCharacteristics {
      */
     int numberOfMethods();
 
-    class Fake implements TestClassCharacteristics {
+    /**
+     * Fake implementation for test characteristics.
+     *
+     * @since 0.1.19
+     */
+    @EqualsAndHashCode
+    @ToString
+    final class Fake implements TestClassCharacteristics {
 
         /**
          * Is the test class a JUnit extension?

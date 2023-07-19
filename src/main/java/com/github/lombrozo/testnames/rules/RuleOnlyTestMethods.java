@@ -39,7 +39,7 @@ import java.util.Collections;
  *  This rule should be incorporated into the Cop class. When this is done, we should add
  *  integration tests for that rule and remove this puzzle.
  */
-public class RuleOnlyTestMethods implements Rule {
+public final class RuleOnlyTestMethods implements Rule {
 
     /**
      * The test class.
@@ -57,8 +57,8 @@ public class RuleOnlyTestMethods implements Rule {
     @Override
     public Collection<Complaint> complaints() {
         final Collection<Complaint> result;
-        final TestClassCharacteristics characteristics = this.klass.characteristics();
-        if (characteristics.numberOfMethods() == characteristics.numberOfTests()) {
+        final TestClassCharacteristics props = this.klass.characteristics();
+        if (props.numberOfMethods() == props.numberOfTests()) {
             result = Collections.emptyList();
         } else {
             result = Collections.singleton(

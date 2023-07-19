@@ -23,8 +23,6 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
-import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
@@ -58,5 +56,4 @@ final class BytecodeTestClassCharacteristicsTest {
             Matchers.notNullValue()
         );
     }
-
 }
