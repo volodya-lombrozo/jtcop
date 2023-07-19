@@ -50,18 +50,33 @@ public interface TestClassCharacteristics {
 
     class Fake implements TestClassCharacteristics {
 
+        /**
+         * Is the test class a JUnit extension?
+         */
         private final boolean junit;
+
+        /**
+         * The number of tests in the class.
+         */
         private final int tests;
+
+        /**
+         * The total number of methods in the class.
+         */
         private final int methods;
 
+        public Fake(final boolean extension) {
+            this(extension, 0, 0);
+        }
+
         public Fake(
-            final boolean junit,
-            final int tests,
-            final int methods
+            final boolean extension,
+            final int ntests,
+            final int nmethods
         ) {
-            this.junit = junit;
-            this.tests = tests;
-            this.methods = methods;
+            this.junit = extension;
+            this.tests = ntests;
+            this.methods = nmethods;
         }
 
         @Override

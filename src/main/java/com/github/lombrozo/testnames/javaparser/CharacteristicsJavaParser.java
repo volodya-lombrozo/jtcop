@@ -21,25 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.rules;
+package com.github.lombrozo.testnames.javaparser;
 
-import org.junit.jupiter.api.Test;
+import com.github.lombrozo.testnames.JUnitExtension;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
 
 /**
- * Test for {@link RuleOnlyTestMethods}.
+ * JavaParser implementation of {@link TestClassCharacteristics}.
  *
  * @since 0.1.19
  */
-class RuleOnlyTestMethodsTest {
+final class CharacteristicsJavaParser implements TestClassCharacteristics {
 
-    @Test
-    void checksClassCorrectly() {
-        //todo
+    /**
+     * JavaParser parsed class.
+     */
+    private final JavaParserClass klass;
+
+    /**
+     * Constructor.
+     * @param klass JavaParser parsed class.
+     */
+    CharacteristicsJavaParser(final JavaParserClass klass) {
+        this.klass = klass;
     }
 
-    @Test
-    void failsOnNonTestMethod() {
-        //todo
+    @Override
+    public boolean isJUnitExtension() {
+        return this.klass.parents().stream()
+            .map(JUnitExtension::new)
+            .anyMatch(JUnitExtension::isJUnitExtension);
     }
 
+    @Override
+    public int numberOfTests() {
+        return 0;
+    }
+
+    @Override
+    public int numberOfMethods() {
+        return 0;
+    }
 }

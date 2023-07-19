@@ -29,6 +29,7 @@ import com.github.javaparser.StaticJavaParser;
 import com.github.lombrozo.testnames.JUnitExtension;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
@@ -181,10 +182,8 @@ public final class TestClassJavaParser implements TestClass {
     }
 
     @Override
-    public boolean isJUnitExtension() {
-        return this.unit.value().parents().stream()
-            .map(JUnitExtension::new)
-            .anyMatch(JUnitExtension::isJUnitExtension);
+    public TestClassCharacteristics characteristics() {
+        return new CharacteristicsJavaParser(this.unit.value());
     }
 
     /**

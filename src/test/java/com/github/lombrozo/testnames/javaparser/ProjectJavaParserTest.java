@@ -202,7 +202,7 @@ final class ProjectJavaParserTest {
         );
         MatcherAssert.assertThat(
             "Class has to be JUnit extension, but was not",
-            classes.iterator().next().isJUnitExtension(),
+            classes.iterator().next().characteristics().isJUnitExtension(),
             Matchers.is(true)
         );
     }
@@ -221,7 +221,7 @@ final class ProjectJavaParserTest {
         );
         MatcherAssert.assertThat(
             "Class has to be JUnit extension, but was not",
-            classes.iterator().next().isJUnitExtension(),
+            classes.iterator().next().characteristics().isJUnitExtension(),
             Matchers.is(true)
         );
     }

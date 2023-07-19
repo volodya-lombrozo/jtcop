@@ -24,6 +24,7 @@
 package com.github.lombrozo.testnames.bytecode;
 
 import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
@@ -34,45 +35,28 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link BytecodeTestClass}.
+ * Test case for {@link BytecodeTestClassCharacteristics}.
  *
- * @since 0.1.17
+ * @since 0.1.19
+ * @todo #194:30min Add tests for all the methods from BytecodeTestClassCharacteristics class.
+ *  The tests should be added to BytecodeTestClassCharacteristicsTest class for all
+ *  methods from {@link com.github.lombrozo.testnames.bytecode.BytecodeTestClassCharacteristics}.
+ *  When we implement the tests, we should remove the that puzzle from this class.
  */
-class BytecodeTestClassTest {
+final class BytecodeTestClassCharacteristicsTest {
 
     @Test
-    void checksIfBytecodeIsJUnitExtension(@TempDir final Path temp) throws Exception {
-        final ResourceOf resource = new ResourceOf("generated/OnlineCondition.class");
-        Files.write(temp.resolve("OnlineCondition.class"), new BytesOf(resource).asBytes());
-        final TestClass test = new BytecodeProject(temp, temp)
-            .testClasses()
-            .iterator()
-            .next();
-        MatcherAssert.assertThat(
-            String.format(
-                "We expected that test class will be JUnit extension, but wasn't: %s",
-                test
-            ),
-            test.characteristics().isJUnitExtension(),
-            Matchers.is(true)
-        );
-    }
-
-    @Test
-    void checksIfBytecodeIsNotJUnitExtension(@TempDir final Path temp) throws Exception {
+    void createsSuccessfully(@TempDir final Path tmp) throws Exception {
         final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
-        Files.write(temp.resolve("RuleTest.class"), new BytesOf(resource).asBytes());
-        final TestClass test = new BytecodeProject(temp, temp)
-            .testClasses()
-            .iterator()
-            .next();
+        Files.write(tmp.resolve("RuleTest.class"), new BytesOf(resource).asBytes());
         MatcherAssert.assertThat(
-            String.format(
-                "We expected that test class will not be JUnit extension, but was %s",
-                test
-            ),
-            test.characteristics().isJUnitExtension(),
-            Matchers.is(false)
+            "Characteristics of the test class shouldn't be empty",
+            new BytecodeProject(tmp, tmp)
+                .testClasses()
+                .iterator()
+                .next().characteristics(),
+            Matchers.notNullValue()
         );
     }
+
 }

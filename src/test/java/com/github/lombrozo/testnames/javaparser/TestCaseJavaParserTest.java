@@ -181,7 +181,7 @@ class TestCaseJavaParserTest {
     void checksIfJUnitExtensionForEnum() {
         MatcherAssert.assertThat(
             "Java enum has to be parsed, but doesn't have to be a JUnit extension",
-            JavaTestClasses.ENUM.toTestClass().isJUnitExtension(),
+            JavaTestClasses.ENUM.toTestClass().characteristics().isJUnitExtension(),
             Matchers.is(false)
         );
     }

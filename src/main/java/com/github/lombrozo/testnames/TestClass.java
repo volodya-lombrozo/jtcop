@@ -65,10 +65,10 @@ public interface TestClass {
     Collection<String> suppressed();
 
     /**
-     * Returns true if the test class is a JUnit extension.
-     * @return True if the test class is a JUnit extension, false otherwise.
+     * The characteristics of the test class.
+     * @return The characteristics of the test class.
      */
-    boolean isJUnitExtension();
+    TestClassCharacteristics characteristics();
 
     /**
      * The fake test class.
@@ -100,9 +100,9 @@ public interface TestClass {
         private final List<String> suppressed;
 
         /**
-         * Is JUnit extension.
+         * Test class characteristics.
          */
-        private final boolean extension;
+        private final TestClassCharacteristics characteristics;
 
         /**
          * Primary ctor.
@@ -128,7 +128,7 @@ public interface TestClass {
                 Fake.DEFAULT_NAME,
                 Collections.emptyList(),
                 Collections.emptyList(),
-                extension
+                new TestClassCharacteristics.Fake(extension)
             );
         }
 
@@ -169,7 +169,7 @@ public interface TestClass {
             final Collection<? extends TestCase> all,
             final List<String> suppressed
         ) {
-            this(name, all, suppressed, false);
+            this(name, all, suppressed, new TestClassCharacteristics.Fake(false));
         }
 
         /**
@@ -177,18 +177,18 @@ public interface TestClass {
          * @param name The name of test class
          * @param all All cases
          * @param suppressed All suppressed rules
-         * @param extension The JUnit extension flag
+         * @param characteristics Test class characteristics
          */
         Fake(
             final String name,
             final Collection<? extends TestCase> all,
             final List<String> suppressed,
-            final boolean extension
+            final TestClassCharacteristics characteristics
         ) {
             this.name = name;
             this.all = all;
             this.suppressed = suppressed;
-            this.extension = extension;
+            this.characteristics = characteristics;
         }
 
         @Override
@@ -212,8 +212,8 @@ public interface TestClass {
         }
 
         @Override
-        public boolean isJUnitExtension() {
-            return this.extension;
+        public TestClassCharacteristics characteristics() {
+            return this.characteristics;
         }
     }
 }

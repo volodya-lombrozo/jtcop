@@ -23,66 +23,65 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
-import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.JUnitExtension;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
-import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.stream.Stream;
 import javassist.CtClass;
+import javassist.NotFoundException;
+import org.junit.jupiter.api.Test;
 
 /**
- * Bytecode test class.
+ * Test class characteristics from bytecode.
  *
- * @since 0.1.17
+ * @since 0.1.19
  */
-final class BytecodeTestClass implements TestClass {
+final class BytecodeTestClassCharacteristics implements TestClassCharacteristics {
 
     /**
-     * Path to the test class.
-     */
-    private final Path file;
-
-    /**
-     * Pared class.
+     * Parsed class.
      */
     private final CtClass klass;
 
     /**
      * Constructor.
-     * @param path Path to the test class.
-     * @param clazz Pared class.
+     * @param klass Parsed class.
      */
-    BytecodeTestClass(
-        final Path path,
-        final CtClass clazz
-    ) {
-        this.file = path;
-        this.klass = clazz;
+    BytecodeTestClassCharacteristics(final CtClass klass) {
+        this.klass = klass;
     }
 
     @Override
-    public String name() {
-        return this.klass.getSimpleName();
+    public boolean isJUnitExtension() {
+        try {
+            return Stream
+                .concat(
+                    Arrays.stream(this.klass.getInterfaces()),
+                    Stream.of(this.klass.getSuperclass())
+                )
+                .map(CtClass::getName)
+                .map(JUnitExtension::new)
+                .anyMatch(JUnitExtension::isJUnitExtension);
+        } catch (final NotFoundException ex) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't get interfaces or parent of class %s",
+                    this.klass.getName()
+                ),
+                ex
+            );
+        }
     }
 
     @Override
-    public Collection<TestCase> all() {
-        return Collections.emptyList();
+    public int numberOfTests() {
+        return (int) Arrays.stream(this.klass.getMethods())
+            .filter(method -> method.hasAnnotation(Test.class))
+            .count();
     }
 
     @Override
-    public Path path() {
-        return this.file;
-    }
-
-    @Override
-    public Collection<String> suppressed() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public TestClassCharacteristics characteristics() {
-        return new BytecodeTestClassCharacteristics(this.klass);
+    public int numberOfMethods() {
+        return this.klass.getMethods().length;
     }
 }
