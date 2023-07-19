@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.TestClass;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,6 +35,8 @@ class RuleOnlyTestMethodsTest {
 
     @Test
     void checksClassCorrectly() {
+
+        new RuleCorrectTestCases()
         //todo
     }
 

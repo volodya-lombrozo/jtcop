@@ -25,6 +25,7 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.TestClass;
 import java.util.Collection;
 
 /**
@@ -33,6 +34,13 @@ import java.util.Collection;
  * @since 0.1.19
  */
 public class RuleOnlyTestMethods implements Rule {
+
+    private final TestClass klass;
+
+    public RuleOnlyTestMethods(final TestClass klass) {
+        this.klass = klass;
+    }
+
     @Override
     public Collection<Complaint> complaints() {
         return null;
