@@ -160,6 +160,19 @@ public interface TestClass {
 
         /**
          * Constructor.
+         * @param characteristics Test class characteristics
+         */
+        public Fake(final TestClassCharacteristics characteristics) {
+            this(
+                Fake.DEFAULT_NAME,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                characteristics
+            );
+        }
+
+        /**
+         * Constructor.
          * @param name The name of test class
          * @param all All cases
          * @param suppressed All suppressed rules

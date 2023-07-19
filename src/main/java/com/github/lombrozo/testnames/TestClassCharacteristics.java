@@ -65,10 +65,29 @@ public interface TestClassCharacteristics {
          */
         private final int methods;
 
+        /**
+         * Constructor.
+         * @param extension Is the test class a JUnit extension?
+         */
         public Fake(final boolean extension) {
             this(extension, 0, 0);
         }
 
+        /**
+         * Constructor.
+         * @param ntests The number of tests in the class.
+         * @param nmethods The total number of methods in the class.
+         */
+        public Fake(final int ntests, final int nmethods) {
+            this(false, ntests, nmethods);
+        }
+
+        /**
+         * Constructor.
+         * @param extension Is the test class a JUnit extension?
+         * @param ntests The number of tests in the class.
+         * @param nmethods The total number of methods in the class.
+         */
         public Fake(
             final boolean extension,
             final int ntests,

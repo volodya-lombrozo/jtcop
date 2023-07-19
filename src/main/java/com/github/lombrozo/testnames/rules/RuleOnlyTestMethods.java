@@ -26,7 +26,10 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
+import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Checks that test class has only methods annotated with @Test annotation.
@@ -35,14 +38,41 @@ import java.util.Collection;
  */
 public class RuleOnlyTestMethods implements Rule {
 
+    /**
+     * The test class.
+     */
     private final TestClass klass;
 
+    /**
+     * Constructor.
+     * @param klass The test class to check.
+     */
     public RuleOnlyTestMethods(final TestClass klass) {
         this.klass = klass;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return null;
+        final Collection<Complaint> result;
+        final TestClassCharacteristics characteristics = this.klass.characteristics();
+        if (characteristics.numberOfMethods() == characteristics.numberOfTests()) {
+            result = Collections.emptyList();
+        } else {
+            result = Collections.singleton(
+                new ComplaintLinked(
+                    String.format(
+                        "All methods of the test class '%s' should be annotated with @Test annotation",
+                        this.klass.name()
+                    ),
+                    String.format(
+                        "Please annotate all methods of the test class .%s with @Test annotation",
+                        this.klass.path()
+                    ),
+                    this.getClass(),
+                    "only-test-methods.md"
+                )
+            );
+        }
+        return result;
     }
 }

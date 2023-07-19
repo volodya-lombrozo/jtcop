@@ -23,6 +23,10 @@
  */
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -34,12 +38,24 @@ class RuleOnlyTestMethodsTest {
 
     @Test
     void checksClassCorrectly() {
-        //todo
+        MatcherAssert.assertThat(
+            "Test class with single test and single method should not have complaints",
+            new RuleOnlyTestMethods(
+                new TestClass.Fake(new TestClassCharacteristics.Fake(1, 1))
+            ).complaints(),
+            Matchers.empty()
+        );
     }
 
     @Test
     void failsOnNonTestMethod() {
-        //todo
+        MatcherAssert.assertThat(
+            "Test class with single test and several methods should have complaints, because not all methods are tests",
+            new RuleOnlyTestMethods(
+                new TestClass.Fake(new TestClassCharacteristics.Fake(2, 1))
+            ).complaints(),
+            Matchers.hasSize(1)
+        );
     }
 
 }
