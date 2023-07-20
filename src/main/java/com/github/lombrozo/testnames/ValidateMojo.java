@@ -31,6 +31,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -95,6 +96,7 @@ public final class ValidateMojo extends AbstractMojo {
                         Paths.get(this.project.getCompileSourceRoots().get(0)),
                         Paths.get(this.project.getTestCompileSourceRoots().get(0)),
                         Arrays.stream(this.exclusions)
+                            .filter(Objects::nonNull)
                             .map(RuleName::new)
                             .map(RuleName::withoutPrefix)
                             .collect(Collectors.toSet())
