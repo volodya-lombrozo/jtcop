@@ -90,16 +90,6 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
-        Logger.getLogger(this.getClass().getName()).info("Validating tests...");
-        Logger.getLogger(this.getClass().getName()).info(
-            String.format("Exclusions: %s", Arrays.toString(this.exclusions))
-        );
-        Logger.getLogger(this.getClass().getName()).info(
-            String.format("Generated Sources: %s", this.sources)
-        );
-        Logger.getLogger(this.getClass().getName()).info(
-            String.format("Generated Tests: %s", this.tests)
-        );
         final Set<String> suppressed = Arrays.stream(this.exclusions)
             .filter(Objects::nonNull)
             .map(RuleName::new)
