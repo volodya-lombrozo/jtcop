@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -88,18 +89,24 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
+        final Set<String> suppressed = Arrays.stream(this.exclusions)
+            .filter(Objects::nonNull)
+            .map(RuleName::new)
+            .map(RuleName::withoutPrefix)
+            .collect(Collectors.toSet());
         final Collection<Complaint> complaints = new Cop(
             new ProjectWithoutJUnitExtensions(
                 new Project.Combined(
                     new BytecodeProject(this.sources, this.tests),
                     new ProjectJavaParser(
+                        this.sources.toPath(),
+                        this.tests.toPath(),
+                        suppressed
+                    ),
+                    new ProjectJavaParser(
                         Paths.get(this.project.getCompileSourceRoots().get(0)),
                         Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                        Arrays.stream(this.exclusions)
-                            .filter(Objects::nonNull)
-                            .map(RuleName::new)
-                            .map(RuleName::withoutPrefix)
-                            .collect(Collectors.toSet())
+                        suppressed
                     )
                 )
             )
