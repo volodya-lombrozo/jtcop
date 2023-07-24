@@ -23,6 +23,8 @@
  */
 package com.github.lombrozo.testnames.rules;
 
+import org.junit.jupiter.api.Test;
+
 public class JavaGeneratedTest {
 
     @Test

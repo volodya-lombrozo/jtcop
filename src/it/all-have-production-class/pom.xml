@@ -57,6 +57,7 @@ SOFTWARE.
         <configuration>
           <excludes>
             <exclude>**/EOboolEOnotTest.java</exclude>
+            <exclude>**/JavaGeneratedTest.java</exclude>
           </excludes>
         </configuration>
       </plugin>
