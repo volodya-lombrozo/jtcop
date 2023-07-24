@@ -105,6 +105,7 @@ public final class BytecodeProject implements Project {
                     .filter(BytecodeClass::isClass)
                     .map(BytecodeClass::toTest)
                     .collect(Collectors.toList());
+                System.out.println("BYTECODE TESTS: " + result);
             } catch (final IOException ex) {
                 throw new IllegalStateException(
                     String.format("Can't read test classes from %s", this.tests),

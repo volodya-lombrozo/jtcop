@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -88,6 +89,16 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
+        Logger.getLogger(this.getClass().getName()).info("Validating tests...");
+        Logger.getLogger(this.getClass().getName()).info(
+            String.format("Exclusions: %s", Arrays.toString(this.exclusions))
+        );
+        Logger.getLogger(this.getClass().getName()).info(
+            String.format("Generated Sources: %s", this.sources)
+        );
+        Logger.getLogger(this.getClass().getName()).info(
+            String.format("Generated Tests: %s", this.tests)
+        );
         final Collection<Complaint> complaints = new Cop(
             new ProjectWithoutJUnitExtensions(
                 new Project.Combined(

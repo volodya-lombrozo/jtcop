@@ -63,6 +63,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <skipITs/>
   </properties>
   <dependencies>
     <dependency>
@@ -186,6 +187,7 @@ SOFTWARE.
           <postBuildHookScript>verify</postBuildHookScript>
           <streamLogsOnFailures>true</streamLogsOnFailures>
           <showErrors>true</showErrors>
+          <skipInvocation>${skipITs}</skipInvocation>
         </configuration>
         <executions>
           <execution>

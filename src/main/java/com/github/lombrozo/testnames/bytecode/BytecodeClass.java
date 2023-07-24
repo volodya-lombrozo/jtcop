@@ -57,6 +57,7 @@ final class BytecodeClass {
      * @return True if file is class file.
      */
     boolean isClass() {
+        System.out.println("isClass: " + this.path.toAbsolutePath());
         return this.path.getFileName().toString().endsWith(".class");
     }
 
