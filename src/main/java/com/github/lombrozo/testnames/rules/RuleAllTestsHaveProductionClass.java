@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -95,14 +94,6 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
         final String name = RuleAllTestsHaveProductionClass.clean(this.test.name());
         if (!classes.containsKey(name)
             && RuleAllTestsHaveProductionClass.isNotPackageInfo(this.test.name())) {
-            Logger.getLogger(RuleAllTestsHaveProductionClass.class.getName())
-                .info(
-                    String.format(
-                        "Test %s doesn't have corresponding production class, map %s",
-                        name,
-                        classes
-                    )
-                );
             complaints.add(
                 new ComplaintLinked(
                     String.format("Test %s doesn't have corresponding production class", name),
