@@ -28,8 +28,10 @@ import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import javassist.CtClass;
+import javassist.CtMethod;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 /**
  * Test class characteristics from bytecode.
@@ -76,13 +78,23 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
     @Override
     public int numberOfTests() {
         return (int) Arrays.stream(this.klass.getMethods())
-            .filter(method -> method.hasAnnotation(Test.class))
+            .filter(BytecodeTestClassCharacteristics::isTest)
             .count();
     }
 
     @Override
     public int numberOfMethods() {
-        return this.klass.getMethods().length;
+        return this.klass.getDeclaredMethods().length;
+    }
+
+    /**
+     * Checks whether a method is test-method.
+     * @param method To check.
+     * @return True if the method is test-method.
+     */
+    private static boolean isTest(final CtMethod method) {
+        return method.hasAnnotation(Test.class)
+            || method.hasAnnotation(ParameterizedTest.class);
     }
 }
 

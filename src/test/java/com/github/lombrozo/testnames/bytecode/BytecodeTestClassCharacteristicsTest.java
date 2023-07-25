@@ -23,9 +23,11 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
+import org.cactoos.bytes.UncheckedBytes;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -44,9 +46,8 @@ import org.junit.jupiter.api.io.TempDir;
 final class BytecodeTestClassCharacteristicsTest {
 
     @Test
-    void createsSuccessfully(@TempDir final Path tmp) throws Exception {
-        final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
-        Files.write(tmp.resolve("RuleTest.class"), new BytesOf(resource).asBytes());
+    void createsSuccessfully(@TempDir final Path tmp) throws IOException {
+        BytecodeTestClassCharacteristicsTest.saveTestClassBinary(tmp);
         MatcherAssert.assertThat(
             "Characteristics of the test class shouldn't be empty",
             new BytecodeProject(tmp, tmp)
@@ -54,6 +55,81 @@ final class BytecodeTestClassCharacteristicsTest {
                 .iterator()
                 .next().characteristics(),
             Matchers.notNullValue()
+        );
+    }
+
+    @Test
+    void retrievesNumberOfTests(@TempDir final Path tmp) throws IOException {
+        BytecodeTestClassCharacteristicsTest.saveTestClassBinary(tmp);
+        MatcherAssert.assertThat(
+            "We expect that RuleTest.class will have exactly one test",
+            new BytecodeProject(tmp, tmp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .numberOfTests(),
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test
+    void retrievesNumberOfMethods(@TempDir final Path tmp) throws IOException {
+        BytecodeTestClassCharacteristicsTest.saveTestClassBinary(tmp);
+        MatcherAssert.assertThat(
+            "We expect that RuleTest.class will have exactly one method",
+            new BytecodeProject(tmp, tmp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .numberOfMethods(),
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test
+    void checksIfBytecodeIsNotJUnitExtension(final Path tmp) throws IOException {
+        BytecodeTestClassCharacteristicsTest.saveTestClassBinary(tmp);
+        MatcherAssert.assertThat(
+            "We expect that RuleTest.class is not a JUnit extension",
+            new BytecodeProject(tmp, tmp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .isJUnitExtension(),
+            Matchers.equalTo(false)
+        );
+    }
+
+    @Test
+    void checksIfBytecodeIsJUnitExtension(final Path tmp) throws IOException {
+        final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
+        Files.write(tmp.resolve("RuleTest.class"),
+            new UncheckedBytes(new BytesOf(resource)).asBytes()
+        );
+        MatcherAssert.assertThat(
+            "We expect that RuleTest.class will have exactly one method",
+            new BytecodeProject(tmp, tmp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .isJUnitExtension(),
+            Matchers.equalTo(true)
+        );
+    }
+
+    /**
+     * Save test class binary for test purposes.
+     * @param tmp Where to save the binary.
+     * @throws IOException if something happened.
+     */
+    private static void saveTestClassBinary(final Path tmp) throws IOException {
+        final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
+        Files.write(tmp.resolve("RuleTest.class"),
+            new UncheckedBytes(new BytesOf(resource)).asBytes()
         );
     }
 }
