@@ -89,7 +89,7 @@ final class BytecodeTestClassCharacteristicsTest {
     }
 
     @Test
-    void checksIfBytecodeIsNotJUnitExtension(final Path tmp) throws IOException {
+    void checksIfBytecodeIsNotJUnitExtension(@TempDir final Path tmp) throws IOException {
         BytecodeTestClassCharacteristicsTest.saveTestClassBinary(tmp);
         MatcherAssert.assertThat(
             "We expect that RuleTest.class is not a JUnit extension",
@@ -104,13 +104,13 @@ final class BytecodeTestClassCharacteristicsTest {
     }
 
     @Test
-    void checksIfBytecodeIsJUnitExtension(final Path tmp) throws IOException {
-        final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
-        Files.write(tmp.resolve("RuleTest.class"),
+    void checksIfBytecodeIsJUnitExtension(@TempDir final Path tmp) throws IOException {
+        final ResourceOf resource = new ResourceOf("generated/OnlineCondition.class");
+        Files.write(tmp.resolve("OnlineCondition.class"),
             new UncheckedBytes(new BytesOf(resource)).asBytes()
         );
         MatcherAssert.assertThat(
-            "We expect that RuleTest.class will have exactly one method",
+            "We expect that OnlineCondition.class a JUnit extension or condition",
             new BytecodeProject(tmp, tmp)
                 .testClasses()
                 .iterator()
