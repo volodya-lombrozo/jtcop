@@ -38,10 +38,6 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link BytecodeTestClassCharacteristics}.
  *
  * @since 0.1.19
- * @todo #194:30min Add tests for all the methods from BytecodeTestClassCharacteristics class.
- *  The tests should be added to BytecodeTestClassCharacteristicsTest class for all
- *  methods from {@link com.github.lombrozo.testnames.bytecode.BytecodeTestClassCharacteristics}.
- *  When we implement the tests, we should remove the that puzzle from this class.
  */
 final class BytecodeTestClassCharacteristicsTest {
 
@@ -53,7 +49,8 @@ final class BytecodeTestClassCharacteristicsTest {
             new BytecodeProject(tmp, tmp)
                 .testClasses()
                 .iterator()
-                .next().characteristics(),
+                .next()
+                .characteristics(),
             Matchers.notNullValue()
         );
     }
@@ -106,7 +103,8 @@ final class BytecodeTestClassCharacteristicsTest {
     @Test
     void checksIfBytecodeIsJUnitExtension(@TempDir final Path tmp) throws IOException {
         final ResourceOf resource = new ResourceOf("generated/OnlineCondition.class");
-        Files.write(tmp.resolve("OnlineCondition.class"),
+        Files.write(
+            tmp.resolve("OnlineCondition.class"),
             new UncheckedBytes(new BytesOf(resource)).asBytes()
         );
         MatcherAssert.assertThat(
@@ -128,7 +126,8 @@ final class BytecodeTestClassCharacteristicsTest {
      */
     private static void saveTestClassBinary(final Path tmp) throws IOException {
         final ResourceOf resource = new ResourceOf("generated/RuleTest.class");
-        Files.write(tmp.resolve("RuleTest.class"),
+        Files.write(
+            tmp.resolve("RuleTest.class"),
             new UncheckedBytes(new BytesOf(resource)).asBytes()
         );
     }
