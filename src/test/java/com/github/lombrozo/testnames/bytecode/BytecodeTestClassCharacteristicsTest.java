@@ -119,6 +119,26 @@ final class BytecodeTestClassCharacteristicsTest {
         );
     }
 
+    @Test
+    void checksIfClassIsIntegrationTest(@TempDir final Path temp) {
+
+    }
+
+    @Test
+    void checksIfClassIsNotIntegrationTest(@TempDir final Path temp) throws IOException {
+        BytecodeTestClassCharacteristicsTest.saveTestClassBinary(temp);
+        MatcherAssert.assertThat(
+            "We expect that a plain class is not an integration test",
+            new BytecodeProject(temp, temp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .isIntegrationTest(),
+            Matchers.is(false)
+        );
+    }
+
     /**
      * Save test class binary for test purposes.
      * @param tmp Where to save the binary.
