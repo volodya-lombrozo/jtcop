@@ -93,6 +93,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
         final Collection<Complaint> complaints = new ArrayList<>(0);
         final String name = RuleAllTestsHaveProductionClass.clean(this.test.name());
         if (!classes.containsKey(name)
+            && !this.test.characteristics().isIntegrationTest()
             && RuleAllTestsHaveProductionClass.isNotPackageInfo(this.test.name())) {
             complaints.add(
                 new ComplaintLinked(

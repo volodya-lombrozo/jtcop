@@ -238,11 +238,13 @@ final class RuleAllTestsHaveProductionClassTest {
 
     @Test
     void ignoresClassesFromIntegrationTestsPackage() {
+        final TestClass.Fake test = new TestClass.Fake(
+            new TestClassCharacteristics.IntegrationTest());
         MatcherAssert.assertThat(
             "We expect that test class under 'it' (integration tests) folder is ignored by the rule",
             new RuleAllTestsHaveProductionClass(
-                new Project.Fake(),
-                new TestClass.Fake(new TestClassCharacteristics.IntegrationTest())
+                new Project.Fake(test),
+                test
             ).complaints(),
             Matchers.empty()
         );
