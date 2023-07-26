@@ -29,6 +29,7 @@ import com.github.lombrozo.testnames.complaints.ComplaintCompound;
 import com.github.lombrozo.testnames.javaparser.ProjectJavaParser;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -70,6 +71,16 @@ public final class ValidateMojo extends AbstractMojo {
     private boolean failOnError = true;
 
     /**
+     * Use experimental features.
+     * Since most of the experimental features are not stable and more strict
+     * they are disable by default.
+     * @checkstyle MemberNameCheck (7 lines)
+     */
+    @SuppressWarnings("PMD.ImmutableField")
+    @Parameter(defaultValue = "true")
+    private boolean experimental = false;
+
+    /**
      * The rules that have to be excluded from execution.
      */
     @Parameter(property = "exclusions")
@@ -94,23 +105,25 @@ public final class ValidateMojo extends AbstractMojo {
             .map(RuleName::new)
             .map(RuleName::withoutPrefix)
             .collect(Collectors.toSet());
-        final Collection<Complaint> complaints = new Cop(
-            new ProjectWithoutJUnitExtensions(
-                new Project.Combined(
-                    new BytecodeProject(this.sources, this.tests),
-                    new ProjectJavaParser(
-                        this.sources.toPath(),
-                        this.tests.toPath(),
-                        suppressed
-                    ),
-                    new ProjectJavaParser(
-                        Paths.get(this.project.getCompileSourceRoots().get(0)),
-                        Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                        suppressed
-                    )
+        final ProjectWithoutJUnitExtensions proj = new ProjectWithoutJUnitExtensions(
+            new Project.Combined(
+                new BytecodeProject(this.sources, this.tests),
+                new ProjectJavaParser(
+                    this.sources.toPath(),
+                    this.tests.toPath(),
+                    suppressed
+                ),
+                new ProjectJavaParser(
+                    Paths.get(this.project.getCompileSourceRoots().get(0)),
+                    Paths.get(this.project.getTestCompileSourceRoots().get(0)),
+                    suppressed
                 )
             )
-        ).inspection();
+        );
+        final Collection<Complaint> complaints = new ArrayList<>(new Cop(proj).inspection());
+        if (this.experimental) {
+            complaints.addAll(new CopExperimental(proj).inspection());
+        }
         if (!complaints.isEmpty() && this.failOnError) {
             throw new MojoFailureException(new ComplaintCompound(complaints).message());
         } else if (!complaints.isEmpty()) {
