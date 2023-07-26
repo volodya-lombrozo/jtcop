@@ -55,11 +55,11 @@ final class CharacteristicsJavaParser implements TestClassCharacteristics {
 
     @Override
     public int numberOfTests() {
-        return 0;
+        return (int) this.klass.methods(new TestsOnly()).count();
     }
 
     @Override
     public int numberOfMethods() {
-        return 0;
+        return (int) this.klass.methods().count();
     }
 }

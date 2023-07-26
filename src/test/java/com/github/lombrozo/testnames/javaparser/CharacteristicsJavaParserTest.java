@@ -46,4 +46,60 @@ final class CharacteristicsJavaParserTest {
             Matchers.notNullValue()
         );
     }
+
+    @Test
+    void checksIfNotJUnitExtension() {
+        MatcherAssert.assertThat(
+            "We expect that simple test is not a JUnit extension or condition",
+            JavaTestClasses.SIMPLE
+                .toTestClass()
+                .characteristics()
+                .isJUnitExtension(),
+            Matchers.is(false)
+        );
+    }
+
+    @Test
+    void checksIfJUnitExtension() {
+        MatcherAssert.assertThat(
+            "We expect that JUnit condition is a JUnit extension",
+            JavaTestClasses.JUNIT_CONDITION
+                .toTestClass()
+                .characteristics()
+                .isJUnitExtension(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void retrievesNumberOfTests() {
+        final int expected = 3;
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect that a simple test class contains exactly %d tests",
+                expected
+            ),
+            JavaTestClasses.SIMPLE
+                .toTestClass()
+                .characteristics()
+                .numberOfTests(),
+            Matchers.is(expected)
+        );
+    }
+
+    @Test
+    void retrievesTotalNumberOfMethods() {
+        final int expected = 3;
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect that a simple test class contains exactly %d methods",
+                expected
+            ),
+            JavaTestClasses.SIMPLE
+                .toTestClass()
+                .characteristics()
+                .numberOfTests(),
+            Matchers.is(expected)
+        );
+    }
 }
