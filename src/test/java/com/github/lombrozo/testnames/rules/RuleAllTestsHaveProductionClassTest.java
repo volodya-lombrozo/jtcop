@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -230,6 +231,18 @@ final class RuleAllTestsHaveProductionClassTest {
                     test
                 ),
                 test
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void ignoresClassesFromIntegrationTestsPackage() {
+        MatcherAssert.assertThat(
+            "We expect that test class under 'it' (integration tests) folder is ignored by the rule",
+            new RuleAllTestsHaveProductionClass(
+                new Project.Fake(),
+                new TestClass.Fake(new TestClassCharacteristics.IntegrationTest())
             ).complaints(),
             Matchers.empty()
         );

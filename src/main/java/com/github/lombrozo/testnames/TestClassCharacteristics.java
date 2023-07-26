@@ -40,6 +40,12 @@ public interface TestClassCharacteristics {
     boolean isJUnitExtension();
 
     /**
+     * Returns true if the test class is an integration test.
+     * @return True if the test class is an integration test, false otherwise.
+     */
+    boolean isIntegrationTest();
+
+    /**
      * The number of tests in the class.
      * @return The number of tests in the class.
      */
@@ -75,12 +81,15 @@ public interface TestClassCharacteristics {
          */
         private final int methods;
 
+
+        private final boolean integration;
+
         /**
          * Constructor.
          * @param extension Is the test class a JUnit extension?
          */
         public Fake(final boolean extension) {
-            this(extension, 0, 0);
+            this(extension, 0, 0, false);
         }
 
         /**
@@ -89,7 +98,7 @@ public interface TestClassCharacteristics {
          * @param nmethods The total number of methods in the class.
          */
         public Fake(final int ntests, final int nmethods) {
-            this(false, ntests, nmethods);
+            this(false, ntests, nmethods, false);
         }
 
         /**
@@ -97,20 +106,28 @@ public interface TestClassCharacteristics {
          * @param extension Is the test class a JUnit extension?
          * @param ntests The number of tests in the class.
          * @param nmethods The total number of methods in the class.
+         * @param integration Is the test class an Integration test?
          */
         public Fake(
             final boolean extension,
             final int ntests,
-            final int nmethods
+            final int nmethods,
+            final boolean integration
         ) {
             this.junit = extension;
             this.tests = ntests;
             this.methods = nmethods;
+            this.integration = integration;
         }
 
         @Override
         public boolean isJUnitExtension() {
             return this.junit;
+        }
+
+        @Override
+        public boolean isIntegrationTest() {
+            return false;
         }
 
         @Override
@@ -121,6 +138,36 @@ public interface TestClassCharacteristics {
         @Override
         public int numberOfMethods() {
             return this.methods;
+        }
+    }
+
+    /**
+     * Fake implementation of integration test characteristics.
+     *
+     * @since 0.1.20
+     */
+    @EqualsAndHashCode
+    @ToString
+    final class IntegrationTest implements TestClassCharacteristics{
+
+        @Override
+        public boolean isJUnitExtension() {
+            return false;
+        }
+
+        @Override
+        public boolean isIntegrationTest() {
+            return true;
+        }
+
+        @Override
+        public int numberOfTests() {
+            return 0;
+        }
+
+        @Override
+        public int numberOfMethods() {
+            return 0;
         }
     }
 

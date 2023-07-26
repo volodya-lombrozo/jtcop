@@ -76,6 +76,11 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
     }
 
     @Override
+    public boolean isIntegrationTest() {
+        return false;
+    }
+
+    @Override
     public int numberOfTests() {
         return (int) Arrays.stream(this.klass.getMethods())
             .filter(BytecodeTestClassCharacteristics::isTest)

@@ -54,6 +54,11 @@ final class CharacteristicsJavaParser implements TestClassCharacteristics {
     }
 
     @Override
+    public boolean isIntegrationTest() {
+        return false;
+    }
+
+    @Override
     public int numberOfTests() {
         return (int) this.klass.methods(new TestsOnly()).count();
     }
