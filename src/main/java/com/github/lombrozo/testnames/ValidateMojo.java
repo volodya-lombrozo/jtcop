@@ -77,8 +77,8 @@ public final class ValidateMojo extends AbstractMojo {
      * @checkstyle MemberNameCheck (7 lines)
      */
     @SuppressWarnings("PMD.ImmutableField")
-    @Parameter(defaultValue = "true")
-    private boolean experimental = false;
+    @Parameter(defaultValue = "false")
+    private boolean experimental;
 
     /**
      * The rules that have to be excluded from execution.

@@ -40,7 +40,7 @@ import java.util.stream.Stream;
  *  abstraction. It worth mention that Cop and Rule interface rather similar. So, maybe it makes
  *  sense to create a tree of rules instead.
  */
-public class CopExperimental {
+final class CopExperimental {
 
     /**
      * Project.
@@ -51,7 +51,7 @@ public class CopExperimental {
      * Constructor.
      * @param project Project.
      */
-    public CopExperimental(final Project project) {
+    CopExperimental(final Project project) {
         this.project = project;
     }
 
@@ -59,9 +59,9 @@ public class CopExperimental {
      * Checks the project.
      * @return The complaints.
      */
-    public Collection<Complaint> inspection() {
+    Collection<Complaint> inspection() {
         return this.project.testClasses().stream()
-            .flatMap(this::classLevelRules)
+            .flatMap(CopExperimental::classLevelRules)
             .map(Rule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
@@ -72,7 +72,7 @@ public class CopExperimental {
      * @param klass The test class to check.
      * @return The class-level rules.
      */
-    private Stream<Rule> classLevelRules(final TestClass klass) {
+    private static Stream<Rule> classLevelRules(final TestClass klass) {
         return Stream.of(
             new RuleSuppressed(new RuleOnlyTestMethods(klass), klass)
         );
