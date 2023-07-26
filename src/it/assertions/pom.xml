@@ -72,6 +72,9 @@ SOFTWARE.
               <experimental>true</experimental>
               <exclusions>
                 <exclusion>
+                  JTCOP.RuleOnlyTestMethods
+                </exclusion>
+                <exclusion>
                   JTCOP.RuleAllTestsHaveProductionClass
                 </exclusion>
                 <exclusion>
