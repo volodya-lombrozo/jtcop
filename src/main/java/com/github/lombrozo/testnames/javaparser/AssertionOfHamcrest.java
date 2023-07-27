@@ -82,7 +82,6 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         return this.method.getArguments()
             .stream()
             .map(Expression::toString)
-            .peek(System.out::println)
             .collect(Collectors.toList());
     }
 

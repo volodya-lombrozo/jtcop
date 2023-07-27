@@ -103,7 +103,6 @@ final class AssertionOfJUnit implements ParsedAssertion {
     public List<String> arguments() {
         return this.call.getArguments().stream()
             .map(Expression::toString)
-            .peek(System.out::println)
             .collect(Collectors.toList());
     }
 
