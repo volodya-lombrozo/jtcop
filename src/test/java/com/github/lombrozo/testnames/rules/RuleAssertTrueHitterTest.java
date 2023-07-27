@@ -56,7 +56,7 @@ class RuleAssertTrueHitterTest {
     @Test
     void checksClassWithHitterCorrectly() {
         MatcherAssert.assertThat(
-            "Test class without line hitter should not have complaints",
+            "Test class with line hitter should have complaints",
             new RuleAssertTrueHitter(
                 new TestCase.Fake(
                     "Fake",
