@@ -55,7 +55,7 @@ final class CharacteristicsJavaParser implements TestClassCharacteristics {
 
     @Override
     public boolean isIntegrationTest() {
-        return false;
+        return this.klass.pckg().endsWith(".it");
     }
 
     @Override

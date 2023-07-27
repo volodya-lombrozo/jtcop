@@ -27,6 +27,7 @@ import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -157,6 +158,20 @@ final class JavaParserClass {
     }
 
     /**
+     * Returns package of the class.
+     * @return Package of the class.
+     */
+    String pckg() {
+        final CompilationUnit compilationUnit = (CompilationUnit) this.klass.getParentNode().orElseThrow(
+            () -> new IllegalStateException("Can't find parent node")
+        );
+        final PackageDeclaration packageDeclaration = compilationUnit.getPackageDeclaration().orElseThrow(
+            () -> new IllegalStateException("Can't find package declaration")
+        );
+        return packageDeclaration.getNameAsString();
+    }
+
+    /**
      * Loads class from the classpath.
      * @param name Name of the class.
      * @return Loaded class.
@@ -258,5 +273,4 @@ final class JavaParserClass {
             );
         }
     }
-
 }

@@ -98,4 +98,28 @@ final class CharacteristicsJavaParserTest {
             Matchers.is(expected)
         );
     }
+
+    @Test
+    void checksIfRegularJavaClassIsNotIntegrationTest() {
+        MatcherAssert.assertThat(
+            "We expect that a regular Java class is not an integration test",
+            JavaTestClasses.SIMPLE
+                .toTestClass()
+                .characteristics()
+                .isIntegrationTest(),
+            Matchers.is(false)
+        );
+    }
+
+    @Test
+    void checksIfJavaClassIsIntegrationTest() {
+        MatcherAssert.assertThat(
+            "We expect that an integration test is an integration test",
+            JavaTestClasses.INTEGRATION_TEST
+                .toTestClass()
+                .characteristics()
+                .isIntegrationTest(),
+            Matchers.is(true)
+        );
+    }
 }

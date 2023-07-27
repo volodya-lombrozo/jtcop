@@ -120,7 +120,12 @@ enum JavaTestClasses {
     /**
      * Enum class.
      */
-    ENUM("EnumInTests.java");
+    ENUM("EnumInTests.java"),
+
+    /**
+     * Integration test.
+     */
+    INTEGRATION_TEST("IntegrationTest.java");
 
     /**
      * Java file name in resources.
