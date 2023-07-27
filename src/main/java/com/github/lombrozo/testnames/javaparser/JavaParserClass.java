@@ -27,13 +27,13 @@ import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
-import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithImplements;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
+import com.github.javaparser.ast.nodeTypes.NodeWithName;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import java.io.IOException;
 import java.io.InputStream;
@@ -161,14 +161,18 @@ final class JavaParserClass {
      * Returns package of the class.
      * @return Package of the class.
      */
-    String pckg() {
-        final CompilationUnit compilationUnit = (CompilationUnit) this.klass.getParentNode().orElseThrow(
-            () -> new IllegalStateException("Can't find parent node")
-        );
-        final PackageDeclaration packageDeclaration = compilationUnit.getPackageDeclaration().orElseThrow(
-            () -> new IllegalStateException("Can't find package declaration")
-        );
-        return packageDeclaration.getNameAsString();
+    Optional<String> pckg() {
+        final CompilationUnit unit = (CompilationUnit) this.klass.getParentNode()
+            .orElseThrow(
+                () -> new IllegalStateException(
+                    String.format(
+                        "Can't find parent node in the klass %s",
+                        this.klass
+                    )
+                )
+            );
+        return unit.getPackageDeclaration()
+            .map(NodeWithName::getNameAsString);
     }
 
     /**

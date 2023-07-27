@@ -81,7 +81,9 @@ public interface TestClassCharacteristics {
          */
         private final int methods;
 
-
+        /**
+         * Is the test class an Integration test?
+         */
         private final boolean integration;
 
         /**
@@ -107,6 +109,7 @@ public interface TestClassCharacteristics {
          * @param ntests The number of tests in the class.
          * @param nmethods The total number of methods in the class.
          * @param integration Is the test class an Integration test?
+         * @checkstyle ParameterNumberCheck (10 lines)
          */
         public Fake(
             final boolean extension,
@@ -148,7 +151,7 @@ public interface TestClassCharacteristics {
      */
     @EqualsAndHashCode
     @ToString
-    final class IntegrationTest implements TestClassCharacteristics{
+    final class IntegrationTest implements TestClassCharacteristics {
 
         @Override
         public boolean isJUnitExtension() {
@@ -170,5 +173,4 @@ public interface TestClassCharacteristics {
             return 0;
         }
     }
-
 }
