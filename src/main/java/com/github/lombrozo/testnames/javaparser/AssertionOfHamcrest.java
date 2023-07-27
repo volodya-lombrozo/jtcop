@@ -27,8 +27,10 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Assertion of Hamcrest.
@@ -49,6 +51,7 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
 
     /**
      * Ctor.
+     *
      * @param call The method call.
      */
     AssertionOfHamcrest(final MethodCallExpr call) {
@@ -72,5 +75,19 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
             result = Optional.empty();
         }
         return result;
+    }
+
+    @Override
+    public List<String> arguments() {
+        return this.method.getArguments()
+            .stream()
+            .map(Expression::toString)
+            .peek(System.out::println)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public String name() {
+        return this.method.getNameAsString();
     }
 }

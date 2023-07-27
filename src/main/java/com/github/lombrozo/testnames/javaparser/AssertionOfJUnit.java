@@ -29,6 +29,7 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,6 +60,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * Constructor.
+     *
      * @param method The method call.
      */
     AssertionOfJUnit(final MethodCallExpr method) {
@@ -67,6 +69,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * Constructor.
+     *
      * @param method The method call.
      * @param methods The allowed methods.
      */
@@ -96,8 +99,22 @@ final class AssertionOfJUnit implements ParsedAssertion {
         return result;
     }
 
+    @Override
+    public List<String> arguments() {
+        return this.call.getArguments().stream()
+            .map(Expression::toString)
+            .peek(System.out::println)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public String name() {
+        return this.call.getNameAsString();
+    }
+
     /**
      * The allowed methods.
+     *
      * @return The allowed JUnit methods.
      */
     private static Map<String, Integer> allowedJUnitNames() {
@@ -108,6 +125,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * Is JUnit assertion.
+     *
      * @param method The method.
      * @return True if JUnit assertion.
      */

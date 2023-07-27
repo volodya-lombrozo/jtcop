@@ -23,8 +23,12 @@
  */
 package com.github.lombrozo.testnames;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.cactoos.list.ListOf;
 
 /**
  * The assertion of the test method.
@@ -38,6 +42,20 @@ public interface Assertion {
      * @return The assertion message explanation.
      */
     Optional<String> explanation();
+
+    /**
+     * The assertion arguments.
+     *
+     * @return The assertion arguments
+     */
+    List<String> arguments();
+
+    /**
+     * The assertion name.
+     *
+     * @return Name of assertion
+     */
+    String name();
 
     /**
      * Fake assertion.
@@ -70,6 +88,18 @@ public interface Assertion {
         public Optional<String> explanation() {
             return Optional.ofNullable(this.message);
         }
+
+        @Override
+        public List<String> arguments() {
+            return IntStream.range(0, 5)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.toList());
+        }
+
+        @Override
+        public String name() {
+            return this.message;
+        }
     }
 
     /**
@@ -82,6 +112,16 @@ public interface Assertion {
         @Override
         public Optional<String> explanation() {
             return Optional.empty();
+        }
+
+        @Override
+        public List<String> arguments() {
+            return new ListOf<>();
+        }
+
+        @Override
+        public String name() {
+            return "";
         }
     }
 
