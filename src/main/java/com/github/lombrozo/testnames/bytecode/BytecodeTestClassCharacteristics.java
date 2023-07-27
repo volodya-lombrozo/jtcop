@@ -77,7 +77,7 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
 
     @Override
     public boolean isIntegrationTest() {
-        return false;
+        return this.klass.getPackageName().endsWith(".it");
     }
 
     @Override

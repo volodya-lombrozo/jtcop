@@ -120,8 +120,22 @@ final class BytecodeTestClassCharacteristicsTest {
     }
 
     @Test
-    void checksIfClassIsIntegrationTest(@TempDir final Path temp) {
-
+    void checksIfClassIsIntegrationTest(@TempDir final Path temp) throws IOException {
+        final ResourceOf resource = new ResourceOf("generated/IntegrationTest.class");
+        Files.write(
+            temp.resolve("IntegrationTest.class"),
+            new UncheckedBytes(new BytesOf(resource)).asBytes()
+        );
+        MatcherAssert.assertThat(
+            "We expect that IntegrationTest.class an integration test",
+            new BytecodeProject(temp, temp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .isIntegrationTest(),
+            Matchers.equalTo(true)
+        );
     }
 
     @Test
