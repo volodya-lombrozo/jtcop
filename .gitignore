@@ -31,3 +31,4 @@ hs_err_pid*
 # Maven
 target
 !src/it/all-have-production-class/target
+!src/it/empty-project/target

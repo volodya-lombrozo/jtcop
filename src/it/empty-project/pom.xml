@@ -61,6 +61,7 @@ SOFTWARE.
               <goal>check</goal>
             </goals>
             <configuration>
+              <ignoreGeneratedTests>true</ignoreGeneratedTests>
               <exclusions>
                 <exclusion>
                   <!--Empty exclusion-->
