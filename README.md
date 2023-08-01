@@ -33,12 +33,21 @@ in the root of your project:
 mvn com.github.volodya-lombrozo:jtcop-maven-plugin:check
 ```
 
+or short version:
+```shell
+mvn jtcop:check
+```
+
 After that you will see the result of the plugin execution in the console. If
 you want to use specific (older) version of the plugin, for example `0.1.16`,
 just run the next maven command with specified version:
 
 ```shell
 mvn com.github.volodya-lombrozo:jtcop-maven-plugin:0.1.16:check
+```
+or snapshot version:
+```shell
+mvn com.github.volodya-lombrozo:jtcop-maven-plugin:1.0-SNAPSHOT:check
 ```
 
 ### Add the plugin to your `pom.xml`
