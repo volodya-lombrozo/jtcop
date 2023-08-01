@@ -71,6 +71,13 @@ public final class ValidateMojo extends AbstractMojo {
     private boolean failOnError = true;
 
     /**
+     * Ignore generated tests.
+     * @checkstyle MemberNameCheck (7 lines)
+     */
+    @Parameter(name = "ignoreGeneratedTests", defaultValue = "false")
+    private boolean ignoreGeneratedTests;
+
+    /**
      * Use experimental features.
      * Since most of the experimental features are not stable and more strict
      * they are disable by default.
