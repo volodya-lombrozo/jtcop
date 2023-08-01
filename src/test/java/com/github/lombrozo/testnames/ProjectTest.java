@@ -45,4 +45,21 @@ class ProjectTest {
             Matchers.hasSize(2)
         );
     }
+
+    @Test
+    void createsWithoutTests() {
+        final Project.WithoutTests without = new Project.WithoutTests(
+            new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake())
+        );
+        MatcherAssert.assertThat(
+            "Project without tests should have no test classes",
+            without.testClasses(),
+            Matchers.empty()
+        );
+        MatcherAssert.assertThat(
+            "Project without tests should have production classes",
+            without.productionClasses(),
+            Matchers.hasSize(1)
+        );
+    }
 }

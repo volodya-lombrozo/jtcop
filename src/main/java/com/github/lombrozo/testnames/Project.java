@@ -167,6 +167,8 @@ public interface Project {
 
     /**
      * Project without tests.
+     *
+     * @since 1.0.1
      */
     class WithoutTests implements Project {
 
@@ -177,7 +179,7 @@ public interface Project {
 
         /**
          * Constructor.
-         * @param original
+         * @param original Original project.
          */
         public WithoutTests(final Project original) {
             this.original = original;
@@ -188,6 +190,7 @@ public interface Project {
             return this.original.productionClasses();
         }
 
+        @SuppressWarnings("PMD.JUnit4TestShouldUseTestAnnotation")
         @Override
         public Collection<TestClass> testClasses() {
             return Collections.emptyList();

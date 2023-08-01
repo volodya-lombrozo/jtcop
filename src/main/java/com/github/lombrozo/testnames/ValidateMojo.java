@@ -166,14 +166,21 @@ public final class ValidateMojo extends AbstractMojo {
                 this.tests.toPath(),
                 suppressed
             )
-        ).map(
-            proj -> {
-                if (this.ignoreGeneratedTests) {
-                    return new Project.WithoutTests(proj);
-                } else {
-                    return proj;
-                }
-            }
-        );
+        ).map(this::generated);
+    }
+
+    /**
+     * The generated project.
+     * @param proj The project
+     * @return The generated project
+     */
+    private Project generated(final Project proj) {
+        final Project result;
+        if (this.ignoreGeneratedTests) {
+            result = new Project.WithoutTests(proj);
+        } else {
+            result = proj;
+        }
+        return result;
     }
 }
