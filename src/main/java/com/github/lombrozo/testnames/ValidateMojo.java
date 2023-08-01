@@ -35,6 +35,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -75,6 +76,7 @@ public final class ValidateMojo extends AbstractMojo {
      * @checkstyle MemberNameCheck (7 lines)
      */
     @Parameter(name = "ignoreGeneratedTests", defaultValue = "false")
+    @SuppressWarnings("PMD.LongVariable")
     private boolean ignoreGeneratedTests;
 
     /**
@@ -107,25 +109,8 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
-        final Set<String> suppressed = Arrays.stream(this.exclusions)
-            .filter(Objects::nonNull)
-            .map(RuleName::new)
-            .map(RuleName::withoutPrefix)
-            .collect(Collectors.toSet());
         final ProjectWithoutJUnitExtensions proj = new ProjectWithoutJUnitExtensions(
-            new Project.Combined(
-                new BytecodeProject(this.sources, this.tests),
-                new ProjectJavaParser(
-                    this.sources.toPath(),
-                    this.tests.toPath(),
-                    suppressed
-                ),
-                new ProjectJavaParser(
-                    Paths.get(this.project.getCompileSourceRoots().get(0)),
-                    Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                    suppressed
-                )
-            )
+            new Project.Combined(this.projects())
         );
         final Collection<Complaint> complaints = new ArrayList<>(new Cop(proj).inspection());
         if (this.experimental) {
@@ -136,5 +121,59 @@ public final class ValidateMojo extends AbstractMojo {
         } else if (!complaints.isEmpty()) {
             complaints.forEach(complaint -> this.getLog().warn(complaint.message()));
         }
+    }
+
+    /**
+     * All projects to validate.
+     * @return The projects
+     */
+    private Collection<Project> projects() {
+        final Set<String> suppressed = this.suppressed();
+        return Stream.concat(
+            this.generated(suppressed),
+            Stream.of(
+                new ProjectJavaParser(
+                    Paths.get(this.project.getCompileSourceRoots().get(0)),
+                    Paths.get(this.project.getTestCompileSourceRoots().get(0)),
+                    suppressed
+                )
+            )
+        ).collect(Collectors.toList());
+    }
+
+    /**
+     * The suppressed rules.
+     * @return The suppressed rules
+     */
+    private Set<String> suppressed() {
+        return Arrays.stream(this.exclusions)
+            .filter(Objects::nonNull)
+            .map(RuleName::new)
+            .map(RuleName::withoutPrefix)
+            .collect(Collectors.toSet());
+    }
+
+    /**
+     * The generated projects.
+     * @param suppressed The suppressed rules
+     * @return The generated projects
+     */
+    private Stream<Project> generated(final Set<String> suppressed) {
+        return Stream.of(
+            new BytecodeProject(this.sources, this.tests),
+            new ProjectJavaParser(
+                this.sources.toPath(),
+                this.tests.toPath(),
+                suppressed
+            )
+        ).map(
+            proj -> {
+                if (this.ignoreGeneratedTests) {
+                    return new Project.WithoutTests(proj);
+                } else {
+                    return proj;
+                }
+            }
+        );
     }
 }

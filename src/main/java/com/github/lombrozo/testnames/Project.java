@@ -164,4 +164,33 @@ public interface Project {
                 .collect(Collectors.toList());
         }
     }
+
+    /**
+     * Project without tests.
+     */
+    class WithoutTests implements Project {
+
+        /**
+         * Original project.
+         */
+        private final Project original;
+
+        /**
+         * Constructor.
+         * @param original
+         */
+        public WithoutTests(final Project original) {
+            this.original = original;
+        }
+
+        @Override
+        public Collection<ProductionClass> productionClasses() {
+            return this.original.productionClasses();
+        }
+
+        @Override
+        public Collection<TestClass> testClasses() {
+            return Collections.emptyList();
+        }
+    }
 }
