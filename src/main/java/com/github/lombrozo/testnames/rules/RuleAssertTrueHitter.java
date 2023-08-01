@@ -33,10 +33,6 @@ import java.util.Collection;
 /**
  * The rule checks if test case contains a "Line Hitter"
  * antipattern.
- * <br>
- * For case {@code
- * assertTrue(true)
- * }.
  *
  * @since 1.0.1
  */
