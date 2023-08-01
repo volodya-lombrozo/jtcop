@@ -75,8 +75,8 @@ public final class ValidateMojo extends AbstractMojo {
      * Ignore generated tests.
      * @checkstyle MemberNameCheck (7 lines)
      */
-    @Parameter(name = "ignoreGeneratedTests", defaultValue = "false")
     @SuppressWarnings("PMD.LongVariable")
+    @Parameter(defaultValue = "false")
     private boolean ignoreGeneratedTests;
 
     /**
@@ -109,6 +109,7 @@ public final class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoFailureException {
+        this.getLog().info("Validating tests...");
         final ProjectWithoutJUnitExtensions proj = new ProjectWithoutJUnitExtensions(
             new Project.Combined(this.projects())
         );
@@ -120,6 +121,9 @@ public final class ValidateMojo extends AbstractMojo {
             throw new MojoFailureException(new ComplaintCompound(complaints).message());
         } else if (!complaints.isEmpty()) {
             complaints.forEach(complaint -> this.getLog().warn(complaint.message()));
+        }
+        if (complaints.isEmpty()) {
+            this.getLog().info("All tests are valid");
         }
     }
 
