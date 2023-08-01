@@ -23,12 +23,8 @@
  */
 package com.github.lombrozo.testnames;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import org.cactoos.list.ListOf;
 
 /**
  * The assertion of the test method.
@@ -44,25 +40,18 @@ public interface Assertion {
     Optional<String> explanation();
 
     /**
-     * The assertion arguments.
+     * Is line hitter?
      *
-     * @return The assertion arguments
+     * @return State of line hitter antipattern
      */
-    List<String> arguments();
-
-    /**
-     * The assertion name.
-     *
-     * @return Name of assertion
-     */
-    String name();
+    Boolean isLineHitter();
 
     /**
      * Fake assertion.
      *
      * @since 0.1.15
      */
-    class Fake implements Assertion {
+    final class Fake implements Assertion {
 
         /**
          * The message.
@@ -90,15 +79,8 @@ public interface Assertion {
         }
 
         @Override
-        public List<String> arguments() {
-            return IntStream.range(0, 5)
-                .mapToObj(String::valueOf)
-                .collect(Collectors.toList());
-        }
-
-        @Override
-        public String name() {
-            return this.message;
+        public Boolean isLineHitter() {
+            return Boolean.FALSE;
         }
     }
 
@@ -107,7 +89,7 @@ public interface Assertion {
      *
      * @since 0.1.15
      */
-    class Empty implements Assertion {
+    final class Empty implements Assertion {
 
         @Override
         public Optional<String> explanation() {
@@ -115,13 +97,8 @@ public interface Assertion {
         }
 
         @Override
-        public List<String> arguments() {
-            return new ListOf<>();
-        }
-
-        @Override
-        public String name() {
-            return "";
+        public Boolean isLineHitter() {
+            return false;
         }
     }
 

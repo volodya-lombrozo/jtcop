@@ -25,12 +25,10 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
-import java.util.List;
-import java.util.Optional;
-import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 /**
  * Test case for {@link RuleAssertTrueHitter}.
@@ -45,38 +43,23 @@ class RuleAssertTrueHitterTest {
             "Test class without line hitter should not have complaints",
             new RuleAssertTrueHitter(
                 new TestCase.Fake(
-                    "Fake",
-                    new Assertion.Fake("blah blah blah")
+                    "Test",
+                    new Assertion.Empty()
                 )
             ).complaints(),
             Matchers.empty()
         );
     }
 
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
     void checksClassWithHitterCorrectly() {
+        final Assertion assertion = Mockito.mock(Assertion.class);
+        Mockito.when(assertion.isLineHitter()).thenReturn(true);
         MatcherAssert.assertThat(
             "Test class with line hitter should have complaints",
             new RuleAssertTrueHitter(
-                new TestCase.Fake(
-                    "Fake",
-                    new Assertion() {
-                        @Override
-                        public Optional<String> explanation() {
-                            return Optional.empty();
-                        }
-
-                        @Override
-                        public List<String> arguments() {
-                            return new ListOf<>("false", "true");
-                        }
-
-                        @Override
-                        public String name() {
-                            return "assertTrue";
-                        }
-                    }
-                )
+                new TestCase.Fake(assertion)
             ).complaints(),
             Matchers.hasSize(1)
         );

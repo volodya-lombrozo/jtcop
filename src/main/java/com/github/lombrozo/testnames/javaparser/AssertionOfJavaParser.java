@@ -23,11 +23,8 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * The assertion of the test method.
@@ -65,15 +62,9 @@ public final class AssertionOfJavaParser implements ParsedAssertion {
     }
 
     @Override
-    public List<String> arguments() {
-        return this.call.getArguments().stream()
-            .map(Expression::toString)
-            .collect(Collectors.toList());
-    }
-
-    @Override
-    public String name() {
-        return this.call.getNameAsString();
+    public Boolean isLineHitter() {
+        return new AssertionOfJUnit(this.call).isLineHitter()
+            || new AssertionOfHamcrest(this.call).isLineHitter();
     }
 
     @Override

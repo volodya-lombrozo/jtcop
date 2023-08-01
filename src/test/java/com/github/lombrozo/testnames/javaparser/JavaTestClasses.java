@@ -125,7 +125,17 @@ enum JavaTestClasses {
     /**
      * Integration test.
      */
-    INTEGRATION_TEST("IntegrationTest.java");
+    INTEGRATION_TEST("IntegrationTest.java"),
+
+    /**
+     * Assert true line hitter for hamcrest.
+     */
+    HAMCREST_ASSERT_TRUE_LINE_HITTER("HamcrestAssertTrueHitter.java"),
+
+    /**
+     * Assert true line hitter for hamcrest.
+     */
+    JUNIT_ASSERT_TRUE_LINE_HITTER("JunitAssertTrueHitter.java");
 
     /**
      * Java file name in resources.

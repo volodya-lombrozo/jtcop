@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -78,15 +79,23 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
     }
 
     @Override
-    public List<String> arguments() {
-        return this.method.getArguments()
+    public Boolean isLineHitter() {
+        final List<String> args = this.method.getArguments()
             .stream()
             .map(Expression::toString)
             .collect(Collectors.toList());
+        return AssertionOfHamcrest.containsLineHitter(args);
     }
 
-    @Override
-    public String name() {
-        return this.method.getNameAsString();
+    /**
+     * Checks if contians line hitter.
+     *
+     * @param args Assertion arguments
+     * @return True if contains assertTrue(true) assertion
+     */
+    private static boolean containsLineHitter(final Collection<String> args) {
+        final boolean hitter =
+            args.contains("equalTo(true)") || args.contains("Matchers.equalTo(true)");
+        return args.contains("true") && hitter;
     }
 }

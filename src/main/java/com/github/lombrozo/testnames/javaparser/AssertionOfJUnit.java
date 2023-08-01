@@ -29,7 +29,6 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -100,15 +99,11 @@ final class AssertionOfJUnit implements ParsedAssertion {
     }
 
     @Override
-    public List<String> arguments() {
-        return this.call.getArguments().stream()
-            .map(Expression::toString)
-            .collect(Collectors.toList());
-    }
-
-    @Override
-    public String name() {
-        return this.call.getNameAsString();
+    public Boolean isLineHitter() {
+        return "assertTrue".equalsIgnoreCase(this.call.getNameAsString())
+            && this.call.getArguments()
+                .stream()
+                .anyMatch(arg -> "true".equalsIgnoreCase(arg.toString()));
     }
 
     /**

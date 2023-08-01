@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
@@ -58,11 +59,12 @@ public final class RuleAssertTrueHitter implements Rule {
     @Override
     public Collection<Complaint> complaints() {
         return new RuleConditional(
-            () -> !this.containsLineHitter(),
+            this::containsLineHitter,
             new ComplaintLinked(
-                new Complaint.Text(
-                    "the test contains \"assertTrue(true)\" assertion"
-                ).message(),
+                String.format(
+                    "Method '%s' contains line hitter anti-pattern with 'assert true' case",
+                    this.test.name()
+                ),
                 "Write valuable assertion for this test",
                 this.getClass(),
                 "assert-true-hitter.md"
@@ -76,8 +78,12 @@ public final class RuleAssertTrueHitter implements Rule {
      * @return True if contains line hitter
      */
     private Boolean containsLineHitter() {
-        return this.test.assertions().stream()
-            .filter(assertion -> "assertTrue".equals(assertion.name()))
-            .noneMatch(assertion -> assertion.arguments().contains("true"));
+        boolean result = false;
+        if (!this.test.assertions().isEmpty()) {
+            result = this.test.assertions()
+                .stream()
+                .anyMatch(Assertion::isLineHitter);
+        }
+        return result;
     }
 }
