@@ -69,7 +69,7 @@ public final class RuleLineHitter implements Rule {
     }
 
     /**
-     * Just checks assertTrue(true) assertion.
+     * Just checks if collections contains line hitter.
      *
      * @return True if contains line hitter
      */
