@@ -30,17 +30,17 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link RuleAssertTrueHitter}.
+ * Test case for {@link RuleLineHitter}.
  *
  * @since 1.0.1
  */
-class RuleAssertTrueHitterTest {
+class RuleLineHitterTest {
 
     @Test
     void checksClassWithoutHitterCorrectly() {
         MatcherAssert.assertThat(
             "Test class without line hitter should not have complaints",
-            new RuleAssertTrueHitter(
+            new RuleLineHitter(
                 new TestCase.Fake(
                     "Test",
                     new Assertion.Empty()
@@ -55,7 +55,7 @@ class RuleAssertTrueHitterTest {
     void checksClassWithHitterCorrectly() {
         MatcherAssert.assertThat(
             "Test class with line hitter should have complaints",
-            new RuleAssertTrueHitter(
+            new RuleLineHitter(
                 new TestCase.Fake(
                     new Assertion.Fake(
                         "msg",

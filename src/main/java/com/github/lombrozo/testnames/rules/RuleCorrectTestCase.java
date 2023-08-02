@@ -56,7 +56,7 @@ public final class RuleCorrectTestCase implements Rule {
             new RuleNotUsesSpecialCharacters(test),
             new RulePresentTense(test),
             new RuleAssertionMessage(test),
-            new RuleAssertTrueHitter(test)
+            new RuleLineHitter(test)
         ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
     }
 
