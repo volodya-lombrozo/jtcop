@@ -74,12 +74,8 @@ public final class RuleAssertTrueHitter implements Rule {
      * @return True if contains line hitter
      */
     private Boolean containsLineHitter() {
-        boolean result = false;
-        if (!this.test.assertions().isEmpty()) {
-            result = this.test.assertions()
-                .stream()
-                .anyMatch(Assertion::isLineHitter);
-        }
-        return result;
+        return this.test.assertions()
+            .stream()
+            .anyMatch(Assertion::isLineHitter);
     }
 }

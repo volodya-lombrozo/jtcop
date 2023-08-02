@@ -28,7 +28,6 @@ import com.github.lombrozo.testnames.TestCase;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 /**
  * Test case for {@link RuleAssertTrueHitter}.
@@ -54,12 +53,15 @@ class RuleAssertTrueHitterTest {
     @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
     void checksClassWithHitterCorrectly() {
-        final Assertion assertion = Mockito.mock(Assertion.class);
-        Mockito.when(assertion.isLineHitter()).thenReturn(true);
         MatcherAssert.assertThat(
             "Test class with line hitter should have complaints",
             new RuleAssertTrueHitter(
-                new TestCase.Fake(assertion)
+                new TestCase.Fake(
+                    new Assertion.Fake(
+                        "msg",
+                        true
+                    )
+                )
             ).complaints(),
             Matchers.hasSize(1)
         );
