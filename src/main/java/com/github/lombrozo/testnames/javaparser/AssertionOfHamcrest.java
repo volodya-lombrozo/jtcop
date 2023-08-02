@@ -88,14 +88,30 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
     }
 
     /**
-     * Checks if contians line hitter.
+     * Checks if contains line hitter.
      *
      * @param args Assertion arguments
      * @return True if contains assertTrue(true) assertion
      */
     private static boolean containsLineHitter(final Collection<String> args) {
-        final boolean hitter =
-            args.contains("equalTo(true)") || args.contains("Matchers.equalTo(true)");
-        return args.contains("true") && hitter;
+        return AssertionOfHamcrest.containsHitter(args, "true")
+            || AssertionOfHamcrest.containsHitter(args, "false");
+    }
+
+    /**
+     * Checks for the existence of line hitter by type.
+     *
+     * @param args All args
+     * @param type Type of hitter
+     * @return True if contains hitter
+     */
+    private static boolean containsHitter(
+        final Collection<String> args,
+        final String type
+    ) {
+        return (
+            args.contains(String.format("equalTo(%s)", type))
+                || args.contains(String.format("Matchers.equalTo(%s)", type))
+            ) && args.contains(type);
     }
 }
