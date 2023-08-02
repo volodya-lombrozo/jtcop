@@ -58,12 +58,12 @@ public final class RuleLineHitter implements Rule {
             this::containsLineHitter,
             new ComplaintLinked(
                 String.format(
-                    "Method '%s' contains line hitter anti-pattern with 'assert true' case",
+                    "Method '%s' contains line hitter anti-pattern",
                     this.test.name()
                 ),
                 "Write valuable assertion for this test",
                 this.getClass(),
-                "assert-true-hitter.md"
+                "line-hitter.md"
             )
         ).complaints();
     }
