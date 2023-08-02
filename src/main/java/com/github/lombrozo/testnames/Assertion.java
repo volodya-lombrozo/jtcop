@@ -58,6 +58,9 @@ public interface Assertion {
          */
         private final String message;
 
+        /**
+         * State of line hitter antipattern.
+         */
         private final boolean hitter;
 
         /**
