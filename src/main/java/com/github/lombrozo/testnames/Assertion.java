@@ -44,7 +44,7 @@ public interface Assertion {
      *
      * @return State of line hitter antipattern
      */
-    Boolean isLineHitter();
+    boolean isLineHitter();
 
     /**
      * Fake assertion.
@@ -58,6 +58,8 @@ public interface Assertion {
          */
         private final String message;
 
+        private final boolean hitter;
+
         /**
          * Ctor.
          */
@@ -70,7 +72,21 @@ public interface Assertion {
          * @param msg The message.
          */
         public Fake(final String msg) {
+            this(msg, false);
+        }
+
+        /**
+         * Ctor.
+         *
+         * @param msg The message.
+         * @param hitter The hitter state.
+         */
+        public Fake(
+            final String msg,
+            final boolean hitter
+        ) {
             this.message = msg;
+            this.hitter = hitter;
         }
 
         @Override
@@ -79,8 +95,8 @@ public interface Assertion {
         }
 
         @Override
-        public Boolean isLineHitter() {
-            return Boolean.FALSE;
+        public boolean isLineHitter() {
+            return this.hitter;
         }
     }
 
@@ -97,7 +113,7 @@ public interface Assertion {
         }
 
         @Override
-        public Boolean isLineHitter() {
+        public boolean isLineHitter() {
             return false;
         }
     }

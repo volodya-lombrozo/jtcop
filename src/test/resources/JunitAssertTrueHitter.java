@@ -7,4 +7,9 @@ class JunitAssertTrueHitter {
     void assertTrueHitter() {
         assertTrue(true);
     }
+
+    @Test
+    void assertFalseHitter() {
+        assertFalse(false);
+    }
 }

@@ -29,8 +29,10 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 
@@ -45,6 +47,11 @@ final class AssertionOfJUnit implements ParsedAssertion {
      * Special assertions that we consider as assertions with messages.
      */
     private static final String[] SPECIAL = {"assertAll", "fail"};
+
+    /**
+     * The `assert` regex.
+     */
+    private static final Pattern ASSERT = Pattern.compile("assert");
 
     /**
      * The method call.
@@ -99,11 +106,26 @@ final class AssertionOfJUnit implements ParsedAssertion {
     }
 
     @Override
-    public Boolean isLineHitter() {
-        return "assertTrue".equalsIgnoreCase(this.call.getNameAsString())
-            && this.call.getArguments()
-                .stream()
-                .anyMatch(arg -> "true".equalsIgnoreCase(arg.toString()));
+    public boolean isLineHitter() {
+        final String cut = AssertionOfJUnit.ASSERT
+            .matcher(this.call.getNameAsString())
+            .replaceAll("")
+            .toLowerCase(Locale.ROOT);
+        return this.containsLineHitter("true", cut)
+            || this.containsLineHitter("false", cut);
+    }
+
+    /**
+     * Check on simple line hitter.
+     *
+     * @param type Type of hitter
+     * @param cut Rest of assertion
+     * @return True if rest of assertion equals to type
+     */
+    private boolean containsLineHitter(final String type, final String cut) {
+        return type.equalsIgnoreCase(cut) && this.call.getArguments()
+            .stream()
+            .anyMatch(arg -> cut.equals(arg.toString()));
     }
 
     /**

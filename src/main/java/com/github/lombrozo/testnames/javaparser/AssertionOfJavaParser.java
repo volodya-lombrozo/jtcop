@@ -62,7 +62,7 @@ public final class AssertionOfJavaParser implements ParsedAssertion {
     }
 
     @Override
-    public Boolean isLineHitter() {
+    public boolean isLineHitter() {
         return new AssertionOfJUnit(this.call).isLineHitter()
             || new AssertionOfHamcrest(this.call).isLineHitter();
     }

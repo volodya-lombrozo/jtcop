@@ -79,7 +79,7 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
     }
 
     @Override
-    public Boolean isLineHitter() {
+    public boolean isLineHitter() {
         final List<String> args = this.method.getArguments()
             .stream()
             .map(Expression::toString)
