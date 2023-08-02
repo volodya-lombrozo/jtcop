@@ -40,16 +40,28 @@ public interface Assertion {
     Optional<String> explanation();
 
     /**
+     * Is line hitter?
+     *
+     * @return State of line hitter antipattern
+     */
+    boolean isLineHitter();
+
+    /**
      * Fake assertion.
      *
      * @since 0.1.15
      */
-    class Fake implements Assertion {
+    final class Fake implements Assertion {
 
         /**
          * The message.
          */
         private final String message;
+
+        /**
+         * State of line hitter antipattern.
+         */
+        private final boolean hitter;
 
         /**
          * Ctor.
@@ -63,12 +75,31 @@ public interface Assertion {
          * @param msg The message.
          */
         public Fake(final String msg) {
+            this(msg, false);
+        }
+
+        /**
+         * Ctor.
+         *
+         * @param msg The message.
+         * @param hitter The hitter state.
+         */
+        public Fake(
+            final String msg,
+            final boolean hitter
+        ) {
             this.message = msg;
+            this.hitter = hitter;
         }
 
         @Override
         public Optional<String> explanation() {
             return Optional.ofNullable(this.message);
+        }
+
+        @Override
+        public boolean isLineHitter() {
+            return this.hitter;
         }
     }
 
@@ -77,11 +108,16 @@ public interface Assertion {
      *
      * @since 0.1.15
      */
-    class Empty implements Assertion {
+    final class Empty implements Assertion {
 
         @Override
         public Optional<String> explanation() {
             return Optional.empty();
+        }
+
+        @Override
+        public boolean isLineHitter() {
+            return false;
         }
     }
 

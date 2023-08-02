@@ -21,50 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.Rule;
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
-import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 /**
- * The rule checks if test case in present simple.
+ * Test case for {@link RuleLineHitter}.
  *
- * @since 0.1.0
+ * @since 1.0.1
  */
-public final class RuleCorrectTestCase implements Rule {
+class RuleLineHitterTest {
 
-    /**
-     * The rules.
-     */
-    private final Collection<Rule> all;
-
-    /**
-     * Ctor.
-     *
-     * @param test The test case to check
-     */
-    RuleCorrectTestCase(final TestCase test) {
-        this.all = Stream.of(
-            new RuleNotCamelCase(test),
-            new RuleNotContainsTestWord(test),
-            new RuleNotSpam(test),
-            new RuleNotUsesSpecialCharacters(test),
-            new RulePresentTense(test),
-            new RuleAssertionMessage(test),
-            new RuleLineHitter(test)
-        ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
+    @Test
+    void checksClassWithoutHitterCorrectly() {
+        MatcherAssert.assertThat(
+            "Test class without line hitter should not have complaints",
+            new RuleLineHitter(
+                new TestCase.Fake(
+                    "Test",
+                    new Assertion.Empty()
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
     }
 
-    @Override
-    public Collection<Complaint> complaints() {
-        return this.all.stream()
-            .map(Rule::complaints)
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    @Test
+    void checksClassWithHitterCorrectly() {
+        MatcherAssert.assertThat(
+            "Test class with line hitter should have complaints",
+            new RuleLineHitter(
+                new TestCase.Fake(
+                    new Assertion.Fake(
+                        "msg",
+                        true
+                    )
+                )
+            ).complaints(),
+            Matchers.hasSize(1)
+        );
     }
 }

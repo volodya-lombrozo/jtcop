@@ -21,50 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 package com.github.lombrozo.testnames.rules;
 
+import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
- * The rule checks if test case in present simple.
+ * The rule checks if test case contains a "Line Hitter"
+ * antipattern.
  *
- * @since 0.1.0
+ * @since 1.0.1
  */
-public final class RuleCorrectTestCase implements Rule {
+public final class RuleLineHitter implements Rule {
 
     /**
-     * The rules.
+     * The test case.
      */
-    private final Collection<Rule> all;
+    private final TestCase test;
 
     /**
-     * Ctor.
+     * Primary ctor.
      *
      * @param test The test case to check
      */
-    RuleCorrectTestCase(final TestCase test) {
-        this.all = Stream.of(
-            new RuleNotCamelCase(test),
-            new RuleNotContainsTestWord(test),
-            new RuleNotSpam(test),
-            new RuleNotUsesSpecialCharacters(test),
-            new RulePresentTense(test),
-            new RuleAssertionMessage(test),
-            new RuleLineHitter(test)
-        ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
+    public RuleLineHitter(final TestCase test) {
+        this.test = test;
     }
 
     @Override
     public Collection<Complaint> complaints() {
-        return this.all.stream()
-            .map(Rule::complaints)
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
+        return new RuleConditional(
+            this::containsLineHitter,
+            new ComplaintLinked(
+                String.format(
+                    "Method '%s' contains line hitter anti-pattern",
+                    this.test.name()
+                ),
+                "Write valuable assertion for this test",
+                this.getClass(),
+                "line-hitter.md"
+            )
+        ).complaints();
+    }
+
+    /**
+     * Just checks if collections contains line hitter.
+     *
+     * @return True if contains line hitter
+     */
+    private Boolean containsLineHitter() {
+        return this.test.assertions()
+            .stream()
+            .anyMatch(Assertion::isLineHitter);
     }
 }

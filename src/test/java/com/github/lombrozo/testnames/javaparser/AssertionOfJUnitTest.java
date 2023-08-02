@@ -25,6 +25,7 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
@@ -157,5 +158,45 @@ class AssertionOfJUnitTest {
                 .allMatch(Optional::isPresent),
             Matchers.is(true)
         );
+    }
+
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    @Test
+    void checksIfAssertTrueLineHitter() {
+        final List<AssertionOfJUnit> assertions =
+            AssertionOfJUnitTest.assertionsFromMethod("assertTrueHitter");
+        MatcherAssert.assertThat(
+            String.format("%s\n\tHave to contain only one line hitter", assertions),
+            assertions,
+            Matchers.hasSize(1)
+        );
+    }
+
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    @Test
+    void checksIfAssertFalseLineHitter() {
+        final List<AssertionOfJUnit> assertions =
+            AssertionOfJUnitTest.assertionsFromMethod("assertFalseHitter");
+        MatcherAssert.assertThat(
+            String.format("%s\n\tHave to contain only one line hitter", assertions),
+            assertions,
+            Matchers.hasSize(1)
+        );
+    }
+
+    /**
+     * Return assertions from method by name.
+     *
+     * @param method Method name
+     * @return Assertions from method
+     */
+    private static List<AssertionOfJUnit> assertionsFromMethod(
+        final String method
+    ) {
+        return JavaTestClasses.JUNIT_ASSERT_TRUE_LINE_HITTER.method(method)
+            .statements()
+            .map(AssertionOfJUnit::new)
+            .filter(AssertionOfJUnit::isLineHitter)
+            .collect(Collectors.toList());
     }
 }

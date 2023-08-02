@@ -125,4 +125,21 @@ class AssertionOfHamcrestTest {
             Matchers.empty()
         );
     }
+
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    @Test
+    void checksCorrectlyOnLineHitters() {
+        final List<AssertionOfHamcrest> assertions =
+            JavaTestClasses.HAMCREST_ASSERT_TRUE_LINE_HITTER
+            .method("checksHitter")
+            .statements()
+            .map(AssertionOfHamcrest::new)
+            .filter(AssertionOfHamcrest::isLineHitter)
+            .collect(Collectors.toList());
+        MatcherAssert.assertThat(
+            String.format("%s contains two line hitters", assertions),
+            assertions,
+            Matchers.hasSize(2)
+        );
+    }
 }

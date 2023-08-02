@@ -26,9 +26,12 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Assertion of Hamcrest.
@@ -49,6 +52,7 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
 
     /**
      * Ctor.
+     *
      * @param call The method call.
      */
     AssertionOfHamcrest(final MethodCallExpr call) {
@@ -72,5 +76,42 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
             result = Optional.empty();
         }
         return result;
+    }
+
+    @Override
+    public boolean isLineHitter() {
+        final List<String> args = this.method.getArguments()
+            .stream()
+            .map(Expression::toString)
+            .collect(Collectors.toList());
+        return AssertionOfHamcrest.containsLineHitter(args);
+    }
+
+    /**
+     * Checks if contains line hitter.
+     *
+     * @param args Assertion arguments
+     * @return True if contains assertTrue(true) assertion
+     */
+    private static boolean containsLineHitter(final Collection<String> args) {
+        return AssertionOfHamcrest.containsHitter(args, "true")
+            || AssertionOfHamcrest.containsHitter(args, "false");
+    }
+
+    /**
+     * Checks for the existence of line hitter by type.
+     *
+     * @param args All args
+     * @param type Type of hitter
+     * @return True if contains hitter
+     */
+    private static boolean containsHitter(
+        final Collection<String> args,
+        final String type
+    ) {
+        return (
+            args.contains(String.format("equalTo(%s)", type))
+                || args.contains(String.format("Matchers.equalTo(%s)", type))
+            ) && args.contains(type);
     }
 }

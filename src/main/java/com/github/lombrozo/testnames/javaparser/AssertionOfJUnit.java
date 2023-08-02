@@ -29,8 +29,10 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 
@@ -47,6 +49,11 @@ final class AssertionOfJUnit implements ParsedAssertion {
     private static final String[] SPECIAL = {"assertAll", "fail"};
 
     /**
+     * The `assert` regex.
+     */
+    private static final Pattern ASSERT = Pattern.compile("assert");
+
+    /**
      * The method call.
      */
     private final MethodCallExpr call;
@@ -59,6 +66,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * Constructor.
+     *
      * @param method The method call.
      */
     AssertionOfJUnit(final MethodCallExpr method) {
@@ -67,6 +75,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * Constructor.
+     *
      * @param method The method call.
      * @param methods The allowed methods.
      */
@@ -96,8 +105,32 @@ final class AssertionOfJUnit implements ParsedAssertion {
         return result;
     }
 
+    @Override
+    public boolean isLineHitter() {
+        final String cut = AssertionOfJUnit.ASSERT
+            .matcher(this.call.getNameAsString())
+            .replaceAll("")
+            .toLowerCase(Locale.ROOT);
+        return this.containsLineHitter("true", cut)
+            || this.containsLineHitter("false", cut);
+    }
+
+    /**
+     * Check on simple line hitter.
+     *
+     * @param type Type of hitter
+     * @param cut Rest of assertion
+     * @return True if rest of assertion equals to type
+     */
+    private boolean containsLineHitter(final String type, final String cut) {
+        return type.equalsIgnoreCase(cut) && this.call.getArguments()
+            .stream()
+            .anyMatch(arg -> cut.equals(arg.toString()));
+    }
+
     /**
      * The allowed methods.
+     *
      * @return The allowed JUnit methods.
      */
     private static Map<String, Integer> allowedJUnitNames() {
@@ -108,6 +141,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
 
     /**
      * Is JUnit assertion.
+     *
      * @param method The method.
      * @return True if JUnit assertion.
      */
