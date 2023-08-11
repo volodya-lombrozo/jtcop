@@ -25,12 +25,19 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
-class HamcrestAssertTrueHitter {
+class Java17Test {
+
+    final String cql =
+        """
+            CREATE KEYSPACE test
+            WITH REPLICATION = {
+             'class' : 'NetworkTopologyStrategy',
+             'datacenter1' : 1
+             };
+            """;
 
     @Test
-    void checksHitter() {
-        MatcherAssert.assertThat("msg", true, Matchers.equalTo(true));
-        MatcherAssert.assertThat("msg", false, Matchers.equalTo(false));
-        MatcherAssert.assertThat("msg", true || false, Matchers.equalTo(true));
+    void checksQuery() {
+        MatcherAssert.assertThat("msg", cql, Matchers.notNullValue());
     }
 }

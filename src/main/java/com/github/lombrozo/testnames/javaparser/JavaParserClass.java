@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
@@ -37,6 +38,7 @@ import com.github.javaparser.ast.nodeTypes.NodeWithName;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
@@ -54,6 +56,7 @@ import java.util.stream.Stream;
  *
  * @since 0.1.15
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class JavaParserClass {
 
     /**
@@ -63,10 +66,10 @@ final class JavaParserClass {
 
     /**
      * Ctor.
-     * @param stream Input stream with java class.
+     * @param path Input stream with java class.
      */
-    JavaParserClass(final Path stream) {
-        this(JavaParserClass.parse(stream));
+    JavaParserClass(final Path path) {
+        this(JavaParserClass.parse(path));
     }
 
     /**
@@ -74,7 +77,7 @@ final class JavaParserClass {
      * @param stream Input stream with java class.
      */
     JavaParserClass(final InputStream stream) {
-        this(StaticJavaParser.parse(stream));
+        this(JavaParserClass.parse(stream));
     }
 
     /**
@@ -269,12 +272,25 @@ final class JavaParserClass {
      */
     private static CompilationUnit parse(final Path path) {
         try {
-            return StaticJavaParser.parse(path);
+            StaticJavaParser.getParserConfiguration()
+                .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
+            return JavaParserClass.parse(Files.newInputStream(path));
         } catch (final IOException ex) {
             throw new IllegalStateException(
                 String.format("Can't parse java file: %s", path.toAbsolutePath()),
                 ex
             );
         }
+    }
+
+    /**
+     * Parse java by input stream.
+     * @param stream Input stream.
+     * @return Compilation unit.
+     */
+    private static CompilationUnit parse(final InputStream stream) {
+        StaticJavaParser.getParserConfiguration()
+            .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
+        return StaticJavaParser.parse(stream);
     }
 }

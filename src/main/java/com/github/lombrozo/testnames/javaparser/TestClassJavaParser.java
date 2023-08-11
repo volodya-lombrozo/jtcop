@@ -25,7 +25,6 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
-import com.github.javaparser.StaticJavaParser;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
@@ -191,7 +190,7 @@ public final class TestClassJavaParser implements TestClass {
      * @return Parsed class.
      */
     private static Sticky<JavaParserClass> parse(final Path path) {
-        return new Sticky<>(() -> new JavaParserClass(StaticJavaParser.parse(path)));
+        return new Sticky<>(() -> new JavaParserClass(path));
     }
 
     /**
@@ -200,6 +199,6 @@ public final class TestClassJavaParser implements TestClass {
      * @return Parsed class.
      */
     private static Sticky<JavaParserClass> parse(final InputStream stream) {
-        return new Sticky<>(() -> new JavaParserClass(StaticJavaParser.parse(stream)));
+        return new Sticky<>(() -> new JavaParserClass(stream));
     }
 }

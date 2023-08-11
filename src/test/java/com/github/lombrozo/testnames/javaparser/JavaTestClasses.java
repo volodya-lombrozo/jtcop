@@ -133,6 +133,11 @@ enum JavaTestClasses {
     HAMCREST_ASSERT_TRUE_LINE_HITTER("HamcrestAssertTrueHitter.java"),
 
     /**
+     * Java class with java 17 features.
+     */
+    JAVA_17_TEST("Java17Test.java"),
+
+    /**
      * Assert true line hitter for junit.
      */
     JUNIT_ASSERT_TRUE_LINE_HITTER("JunitAssertTrueHitter.java");

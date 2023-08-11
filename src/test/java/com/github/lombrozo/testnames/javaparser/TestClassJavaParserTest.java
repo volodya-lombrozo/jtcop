@@ -225,4 +225,15 @@ final class TestClassJavaParserTest {
         MatcherAssert.assertThat(msg, all, Matchers.hasSize(1));
         MatcherAssert.assertThat(msg, all, Matchers.hasItem(expected));
     }
+
+    @Test
+    void parsesJavaClassWithTextBlock() {
+        MatcherAssert.assertThat(
+            "We expected that test class will parsed successfully and contain only one test case",
+            JavaTestClasses.JAVA_17_TEST
+                .toTestClass()
+                .all(),
+            Matchers.hasSize(1)
+        );
+    }
 }
