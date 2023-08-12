@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.rules.RuleCorrectTestCases;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,12 +44,15 @@ final class Cop {
      */
     private final Project project;
 
+    private final Function<Suspect, Stream<Rule>> law;
+
     /**
      * Ctor.
      * @param proj The project to check.
      */
     Cop(final Project proj) {
         this.project = proj;
+        this.law = Cop::rules;
     }
 
     /**
@@ -57,22 +61,27 @@ final class Cop {
      */
     Collection<Complaint> inspection() {
         return this.project.testClasses().stream()
-            .flatMap(this::classLevelRules)
+            .map(testClass -> new Suspect(this.project, testClass))
+            .flatMap(this.law)
             .map(Rule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
     }
 
+
     /**
      * Creates the class-level rules.
-     * @param klass The test class to check.
+     * @param suspect The test class to check.
      * @return The class-level rules.
      */
-    private Stream<Rule> classLevelRules(final TestClass klass) {
+    private static Stream<Rule> rules(final Suspect suspect) {
         return Stream.of(
-            new RuleSuppressed(new RuleAllTestsHaveProductionClass(this.project, klass), klass),
-            new RuleSuppressed(new RuleCorrectTestName(klass), klass),
-            new RuleSuppressed(new RuleCorrectTestCases(klass), klass)
+            new RuleSuppressed(
+                new RuleAllTestsHaveProductionClass(suspect.getProject(), suspect.getTest()),
+                suspect.getTest()
+            ),
+            new RuleSuppressed(new RuleCorrectTestName(suspect.getTest()), suspect.getTest()),
+            new RuleSuppressed(new RuleCorrectTestCases(suspect.getTest()), suspect.getTest())
         );
     }
 }
