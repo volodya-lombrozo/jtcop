@@ -46,7 +46,7 @@ final class Cop {
     private final Project project;
 
     /**
-     *
+     * The law to check the project.
      */
     private final Function<Suspect, Stream<Rule>> law;
 
@@ -84,7 +84,21 @@ final class Cop {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Experimental law.
+     * @return The experimental law which will be applied to projects that uses `experimental`
+     *  features.
+     */
+    static Function<Suspect, Stream<Rule>> experimental() {
+        return suspect -> Stream.of(
+            new RuleSuppressed(new RuleOnlyTestMethods(suspect.test()), suspect.test())
+        );
+    }
 
+    /**
+     * Regular law.
+     * @return The regular law which will be applied to all projects.
+     */
     private static Function<Suspect, Stream<Rule>> regular() {
         return suspect -> Stream.of(
             new RuleSuppressed(
@@ -93,12 +107,6 @@ final class Cop {
             ),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleCorrectTestCases(suspect.test()), suspect.test())
-        );
-    }
-
-     static Function<Suspect, Stream<Rule>> experimental() {
-        return suspect -> Stream.of(
-            new RuleSuppressed(new RuleOnlyTestMethods(suspect.test()), suspect.test())
         );
     }
 }
