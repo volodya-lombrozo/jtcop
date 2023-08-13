@@ -115,7 +115,7 @@ public final class ValidateMojo extends AbstractMojo {
         );
         final Collection<Complaint> complaints = new ArrayList<>(new Cop(proj).inspection());
         if (this.experimental) {
-            complaints.addAll(new CopExperimental(proj).inspection());
+            complaints.addAll(new Cop(proj, Cop.experimental()).inspection());
         }
         if (!complaints.isEmpty() && this.failOnError) {
             throw new MojoFailureException(new ComplaintCompound(complaints).message());

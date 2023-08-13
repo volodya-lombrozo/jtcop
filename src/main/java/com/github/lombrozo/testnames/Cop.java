@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames;
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestCases;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
+import com.github.lombrozo.testnames.rules.RuleOnlyTestMethods;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
 import java.util.function.Function;
@@ -54,7 +55,7 @@ final class Cop {
      * @param proj The project to check.
      */
     Cop(final Project proj) {
-        this(proj, Cop::rules);
+        this(proj, Cop.regular());
     }
 
     /**
@@ -62,7 +63,7 @@ final class Cop {
      * @param project The project to check.
      * @param law The law to check the project.
      */
-    public Cop(
+    Cop(
         final Project project,
         final Function<Suspect, Stream<Rule>> law
     ) {
@@ -84,19 +85,20 @@ final class Cop {
     }
 
 
-    /**
-     * Creates the class-level rules.
-     * @param suspect The test class to check.
-     * @return The class-level rules.
-     */
-    private static Stream<Rule> rules(final Suspect suspect) {
-        return Stream.of(
+    private static Function<Suspect, Stream<Rule>> regular() {
+        return suspect -> Stream.of(
             new RuleSuppressed(
                 new RuleAllTestsHaveProductionClass(suspect.project(), suspect.test()),
                 suspect.test()
             ),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleCorrectTestCases(suspect.test()), suspect.test())
+        );
+    }
+
+     static Function<Suspect, Stream<Rule>> experimental() {
+        return suspect -> Stream.of(
+            new RuleSuppressed(new RuleOnlyTestMethods(suspect.test()), suspect.test())
         );
     }
 }
