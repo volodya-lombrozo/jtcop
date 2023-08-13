@@ -44,6 +44,9 @@ final class Cop {
      */
     private final Project project;
 
+    /**
+     *
+     */
     private final Function<Suspect, Stream<Rule>> law;
 
     /**
@@ -51,8 +54,20 @@ final class Cop {
      * @param proj The project to check.
      */
     Cop(final Project proj) {
-        this.project = proj;
-        this.law = Cop::rules;
+        this(proj, Cop::rules);
+    }
+
+    /**
+     * Ctor.
+     * @param project The project to check.
+     * @param law The law to check the project.
+     */
+    public Cop(
+        final Project project,
+        final Function<Suspect, Stream<Rule>> law
+    ) {
+        this.project = project;
+        this.law = law;
     }
 
     /**
@@ -77,11 +92,11 @@ final class Cop {
     private static Stream<Rule> rules(final Suspect suspect) {
         return Stream.of(
             new RuleSuppressed(
-                new RuleAllTestsHaveProductionClass(suspect.getProject(), suspect.getTest()),
-                suspect.getTest()
+                new RuleAllTestsHaveProductionClass(suspect.project(), suspect.test()),
+                suspect.test()
             ),
-            new RuleSuppressed(new RuleCorrectTestName(suspect.getTest()), suspect.getTest()),
-            new RuleSuppressed(new RuleCorrectTestCases(suspect.getTest()), suspect.getTest())
+            new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
+            new RuleSuppressed(new RuleCorrectTestCases(suspect.test()), suspect.test())
         );
     }
 }
