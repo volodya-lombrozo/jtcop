@@ -26,8 +26,10 @@ package com.github.lombrozo.testnames;
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestCases;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
+import com.github.lombrozo.testnames.rules.RuleOnlyTestMethods;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,11 +46,29 @@ final class Cop {
     private final Project project;
 
     /**
+     * The law to check the project.
+     */
+    private final Function<Suspect, Stream<Rule>> law;
+
+    /**
      * Ctor.
      * @param proj The project to check.
      */
     Cop(final Project proj) {
-        this.project = proj;
+        this(proj, Cop.regular());
+    }
+
+    /**
+     * Ctor.
+     * @param project The project to check.
+     * @param law The law to check the project.
+     */
+    Cop(
+        final Project project,
+        final Function<Suspect, Stream<Rule>> law
+    ) {
+        this.project = project;
+        this.law = law;
     }
 
     /**
@@ -57,22 +77,36 @@ final class Cop {
      */
     Collection<Complaint> inspection() {
         return this.project.testClasses().stream()
-            .flatMap(this::classLevelRules)
+            .map(testClass -> new Suspect(this.project, testClass))
+            .flatMap(this.law)
             .map(Rule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
     }
 
     /**
-     * Creates the class-level rules.
-     * @param klass The test class to check.
-     * @return The class-level rules.
+     * Experimental law.
+     * @return The experimental law which will be applied to projects that uses `experimental`
+     *  features.
      */
-    private Stream<Rule> classLevelRules(final TestClass klass) {
-        return Stream.of(
-            new RuleSuppressed(new RuleAllTestsHaveProductionClass(this.project, klass), klass),
-            new RuleSuppressed(new RuleCorrectTestName(klass), klass),
-            new RuleSuppressed(new RuleCorrectTestCases(klass), klass)
+    static Function<Suspect, Stream<Rule>> experimental() {
+        return suspect -> Stream.of(
+            new RuleSuppressed(new RuleOnlyTestMethods(suspect.test()), suspect.test())
+        );
+    }
+
+    /**
+     * Regular law.
+     * @return The regular law which will be applied to all projects.
+     */
+    private static Function<Suspect, Stream<Rule>> regular() {
+        return suspect -> Stream.of(
+            new RuleSuppressed(
+                new RuleAllTestsHaveProductionClass(suspect.project(), suspect.test()),
+                suspect.test()
+            ),
+            new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
+            new RuleSuppressed(new RuleCorrectTestCases(suspect.test()), suspect.test())
         );
     }
 }

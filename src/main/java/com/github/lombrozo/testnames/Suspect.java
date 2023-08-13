@@ -23,24 +23,51 @@
  */
 package com.github.lombrozo.testnames;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
-
 /**
- * Test case for {@link CopExperimental}.
- *
- * @since 0.1.20
+ * The suspect that is checked by the cop.
+ * @since 1.2.0
+ * @todo #245:90min The Suspect class is a plain DTO.
+ *  We should refactor this class to make it more object-oriented.
+ *  Why it is bed, you can read in that
+ *  <a href="https://www.yegor256.com/2016/07/06/data-transfer-object.html">blog post.</a>
+ *  The main idea to make this class alive.
+ *  Moreover, we have to add more tests for this class.
  */
-class CopExperimentalTest {
+public class Suspect {
 
-    @Test
-    void createsCopSuccessfully() {
-        MatcherAssert.assertThat(
-            "Experimental cop doesn't have to contain any complaints for a fake project",
-            new CopExperimental(new Project.Fake()).inspection(),
-            Matchers.empty()
-        );
+    /**
+     * The project to check.
+     */
+    private final Project proj;
+
+    /**
+     * The test class to check.
+     */
+    private final TestClass klass;
+
+    /**
+     * Ctor.
+     * @param project The project to check.
+     * @param test The test class to check.
+     */
+    Suspect(final Project project, final TestClass test) {
+        this.proj = project;
+        this.klass = test;
+    }
+
+    /**
+     * The project to check.
+     * @return The project.
+     */
+    public Project project() {
+        return this.proj;
+    }
+
+    /**
+     * The test class to check.
+     * @return The test class.
+     */
+    public TestClass test() {
+        return this.klass;
     }
 }
-
