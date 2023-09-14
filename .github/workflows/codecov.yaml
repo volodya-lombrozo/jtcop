@@ -21,7 +21,7 @@ jobs:
           restore-keys: |
             maven-
       - run: mvn clean install -Pqulice --errors --batch-mode
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           files: ./target/site/jacoco/jacoco.xml
           fail_ci_if_error: true
