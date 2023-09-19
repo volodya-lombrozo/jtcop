@@ -89,7 +89,13 @@ Other articles:
   - This article also consider three different parts of the test: "given:, when:,, and then"
   - This article also mentions the importance of Assertions order (the same for mocking and stubbing)
   - **"A when:  code block or a then: code block should never contain an if statement."**
-- 
+- https://dzone.com/articles/unit-testing-anti-patterns-full-list (Unit Testing Anti-Patterns — Full List)
+  - Anti-patterns which have to be avoided
+- https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue
+  - Anti-patterns which have to be avoided
+- https://www.yegor256.com/2023/01/19/layout-of-tests.html
+  - "The layout of tests is a very important aspect of the quality of your code. It's not just about how you name your test methods, 
+  it's about how you organize them in the source code."
 
 Interesting from other articles (cites):
 - "In this article, I am going to share an example of such a test app. You can do the same in your projects.
