@@ -252,12 +252,22 @@ with higher quality.
 
 ## Benefits of Using jtcop
 
-* Consistency: Discuss how jtcop can enforce consistency across a team or
-  project.
-* Improved Onboarding: Explain how a well-organized and named test suite can
-  reduce the onboarding time for new team members.
-* Better Refactoring: Discuss how clear tests help in the refactoring process by
-  providing an understandable safety net.
+* Consistency: jtcop helps us keep the tests similar across many projects. So
+  when you open a project that employs jtcop, it's much easier to understand
+  what
+  is going on with a project and which guides the project follows
+* Code Review: the main problem that was solved by jtcop is constantly
+  mentioned noisy messages like "put this class here", "use different name" for
+  it, or "it an antipattern". So by using jtcop we don't spend much time and
+  help the developer to solve all the problems even before pushing something to
+  us.
+* Improved Onboarding: One more effect which we got is that well-organized and
+  named test suites not only helps understand and maintain the code, it actually
+  reduce the time for explaining or writing down code style guides across
+  projects
+  many projects which simplified onboarding new programmers. We receive already
+  well-formatterd pull requests  new team members without additional help, 
+
 
 ## Feedback and Community Contribution
 
