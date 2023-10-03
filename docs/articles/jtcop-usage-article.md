@@ -266,28 +266,76 @@ with higher quality.
   reduce the time for explaining or writing down code style guides across
   projects
   many projects which simplified onboarding new programmers. We receive already
-  well-formatterd pull requests  new team members without additional help, 
+  well-formatterd pull requests new team members without additional help,
 
+## Future Plans
 
-## Feedback and Community Contribution
+### Roadmap
 
-* Open Source Nature: If jtcop is open source, encourage community contributions
-  and feedback.
-* Roadmap: Share your vision for the future of jtcop. Highlight upcoming
-  features or areas you'd like the community's help with.
+In the future we are going to add more rules to jtcop, for example we can check
+some anti-patterns, listed in
+that [thread](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue),
+lile
+"The Mockery" (when a unit test contains too many mocks), "Excessive Setup" (a
+test that requires a huge setup),
+"Wait and See" (a tests that needs to 'wait' a specific amount of time before it
+can 'see' if the code under test functioned as expected) and many others.
 
-## Conclusion
+Also, it would be great to add some rules for other languages, like Python,
+JavaScript, Go, etc, maybe by creating a separate tools for other languages.
+So, if you are inspired by our idea, you can create your own tool for your
+favorite language.
 
-* Recap: Reiterate the importance of best practices in test organization and
-  naming.
-* Call to Action: Encourage readers to try jtcop in their projects and share
-  their experiences.
+We also faced with the problem with projects that already have a lot of tests
+written in a different style and sometimes it is extremely tedious to fix all
+the problems manually. So, one more direction which makes sense is automatic
+fixer, which will fix most of the problems automatically, but it is a bit more
+complicated task that will be implemented later as a separate tool. But if you
+already have some ideas how to implement it, please let us know and we will be
+happy to help you.
+
+### Ask for contribution
+
+Of course jtcop is an open source tool, so we are always happy to receive any
+feedback or contribution from the community. Make forks if you need and create
+your own test checkers suitable for your needs, or just use the already existing
+plugin. If you have any ideas or suggestions, please, feel free to create an
+issue or pull request in
+our [repository](https://github.com/volodya-lombrozo/jtcop) and share your
+thoughts with us.
+
+## Final Thoughts
+
+Navigating through all the ideas about clear unit tests and best practice
+for writing them we created a tool which helps us to keep our tests more or less
+consistent, easy to read and orginized by similar principles. We have lots of
+plans for the future, but we hope that you will find jtcop useful even now.
+So, please, try it and share your thoughts with us, or create your own tool for
+your specific needs, because it can improve the quality of your code and save
+significant amount of time for you and your team.
 
 ## References
 
-* List the articles, discussion threads, and any other resources you referenced
-  throughout the article.
-* Throughout the article, ensure to use screenshots, code examples, and any
-  other visual aids to enhance clarity and engagement. Make sure to engage with
-  the readers by asking questions or soliciting feedback, especially if the
-  community can contribute to the plugin's development.
+Here is a list of articles and discussion threads that inspired us to create
+jtcop:
+
+* [On the Layout of Tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html),
+  Yegor Bugayenko
+* [Unit testing Anti-patterns catalogue](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue),
+  StackOverflow
+* [Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test),
+  Sam Atkinson
+* [Java Unit Testing Best Practices](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo),
+  Brian McGlauflin
+* [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing), Alex Staveley 
+* [Unit Testing Anti-Patterns — Full List](https://dzone.com/articles/unit-testing-anti-patterns-full-list), Yegor Bugayenko
+* [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java),
+  Reshma Bidikar
+* [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
+  Grant Fritchey
+* [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
+  Bala Murugan
+* [Software Unit Testing: What Is That? Why Is it Important?](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor),
+  Anna Smith
+* [What Is Test-Driven Development and Why It’s Important](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import),
+  Anna Smith
