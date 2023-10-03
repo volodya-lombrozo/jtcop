@@ -207,13 +207,66 @@ rules to name tests:
 | walksInPark()    | WalksInPark()        |
 | barksLoudly()    | barks__loudly()      |    
 
-Of course, it is the style that we prefer in our projects, if you prefer some 
-other patter for tests naming, just sent an issue or PR to jtcop and we will 
+Of course, it is the style that we prefer in our projects, if you prefer some
+other patter for tests naming, just sent an issue or PR to jtcop and we will
 be happy to add it to the plugin.
 
 ### Test Assertions
 
-* All tests have assertion explanatory message + assertion message itself
+The next important point that jcop checks assertions in tests. The most
+important check is, of course, the presense of assertions in a test.
+jtcop understands two assertion types `JUnit` assertions and `Hamcrest`
+assertions.
+
+For example the next test is incorrect:
+
+```java
+@Test
+void calculatesSum(){
+    //todo
+    }
+```
+
+where the next is correct:
+
+```java
+@Test
+void calculatesSum(){
+    //todo
+    }
+```
+
+or with using Hamcrest assertions:
+
+```java
+@Test
+void calculatesSum(){
+    //todo
+    }
+```
+
+Pay attention on explanatory messages in assertions. For example, let's consider
+this examples:
+
+```java
+@Test
+void calculatesSum(){
+    //todo
+    }
+```
+
+This example will print `message` message, that doesn't tell anything useful.
+Isn't it? In opposite, let's take a look on the next example:
+
+```java
+@Test
+void calculatesSum(){
+    //todo
+    }
+```
+
+This time, the error message is `message`. Much better. Isn't it?
+
 
 ### Line Hitters
 
