@@ -170,15 +170,63 @@ Tools to check:
 
 ## Introducing jtcop
 
-The primary features of jtcop for now are:
+Please, pay attention that most of the ideas was suggested by the community and
+we just collected them. So it is not out now-how So, the primary features of
+jtcop for now are:
+
+### Test Names
+
+There are lots of test naming convetions that can be used in the industry:
+
+* https://dzone.com/articles/7-popular-unit-test-naming
+* https://stackoverflow.com/questions/155436/unit-test-naming-best-practices
+
+When they use different ways to name tests, we prefer to use the following
+rules to name tests:
+
+1. We use present tense without a subject for test names. For example if you
+   test a class `Animal` with method `eat()`, the test name should be `eats()`,
+   if you need add more context, you do it after a verb: `eatsApplesOnly()`.
+2. We use [camelCase](https://en.wikipedia.org/wiki/Camel_case) for test names.
+3. We don't use the "test" word in test names, since it is redundant and it is
+   already clear that it is a test (it is already obvious from the test class
+   name and by using `@Test` annotation).
+4. We also forbid to use some special characters like `_` nad `$` together with
+   spaming letters like. So we don't allow `eatsSSS()`, `_eats` and similar.
+
+| Correct Names    | Incorrect Names      |
+|------------------|----------------------|
+| eats()           | testEats()           |
+| eatsApplesOnly() | TestEatsApplesOnly() |
+| runsQuickly()    | _runsQuickly()       |
+| jumpsOverFence() | jumps_over_fence()   |
+| drinksWater()    | drinks$Water()       |
+| sleepsAtNight()  | sleepsZZZ()          |
+| chewsGum()       | test_chewsGum()      |
+| listensToMusic() | listens_To_Music()   |
+| walksInPark()    | WalksInPark()        |
+| barksLoudly()    | barks__loudly()      |    
+
+Of course, it is the style that we prefer in our projects, if you prefer some 
+other patter for tests naming, just sent an issue or PR to jtcop and we will 
+be happy to add it to the plugin.
+
+### Test Assertions
+
+* All tests have assertion explanatory message + assertion message itself
+
+### Line Hitters
+
+* Checks [line hitters](https://stackoverflow.com/a/10323328/10423604) (that
+  checks nothing).
+
+### Corresponding Production Class
 
 * All tests have a corresponding production class (integration tests are
   exceptions).
-* All tests have assertion explanatory message + assertion message itself
-* All tests have correct test name (present tense + CamelCase + doesn't contain
-  the "test" word and spam letters + special characters)
-* Checks [line hitters](https://stackoverflow.com/a/10323328/10423604) (that
-  checks nothing).
+
+### Test Methods Only
+
 * Only test methods.
 
 Todo: Detailed Comparison with Other Tools: Draw parallels with tools like
@@ -327,8 +375,10 @@ jtcop:
   Sam Atkinson
 * [Java Unit Testing Best Practices](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo),
   Brian McGlauflin
-* [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing), Alex Staveley 
-* [Unit Testing Anti-Patterns — Full List](https://dzone.com/articles/unit-testing-anti-patterns-full-list), Yegor Bugayenko
+* [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing), Alex
+  Staveley
+* [Unit Testing Anti-Patterns — Full List](https://dzone.com/articles/unit-testing-anti-patterns-full-list),
+  Yegor Bugayenko
 * [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java),
   Reshma Bidikar
 * [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
