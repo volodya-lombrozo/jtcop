@@ -345,8 +345,27 @@ is able to find such tests and mark them as incorrect.
 
 ### Corresponding Production Class
 
-* All tests have a corresponding production class (integration tests are
-  exceptions).
+As was already [mentioned](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes),
+the well-formatted methods of unit tests is not enough. 
+For example, you have a test class with the name `SumTest.java` with 
+the test method `checksSum()` which tests the method `sum()`. But occasionally, 
+the test fails. What will you do? You will open the test class to find a problem.
+But which class? I belive the first guess is `Sum.java`, isn't it? 
+But what if the class is named `Addition.java`? Or `Calculator.java`?
+Sometimes it is not so easy to find the corresponding class, especially if you
+have a lot of classes in your project. So, jtcop checks if the test class has
+a corresponding production class. If it doesn't, it will mark the test as
+incorrect. In other words the name of the class isn't just a name, it is a
+pointer to the production class where to pinpoint the problem.
+
+So, if you have a test class `SumTest.java` with the corresponding production
+class `Addition.java`, it is extremely confusing. The proper way is to name
+test class `AdditionTest.java`.
+
+//todo: What about integration tests 
+
+
+
 
 ### Test Methods Only
 
