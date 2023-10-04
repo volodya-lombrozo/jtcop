@@ -362,8 +362,11 @@ So, if you have a test class `SumTest.java` with the corresponding production
 class `Addition.java`, it is extremely confusing. The proper way is to name
 test class `AdditionTest.java`.
 
-//todo: What about integration tests 
 
+The only exception in this case is integration tests. They are usually named
+like `AdditionIT.java` or `AdditionIntegrationTest.java`. But they have to be
+placed in the separate package, like `it`  and have an appropriate suffix:
+`ITCase` (`maven-compiler-plugin`). 
 
 
 
