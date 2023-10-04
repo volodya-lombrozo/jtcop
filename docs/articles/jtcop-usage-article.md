@@ -345,12 +345,14 @@ is able to find such tests and mark them as incorrect.
 
 ### Corresponding Production Class
 
-As was already [mentioned](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes),
-the well-formatted methods of unit tests is not enough. 
-For example, you have a test class with the name `SumTest.java` with 
-the test method `checksSum()` which tests the method `sum()`. But occasionally, 
-the test fails. What will you do? You will open the test class to find a problem.
-But which class? I belive the first guess is `Sum.java`, isn't it? 
+As was
+already [mentioned](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes),
+the well-formatted methods of unit tests is not enough.
+For example, you have a test class with the name `SumTest.java` with
+the test method `checksSum()` which tests the method `sum()`. But occasionally,
+the test fails. What will you do? You will open the test class to find a
+problem.
+But which class? I belive the first guess is `Sum.java`, isn't it?
 But what if the class is named `Addition.java`? Or `Calculator.java`?
 Sometimes it is not so easy to find the corresponding class, especially if you
 have a lot of classes in your project. So, jtcop checks if the test class has
@@ -362,17 +364,24 @@ So, if you have a test class `SumTest.java` with the corresponding production
 class `Addition.java`, it is extremely confusing. The proper way is to name
 test class `AdditionTest.java`.
 
-
 The only exception in this case is integration tests. They are usually named
 like `AdditionIT.java` or `AdditionIntegrationTest.java`. But they have to be
 placed in the separate package, like `it`  and have an appropriate suffix:
-`ITCase` (`maven-compiler-plugin`). 
-
-
+`ITCase` (`maven-compiler-plugin`).
 
 ### Test Methods Only
 
-* Only test methods.
+Sometimes when you write a test class with many test cases you might
+require to configure common setup for all the tests in the class. Usually
+we have several ways to do it:
+
+1. By using plain old static methods.
+2. By using `@BeforeAll`, `@BeforeEach` and `@AfterAll`, `@AfterEach`
+annotations.
+3. By using `@ExtendWith` JUnit approach
+4. By using production classes only or Fake objects.
+
+Let's delve a bit deeper into each of them and compare.
 
 Todo: Detailed Comparison with Other Tools: Draw parallels with tools like
 CheckStyle or PMD. Highlight the unique selling points of jtcop.
@@ -419,13 +428,21 @@ Then, if you have some problem, for example, you test doesn't have corresponding
 production class, you will receive human readable explanatory message:
 
 ```shell
-//todo
+[ERROR] Test SumTest doesn't have corresponding production class.
+[ERROR]  Either rename or move the test class ./SumTest.java.
+[ERROR]  You can also ignore the rule by adding @SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass") annotation.
+[ERROR]  Rule: RuleAllTestsHaveProductionClass.
+[ERROR]  You can read more about the rule here: <link>
 ```
 
 Or in case of Line hitter pattern, as it was discussed erlier:
 
 ```shell
-//todo
+[ERROR] Method 'calculatesSum' contains line hitter anti-pattern.
+[ERROR]  Write valuable assertion for this test.
+[ERROR]  You can also ignore the rule by adding @SuppressWarnings("JTCOP.RuleLineHitter") annotation.
+[ERROR]  Rule: RuleLineHitter.
+[ERROR]  You can read more about the rule here: <link>
 ```
 
 jtcop by defult will stop the further build if your tests have some problems,
