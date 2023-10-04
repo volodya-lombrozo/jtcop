@@ -373,20 +373,47 @@ placed in the separate package, like `it`  and have an appropriate suffix:
 
 Sometimes when you write a test class with many test cases you might
 require to configure common setup for all the tests in the class. Usually
-we have several ways to do it:
+we have several ways to do it. Let's delve a bit deeper into each of them and compare.
 
-1. By using plain old static methods.
+1. By using plain old static methods. (don't allow) 
+
+todo: explain with code sample.
+
 2. By using `@BeforeAll`, `@BeforeEach` and `@AfterAll`, `@AfterEach`
-annotations.
-3. By using `@ExtendWith` JUnit approach
-4. By using production classes only or Fake objects.
+annotations. (don't allow)
 
-Let's delve a bit deeper into each of them and compare.
+todo: explain with code sample.
+
+3. By using `@ExtendWith` JUnit approach (good - allow)
+
+todo: explain with code sample.
+
+4. By using production classes only or Fake objects. (good - allow)
+
+todo: explain with code sample.
+
 
 Todo: Detailed Comparison with Other Tools: Draw parallels with tools like
 CheckStyle or PMD. Highlight the unique selling points of jtcop.
 
-TODO: it is an experimental feature.
+
+```shell
+All methods of the test class 'SumTest.java' should be annotated with @Test annotation.
+```
+
+This rule is quite quite strict and since we don't use it in all our projects, 
+the feature is still in experimental stack and if you want to use it, just
+enable it by adding the next configuration to your `pom.xml` file:
+
+```xml
+
+<configuration>
+  <experimental>true</experimental>
+</configuration>
+```
+
+Now, developers have to properly organize the initialization of the cases.
+
 
 ## How jtcop Works
 
