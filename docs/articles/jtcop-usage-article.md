@@ -386,6 +386,8 @@ Let's delve a bit deeper into each of them and compare.
 Todo: Detailed Comparison with Other Tools: Draw parallels with tools like
 CheckStyle or PMD. Highlight the unique selling points of jtcop.
 
+TODO: it is an experimental feature.
+
 ## How jtcop Works
 
 ### Integration
