@@ -223,8 +223,10 @@ For example the next test is incorrect:
 ```java
 @Test
 void calculatesSum(){
-    //todo
-    }
+  if(sum(1, 1) != 2){
+    throw new RuntimeException("1 + 1 != 2");
+  }
+}
 ```
 
 where the next is correct:
@@ -232,8 +234,10 @@ where the next is correct:
 ```java
 @Test
 void calculatesSum(){
-    //todo
-    }
+  Assertions.assertEquals(
+    2, sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+  );
+}
 ```
 
 or with using Hamcrest assertions:
@@ -241,37 +245,103 @@ or with using Hamcrest assertions:
 ```java
 @Test
 void calculatesSum(){
-    //todo
-    }
+  MatcherAssert.assertThat(
+    "Something went wrong, because 1 + 1 != 2",
+    sum(1, 1),
+    Matchers.equalTo(2)
+  );
+}
 ```
 
-Pay attention on explanatory messages in assertions. For example, let's consider
-this examples:
+Pay attention on explanatory messages in
+assertions `Something went wrong, because 1 + 1 != 2`.
+They are required too. For example, let's consider
+the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e2ae4e895c0c7a4b42f9d0122e5/src/test/java/com/github/lombrozo/testnames/CopTest.java#L38)
+(I simplified it a bit):
 
 ```java
 @Test
-void calculatesSum(){
-    //todo
-    }
+void checksSuccessfully() {
+  MatcherAssert.assertThat(
+    new Cop(new Project.Fake()).inspection(),
+    Matchers.empty()
+  );
+}
 ```
 
-This example will print `message` message, that doesn't tell anything useful.
-Isn't it? In opposite, let's take a look on the next example:
+And, let's imagine this test fails and you get the next exception message:
+
+```shell
+Expected: an empty collection
+     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+```
+
+Not informative at all. Isn't it? But if you add explanatory message to the
+assertion:
 
 ```java
 @Test
-void calculatesSum(){
-    //todo
-    }
+void checksSuccessfully() {
+  MatcherAssert.assertThat(
+    "Cop should not find any complaints in this case, but it has found something.",
+    new Cop(new Project.Fake()).inspection(),
+    Matchers.empty()
+  );
+}
 ```
 
-This time, the error message is `message`. Much better. Isn't it?
+you will get the next message:
 
+```shell
+java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.
+Expected: an empty collection
+     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+```
+
+It is much better, isn't it? Of course in the perfect world, we will add more
+information (aka context, that explains initialisation values and gives a clue
+to the developer) to the message, but even now it is much better than the
+previous example, because it is clear
+and human-readable.
+
+This feature was extremly useful for us, because we don't need to ask the
+developer to add explanatory messages to assertions, like we did it in numerous
+PR reviews. Now we just run jtcop and it will do it for us.
 
 ### Line Hitters
 
-* Checks [line hitters](https://stackoverflow.com/a/10323328/10423604) (that
-  checks nothing).
+First of all it is worth mentioning what
+is [Line Hitter]((https://stackoverflow.com/a/10323328/10423604)) is.
+
+> At first glance, the tests cover everything and code coverage tools confirm it
+> with 100%, but in reality the tests merely hit the code, without doing any
+> output analysis.
+
+In other words, It is a test method that doesn't check anything. For example:
+
+```java
+@Test
+void calculatesSum(){
+  sum(1, 1);
+}
+```
+
+This often happens when a developer writes in order to increase code coverage
+and doesn't care about the quality of the test.
+
+Some tools might find the absence of assertions in tests, and in this case
+developers might cheat a bit to avoid the problem:
+
+```java
+@Test
+void calculatesSum(){
+  sum(1, 1);
+  Assertions.assertTrue(true);
+}
+```
+
+Well, it is the same "Line Hitter", but with assertion statement. So, jtcop
+is able to find such tests and mark them as incorrect.
 
 ### Corresponding Production Class
 
