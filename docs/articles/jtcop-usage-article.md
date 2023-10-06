@@ -372,8 +372,12 @@ placed in the separate package, like `it`  and have an appropriate suffix:
 ### Test Methods Only
 
 Sometimes when you write a test class with many test cases you might
-require to configure common setup for all the tests in the class. Usually
-we have several ways to do it. Let's delve a bit deeper into each of them and compare.
+require to configure common setup for all the tests in the class.
+jtcop can guide you in this case too. But before, I would like to mention
+this rule is quite strict and since we don't use it in all our projects
+this feature is still in experimental stack, so it is disabled by default
+and you need to enable it manually (further I will explain [how to do this](#experimental).)
+Usually we have several ways to do it. Let's delve a bit deeper into each of them and compare.
 
 #### Plain Old Static Methods
 
@@ -407,9 +411,13 @@ https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-prerequisites-wron
 or at least requires lots of experience to use them properly.
 
 So, jtcop considers that methods and utility classes as dangerous and doesn't
-allow them.
+allow them and you will the next exception message for the code above:
+```shell
+All methods of the test class 'SumTest.java' should be annotated with @Test annotation.
+```
 
-2. By using `@BeforeAll`, `@BeforeEach` and `@AfterAll`, `@AfterEach`
+
+#### Annotations @BeforeAll, @BeforeEach and @AfterAll, @AfterEach
 annotations. (don't allow)
 
 ```java
@@ -441,36 +449,84 @@ which is tedious sometimes.
 
 So, jtcop doesn't allow to use these annotations.
 
-3. By using `@ExtendWith` JUnit approach (good - allow)
+#### Test Extensions
 
-todo: explain with code sample.
+JUnit 5 has a feature called [Test Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions)
+that allows to create a custom extension to configure common setup for all the
+tests in the class. For example:
 
-4. By using production classes only or Fake objects. (good - allow)
+```java
+@ExtendWith(SummatorExtension.class)
+public class SumTest {
 
-todo: explain with code sample.
+  @Test
+  void calculatesSum(Summator s){
+    Assertions.assertEquals(
+      2, s.sum(1,1), "Something went wrong, because 1 + 1 != 2"
+    );
+  }
+}
 
-
-Todo: Detailed Comparison with Other Tools: Draw parallels with tools like
-CheckStyle or PMD. Highlight the unique selling points of jtcop.
-
-
-```shell
-All methods of the test class 'SumTest.java' should be annotated with @Test annotation.
+class SummatorExtension implements ParameterResolver {
+    @Override
+    public boolean supportsParameter(ParameterContext pctx, ExtensionContext ectx) {
+        return pctx.getParameter().getType() == Summator.class;
+    }
+    @Override
+    public Object resolveParameter(
+        Summator s = new Summator();
+        // some common setup
+        return s;
+    }
+}
 ```
 
-This rule is quite quite strict and since we don't use it in all our projects, 
-the feature is still in experimental stack and if you want to use it, just
-enable it by adding the next configuration to your `pom.xml` file:
+In this case we avoided the need to keep utility classes, static methods and
+common state between tests. It is easy to reuse amond many test classes and 
+separate unit tests.
 
-```xml
+So, jtcop allows to use this approach.
 
-<configuration>
-  <experimental>true</experimental>
-</configuration>
+#### Fake Objects
+
+And the last approach allowed by jtcop is to use Fake objects. 
+They are placed  together with other live objects, 
+but have special “fake” behavior, for example, let's imagine that `Summator`
+class depends on some environmental conditions to provide summation and it might
+differ in different situations, but for some reason we want to exclude 
+environmental conditions from the test. So, we can either mock it by using
+some mocking framework or create a Fake object. For example:
+
+```java
+class Environment {
+  double multiplier(){
+    return 0.5; // real multiplier that we want to ignore.
+  }
+  
+  static class Fake extends Environment { 
+      @Override
+      double multiplier(){
+         return 1;
+      }
+    }
+}
+
+public class SumTest {
+
+  @Test
+  void calculatesSum(){
+    Summator s = new Summator(new Enivornement.Fake());
+    Assertions.assertEquals(
+      2, s.sum(1,1), "Something went wrong, because 1 + 1 != 2"
+    );
+  }
+}
 ```
-
-Now, developers have to properly organize the initialization of the cases.
-
+In this case you can avoid using any annotations, utility classes, static methods:
+just use Fake objects. As for Fake objects aren't a part of the testing code,
+jtcoo doesn't consider them as a problem. It is just a short introduction
+into Fake objects, so you can read more about that approach right
+[here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
 
 ## How jtcop Works
 
@@ -545,6 +601,22 @@ setting `failOnError` property:
 
 But I highly recommend to leave it as is which will allow you to keep your tests
 with higher quality.
+
+#### Experimental
+
+As I've already mentioned some features are still in experimental stack and
+if you want to use it, you might enable them by adding the next configuration 
+to your `pom.xml` file:
+
+```xml
+
+<configuration>
+  <experimental>true</experimental>
+</configuration>
+```
+
+Now, all experimental features will be applied to your project and you can 
+get advantages of even better formatted and structured tests.
 
 ## Benefits of Using jtcop
 
