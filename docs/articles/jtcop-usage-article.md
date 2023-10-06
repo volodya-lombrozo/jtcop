@@ -159,14 +159,34 @@ Interesting from other articles (cites):
 
 ### Gap Identification
 
-Talk about what existing tools offer and where they fall short in terms of
-checking test organization and naming conventions:
-Tools to check:
+As you might have noticed from the articles, there are some common ideas and 
+principles we can apply to create good unit tests. But what about the tools that
+already help us keep our code clear and consistent? I'm referring to static 
+analyzers. Let's examine the most widely used ones. Please note that here I will
+only briefly describe a few of them, even though there are plenty of similar 
+tools available. This is a vast topic on its own. Ok, let's just review them.
 
-* PMD
-* Checkstyle
-* SonarQube
-* (SpotBugs?)
+#### PMD
+
+[PMD](https://pmd.github.io) - a source code analyzer. It finds common
+programming flaws like unused variables, empty catch blocks, unnecessary
+object creation, and so forth. While it supports many different languages,
+here we are interested in Java only. Let's try to find how PMD can help us to 
+keep our tests consistent and clear according to industry requirements and 
+best practices.
+
+#### Checkstyle
+
+[Checkstyle](https://checkstyle.sourceforge.io) - is one more development tool
+that helps programmers write Java code that adheres to a coding standard. In 
+other words, Checkstyle is a static code analysis tool (linter) used in Java
+world.
+
+#### Sonar Qube
+
+[SonarQube](https://www.sonarqube.org) - is a tool that also widely used to 
+check code quality. SonarQube is an open-source platform that has a support
+of Java and other languages.
 
 ## Introducing jtcop
 
