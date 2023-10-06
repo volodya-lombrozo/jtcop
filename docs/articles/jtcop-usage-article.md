@@ -336,7 +336,7 @@ developers might cheat a bit to avoid the problem:
 @Test
 void calculatesSum(){
   sum(1, 1);
-  Assertions.assertTrue(true);
+  Assertions.assertTrue(true, "I'm just hanging around");
 }
 ```
 
@@ -375,14 +375,71 @@ Sometimes when you write a test class with many test cases you might
 require to configure common setup for all the tests in the class. Usually
 we have several ways to do it. Let's delve a bit deeper into each of them and compare.
 
-1. By using plain old static methods. (don't allow) 
+#### Plain Old Static Methods
 
-todo: explain with code sample.
+Often developers (and, to be honest me too) use static methods to configure
+common setup for all the tests in the class. For example:
+```java
+@Test
+void calculatesSum(){
+    Summator s = init();
+    Assertions.assertEquals(
+    2, sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+  );
+}
+
+private static Summator init(){
+    Summator s = new Summator();
+    // some common setup
+    return s;      
+}
+```
+Well, from the first glance it looks like a good solution, but it has some
+problems. Usually, when such a method is used in the single class, it is not a 
+big deal, despite the fact that it is a static method usually create [low cohesion and tight
+coupling](https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies).
+But when you start using it in many classes or even create something like 
+a `TestUtils.java` to move all initialization in one place, it becomes [a problem](
+https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-prerequisites-wrong-way
+):
+1. It confuses a developer, because `TestUtils` doesn’t have a counterpart in the live code block.
+2. `TestUtils.java` might be considered as an [anti-pattern](https://stackoverflow.com/questions/3340032/are-utility-classes-evil) itself 
+or at least requires lots of experience to use them properly.
+
+So, jtcop considers that methods and utility classes as dangerous and doesn't
+allow them.
 
 2. By using `@BeforeAll`, `@BeforeEach` and `@AfterAll`, `@AfterEach`
 annotations. (don't allow)
 
-todo: explain with code sample.
+```java
+Summator s;
+
+@BeforeEach
+void setUp(){
+  s = new Summator();
+  // some common setup
+}
+
+@Test
+void calculatesSum(){
+    Summator s = init();
+    Assertions.assertEquals(
+      2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
+    );
+}
+```
+
+Well, this methods makes the situation event worse, because all the tests 
+in the class will share the same number of varibles and will have to 
+initiate them each time. Let's imagine a test class with 500 unit tests. I don't
+think that all of these tests will require the same initialization. Moreover, 
+using `@BeforeAll` and `@AfterAll` exactely the same as using static methods. 
+And one more thing - the developer will have to "compile" the test case in his 
+head all the time by jumping beween the test method and the `@BeforeAll` method,
+which is tedious sometimes.
+
+So, jtcop doesn't allow to use these annotations.
 
 3. By using `@ExtendWith` JUnit approach (good - allow)
 
