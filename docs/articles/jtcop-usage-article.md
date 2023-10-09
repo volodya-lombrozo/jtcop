@@ -159,32 +159,106 @@ Interesting from other articles (cites):
 
 ### Gap Identification
 
-As you might have noticed from the articles, there are some common ideas and 
+As you might have noticed from the articles, there are some common ideas and
 principles we can apply to create good unit tests. But what about the tools that
-already help us keep our code clear and consistent? I'm referring to static 
+already help us keep our code clear and consistent? I'm referring to static
 analyzers. Let's examine the most widely used ones. Please note that here I will
-only briefly describe a few of them, even though there are plenty of similar 
+only briefly describe a few of them, even though there are plenty of similar
 tools available. This is a vast topic on its own. Ok, let's just review them.
+
+#### Checkstyle
+
+[Checkstyle](https://checkstyle.sourceforge.io) - is one more development tool
+that helps programmers write Java code that adheres to a coding standard. In
+other words, Checkstyle is a static code analysis tool (linter) used in Java
+world. Although Checkstyle doesn't provide features specifically tailored for
+unit tests, many of its features are applicable to test code just as they are
+to production code.
+
+The only useful feature to the best of my knowledge is the ability to enforce
+the test names convention by developing
+your [own checker](https://stackoverflow.com/questions/24415234/configure-checkstyle-method-names-for-test-methods-only).
+Well, yes, before using it you need to develop your own checker, but it is
+possible.
+
+Also, checkstyle can help you with javadoc comments, indentation, line length,
+cyclomatic complexity, etc. So, it is a tool just for checking common rules. It
+doesn't consider specific rules for unit tests, like test names, assertions,
+and layout of tests.
+
+However, as I mentioned before, the Checkstyle is a general tool that
+concentrated on java code only and doesn't check high level problems with tests,
+for example where they are placed. Also Checkstyle doesn't check the test
+classes names and doesn't check if the test class has a corresponding production
+class. So, to conclude, Checkstyle is a good tool, but it doesn't help us to
+keep our tests consistent and clear according to industry requirements and best
+practices.
+
 
 #### PMD
 
 [PMD](https://pmd.github.io) - a source code analyzer. It finds common
 programming flaws like unused variables, empty catch blocks, unnecessary
 object creation, and so forth. While it supports many different languages,
-here we are interested in Java only. Let's try to find how PMD can help us to 
-keep our tests consistent and clear according to industry requirements and 
+here we are interested in Java only. Let's try to find how PMD can help us to
+keep our tests consistent and clear according to industry requirements and
 best practices.
 
-#### Checkstyle
+PMD, comparing with Checkstyle has much more rules that checks tests quality,
+for example:
 
-[Checkstyle](https://checkstyle.sourceforge.io) - is one more development tool
-that helps programmers write Java code that adheres to a coding standard. In 
-other words, Checkstyle is a static code analysis tool (linter) used in Java
-world.
+1. [JUnitAssertionsShouldIncludeMessage](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junitassertionsshouldincludemessage) - requires that JUnit assertions should include a message.
+
+```java
+public class Foo extends TestCase {
+public void testSomething() {
+assertEquals("foo", "bar");
+// Use the form:
+// assertEquals("Foo does not equals bar", "foo", "bar");
+// instead
+}
+}
+```
+
+2. [JUnitTestContainsTooManyAsserts](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestcontainstoomanyasserts) 
+checks that JUnit or TestNG test contains too many assertion statements:
+
+```java
+public class MyTestCase extends TestCase {
+    // Ok
+    public void testMyCaseWithOneAssert() {
+        boolean myVar = false;
+        assertFalse("should be false", myVar);
+    }
+
+    // Bad, too many asserts (assuming max=1)
+    public void testMyCaseWithMoreAsserts() {
+        boolean myVar = false;
+        assertFalse("myVar should be false", myVar);
+        assertEquals("should equals false", false, myVar);
+    }
+}
+```
+
+3. [JUnitTestsShouldIncludeAssert](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestsshouldincludeassert) 
+checks that JUnit tests include at least one assertion
+4. [TestClassWithoutTestCases](todo) checks that test classes have at least one test case (testing method)
+5. [UnnecessaryBooleanAssertion](todo) , [UseAssertEqualsInsteadOfAssertTrue](todo), [UseAssertEqualsInsteadOfAssertTrue](todo) 
+- check that JUnit assertions are used correctly. 
+
+However, all this checks designed mostly for JUnit assertions and in some cases 
+for AssertJ and don't support Hamcrest assertions that is widely using in the 
+industry (including us, personally).
+
+Also, when PMD can sheck method names, all this checks are designed for
+production code only and doesn't check specific test name patterns.
+
+Moreover, to best my knowledge, PMD doesn't check the layout of tests and where
+they are placed.
 
 #### Sonar Qube
 
-[SonarQube](https://www.sonarqube.org) - is a tool that also widely used to 
+[SonarQube](https://www.sonarqube.org) - is a tool that also widely used to
 check code quality. SonarQube is an open-source platform that has a support
 of Java and other languages.
 
@@ -243,10 +317,10 @@ For example the next test is incorrect:
 ```java
 @Test
 void calculatesSum(){
-  if(sum(1, 1) != 2){
+    if(sum(1,1)!=2){
     throw new RuntimeException("1 + 1 != 2");
-  }
-}
+    }
+    }
 ```
 
 where the next is correct:
@@ -254,10 +328,10 @@ where the next is correct:
 ```java
 @Test
 void calculatesSum(){
-  Assertions.assertEquals(
-    2, sum(1, 1), "Something went wrong, because 1 + 1 != 2"
-  );
-}
+    Assertions.assertEquals(
+    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
+    );
+    }
 ```
 
 or with using Hamcrest assertions:
@@ -265,12 +339,12 @@ or with using Hamcrest assertions:
 ```java
 @Test
 void calculatesSum(){
-  MatcherAssert.assertThat(
+    MatcherAssert.assertThat(
     "Something went wrong, because 1 + 1 != 2",
-    sum(1, 1),
+    sum(1,1),
     Matchers.equalTo(2)
-  );
-}
+    );
+    }
 ```
 
 Pay attention on explanatory messages in
@@ -281,12 +355,12 @@ the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e
 
 ```java
 @Test
-void checksSuccessfully() {
-  MatcherAssert.assertThat(
+void checksSuccessfully(){
+    MatcherAssert.assertThat(
     new Cop(new Project.Fake()).inspection(),
     Matchers.empty()
-  );
-}
+    );
+    }
 ```
 
 And, let's imagine this test fails and you get the next exception message:
@@ -301,13 +375,13 @@ assertion:
 
 ```java
 @Test
-void checksSuccessfully() {
-  MatcherAssert.assertThat(
+void checksSuccessfully(){
+    MatcherAssert.assertThat(
     "Cop should not find any complaints in this case, but it has found something.",
     new Cop(new Project.Fake()).inspection(),
     Matchers.empty()
-  );
-}
+    );
+    }
 ```
 
 you will get the next message:
@@ -342,8 +416,8 @@ In other words, It is a test method that doesn't check anything. For example:
 ```java
 @Test
 void calculatesSum(){
-  sum(1, 1);
-}
+    sum(1,1);
+    }
 ```
 
 This often happens when a developer writes in order to increase code coverage
@@ -355,9 +429,9 @@ developers might cheat a bit to avoid the problem:
 ```java
 @Test
 void calculatesSum(){
-  sum(1, 1);
-  Assertions.assertTrue(true, "I'm just hanging around");
-}
+    sum(1,1);
+    Assertions.assertTrue(true,"I'm just hanging around");
+    }
 ```
 
 Well, it is the same "Line Hitter", but with assertion statement. So, jtcop
@@ -396,48 +470,59 @@ require to configure common setup for all the tests in the class.
 jtcop can guide you in this case too. But before, I would like to mention
 this rule is quite strict and since we don't use it in all our projects
 this feature is still in experimental stack, so it is disabled by default
-and you need to enable it manually (further I will explain [how to do this](#experimental).)
-Usually we have several ways to do it. Let's delve a bit deeper into each of them and compare.
+and you need to enable it manually (further I will
+explain [how to do this](#experimental).)
+Usually we have several ways to do it. Let's delve a bit deeper into each of
+them and compare.
 
 #### Plain Old Static Methods
 
 Often developers (and, to be honest me too) use static methods to configure
 common setup for all the tests in the class. For example:
+
 ```java
 @Test
 void calculatesSum(){
-    Summator s = init();
+    Summator s=init();
     Assertions.assertEquals(
-    2, sum(1, 1), "Something went wrong, because 1 + 1 != 2"
-  );
-}
+    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
+    );
+    }
 
 private static Summator init(){
-    Summator s = new Summator();
+    Summator s=new Summator();
     // some common setup
-    return s;      
-}
+    return s;
+    }
 ```
+
 Well, from the first glance it looks like a good solution, but it has some
-problems. Usually, when such a method is used in the single class, it is not a 
-big deal, despite the fact that it is a static method usually create [low cohesion and tight
+problems. Usually, when such a method is used in the single class, it is not a
+big deal, despite the fact that it is a static method usually
+create [low cohesion and tight
 coupling](https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies).
-But when you start using it in many classes or even create something like 
-a `TestUtils.java` to move all initialization in one place, it becomes [a problem](
+But when you start using it in many classes or even create something like
+a `TestUtils.java` to move all initialization in one place, it
+becomes [a problem](
 https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-prerequisites-wrong-way
 ):
-1. It confuses a developer, because `TestUtils` doesn’t have a counterpart in the live code block.
-2. `TestUtils.java` might be considered as an [anti-pattern](https://stackoverflow.com/questions/3340032/are-utility-classes-evil) itself 
-or at least requires lots of experience to use them properly.
+
+1. It confuses a developer, because `TestUtils` doesn’t have a counterpart in
+   the live code block.
+2. `TestUtils.java` might be considered as
+   an [anti-pattern](https://stackoverflow.com/questions/3340032/are-utility-classes-evil)
+   itself
+   or at least requires lots of experience to use them properly.
 
 So, jtcop considers that methods and utility classes as dangerous and doesn't
 allow them and you will the next exception message for the code above:
+
 ```shell
 All methods of the test class 'SumTest.java' should be annotated with @Test annotation.
 ```
 
-
 #### Annotations @BeforeAll, @BeforeEach and @AfterAll, @AfterEach
+
 annotations. (don't allow)
 
 ```java
@@ -445,25 +530,25 @@ Summator s;
 
 @BeforeEach
 void setUp(){
-  s = new Summator();
-  // some common setup
-}
+    s=new Summator();
+    // some common setup
+    }
 
 @Test
 void calculatesSum(){
-    Summator s = init();
+    Summator s=init();
     Assertions.assertEquals(
-      2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
+    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
     );
-}
+    }
 ```
 
-Well, this methods makes the situation event worse, because all the tests 
-in the class will share the same number of varibles and will have to 
+Well, this methods makes the situation event worse, because all the tests
+in the class will share the same number of varibles and will have to
 initiate them each time. Let's imagine a test class with 500 unit tests. I don't
-think that all of these tests will require the same initialization. Moreover, 
-using `@BeforeAll` and `@AfterAll` exactely the same as using static methods. 
-And one more thing - the developer will have to "compile" the test case in his 
+think that all of these tests will require the same initialization. Moreover,
+using `@BeforeAll` and `@AfterAll` exactely the same as using static methods.
+And one more thing - the developer will have to "compile" the test case in his
 head all the time by jumping beween the test method and the `@BeforeAll` method,
 which is tedious sometimes.
 
@@ -471,78 +556,86 @@ So, jtcop doesn't allow to use these annotations.
 
 #### Test Extensions
 
-JUnit 5 has a feature called [Test Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions)
+JUnit 5 has a feature
+called [Test Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions)
 that allows to create a custom extension to configure common setup for all the
 tests in the class. For example:
 
 ```java
+
 @ExtendWith(SummatorExtension.class)
 public class SumTest {
 
-  @Test
-  void calculatesSum(Summator s){
-    Assertions.assertEquals(
-      2, s.sum(1,1), "Something went wrong, because 1 + 1 != 2"
-    );
-  }
+    @Test
+    void calculatesSum(Summator s) {
+        Assertions.assertEquals(
+            2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+        );
+    }
 }
 
 class SummatorExtension implements ParameterResolver {
     @Override
-    public boolean supportsParameter(ParameterContext pctx, ExtensionContext ectx) {
+    public boolean supportsParameter(ParameterContext pctx,
+        ExtensionContext ectx
+    ) {
         return pctx.getParameter().getType() == Summator.class;
     }
+
     @Override
     public Object resolveParameter(
-        Summator s = new Summator();
-        // some common setup
+        Summator s =new Summator(
+    );
+    // some common setup
         return s;
-    }
+}
 }
 ```
 
 In this case we avoided the need to keep utility classes, static methods and
-common state between tests. It is easy to reuse amond many test classes and 
+common state between tests. It is easy to reuse amond many test classes and
 separate unit tests.
 
 So, jtcop allows to use this approach.
 
 #### Fake Objects
 
-And the last approach allowed by jtcop is to use Fake objects. 
-They are placed  together with other live objects, 
+And the last approach allowed by jtcop is to use Fake objects.
+They are placed together with other live objects,
 but have special “fake” behavior, for example, let's imagine that `Summator`
 class depends on some environmental conditions to provide summation and it might
-differ in different situations, but for some reason we want to exclude 
+differ in different situations, but for some reason we want to exclude
 environmental conditions from the test. So, we can either mock it by using
 some mocking framework or create a Fake object. For example:
 
 ```java
 class Environment {
-  double multiplier(){
-    return 0.5; // real multiplier that we want to ignore.
-  }
-  
-  static class Fake extends Environment { 
-      @Override
-      double multiplier(){
-         return 1;
-      }
+    double multiplier() {
+        return 0.5; // real multiplier that we want to ignore.
+    }
+
+    static class Fake extends Environment {
+        @Override
+        double multiplier() {
+            return 1;
+        }
     }
 }
 
 public class SumTest {
 
-  @Test
-  void calculatesSum(){
-    Summator s = new Summator(new Enivornement.Fake());
-    Assertions.assertEquals(
-      2, s.sum(1,1), "Something went wrong, because 1 + 1 != 2"
-    );
-  }
+    @Test
+    void calculatesSum() {
+        Summator s = new Summator(new Enivornement.Fake());
+        Assertions.assertEquals(
+            2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+        );
+    }
 }
 ```
-In this case you can avoid using any annotations, utility classes, static methods:
+
+In this case you can avoid using any annotations, utility classes, static
+methods:
 just use Fake objects. As for Fake objects aren't a part of the testing code,
 jtcoo doesn't consider them as a problem. It is just a short introduction
 into Fake objects, so you can read more about that approach right
@@ -625,7 +718,7 @@ with higher quality.
 #### Experimental
 
 As I've already mentioned some features are still in experimental stack and
-if you want to use it, you might enable them by adding the next configuration 
+if you want to use it, you might enable them by adding the next configuration
 to your `pom.xml` file:
 
 ```xml
@@ -635,7 +728,7 @@ to your `pom.xml` file:
 </configuration>
 ```
 
-Now, all experimental features will be applied to your project and you can 
+Now, all experimental features will be applied to your project and you can
 get advantages of even better formatted and structured tests.
 
 ## Benefits of Using jtcop
