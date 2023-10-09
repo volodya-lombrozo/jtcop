@@ -194,7 +194,6 @@ class. So, to conclude, Checkstyle is a good tool, but it doesn't help us to
 keep our tests consistent and clear according to industry requirements and best
 practices.
 
-
 #### PMD
 
 [PMD](https://pmd.github.io) - a source code analyzer. It finds common
@@ -207,21 +206,22 @@ best practices.
 PMD, comparing with Checkstyle has much more rules that checks tests quality,
 for example:
 
-1. [JUnitAssertionsShouldIncludeMessage](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junitassertionsshouldincludemessage) - requires that JUnit assertions should include a message.
+1. [JUnitAssertionsShouldIncludeMessage](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junitassertionsshouldincludemessage) -
+   requires that JUnit assertions should include a message.
 
 ```java
 public class Foo extends TestCase {
-public void testSomething() {
-assertEquals("foo", "bar");
+    public void testSomething() {
+        assertEquals("foo", "bar");
 // Use the form:
 // assertEquals("Foo does not equals bar", "foo", "bar");
 // instead
-}
+    }
 }
 ```
 
-2. [JUnitTestContainsTooManyAsserts](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestcontainstoomanyasserts) 
-checks that JUnit or TestNG test contains too many assertion statements:
+2. [JUnitTestContainsTooManyAsserts](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestcontainstoomanyasserts)
+   checks that JUnit or TestNG test contains too many assertion statements:
 
 ```java
 public class MyTestCase extends TestCase {
@@ -240,27 +240,49 @@ public class MyTestCase extends TestCase {
 }
 ```
 
-3. [JUnitTestsShouldIncludeAssert](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestsshouldincludeassert) 
-checks that JUnit tests include at least one assertion
-4. [TestClassWithoutTestCases](todo) checks that test classes have at least one test case (testing method)
-5. [UnnecessaryBooleanAssertion](todo) , [UseAssertEqualsInsteadOfAssertTrue](todo), [UseAssertEqualsInsteadOfAssertTrue](todo) 
-- check that JUnit assertions are used correctly. 
+3. [JUnitTestsShouldIncludeAssert](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestsshouldincludeassert)
+   checks that JUnit tests include at least one assertion
+4. [TestClassWithoutTestCases](https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#testclasswithouttestcases)
+   checks that test classes have at least one test case (testing method)
+5. [UnnecessaryBooleanAssertion](https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#unnecessarybooleanassertion)
 
-However, all this checks designed mostly for JUnit assertions and in some cases 
-for AssertJ and don't support Hamcrest assertions that is widely using in the 
+- checks that JUnit assertions are used correctly without `assertTrue(true)` (or
+  similar) statements.
+
+However, all this checks designed mostly for JUnit assertions and in some cases
+for AssertJ and don't support Hamcrest assertions that is widely using in the
 industry (including us, personally).
 
 Also, when PMD can sheck method names, all this checks are designed for
 production code only and doesn't check specific test name patterns.
 
 Moreover, to best my knowledge, PMD doesn't check the layout of tests and where
-they are placed.
+they are placed. So, PMD has a rather limited number of checks for tests.
 
 #### Sonar Qube
 
 [SonarQube](https://www.sonarqube.org) - is a tool that also widely used to
 check code quality. SonarQube is an open-source platform that has a support
 of Java and other languages.
+
+SonarQube has a lot of rules similar to PMD that can be applied to tests,
+for example:
+
+1. [TestCases should contain tests](https://rules.sonarsource.com/java/tag/tests/RSPEC-2187/) - checks that test classes have at
+   least one test case (testing method).
+2. [Literal boolean values and nulls should not be used in assertions.](https://rules.sonarsource.com/java/tag/tests/RSPEC-2699/)
+3. [Assertions should not compare an object to itself.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5863/)
+4. [Test assertions should include messages.](https://rules.sonarsource.com/java/tag/tests/RSPEC-2698/)
+5. [Test methods should not contain too many assertions.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5961/)
+6. [Similar tests should be grouped in a single Parameterized test.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5976/)
+
+The full list you can find
+right [here](https://rules.sonarsource.com/java/tag/tests/RSPEC-2701/). 
+It's around total 45 rules for tests.
+
+As you might notice, SonarQube has more rules than PMD, although most of them
+overlap with PMD. Also, SonarQube, to best my knowledge, doesn't check 
+Hamcrest assertions at all and doesn't keep the layout of tests.
 
 ## Introducing jtcop
 
