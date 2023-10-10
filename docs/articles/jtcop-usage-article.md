@@ -4,7 +4,7 @@
 
 ### Background
 
-I more than sure that we rarther often change our job titles, projects,
+I more than sure that we rather often change our job titles, projects,
 teams, technologies, and each time when I open a new project I see the
 entirely different picture of the project, and specifically, the tests.
 You may wonder why it so important. Well, because the well-organaized
@@ -40,6 +40,20 @@ many projects and teams. And we hope that you will find them useful too.
 
 **!Highlight some of the main takeaways!**
 
+During the years it was written a lot of articles about the importance of
+unit tests and how to write them properly.
+
+For instance, the article [Anatomy of a Good Java
+Test](https://dzone.com/articles/anatomy-of-a-good-java-test) emphasizes the
+significance of test naming, especially from a documentation standpoint. While
+recommendations like adhering to consistent naming conventions
+and avoiding the use of the word "test" in test names may seem obvious, they
+are not always followed in practice. Furthermore, the article underscores the
+value of organizing tests into three distinct
+sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-assert/info).
+It also advises against using cryptic assertion messages and emphasizes the
+importance of clarity and expressiveness in test writing.
+
 Other articles:
 
 - https://dzone.com/articles/anatomy-of-a-good-java-test (Anatomy of a Good Java
@@ -56,6 +70,7 @@ Other articles:
       Action, Assertion, (Or even more famous Arrange, Act, Assert).
       Which also significances the importance of clear test structure.
     - ~"Don't use cryptic assertion messages"
+-
 - https://dzone.com/articles/importance-of-testing-grant-fritchey \[Opinion] (
   Importance of Testing).
     - Highlights the importance of testing (and not only for software
@@ -268,7 +283,8 @@ of Java and other languages.
 SonarQube has a lot of rules similar to PMD that can be applied to tests,
 for example:
 
-1. [TestCases should contain tests](https://rules.sonarsource.com/java/tag/tests/RSPEC-2187/) - checks that test classes have at
+1. [TestCases should contain tests](https://rules.sonarsource.com/java/tag/tests/RSPEC-2187/) -
+   checks that test classes have at
    least one test case (testing method).
 2. [Literal boolean values and nulls should not be used in assertions.](https://rules.sonarsource.com/java/tag/tests/RSPEC-2699/)
 3. [Assertions should not compare an object to itself.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5863/)
@@ -277,11 +293,11 @@ for example:
 6. [Similar tests should be grouped in a single Parameterized test.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5976/)
 
 The full list you can find
-right [here](https://rules.sonarsource.com/java/tag/tests/RSPEC-2701/). 
+right [here](https://rules.sonarsource.com/java/tag/tests/RSPEC-2701/).
 It's around total 45 rules for tests.
 
 As you might notice, SonarQube has more rules than PMD, although most of them
-overlap with PMD. Also, SonarQube, to best my knowledge, doesn't check 
+overlap with PMD. Also, SonarQube, to best my knowledge, doesn't check
 Hamcrest assertions at all and doesn't keep the layout of tests.
 
 ## Introducing jtcop
