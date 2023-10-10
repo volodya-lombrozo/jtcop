@@ -43,6 +43,11 @@ many projects and teams. And we hope that you will find them useful too.
 During the years it was written a lot of articles about the importance of
 unit tests and how to write them properly.
 
+In the opinion
+about [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
+testing is highlighted as a "fundamental aspect of everything we do," with a
+suggestion to make it a central part of the development process.
+
 For instance, the article [Anatomy of a Good Java
 Test](https://dzone.com/articles/anatomy-of-a-good-java-test) emphasizes the
 significance of test naming, especially from a documentation standpoint. While
@@ -54,32 +59,18 @@ sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-
 It also advises against using cryptic assertion messages and emphasizes the
 importance of clarity and expressiveness in test writing.
 
+The article
+[Java Unit Testing Best Practices](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+highlights the importance of unit testing, including the ability to identify
+defects early in the development process, the ability to refactor safely, and
+even help in the code review process.
+Most importantly, the article offers numerous best practices for writing unit
+tests. These include ensuring that tests are trustworthy (failing only when
+necessary), maintainable, readable, and dedicated to verifying a single use
+case. Tests should also be isolated and automated.
+
 Other articles:
 
-- https://dzone.com/articles/anatomy-of-a-good-java-test (Anatomy of a Good Java
-  Test).
-  We write tests for a number of reasons: To shape the design of our system.
-  To ensure initial and ongoing correctness. Documentation.
-    - The article significances the importance of test naming "The name of the
-      test is crucially important, particularly from a documentation
-      standpoint. "
-    - Never start a test name with “test”.
-    - "Don’t be afraid to be expressive. If your test name needs to be really
-      long then go for it if it’s clear what’s going on."
-    - The article also suggests to split tests into three sections: Setup,
-      Action, Assertion, (Or even more famous Arrange, Act, Assert).
-      Which also significances the importance of clear test structure.
-    - ~"Don't use cryptic assertion messages"
--
-- https://dzone.com/articles/importance-of-testing-grant-fritchey \[Opinion] (
-  Importance of Testing).
-    - Highlights the importance of testing (and not only for software
-      development)
-    - "Appropriate testing is one of the single best ways you can protect your
-      production environment and your business"
-    - "Testing will be a fundamental aspect of everything we do"
-    - "Make testing a central part of everything that you do"
-    - It isn't an article, it is an opinion
 - https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo (
   Java Unit Testing Best Practices)
     - Highlights the importance of Unit testing
@@ -97,6 +88,8 @@ Other articles:
         - Unit Tests Should Be Automated
         - Use a Good Mixture of Unit and Integration Tests
         - **"writing unit tests as you write your application code"**
+
+
 - https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java (7
   Tips for Writing Better Unit Tests in Java)
     - Use a Framework for Unit Testing (JUnit, TestNG)
