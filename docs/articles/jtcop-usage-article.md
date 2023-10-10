@@ -22,8 +22,8 @@ We even created a tool which help us to keep our tests according with the rules
 which we think are important for Java projects. I believe that the similar tool
 might be created for other languages you like.
 
-In this article I will try to explain how it fits into the lanscape of static
-analysis tools and how it can halp you in our every-day-programming.
+In this article I will try to explain how it fits into the landscape of static
+analysis tools and how it can help you in our every-day-programming.
 
 Of course, we aren't trying to say that our rules are the best and the only
 way to organize tests, but we think that they are good enough to be used across
@@ -50,8 +50,24 @@ about [Importance of Testing](https://dzone.com/articles/importance-of-testing-g
 testing is highlighted as a "fundamental aspect of everything we do," with a
 suggestion to make it a central part of the development process.
 
+This [article](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor)
+and [this](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import)
+highlights the importance of unit testing, including the ability to localize
+every little mistake quickly and accurately as well as simplify the debugging
+process, detect errors at an early stage of the development process, save time
+and costs in terms of future developments, and ensure alignment between
+specification and the result of development.
 
 #### Transition from Importance to Best Practice
+
+The
+article [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing)
+also highlights the importance of unit testing: it ensures security, customer
+satisfaction, saves money (sometimes even lives) in the long run, reduces the
+time required to find and fix bugs, and results in more reliable code.
+The article suggests several best practices for unit testing, including using
+consistent naming conventions, providing a corresponding unit test case for
+every module, and testing as you commit code to avoid errors.
 
 The article
 [Java Unit Testing Best Practices](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
@@ -76,68 +92,30 @@ sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-
 It also advises against using cryptic assertion messages and emphasizes the
 importance of clarity and expressiveness in test writing.
 
-
-The article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+The
+article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
 also offers a number of tips for writing better unit tests. These include using
-a framework for unit testing, using test-driven development judiciously, 
+a framework for unit testing, using test-driven development judiciously,
 measuring code coverage, using assertions instead of print statements, and
 building tests that have deterministic results. The article also emphasizes the
 importance of testing negative scenarios and borderline cases, in addition to
 positive scenarios.
 
+The article [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+also serves as an invaluable resource for those seeking to enhance their unit
+tests. It introduces several best practices such as the appropriate use
+of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
+effective naming and ordering of variables, and the paramount importance of test
+readability. The article underscores that each test should focus on a single
+case, employing a limited and well-ordered set of assertions. It also warns
+against including "if" statements in testing blocks, among many other insightful
+recommendations.
+
 #### Anti-Patterns and Layout of Tests
 
+Plenty of important articles were written about anti-patterns and layout of
+tests...
 
-
-Other articles:
-
-- https://dzone.com/articles/importance-of-unit-testing (Importance of Unit
-  Testing)
-    - "testing ensures security, customer satisfaction, and saves money in the
-      long run. Sometimes it can save lives as well"
-    - !**"Use consistent naming conventions and test one code at a time."**
-    - "Make sure that there is a corresponding unit test case for a module if
-      there is any change in the code. All the bugs must be fixed before moving
-      to the next phase. It’s better to test as you commit a code to avoid
-      errors. Focus more on the tests that affect the behavior of the system. "
-    - "It takes less time to find and fix the bugs during unit testing"
-    - "You end up with more reliable code as the bugs are fixed in the initial
-      stage"
-- https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor (
-  Software Unit Testing: What Is That? Why Is it Important?)
-    - "localize every little mistake quickly and accurately as well as simplify
-      the debugging process if any issue occurs"
-    - "unit tests give the ability to detect errors at an early stage of the
-      development process "
-    - "this technique helps to save time and costs in terms of future
-      developments"
-    - "alignment between specification and the result of development"
-- https://dzone.com/articles/what-is-test-driven-development-and-why-its-import (
-  What Is Test-Driven Development and Why It’s Important)
-    - The same points as a
-      previous [article](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor)
-- https://dzone.com/articles/clean-unit-testing (Clean Unit Testing)
-    - "Doing unit testing properly is a lot harder than people think."
-    - Reason for Failure (Single resposibility principle by mocking all except
-      the unit (class) itself)
-    - Stubbing and Mocking (use stubs and mocks in corresponding cases)
-    - **"unit test code is much more readable when it mirrors the code under
-      test"**
-    - **Variable Declaration Order** "It is much easier to read the test code if
-      they stubs and mocks are defined in the same order as they appear in the
-      class that is being tested."
-    - **Variable Naming** (The variable names used to represent the stubs and
-      mocks should be the same names that are used in the actual code.)
-    - Avoid Over Stubbing
-    - "A test should check a single interaction with the class you are testing.
-      Now, this doesn't mean you can only have one assert, it means you should
-      have a narrow when and a wide then. "
-    - This article also consider three different parts of the test: "given:,
-      when:,, and then"
-    - This article also mentions the importance of Assertions order (the same
-      for mocking and stubbing)
-    - **"A when:  code block or a then: code block should never contain an if
-      statement."**
 - https://dzone.com/articles/unit-testing-anti-patterns-full-list (Unit Testing
   Anti-Patterns — Full List)
     - Anti-patterns which have to be avoided
