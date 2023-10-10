@@ -113,26 +113,25 @@ recommendations.
 
 #### Anti-Patterns and Layout of Tests
 
-Plenty of important articles were written about anti-patterns and layout of
-tests...
+Additionally,
+certain [threads](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
+and [articles](https://dzone.com/articles/unit-testing-anti-patterns-full-list)
+identify anti-patterns one might encounter in real projects.
+These should be avoided as much as possible.
 
-- https://dzone.com/articles/unit-testing-anti-patterns-full-list (Unit Testing
-  Anti-Patterns — Full List)
-    - Anti-patterns which have to be avoided
-- https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue
-    - Anti-patterns which have to be avoided
-- https://www.yegor256.com/2023/01/19/layout-of-tests.html
-    - "The layout of tests is a very important aspect of the quality of your
-      code. It's not just about how you name your test methods,
-      it's about how you organize them in the source code."
+And another
+intriguing [approach]((https://www.yegor256.com/2023/01/19/layout-of-tests.html))
+that has emerged recently emphasizes the importance of maintaining a
+structured "layout" for your unit and integration tests. This isn't merely about
+naming test methods; it's about organizing them systematically within the source
+code.
 
-Interesting from other articles (cites):
+#### Conclusion and transition
 
-- "In this article, I am going to share an example of such a test app. You can
-  do the same in your projects.
-- "Technology stack: Netbeans IDE. Java. Maven."
-- "developers either don't write unit tests at all, don't write enough tests, or
-  they don't maintain them"
+Despite the undeniable impact and evidence highlighting the importance
+of unit testing, achieving high-quality code in tests remains elusive. Many developers
+either neglect to write tests, don't cover most of the cases, or
+fail to maintain them. Is there a solution to this problem?
 
 ### Gap Identification
 
