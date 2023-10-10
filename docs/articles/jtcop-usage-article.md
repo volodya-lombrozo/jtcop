@@ -43,10 +43,27 @@ many projects and teams. And we hope that you will find them useful too.
 During the years it was written a lot of articles about the importance of
 unit tests and how to write them properly.
 
+#### Importance of Unit Testing
+
 In the opinion
 about [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
 testing is highlighted as a "fundamental aspect of everything we do," with a
 suggestion to make it a central part of the development process.
+
+
+#### Transition from Importance to Best Practice
+
+The article
+[Java Unit Testing Best Practices](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+highlights the importance of unit testing, including the ability to identify
+defects early in the development process, the ability to refactor safely, and
+even help in the code review process.
+Most importantly, the article offers numerous best practices for writing unit
+tests. These include ensuring that tests are trustworthy (failing only when
+necessary), maintainable, readable, and dedicated to verifying a single use
+case. Tests should also be isolated and automated.
+
+#### Best Practices
 
 For instance, the article [Anatomy of a Good Java
 Test](https://dzone.com/articles/anatomy-of-a-good-java-test) emphasizes the
@@ -59,47 +76,21 @@ sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-
 It also advises against using cryptic assertion messages and emphasizes the
 importance of clarity and expressiveness in test writing.
 
-The article
-[Java Unit Testing Best Practices](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
-highlights the importance of unit testing, including the ability to identify
-defects early in the development process, the ability to refactor safely, and
-even help in the code review process.
-Most importantly, the article offers numerous best practices for writing unit
-tests. These include ensuring that tests are trustworthy (failing only when
-necessary), maintainable, readable, and dedicated to verifying a single use
-case. Tests should also be isolated and automated.
+
+The article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+also offers a number of tips for writing better unit tests. These include using
+a framework for unit testing, using test-driven development judiciously, 
+measuring code coverage, using assertions instead of print statements, and
+building tests that have deterministic results. The article also emphasizes the
+importance of testing negative scenarios and borderline cases, in addition to
+positive scenarios.
+
+#### Anti-Patterns and Layout of Tests
+
+
 
 Other articles:
 
-- https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo (
-  Java Unit Testing Best Practices)
-    - Highlights the importance of Unit testing
-        - "validates that each piece of your software", "a solid foundation for
-          future development"
-        - "identifies defects at early stages "
-        - "safer to refactor"
-        - Even helps in code review process and consider corner cases
-    - **Best practice** of writing unit tests:
-        - Unit Tests Should Be Trustworthy (fail when it needed)
-        - **Unit Tests Should Be Maintainable and Readable**
-        - Unit Tests Should Verify a Single Use Case
-        - Unit Tests Should Be Isolated (Tests should be runnable on any
-          machine, in any order, without affecting each other.)
-        - Unit Tests Should Be Automated
-        - Use a Good Mixture of Unit and Integration Tests
-        - **"writing unit tests as you write your application code"**
-
-
-- https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java (7
-  Tips for Writing Better Unit Tests in Java)
-    - Use a Framework for Unit Testing (JUnit, TestNG)
-    - Use Test Driven Development Judiciously!
-    - Measure Code Coverage
-    - Externalize test data wherever possible (@Parameterized.Parameters)
-    - **Use Assertions Instead of Print Statements**
-    - Build tests that have deterministic results
-    - Test negative scenarios and borderline cases, in addition to positive
-      scenarios
 - https://dzone.com/articles/importance-of-unit-testing (Importance of Unit
   Testing)
     - "testing ensures security, customer satisfaction, and saves money in the
