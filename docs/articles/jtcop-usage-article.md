@@ -38,25 +38,36 @@ many projects and teams. And we hope that you will find them useful too.
 
 ### Referenced Articles.
 
-**!Highlight some of the main takeaways!**
-
-During the years it was written a lot of articles about the importance of
-unit tests and how to write them properly.
+Over the years, numerous articles have been written about the importance of
+unit and integration tests and the benefits they provide. Among these benefits are the ability
+to swiftly and precisely [identify errors](https://dzone.com/articles/importance-of-unit-testing),
+simplify debugging, and detect mistakes early.
+Furthermore, effective testing can lead to significant savings in
+development [costs](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import)
+and ensure
+a [strong alignment](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor)
+between the specification and the final product.
+Unit tests
+facilitate [safe refactoring](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+and can
+prove [invaluable during the code review](https://www.yegor256.com/2019/12/03/testing-in-code-review.html)
+process.
+Thus, testing is sometimes even considered
+a [central part](https://dzone.com/articles/importance-of-testing-grant-fritchey)
+of the development process.
 
 #### Importance of Unit Testing
 
-In the opinion
-about [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
-testing is highlighted as a "fundamental aspect of everything we do," with a
-suggestion to make it a central part of the development process.
+https://dzone.com/articles/importance-of-unit-testing
+Best practices suggested for unit testing include using consistent naming
+conventions, providing a corresponding unit test case for each module, and
+testing as code is committed.
 
-This [article](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor)
-and [this](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import)
-highlights the importance of unit testing, including the ability to localize
-every little mistake quickly and accurately as well as simplify the debugging
-process, detect errors at an early stage of the development process, save time
-and costs in terms of future developments, and ensure alignment between
-specification and the result of development.
+https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
+These include ensuring that tests are trustworthy (failing only when
+necessary), maintainable, readable, and dedicated to verifying a single use
+case. Tests should also be isolated and automated.
+___
 
 #### Transition from Importance to Best Practice
 
@@ -65,6 +76,7 @@ article [Importance of Unit Testing](https://dzone.com/articles/importance-of-un
 also highlights the importance of unit testing: it ensures security, customer
 satisfaction, saves money (sometimes even lives) in the long run, reduces the
 time required to find and fix bugs, and results in more reliable code.
+
 The article suggests several best practices for unit testing, including using
 consistent naming conventions, providing a corresponding unit test case for
 every module, and testing as you commit code to avoid errors.
@@ -129,7 +141,8 @@ code.
 #### Conclusion and transition
 
 Despite the undeniable impact and evidence highlighting the importance
-of unit testing, achieving high-quality code in tests remains elusive. Many developers
+of unit testing, achieving high-quality code in tests remains elusive. Many
+developers
 either neglect to write tests, don't cover most of the cases, or
 fail to maintain them. Is there a solution to this problem?
 
