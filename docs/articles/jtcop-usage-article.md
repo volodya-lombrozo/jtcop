@@ -2,45 +2,11 @@
 
 ## Introduction
 
-### Background
-
-I more than sure that we rather often change our job titles, projects,
-teams, technologies, and each time when I open a new project I see the
-entirely different picture of the project, and specifically, the tests.
-You may wonder why it so important. Well, because the well-organaized
-tests are like a good documentation, they are easy to read and easy to
-understand. If I want to add something new to a project, I always look through
-the project tests and always start from them. I don't insist here that we
-should write tests first, I'm just saying that tests are important for many
-reasons (which one?):
-
-### Purpose of the Article
-
-So we decided to create a tool that will help us to keep our tests
-more or less consistent, easy to read and orginized by similar principles.
-We even created a tool which help us to keep our tests according with the rules
-which we think are important for Java projects. I believe that the similar tool
-might be created for other languages you like.
-
-In this article I will try to explain how it fits into the landscape of static
-analysis tools and how it can help you in our every-day-programming.
-
-Of course, we aren't trying to say that our rules are the best and the only
-way to organize tests, but we think that they are good enough to be used across
-many projects and teams. And we hope that you will find them useful too.
-
-* Clarity: Discuss the importance of immediately understanding what a test does
-  and why.
-* Maintainability: Describe the challenges of maintaining poorly organized or
-  ambiguously named tests.
-
-## The Inspiration Behind jtcop
-
-### Referenced Articles.
-
 Over the years, numerous articles have been written about the importance of
-unit and integration tests and the benefits they provide. Among these benefits are the ability
-to swiftly and precisely [identify errors](https://dzone.com/articles/importance-of-unit-testing),
+unit and integration tests and the benefits they provide. Among these benefits
+are the ability
+to swiftly and
+precisely [identify errors](https://dzone.com/articles/importance-of-unit-testing),
 simplify debugging, and detect mistakes early.
 Furthermore, effective testing can lead to significant savings in
 development [costs](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import)
@@ -56,7 +22,27 @@ Thus, testing is sometimes even considered
 a [central part](https://dzone.com/articles/importance-of-testing-grant-fritchey)
 of the development process.
 
-#### Importance of Unit Testing
+However, in recent years, within the developer community, it has become evident
+that the mere presence of unit and integration tests in a project is not
+sufficient. There has been an increasing number of blog posts and articles
+discussing the importance of well-structured and formatted tests.
+So, why is this so important?
+
+### Background
+
+I more than sure that we rather often change our job titles, projects,
+teams, technologies, and each time when I open a new project I see the
+entirely different picture of the project, and specifically, the tests.
+You may wonder why it so important. Well, because the well-organaized
+tests are like a good documentation, they are easy to read and easy to
+understand. If I want to add something new to a project, I always look through
+the project tests and always start from them. I don't insist here that we
+should write tests first, I'm just saying that tests are important for many
+reasons (which one?):
+
+### Best Practices
+
+#### Best Practices (OLD)
 
 https://dzone.com/articles/importance-of-unit-testing
 Best practices suggested for unit testing include using consistent naming
@@ -67,9 +53,6 @@ https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
 These include ensuring that tests are trustworthy (failing only when
 necessary), maintainable, readable, and dedicated to verifying a single use
 case. Tests should also be isolated and automated.
-___
-
-#### Transition from Importance to Best Practice
 
 The
 article [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing)
@@ -90,8 +73,6 @@ Most importantly, the article offers numerous best practices for writing unit
 tests. These include ensuring that tests are trustworthy (failing only when
 necessary), maintainable, readable, and dedicated to verifying a single use
 case. Tests should also be isolated and automated.
-
-#### Best Practices
 
 For instance, the article [Anatomy of a Good Java
 Test](https://dzone.com/articles/anatomy-of-a-good-java-test) emphasizes the
@@ -273,6 +254,26 @@ It's around total 45 rules for tests.
 As you might notice, SonarQube has more rules than PMD, although most of them
 overlap with PMD. Also, SonarQube, to best my knowledge, doesn't check
 Hamcrest assertions at all and doesn't keep the layout of tests.
+
+### Introduction to jtcop
+
+So we decided to create a tool that will help us to keep our tests
+more or less consistent, easy to read and orginized by similar principles.
+We even created a tool which help us to keep our tests according with the rules
+which we think are important for Java projects. I believe that the similar tool
+might be created for other languages you like.
+
+In this article I will try to explain how it fits into the landscape of static
+analysis tools and how it can help you in our every-day-programming.
+
+Of course, we aren't trying to say that our rules are the best and the only
+way to organize tests, but we think that they are good enough to be used across
+many projects and teams. And we hope that you will find them useful too.
+
+* Clarity: Discuss the importance of immediately understanding what a test does
+  and why.
+* Maintainability: Describe the challenges of maintaining poorly organized or
+  ambiguously named tests.
 
 ## Introducing jtcop
 
