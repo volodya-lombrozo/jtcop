@@ -28,17 +28,33 @@ sufficient. There has been an increasing number of blog posts and articles
 discussing the importance of well-structured and formatted tests.
 So, why is this so important?
 
-### Background
+## Background
 
-I more than sure that we rather often change our job titles, projects,
-teams, technologies, and each time when I open a new project I see the
-entirely different picture of the project, and specifically, the tests.
-You may wonder why it so important. Well, because the well-organaized
-tests are like a good documentation, they are easy to read and easy to
-understand. If I want to add something new to a project, I always look through
-the project tests and always start from them. I don't insist here that we
-should write tests first, I'm just saying that tests are important for many
-reasons (which one?):
+Well, every time I delve into a new project, I'm presented with an entirely new,
+distinct landscape. I start by reading the documentation and quickly delve into
+the project's tests. First and foremost, tests much better even a good
+documentation, since they are usually up-to-date, in contrast to the
+documentation, which can sometimes be misleading. By examining integration
+tests, I can easily determine how to use the project application or tool. By
+reviewing unit tests, I can readily understand the internal structure of the
+project, how it functions, and how certain classes, functions or units operate.
+
+Moreover, when I want or need to contribute to a project, the first question I
+ask is, "Where should I add my changes?" And yes, I will look for the answer in
+the tests, as they indicate which unit is most appropriate. If I need to fix a
+bug, my first step will be to reproduce it. How? Yes, you are right - by writing 
+a test. Thus, project tests guide me through all the actions I need to undertake 
+with the project.
+
+Now, let's imagine that the project's tests are chaotic or missing entirely. It
+would be extremely difficult to understand the code, determine where to add my
+changes, and ensure that my modifications won't break anything.
+
+So, yes, the quality of tests is paramount. If tests are poorly formatted or
+even exhibit some anti-patterns, it becomes challenging to work with the
+project. And of course, this isn't my original thought. There are numerous
+articles that emphasize the importance of well-structured and formatted tests,
+offering best practices and insights.
 
 ### Best Practices
 
@@ -127,7 +143,7 @@ developers
 either neglect to write tests, don't cover most of the cases, or
 fail to maintain them. Is there a solution to this problem?
 
-### Gap Identification
+## Gap Identification
 
 As you might have noticed from the articles, there are some common ideas and
 principles we can apply to create good unit tests. But what about the tools that
