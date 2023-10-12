@@ -74,25 +74,37 @@ of variable naming and ordering, both pivotal for enhancing test readability.
 
 #### Assertions
 
-The next important point is a correct assertion statements that were
-mentioned several times
+Assertions hold an important position in testing best practices.
+For instance, the
+article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+strongly advises using assertions over print statements in tests. Another
+recurring theme in multiple articles is the principle of
+[limiting](https://dzone.com/articles/clean-unit-testing) and arranging
+assertions within a single unit test.
+The [AAA](https://stackoverflow.com/tags/arrange-act-assert/info)
+pattern (Arrange, Act, Assert) is a good example of positioning
+assertions at the tail end of the test method.
+Adopting such a consistent structure ensures that tests are straightforward and
+easily understandable to other developers.
+Additionally, the clarity of the assertions themselves is also of utmost
+importance.
+They should be accompanied by clear and expressive messages, as mentioned
+many times in numerous articles,
+like [this](https://dzone.com/articles/anatomy-of-a-good-java-test)
+and [this](https://www.yegor256.com/2023/01/19/layout-of-tests.html).
 
-[Anatomy of a Good Java
-Test](https://dzone.com/articles/anatomy-of-a-good-java-test) advises against
-using cryptic assertion messages and emphasizes the importance of clarity and
-expressiveness in test writing.
-
-[7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
-using assertions instead of print statements
+#### Mocks and stubs
 
 [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-employing a limited and well-ordered set of assertions
+suggests the appropriate use
+of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub)
+
+#### ifs
 
 [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-One more A widely endorsed practice highlighted in these articles is the
-organization of tests into three distinct sections: Setup, Action, Assertion.
-This structure ensures that each test follows a coherent and predictable
-pattern, streamlining comprehension for other developers.
+It also warns
+against including "if" statements in testing blocks, among many other insightful
+recommendations
 
 #### Code coverage
 
@@ -131,19 +143,6 @@ https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
 
 Isolated and automated
 https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
-
-#### Mocks and stubs
-
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-suggests the appropriate use
-of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub)
-
-#### ifs
-
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-It also warns
-against including "if" statements in testing blocks, among many other insightful
-recommendations
 
 #### Anti-Patterns
 
