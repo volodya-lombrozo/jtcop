@@ -59,25 +59,18 @@ well-structured and formatted tests, offering best practices and insights.
 
 #### Naming
 
-The most notable suggestion if a test name convention. For example several
-articles
-like
-[Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test),
-[Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
-and this
-mention the importance of test names and that they
-should be organised in a certain way.
-
-- emphasizes the
-  significance of test naming, especially from a documentation standpoint
-- avoiding the use of the word "test" in test names may seem obvious, they
-  are not always followed in practice. Furthermore, the article underscores the
-  value of organizing tests into three distinct
-  sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-assert/info).
-
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-effective naming and ordering of variables, and the paramount importance of test
-readability.
+The first particularly significant aspect of these practices is the way tests
+are named. Both the
+articles, [Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test)
+and [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
+stress the paramount importance of effective test naming, especially from a
+documentation perspective. They advise against the use of the word "test" in
+test names, emphasizing that proper naming can serve as a clear descriptor
+of what the test aims to verify or validate.
+Additionally,
+the [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing) article
+not only underscores effective test naming but also delves into the significance
+of variable naming and ordering, both pivotal for enhancing test readability.
 
 #### Assertions
 
@@ -94,6 +87,12 @@ using assertions instead of print statements
 
 [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
 employing a limited and well-ordered set of assertions
+
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+One more A widely endorsed practice highlighted in these articles is the
+organization of tests into three distinct sections: Setup, Action, Assertion.
+This structure ensures that each test follows a coherent and predictable
+pattern, streamlining comprehension for other developers.
 
 #### Code coverage
 
@@ -179,7 +178,7 @@ analyzers. Let's examine the most widely used ones. Please note that here I will
 only briefly describe a few of them, even though there are plenty of similar
 tools available. This is a vast topic on its own. Ok, let's just review them.
 
-#### Checkstyle
+### Checkstyle
 
 [Checkstyle](https://checkstyle.sourceforge.io) - is one more development tool
 that helps programmers write Java code that adheres to a coding standard. In
@@ -207,7 +206,7 @@ class. So, to conclude, Checkstyle is a good tool, but it doesn't help us to
 keep our tests consistent and clear according to industry requirements and best
 practices.
 
-#### PMD
+### PMD
 
 [PMD](https://pmd.github.io) - a source code analyzer. It finds common
 programming flaws like unused variables, empty catch blocks, unnecessary
@@ -272,7 +271,7 @@ production code only and doesn't check specific test name patterns.
 Moreover, to best my knowledge, PMD doesn't check the layout of tests and where
 they are placed. So, PMD has a rather limited number of checks for tests.
 
-#### Sonar Qube
+### Sonar Qube
 
 [SonarQube](https://www.sonarqube.org) - is a tool that also widely used to
 check code quality. SonarQube is an open-source platform that has a support
