@@ -93,18 +93,38 @@ many times in numerous articles,
 like [this](https://dzone.com/articles/anatomy-of-a-good-java-test)
 and [this](https://www.yegor256.com/2023/01/19/layout-of-tests.html).
 
+#### GPT for below
+
+Several best practices emphasize nuanced guidelines for writing tests. These
+include the judicious use of mocks and stubs, refraining from incorporating "if"
+statements within test blocks, and ensuring each unit test focuses on a singular
+case. Additionally, it's recommended to enhance the isolation and automation of
+tests to the greatest extent possible.
+
+++++++NEXT+++++++ (a bit wrong)
+Moreover, some best practices mention interesting rules for the appropriate use
+of mocks and stubs. These include avoiding "if" statements in testing blocks,
+focusing on a single case in each unit test, and making them as isolated and
+automated as possible. And these are just a few qualities of a good test. We
+mustn't forget about high code coverage, the importance of testing negative
+scenarios and borderline cases in addition to positive ones, and avoiding
+non-deterministic and flaky tests. I've already mentioned the pitfalls of
+unit-test anti-patterns."
+
 #### Mocks and stubs
 
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-suggests the appropriate use
-of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub)
-
-#### ifs
-
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-It also warns
-against including "if" statements in testing blocks, among many other insightful
-recommendations
+Then, some [best practice](https://dzone.com/articles/clean-unit-testing)
+mention
+interesting rules, for appropriate use
+of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
+avoiding "if" statements in testing blocks, focusing on a single
+case in each unit test, and making them
+more [isolated and automated](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+as it possible. And it's only small number of qualities of a good test.
+We can't forget about high code coverage, importance of testing negative
+scenarios and borderline cases, in addition to positive scenarios,
+avoiding non-determenitic and flaky tests alongside with unit-test anti-patterns
+as I've already mentioned.
 
 #### Code coverage
 
@@ -125,24 +145,6 @@ and building tests that have deterministic results ...a framework for unit
 testing,
 using test-driven development judiciously, measuring code coverage measuring
 code coverage
-
-#### Single responsibility
-
-Maintainable, readable:
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-the paramount importance of test
-readability
-
-[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-The article underscores that each test should focus on a single
-case.
-
-Dedicated to verifying a single use case:
-https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
-[Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing)
-
-Isolated and automated
-https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
 
 #### Anti-Patterns
 
