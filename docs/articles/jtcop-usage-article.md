@@ -57,28 +57,74 @@ it becomes challenging to work with the project. And of course, this isn't my
 original thought. There are numerous articles that emphasize the importance of
 well-structured and formatted tests, offering best practices and insights.
 
-The most notable suggestion if a test name convention. For example several articles
-like 
-[this](https://dzone.com/articles/importance-of-unit-testing),
-[Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing), 
-and this 
-mention the importance of test names and that they 
+#### Naming
+
+The most notable suggestion if a test name convention. For example several
+articles
+like
+[Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test),
+[Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
+and this
+mention the importance of test names and that they
 should be organised in a certain way.
 
-The next important point is a correct assertion statements that were 
+- emphasizes the
+  significance of test naming, especially from a documentation standpoint
+- avoiding the use of the word "test" in test names may seem obvious, they
+  are not always followed in practice. Furthermore, the article underscores the
+  value of organizing tests into three distinct
+  sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-assert/info).
+
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+effective naming and ordering of variables, and the paramount importance of test
+readability.
+
+#### Assertions
+
+The next important point is a correct assertion statements that were
 mentioned several times
-here,
-here,
-and here.
+
+[Anatomy of a Good Java
+Test](https://dzone.com/articles/anatomy-of-a-good-java-test) advises against
+using cryptic assertion messages and emphasizes the importance of clarity and
+expressiveness in test writing.
+
+[7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+using assertions instead of print statements
+
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+employing a limited and well-ordered set of assertions
+
+#### Code coverage
 
 Code coverage, Test case for each module, and testing as code is commited:
 https://dzone.com/articles/importance-of-unit-testing
 
-Avoid flaky tests:
+[7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+The article also emphasizes the
+importance of testing negative scenarios and borderline cases, in addition to
+positive scenarios.
+
+#### flaky tests:
+
 https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
 
-Maintainable, readable:
+[7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+and building tests that have deterministic results ...a framework for unit
+testing,
+using test-driven development judiciously, measuring code coverage measuring
+code coverage
 
+#### Single responsibility
+
+Maintainable, readable:
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+the paramount importance of test
+readability
+
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+The article underscores that each test should focus on a single
+case.
 
 Dedicated to verifying a single use case:
 https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
@@ -87,49 +133,27 @@ https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
 Isolated and automated
 https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
 
+#### Mocks and stubs
 
-### Best Practices
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+suggests the appropriate use
+of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub)
 
-#### Best Practices (OLD)
+#### ifs
 
-
-For instance, the article [Anatomy of a Good Java
-Test](https://dzone.com/articles/anatomy-of-a-good-java-test) emphasizes the
-significance of test naming, especially from a documentation standpoint. While
-recommendations like adhering to consistent naming conventions
-and avoiding the use of the word "test" in test names may seem obvious, they
-are not always followed in practice. Furthermore, the article underscores the
-value of organizing tests into three distinct
-sections: [Setup, Action, Assertion](https://stackoverflow.com/tags/arrange-act-assert/info).
-It also advises against using cryptic assertion messages and emphasizes the
-importance of clarity and expressiveness in test writing.
-
-The
-article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
-also offers a number of tips for writing better unit tests. These include using
-a framework for unit testing, using test-driven development judiciously,
-measuring code coverage, using assertions instead of print statements, and
-building tests that have deterministic results. The article also emphasizes the
-importance of testing negative scenarios and borderline cases, in addition to
-positive scenarios.
-
-The article [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-also serves as an invaluable resource for those seeking to enhance their unit
-tests. It introduces several best practices such as the appropriate use
-of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
-effective naming and ordering of variables, and the paramount importance of test
-readability. The article underscores that each test should focus on a single
-case, employing a limited and well-ordered set of assertions. It also warns
+[Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+It also warns
 against including "if" statements in testing blocks, among many other insightful
-recommendations.
+recommendations
 
-#### Anti-Patterns and Layout of Tests
+#### Anti-Patterns
 
 Additionally,
 certain [threads](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
-and [articles](https://dzone.com/articles/unit-testing-anti-patterns-full-list)
 identify anti-patterns one might encounter in real projects.
 These should be avoided as much as possible.
+
+#### Layout of Tests
 
 And another
 intriguing [approach]((https://www.yegor256.com/2023/01/19/layout-of-tests.html))
