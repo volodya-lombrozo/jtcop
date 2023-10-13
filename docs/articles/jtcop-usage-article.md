@@ -28,7 +28,7 @@ sufficient. There has been an increasing number of blog posts and articles
 discussing the importance of well-structured and formatted tests.
 But why is this so important?
 
-## Background
+## Best Practice
 
 Well, every time I delve into a new project, I'm presented with an entirely new,
 distinct landscape. I start by reading the documentation and quickly delve into
@@ -57,8 +57,6 @@ it becomes challenging to work with the project. And of course, this isn't my
 original thought. There are numerous articles that emphasize the importance of
 well-structured and formatted tests, offering best practices and insights.
 
-#### Naming
-
 The first particularly significant aspect of these practices is the way tests
 are named. Both the
 articles, [Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test)
@@ -72,9 +70,7 @@ the [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing) article
 not only underscores effective test naming but also delves into the significance
 of variable naming and ordering, both pivotal for enhancing test readability.
 
-#### Assertions
-
-Assertions hold an important position in testing best practices.
+Assertions also hold an important position in testing best practices.
 For instance, the
 article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
 strongly advises using assertions over print statements in tests. Another
@@ -93,8 +89,6 @@ many times in numerous articles,
 like [this](https://dzone.com/articles/anatomy-of-a-good-java-test)
 and [this](https://www.yegor256.com/2023/01/19/layout-of-tests.html).
 
-#### More
-
 Furthermore, some [best practice](https://dzone.com/articles/clean-unit-testing)
 highlight important rules for the appropriate use of
 [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
@@ -109,11 +103,9 @@ as well as the
 unit-test [anti-patterns](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
 I've previously mentioned.
 
-#### Layout of Tests
-
 So, yes, there's a lot of tacit knowledge that we can borrow from the community
 to craft good unit and integration tests. And this isn't the end of the story.
-There are other emerging ideas worth mentioning. For instance, the recent idea 
+There are other emerging ideas worth mentioning. For instance, the recent idea
 about the
 [layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
 emphasizes the importance of maintaining a structured "layout" for both
@@ -126,40 +118,32 @@ consistent and clear?
 
 ## Gap Identification
 
-As you might have noticed from the articles, there are some common ideas and
-principles we can apply to create good unit tests. But what about the tools that
-already help us keep our code clear and consistent? I'm referring to static
-analyzers. Let's examine the most widely used ones. Please note that here I will
-only briefly describe a few of them, even though there are plenty of similar
-tools available. This is a vast topic on its own. Ok, let's just review them.
+Yes, I'm referring to static analyzers. Let's briefly examine the most widely
+used ones, even though there are many similar tools available. I will focus only
+on rules and checks that help to address at least some best practices discovered
+previously.
 
 ### Checkstyle
 
-[Checkstyle](https://checkstyle.sourceforge.io) - is one more development tool
-that helps programmers write Java code that adheres to a coding standard. In
-other words, Checkstyle is a static code analysis tool (linter) used in Java
-world. Although Checkstyle doesn't provide features specifically tailored for
-unit tests, many of its features are applicable to test code just as they are
-to production code.
+[Checkstyle](https://checkstyle.sourceforge.io) is a development tool that helps
+programmers write Java code that adheres to a coding standard. In other words,
+Checkstyle is a static code analysis
+tool ([linter](https://en.wikipedia.org/wiki/Lint_(software))) used in the Java
+world. Although Checkstyle doesn't
+provide features specifically tailored for tests, many of its features are
+applicable to test code, just as they are to production code. It can assist with
+javadoc comments, indentation, line length, cyclomatic complexity, etc. However,
+to the best of my knowledge, the only feature related to tests is the ability to
+enforce the test names convention by developing a specific checker. So, yes,
+before using it, you need to develop your
+own  [checker](https://stackoverflow.com/questions/24415234/configure-checkstyle-method-names-for-test-methods-only)
+first.
 
-The only useful feature to the best of my knowledge is the ability to enforce
-the test names convention by developing
-your [own checker](https://stackoverflow.com/questions/24415234/configure-checkstyle-method-names-for-test-methods-only).
-Well, yes, before using it you need to develop your own checker, but it is
-possible.
-
-Also, checkstyle can help you with javadoc comments, indentation, line length,
-cyclomatic complexity, etc. So, it is a tool just for checking common rules. It
-doesn't consider specific rules for unit tests, like test names, assertions,
-and layout of tests.
-
-However, as I mentioned before, the Checkstyle is a general tool that
-concentrated on java code only and doesn't check high level problems with tests,
-for example where they are placed. Also Checkstyle doesn't check the test
-classes names and doesn't check if the test class has a corresponding production
-class. So, to conclude, Checkstyle is a good tool, but it doesn't help us to
-keep our tests consistent and clear according to industry requirements and best
-practices.
+Thus, while Checkstyle is a general tool that focuses solely on Java code, it
+doesn't specifically address issues with tests. It doesn't consider specific
+rules related to assertion checks, identification of anti-patterns,
+or maintaining the layout of tests - all of which are essential to keep tests
+consistent and clear in line with industry requirements and best practices.
 
 ### PMD
 
