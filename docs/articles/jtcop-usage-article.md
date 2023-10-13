@@ -147,18 +147,26 @@ consistent and clear in line with industry requirements and best practices.
 
 ### PMD
 
-[PMD](https://pmd.github.io) - a source code analyzer. It finds common
-programming flaws like unused variables, empty catch blocks, unnecessary
-object creation, and so forth. While it supports many different languages,
-here we are interested in Java only. Let's try to find how PMD can help us to
-keep our tests consistent and clear according to industry requirements and
-best practices.
-
-PMD, comparing with Checkstyle has much more rules that checks tests quality,
-for example:
+[PMD](https://pmd.github.io) is one more source code analyzer similar to
+Checkstyle. It finds common programming flaws like unused variables, empty
+catch blocks, unnecessary object creation, and so forth. While it supports
+many different languages, here we are interested in Java only.
+PMD, comparing with Checkstyle has much more rules that check tests quality,
+for example (but not limited to):
 
 1. [JUnitAssertionsShouldIncludeMessage](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junitassertionsshouldincludemessage) -
-   requires that JUnit assertions should include a message.
+   requires JUnit assertions include a message.
+2. [JUnitTestContainsTooManyAsserts](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestcontainstoomanyasserts)
+   checks if JUnit or TestNG test contains too many assertion statements.
+3. [JUnitTestsShouldIncludeAssert](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestsshouldincludeassert)
+   checks that JUnit tests include at least one assertion.
+4. [TestClassWithoutTestCases](https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#testclasswithouttestcases)
+   checks that test classes have at least one testing method.
+5. [UnnecessaryBooleanAssertion](https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#unnecessarybooleanassertion)
+   checks that JUnit assertions are used correctly without `assertTrue(true)`
+   statements (line-hitter anti-pattern detection.)
+
+Here is a short example of test violations that PMD can find:
 
 ```java
 public class Foo extends TestCase {
@@ -169,12 +177,7 @@ public class Foo extends TestCase {
 // instead
     }
 }
-```
 
-2. [JUnitTestContainsTooManyAsserts](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestcontainstoomanyasserts)
-   checks that JUnit or TestNG test contains too many assertion statements:
-
-```java
 public class MyTestCase extends TestCase {
     // Ok
     public void testMyCaseWithOneAssert() {
@@ -189,16 +192,8 @@ public class MyTestCase extends TestCase {
         assertEquals("should equals false", false, myVar);
     }
 }
+
 ```
-
-3. [JUnitTestsShouldIncludeAssert](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestsshouldincludeassert)
-   checks that JUnit tests include at least one assertion
-4. [TestClassWithoutTestCases](https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#testclasswithouttestcases)
-   checks that test classes have at least one test case (testing method)
-5. [UnnecessaryBooleanAssertion](https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#unnecessarybooleanassertion)
-
-- checks that JUnit assertions are used correctly without `assertTrue(true)` (or
-  similar) statements.
 
 However, all this checks designed mostly for JUnit assertions and in some cases
 for AssertJ and don't support Hamcrest assertions that is widely using in the
