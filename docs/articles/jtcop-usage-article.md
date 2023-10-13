@@ -93,82 +93,36 @@ many times in numerous articles,
 like [this](https://dzone.com/articles/anatomy-of-a-good-java-test)
 and [this](https://www.yegor256.com/2023/01/19/layout-of-tests.html).
 
-#### GPT for below
+#### More
 
-Several best practices emphasize nuanced guidelines for writing tests. These
-include the judicious use of mocks and stubs, refraining from incorporating "if"
-statements within test blocks, and ensuring each unit test focuses on a singular
-case. Additionally, it's recommended to enhance the isolation and automation of
-tests to the greatest extent possible.
-
-++++++NEXT+++++++ (a bit wrong)
-Moreover, some best practices mention interesting rules for the appropriate use
-of mocks and stubs. These include avoiding "if" statements in testing blocks,
-focusing on a single case in each unit test, and making them as isolated and
-automated as possible. And these are just a few qualities of a good test. We
-mustn't forget about high code coverage, the importance of testing negative
-scenarios and borderline cases in addition to positive ones, and avoiding
-non-deterministic and flaky tests. I've already mentioned the pitfalls of
-unit-test anti-patterns."
-
-#### Mocks and stubs
-
-Then, some [best practice](https://dzone.com/articles/clean-unit-testing)
-mention
-interesting rules, for appropriate use
-of [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
-avoiding "if" statements in testing blocks, focusing on a single
-case in each unit test, and making them
-more [isolated and automated](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
-as it possible. And it's only small number of qualities of a good test.
-We can't forget about high code coverage, importance of testing negative
-scenarios and borderline cases, in addition to positive scenarios,
-avoiding non-determenitic and flaky tests alongside with unit-test anti-patterns
-as I've already mentioned.
-
-#### Code coverage
-
-Code coverage, Test case for each module, and testing as code is commited:
-https://dzone.com/articles/importance-of-unit-testing
-
-[7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
-The article also emphasizes the
+Furthermore, some [best practice](https://dzone.com/articles/clean-unit-testing)
+highlight important rules for the appropriate use of
+[mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
+avoiding "if" statements in test blocks, focusing on a single case in each unit,
+and making tests
+as [isolated and automated](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+as possible. We must also consider high code coverage and the
 importance of testing negative scenarios and borderline cases, in addition to
-positive scenarios.
-
-#### flaky tests:
-
-https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo
-
-[7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
-and building tests that have deterministic results ...a framework for unit
-testing,
-using test-driven development judiciously, measuring code coverage measuring
-code coverage
-
-#### Anti-Patterns
-
-Additionally,
-certain [threads](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
-identify anti-patterns one might encounter in real projects.
-These should be avoided as much as possible.
+positive ones. Lastly, it's essential to avoid non-deterministic
+and [flaky tests](https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a)
+as well as the
+unit-test [anti-patterns](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
+I've previously mentioned.
 
 #### Layout of Tests
 
-And another
-intriguing [approach]((https://www.yegor256.com/2023/01/19/layout-of-tests.html))
-that has emerged recently emphasizes the importance of maintaining a
-structured "layout" for your unit and integration tests. This isn't merely about
-naming test methods; it's about organizing them systematically within the source
-code.
+So, yes, there's a lot of tacit knowledge that we can borrow from the community
+to craft good unit and integration tests. And this isn't the end of the story.
+There are other emerging ideas worth mentioning. For instance, the recent idea 
+about the
+[layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
+emphasizes the importance of maintaining a structured "layout" for both
+unit and integration tests. This isn't merely about refactoring unit tests; it's
+about organizing them systematically within the source code.
 
-#### Conclusion and transition
-
-Despite the undeniable impact and evidence highlighting the importance
-of unit testing, achieving high-quality code in tests remains elusive. Many
-developers
-either neglect to write tests, don't cover most of the cases, or
-fail to maintain them. Is there a solution to this problem?
+But are all these ideas and principles just theoretical, or do we have
+ready-made solutions that help us adhere to these principles and keep our tests
+consistent and clear?
 
 ## Gap Identification
 
