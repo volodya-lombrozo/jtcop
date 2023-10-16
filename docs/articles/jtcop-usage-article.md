@@ -205,41 +205,40 @@ public class MyTestCase extends TestCase {
   }}
 ```
 
-However, all this checks designed mostly for JUnit assertions and in some cases
-for AssertJ and don't support Hamcrest assertions that is widely using in the
-industry (including us, personally).
-
-Also, when PMD can sheck method names, all this checks are designed for
-production code only and doesn't check specific test name patterns.
-
-Moreover, to best my knowledge, PMD doesn't check the layout of tests and where
-they are placed. So, PMD has a rather limited number of checks for tests.
+However, all these checks are designed primarily for JUnit assertions and, in
+some cases, for AssertJ. They don't support [Hamcrest](https://hamcrest.org)
+assertions, which are widely adopted in the industry.
+Also, while PMD can check method names, these checks are relatively simple. They
+focus on aspects such as method name length, avoiding special characters like
+underscores, and adhering
+to [camel case](https://en.wikipedia.org/wiki/Camel_case) naming conventions.
+Consequently, these checks are primarily intended for production code only and
+don't examine
+specific [test name patterns](https://dzone.com/articles/7-popular-unit-test-naming).
+Moreover, to the best of my knowledge, PMD doesn't identify structural mistakes
+or verify the correct placement of methods. Thus, PMD provides a rather limited
+set of checks for tests.
 
 ### Sonar Qube
 
-[SonarQube](https://www.sonarqube.org) - is a tool that also widely used to
-check code quality. SonarQube is an open-source platform that has a support
-of Java and other languages.
+[SonarQube](https://www.sonarqube.org) is also a widely used tool for checking
+code quality. SonarQube has a lot of rules similar to PMD that can be applied to
+tests, for example:
 
-SonarQube has a lot of rules similar to PMD that can be applied to tests,
-for example:
-
-1. [TestCases should contain tests](https://rules.sonarsource.com/java/tag/tests/RSPEC-2187/) -
-   checks that test classes have at
-   least one test case (testing method).
+1. [TestCases should contain tests](https://rules.sonarsource.com/java/tag/tests/RSPEC-2187/).
 2. [Literal boolean values and nulls should not be used in assertions.](https://rules.sonarsource.com/java/tag/tests/RSPEC-2699/)
 3. [Assertions should not compare an object to itself.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5863/)
 4. [Test assertions should include messages.](https://rules.sonarsource.com/java/tag/tests/RSPEC-2698/)
 5. [Test methods should not contain too many assertions.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5961/)
 6. [Similar tests should be grouped in a single Parameterized test.](https://rules.sonarsource.com/java/tag/tests/RSPEC-5976/)
 
-The full list you can find
-right [here](https://rules.sonarsource.com/java/tag/tests/RSPEC-2701/).
-It's around total 45 rules for tests.
-
-As you might notice, SonarQube has more rules than PMD, although most of them
-overlap with PMD. Also, SonarQube, to best my knowledge, doesn't check
-Hamcrest assertions at all and doesn't keep the layout of tests.
+At the time of writing this text, there are
+around [45 rules](https://rules.sonarsource.com/java/tag/tests/RSPEC-2701/)
+specifically designed for tests. As you might have noticed, SonarQube has more
+rules than PMD, although many of them overlap. However, to the best of my
+knowledge, SonarQube doesn't check Hamcrest assertions and doesn't maintain the
+layout of tests. It also doesn't show much concern about checking test
+anti-patterns.
 
 ### Introduction to jtcop
 
