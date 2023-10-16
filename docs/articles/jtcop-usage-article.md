@@ -151,7 +151,7 @@ consistent and clear in line with industry requirements and best practices.
 Checkstyle. It finds common programming flaws like unused variables, empty
 catch blocks, unnecessary object creation, and so forth. While it supports
 many different languages, here we are interested in Java only.
-PMD, comparing with Checkstyle has much more rules that check tests quality,
+PMD, comparing with Checkstyle, has much more rules that check tests quality,
 for example (but not limited to):
 
 1. [JUnitAssertionsShouldIncludeMessage](https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junitassertionsshouldincludemessage) -
@@ -169,30 +169,40 @@ for example (but not limited to):
 Here is a short example of test violations that PMD can find:
 
 ```java
-public class Foo extends TestCase {
-    public void testSomething() {
-        assertEquals("foo", "bar");
-// Use the form:
-// assertEquals("Foo does not equals bar", "foo", "bar");
-// instead
-    }
-}
+public class Foo extends TestCase { 
+  public void testSomething() {
+    // [JUnitAssertionsShouldIncludeMessage] Use the form:
+    // assertEquals("Foo does not equals bar", "foo", "bar");
+    // instead
+    assertEquals("foo", "bar");
+  }}
 
-public class MyTestCase extends TestCase {
-    // Ok
-    public void testMyCaseWithOneAssert() {
-        boolean myVar = false;
-        assertFalse("should be false", myVar);
-    }
+//[TestClassWithoutTestCases] Consider adding test methods if it is a test:
+public class Bar extends TestCase {}
 
-    // Bad, too many asserts (assuming max=1)
-    public void testMyCaseWithMoreAsserts() {
-        boolean myVar = false;
-        assertFalse("myVar should be false", myVar);
-        assertEquals("should equals false", false, myVar);
-    }
-}
+public class MyTestCase extends TestCase { 
+  // Ok
+  public void testMyCaseWithOneAssert() {
+    boolean myVar = false;
+    assertFalse("should be false", myVar);
+  }
+    
+  //[JUnitTestsShouldIncludeAssert]
+  //Bad, don't have any asserts 
+  public void testSomething() {
+    Bar b = findBar();
+    b.work();
+  }
 
+  //[JUnitTestContainsTooManyAsserts]: 
+  //Bad, too many asserts (assuming max=1)
+  public void testMyCaseWithMoreAsserts() {
+    boolean myVar = false;
+    assertFalse("myVar should be false", myVar);
+    assertEquals("should equals false", false, myVar);
+    //[UnnecessaryBooleanAssertion] Bad, serves no real purpose - remove it:
+    assertTrue(true);
+  }}
 ```
 
 However, all this checks designed mostly for JUnit assertions and in some cases
@@ -406,7 +416,7 @@ In other words, It is a test method that doesn't check anything. For example:
 @Test
 void calculatesSum(){
     sum(1,1);
-    }
+}
 ```
 
 This often happens when a developer writes in order to increase code coverage
@@ -472,11 +482,11 @@ common setup for all the tests in the class. For example:
 ```java
 @Test
 void calculatesSum(){
-    Summator s=init();
+    Summator s = init();
     Assertions.assertEquals(
     2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
     );
-    }
+}
 
 private static Summator init(){
     Summator s=new Summator();
