@@ -266,7 +266,7 @@ We use it in our projects, and it has helped us maintain consistent and clear
 tests. It also speeds up PR reviews significantly by preventing recurring
 comments about issues like improper test placement or naming. 
 Although, we don't think our rules are the only good way to set
-up tests, so feel free to send your ideas and suggestions by submitting tickets 
+up tests, so feel free to share your ideas and suggestions by submitting tickets 
 and PRs.
 In the following, I'll explain how jtcop fits into the landscape of static
 analysis tools, which checks it utilizes, and how it can assist you in your
