@@ -256,31 +256,21 @@ Collectively, while these tools lay a foundation for maintaining test code
 quality, there is still significant room for improvement in aligning with
 industry test standards and best practices.
 
-### Introduction to jtcop
-
-So we decided to create a tool that will help us to keep our tests
-more or less consistent, easy to read and orginized by similar principles.
-We even created a tool which help us to keep our tests according with the rules
-which we think are important for Java projects. I believe that the similar tool
-might be created for other languages you like.
-
-In this article I will try to explain how it fits into the landscape of static
-analysis tools and how it can help you in our every-day-programming.
-
-Of course, we aren't trying to say that our rules are the best and the only
-way to organize tests, but we think that they are good enough to be used across
-many projects and teams. And we hope that you will find them useful too.
-
-* Clarity: Discuss the importance of immediately understanding what a test does
-  and why.
-* Maintainability: Describe the challenges of maintaining poorly organized or
-  ambiguously named tests.
-
 ## Introducing jtcop
 
-Please, pay attention that most of the ideas was suggested by the community and
-we just collected them. So it is not out now-how So, the primary features of
-jtcop for now are:
+In order to address the aforementioned gaps, we developed a new static
+analyzer called [jtcop](https://github.com/volodya-lombrozo/jtcop) that focuses
+on test quality in Java projects. It is a simple Maven plugin that checks tests
+for common mistakes and anti-patterns.
+We use it in our projects, and it has helped us maintain consistent and clear
+tests. It also speeds up PR reviews significantly by preventing recurring
+comments about issues like improper test placement or naming. 
+Although, we don't think our rules are the only good way to set
+up tests, so feel free to send your ideas and suggestions by submitting tickets 
+and PRs.
+In the following, I'll explain how jtcop fits into the landscape of static
+analysis tools, which checks it utilizes, and how it can assist you in your
+everyday programming.
 
 ### Test Names
 
@@ -319,137 +309,6 @@ Of course, it is the style that we prefer in our projects, if you prefer some
 other patter for tests naming, just sent an issue or PR to jtcop and we will
 be happy to add it to the plugin.
 
-### Test Assertions
-
-The next important point that jcop checks assertions in tests. The most
-important check is, of course, the presense of assertions in a test.
-jtcop understands two assertion types `JUnit` assertions and `Hamcrest`
-assertions.
-
-For example the next test is incorrect:
-
-```java
-@Test
-void calculatesSum(){
-    if(sum(1,1)!=2){
-    throw new RuntimeException("1 + 1 != 2");
-    }
-    }
-```
-
-where the next is correct:
-
-```java
-@Test
-void calculatesSum(){
-    Assertions.assertEquals(
-    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
-    );
-    }
-```
-
-or with using Hamcrest assertions:
-
-```java
-@Test
-void calculatesSum(){
-    MatcherAssert.assertThat(
-    "Something went wrong, because 1 + 1 != 2",
-    sum(1,1),
-    Matchers.equalTo(2)
-    );
-    }
-```
-
-Pay attention on explanatory messages in
-assertions `Something went wrong, because 1 + 1 != 2`.
-They are required too. For example, let's consider
-the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e2ae4e895c0c7a4b42f9d0122e5/src/test/java/com/github/lombrozo/testnames/CopTest.java#L38)
-(I simplified it a bit):
-
-```java
-@Test
-void checksSuccessfully(){
-    MatcherAssert.assertThat(
-    new Cop(new Project.Fake()).inspection(),
-    Matchers.empty()
-    );
-    }
-```
-
-And, let's imagine this test fails and you get the next exception message:
-
-```shell
-Expected: an empty collection
-     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
-```
-
-Not informative at all. Isn't it? But if you add explanatory message to the
-assertion:
-
-```java
-@Test
-void checksSuccessfully(){
-    MatcherAssert.assertThat(
-    "Cop should not find any complaints in this case, but it has found something.",
-    new Cop(new Project.Fake()).inspection(),
-    Matchers.empty()
-    );
-    }
-```
-
-you will get the next message:
-
-```shell
-java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.
-Expected: an empty collection
-     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
-```
-
-It is much better, isn't it? Of course in the perfect world, we will add more
-information (aka context, that explains initialisation values and gives a clue
-to the developer) to the message, but even now it is much better than the
-previous example, because it is clear
-and human-readable.
-
-This feature was extremly useful for us, because we don't need to ask the
-developer to add explanatory messages to assertions, like we did it in numerous
-PR reviews. Now we just run jtcop and it will do it for us.
-
-### Line Hitters
-
-First of all it is worth mentioning what
-is [Line Hitter]((https://stackoverflow.com/a/10323328/10423604)) is.
-
-> At first glance, the tests cover everything and code coverage tools confirm it
-> with 100%, but in reality the tests merely hit the code, without doing any
-> output analysis.
-
-In other words, It is a test method that doesn't check anything. For example:
-
-```java
-@Test
-void calculatesSum(){
-    sum(1,1);
-}
-```
-
-This often happens when a developer writes in order to increase code coverage
-and doesn't care about the quality of the test.
-
-Some tools might find the absence of assertions in tests, and in this case
-developers might cheat a bit to avoid the problem:
-
-```java
-@Test
-void calculatesSum(){
-    sum(1,1);
-    Assertions.assertTrue(true,"I'm just hanging around");
-    }
-```
-
-Well, it is the same "Line Hitter", but with assertion statement. So, jtcop
-is able to find such tests and mark them as incorrect.
 
 ### Corresponding Production Class
 
@@ -654,6 +513,141 @@ just use Fake objects. As for Fake objects aren't a part of the testing code,
 jtcoo doesn't consider them as a problem. It is just a short introduction
 into Fake objects, so you can read more about that approach right
 [here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
+
+### Test Assertions
+
+The next important point that jcop checks assertions in tests. The most
+important check is, of course, the presense of assertions in a test.
+jtcop understands two assertion types `JUnit` assertions and `Hamcrest`
+assertions.
+
+For example the next test is incorrect:
+
+```java
+@Test
+void calculatesSum(){
+    if(sum(1,1)!=2){
+    throw new RuntimeException("1 + 1 != 2");
+    }
+    }
+```
+
+where the next is correct:
+
+```java
+@Test
+void calculatesSum(){
+    Assertions.assertEquals(
+    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
+    );
+    }
+```
+
+or with using Hamcrest assertions:
+
+```java
+@Test
+void calculatesSum(){
+    MatcherAssert.assertThat(
+    "Something went wrong, because 1 + 1 != 2",
+    sum(1,1),
+    Matchers.equalTo(2)
+    );
+    }
+```
+
+Pay attention on explanatory messages in
+assertions `Something went wrong, because 1 + 1 != 2`.
+They are required too. For example, let's consider
+the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e2ae4e895c0c7a4b42f9d0122e5/src/test/java/com/github/lombrozo/testnames/CopTest.java#L38)
+(I simplified it a bit):
+
+```java
+@Test
+void checksSuccessfully(){
+    MatcherAssert.assertThat(
+    new Cop(new Project.Fake()).inspection(),
+    Matchers.empty()
+    );
+    }
+```
+
+And, let's imagine this test fails and you get the next exception message:
+
+```shell
+Expected: an empty collection
+     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+```
+
+Not informative at all. Isn't it? But if you add explanatory message to the
+assertion:
+
+```java
+@Test
+void checksSuccessfully(){
+    MatcherAssert.assertThat(
+    "Cop should not find any complaints in this case, but it has found something.",
+    new Cop(new Project.Fake()).inspection(),
+    Matchers.empty()
+    );
+    }
+```
+
+you will get the next message:
+
+```shell
+java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.
+Expected: an empty collection
+     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+```
+
+It is much better, isn't it? Of course in the perfect world, we will add more
+information (aka context, that explains initialisation values and gives a clue
+to the developer) to the message, but even now it is much better than the
+previous example, because it is clear
+and human-readable.
+
+This feature was extremly useful for us, because we don't need to ask the
+developer to add explanatory messages to assertions, like we did it in numerous
+PR reviews. Now we just run jtcop and it will do it for us.
+
+### Line Hitters
+
+First of all it is worth mentioning what
+is [Line Hitter]((https://stackoverflow.com/a/10323328/10423604)) is.
+
+> At first glance, the tests cover everything and code coverage tools confirm it
+> with 100%, but in reality the tests merely hit the code, without doing any
+> output analysis.
+
+In other words, It is a test method that doesn't check anything. For example:
+
+```java
+@Test
+void calculatesSum(){
+    sum(1,1);
+}
+```
+
+This often happens when a developer writes in order to increase code coverage
+and doesn't care about the quality of the test.
+
+Some tools might find the absence of assertions in tests, and in this case
+developers might cheat a bit to avoid the problem:
+
+```java
+@Test
+void calculatesSum(){
+    sum(1,1);
+    Assertions.assertTrue(true,"I'm just hanging around");
+    }
+```
+
+Well, it is the same "Line Hitter", but with assertion statement. So, jtcop
+is able to find such tests and mark them as incorrect.
+
+
+
 
 ## How jtcop Works
 
