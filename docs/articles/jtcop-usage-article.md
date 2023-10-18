@@ -32,9 +32,9 @@ But why is this so important?
 
 Well, every time I delve into a new project, I'm presented with an entirely new,
 distinct landscape. I start by reading the documentation and quickly delve into
-the project's tests. First and foremost, tests much better even a good
-documentation, since they are usually up-to-date, in contrast to the
-documentation, which can sometimes be misleading. By examining integration
+the project's tests. First and foremost, tests are much better than even some
+good documentation, since they are usually up-to-date, in contrast to the
+documentation which can sometimes be misleading. By examining integration
 tests, I can easily determine how to use the project application or tool. By
 reviewing unit tests, I can readily understand the internal structure of the
 project, how it functions, and how certain classes, functions or units operate.
@@ -89,7 +89,8 @@ many times in numerous articles,
 like [this](https://dzone.com/articles/anatomy-of-a-good-java-test)
 and [this](https://www.yegor256.com/2023/01/19/layout-of-tests.html).
 
-Furthermore, some [best practice](https://dzone.com/articles/clean-unit-testing)
+Furthermore,
+some [best practices](https://dzone.com/articles/clean-unit-testing)
 highlight important rules for the appropriate use of
 [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub),
 avoiding "if" statements in test blocks, focusing on a single case in each unit,
@@ -264,9 +265,9 @@ on test quality in Java projects. It is a simple Maven plugin that checks tests
 for common mistakes and anti-patterns.
 We use it in our projects, and it has helped us maintain consistent and clear
 tests. It also speeds up PR reviews significantly by preventing recurring
-comments about issues like improper test placement or naming. 
+comments about issues like improper test placement or naming.
 Although, we don't think our rules are the only good way to set
-up tests, so feel free to share your ideas and suggestions by submitting tickets 
+up tests, so feel free to share your ideas and suggestions by submitting tickets
 and PRs.
 In the following, I'll explain how jtcop fits into the landscape of static
 analysis tools, which checks it utilizes, and how it can assist you in your
@@ -274,7 +275,9 @@ everyday programming.
 
 ### Test Names
 
-There are lots of test naming convetions that can be used in the industry:
+I'm sure you know, that it's lots of ways how you can name your test,
+
+There are lots of test naming conventions that can be used in the industry:
 
 * https://dzone.com/articles/7-popular-unit-test-naming
 * https://stackoverflow.com/questions/155436/unit-test-naming-best-practices
@@ -308,7 +311,6 @@ rules to name tests:
 Of course, it is the style that we prefer in our projects, if you prefer some
 other patter for tests naming, just sent an issue or PR to jtcop and we will
 be happy to add it to the plugin.
-
 
 ### Corresponding Production Class
 
@@ -356,17 +358,17 @@ common setup for all the tests in the class. For example:
 ```java
 @Test
 void calculatesSum(){
-    Summator s = init();
-    Assertions.assertEquals(
-    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
-    );
+  Summator s = init();
+  Assertions.assertEquals(
+    2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
+  );
 }
 
 private static Summator init(){
-    Summator s=new Summator();
-    // some common setup
-    return s;
-    }
+  Summator s = new Summator();
+  // Setup
+  return s;
+}
 ```
 
 Well, from the first glance it looks like a good solution, but it has some
@@ -376,9 +378,7 @@ create [low cohesion and tight
 coupling](https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies).
 But when you start using it in many classes or even create something like
 a `TestUtils.java` to move all initialization in one place, it
-becomes [a problem](
-https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-prerequisites-wrong-way
-):
+becomes [a problem](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-prerequisites-wrong-way):
 
 1. It confuses a developer, because `TestUtils` doesn’t have a counterpart in
    the live code block.
@@ -403,17 +403,17 @@ Summator s;
 
 @BeforeEach
 void setUp(){
-    s=new Summator();
-    // some common setup
-    }
+  s = new Summator();
+  // Setup
+}
 
 @Test
 void calculatesSum(){
-    Summator s=init();
-    Assertions.assertEquals(
-    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
-    );
-    }
+  Summator s=init();
+  Assertions.assertEquals(
+    2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
+  );
+}
 ```
 
 Well, this methods makes the situation event worse, because all the tests
@@ -438,31 +438,24 @@ tests in the class. For example:
 
 @ExtendWith(SummatorExtension.class)
 public class SumTest {
-
-    @Test
-    void calculatesSum(Summator s) {
-        Assertions.assertEquals(
-            2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
-        );
-    }
-}
+  @Test
+  void calculatesSum(Summator s) {
+    Assertions.assertEquals(
+      2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+    );
+  }}
 
 class SummatorExtension implements ParameterResolver {
-    @Override
-    public boolean supportsParameter(ParameterContext pctx,
-        ExtensionContext ectx
-    ) {
-        return pctx.getParameter().getType() == Summator.class;
-    }
-
-    @Override
-    public Object resolveParameter(
-        Summator s =new Summator(
-    );
-    // some common setup
-        return s;
-}
-}
+  @Override
+  public boolean supportsParameter(ParameterContext pctx, ExtensionContext ectx) {
+    return pctx.getParameter().getType() == Summator.class;
+  }
+  @Override
+  public Object resolveParameter(
+    Summator s =new Summator();
+    // Setup
+    return s;
+  }}
 ```
 
 In this case we avoided the need to keep utility classes, static methods and
@@ -483,28 +476,24 @@ some mocking framework or create a Fake object. For example:
 
 ```java
 class Environment {
+  double multiplier() {
+    return 0.5; // real multiplier that we want to ignore.
+  }
+  static class Fake extends Environment {
+    @Override
     double multiplier() {
-        return 0.5; // real multiplier that we want to ignore.
+      return 1;
     }
-
-    static class Fake extends Environment {
-        @Override
-        double multiplier() {
-            return 1;
-        }
-    }
-}
+  }}
 
 public class SumTest {
-
-    @Test
-    void calculatesSum() {
-        Summator s = new Summator(new Enivornement.Fake());
-        Assertions.assertEquals(
-            2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
-        );
-    }
-}
+  @Test
+  void calculatesSum() {
+    Summator s = new Summator(new Enivornement.Fake());
+    Assertions.assertEquals(
+      2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+    );
+  }}
 ```
 
 In this case you can avoid using any annotations, utility classes, static
@@ -526,10 +515,10 @@ For example the next test is incorrect:
 ```java
 @Test
 void calculatesSum(){
-    if(sum(1,1)!=2){
+  if(sum(1, 1) != 2){
     throw new RuntimeException("1 + 1 != 2");
-    }
-    }
+  }
+}
 ```
 
 where the next is correct:
@@ -537,10 +526,10 @@ where the next is correct:
 ```java
 @Test
 void calculatesSum(){
-    Assertions.assertEquals(
-    2,sum(1,1),"Something went wrong, because 1 + 1 != 2"
-    );
-    }
+  Assertions.assertEquals(
+    2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
+  );
+}
 ```
 
 or with using Hamcrest assertions:
@@ -548,12 +537,12 @@ or with using Hamcrest assertions:
 ```java
 @Test
 void calculatesSum(){
-    MatcherAssert.assertThat(
+  MatcherAssert.assertThat(
     "Something went wrong, because 1 + 1 != 2",
     sum(1,1),
     Matchers.equalTo(2)
-    );
-    }
+  );
+}
 ```
 
 Pay attention on explanatory messages in
@@ -565,18 +554,18 @@ the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e
 ```java
 @Test
 void checksSuccessfully(){
-    MatcherAssert.assertThat(
+  MatcherAssert.assertThat(
     new Cop(new Project.Fake()).inspection(),
     Matchers.empty()
-    );
-    }
+  );
+}
 ```
 
 And, let's imagine this test fails and you get the next exception message:
 
 ```shell
 Expected: an empty collection
-     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+  but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
 ```
 
 Not informative at all. Isn't it? But if you add explanatory message to the
@@ -585,12 +574,12 @@ assertion:
 ```java
 @Test
 void checksSuccessfully(){
-    MatcherAssert.assertThat(
+  MatcherAssert.assertThat(
     "Cop should not find any complaints in this case, but it has found something.",
     new Cop(new Project.Fake()).inspection(),
     Matchers.empty()
-    );
-    }
+  );
+}
 ```
 
 you will get the next message:
@@ -598,7 +587,7 @@ you will get the next message:
 ```shell
 java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.
 Expected: an empty collection
-     but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+  but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
 ```
 
 It is much better, isn't it? Of course in the perfect world, we will add more
@@ -607,7 +596,7 @@ to the developer) to the message, but even now it is much better than the
 previous example, because it is clear
 and human-readable.
 
-This feature was extremly useful for us, because we don't need to ask the
+This feature was extremely useful for us, because we don't need to ask the
 developer to add explanatory messages to assertions, like we did it in numerous
 PR reviews. Now we just run jtcop and it will do it for us.
 
@@ -625,7 +614,7 @@ In other words, It is a test method that doesn't check anything. For example:
 ```java
 @Test
 void calculatesSum(){
-    sum(1,1);
+  sum(1,1);
 }
 ```
 
@@ -638,16 +627,13 @@ developers might cheat a bit to avoid the problem:
 ```java
 @Test
 void calculatesSum(){
-    sum(1,1);
-    Assertions.assertTrue(true,"I'm just hanging around");
-    }
+  sum(1,1);
+  Assertions.assertTrue(true,"I'm just hanging around");
+}
 ```
 
 Well, it is the same "Line Hitter", but with assertion statement. So, jtcop
 is able to find such tests and mark them as incorrect.
-
-
-
 
 ## How jtcop Works
 
