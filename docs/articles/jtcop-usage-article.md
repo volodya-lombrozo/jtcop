@@ -325,29 +325,30 @@ and we'll be happy to add it to the plugin.
 
 ### Corresponding Production Class
 
-As was
-already [mentioned](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes),
-the well-formatted methods of unit tests is not enough.
-For example, you have a test class with the name `SumTest.java` with
-the test method `checksSum()` which tests the method `sum()`. But occasionally,
-the test fails. What will you do? You will open the test class to find a
-problem.
-But which class? I belive the first guess is `Sum.java`, isn't it?
-But what if the class is named `Addition.java`? Or `Calculator.java`?
-Sometimes it is not so easy to find the corresponding class, especially if you
-have a lot of classes in your project. So, jtcop checks if the test class has
-a corresponding production class. If it doesn't, it will mark the test as
-incorrect. In other words the name of the class isn't just a name, it is a
-pointer to the production class where to pinpoint the problem.
+Now, let's imagine we have a test class named `SumTest.java` with the test
+method `checksSum()`. But what if the test occasionally fails? I believe most
+would attempt to locate the issue and find the original class where the problem
+occurred. But which class is it? The first guess would likely be `Sum.java`,
+right? Yet, you might not find it, perhaps because the production class is named
+something like `Addition.java` or `Calculator.java`.
+This mismatch in naming conventions can lead to significant confusion and longer
+troubleshooting times.
+In other words, if you have a test class named `SumTest.java` and the
+corresponding production class is `Addition.java`, it can be very confusing. The
+more appropriate naming for the test class would be `AdditionTest.java`.
+Essentially, the name of the test class isn't merely a label; it serves as a
+pointer to the production class, helping developers pinpoint potential issues.
 
-So, if you have a test class `SumTest.java` with the corresponding production
-class `Addition.java`, it is extremely confusing. The proper way is to name
-test class `AdditionTest.java`.
+This is where `jtcop` comes into play. It helps ensure that your tests are
+consistent with your production classes and suggests appropriate naming
+conventions for them, effectively addressing the problem described. If you're
+further interested in this issue, you can read about
+it [here](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes).
 
 The only exception in this case is integration tests. They are usually named
-like `AdditionIT.java` or `AdditionIntegrationTest.java`. But they have to be
-placed in the separate package, like `it`  and have an appropriate suffix:
-`ITCase` (`maven-compiler-plugin`).
+like `AdditionIT.java` or `AdditionIntegrationTest.java`. However, they should
+be placed in a separate package, such as `it`, and have an appropriate suffix
+like `IT` or `ITCase`.
 
 ### Test Methods Only
 
