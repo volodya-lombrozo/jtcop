@@ -275,25 +275,36 @@ everyday programming.
 
 ### Test Names
 
-I'm sure you know, that it's lots of ways how you can name your test,
+I'm sure you know there are many ways to name your test. For example, you can
+find
+various [test naming conventions](https://dzone.com/articles/7-popular-unit-test-naming)
+or even
+some  [threads](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
+that have lengthy discussions on how to do it correctly.
+Here is just a short summary how you can name your tests:
 
-There are lots of test naming conventions that can be used in the industry:
+| Pattern                                                  | Example                                                    |
+|----------------------------------------------------------|------------------------------------------------------------|
+| methodName_stateUnderTest_expected                       | add_negativeNumbers_throwsException()                      |
+| **when**\_condition_**then**_expected                    | when_ageLessThan18_then_isUnderageIsTrue()                 |
+| **given**\_precondition_**when**\_action_**then**_result | given_userIsAdmin_when_deleteIsCalled_then_deleteSuccess() |
+| test\[methodName]                                        | testAdd() or testIsUnderage()                              |
+| **should**_expectedBehavior_when_condition               | should_throwException_when_negativeNumbersAreAdded()       |
+| methodName_expected                                      | add_returnsSum() or isUnderage_returnsTrue()               |
+| **can**Action                                            | canDeleteUser() or canCalculateSum()                       |
+| methodName_doesExpectedBehavior                          | add_doesReturnSum() or isUnderage_returnsTrue()            |
+| verbCondition (or verbResult)                            | calculatesSum() or deletesSuccessfully()                   |
 
-* https://dzone.com/articles/7-popular-unit-test-naming
-* https://stackoverflow.com/questions/155436/unit-test-naming-best-practices
+Jtcop prefers the last pattern:
 
-When they use different ways to name tests, we prefer to use the following
-rules to name tests:
-
-1. We use present tense without a subject for test names. For example if you
-   test a class `Animal` with method `eat()`, the test name should be `eats()`,
-   if you need add more context, you do it after a verb: `eatsApplesOnly()`.
-2. We use [camelCase](https://en.wikipedia.org/wiki/Camel_case) for test names.
-3. We don't use the "test" word in test names, since it is redundant and it is
-   already clear that it is a test (it is already obvious from the test class
-   name and by using `@Test` annotation).
-4. We also forbid to use some special characters like `_` nad `$` together with
-   spaming letters like. So we don't allow `eatsSSS()`, `_eats` and similar.
+1. Test names should use the present tense without a subject.
+   For example, if you're testing a class `Animal` with a method `eat()`, the
+   test name should be `eats()`. If you need to add more context, do it after
+   the verb – for instance, `eatsApplesOnly()`.
+2. Test names should use [camelCase](https://en.wikipedia.org/wiki/Camel_case).
+3. Name shouldn't use the word "test", as it is redundant. The `@Test`
+   annotation is sufficient.
+4. Special characters like `_` and `$` are forbidden.
 
 | Correct Names    | Incorrect Names      |
 |------------------|----------------------|
@@ -308,9 +319,9 @@ rules to name tests:
 | walksInPark()    | WalksInPark()        |
 | barksLoudly()    | barks__loudly()      |    
 
-Of course, it is the style that we prefer in our projects, if you prefer some
-other patter for tests naming, just sent an issue or PR to jtcop and we will
-be happy to add it to the plugin.
+This style has been chosen by many developers and is widely used in numerous
+projects. If you prefer a different pattern for test naming, just let us know,
+and we'll be happy to add it to the plugin.
 
 ### Corresponding Production Class
 
