@@ -432,33 +432,23 @@ void calculatesSum(){
 }
 ```
 
-This approach makes the situation even worse by many reasons. The most obvious
-and familiar for the most developers is the need to "jump" between test methods
-and initialization part. If the number of test cases in the test class grows,
-developers might not even realize the setup/teardown that happens for each test
-that is leading to potential misinterpretations.
-
-Then, using such methods leads to shared state between tests if not managed
-properly. That damages test isolation - extremly important quality of any test.
-Which in turn cause flaky tests.
-
-All the tests
-in the class will share the same number of varibles and will have to
-initiate them each time. Let's imagine a test class with 500 unit tests. I don't
-think that all of these tests will require the same initialization.
-Over time, as the codebase grows and changes, maintaining these
-methods and ensuring they remain relevant and accurate for every test in the
-class can be challenging. You might end up with setup code that is
-unnecessary for some tests, thereby violating the principle of keeping tests
-minimal and only setting up what is needed.
-
+This approach makes the situation even worse for many reasons.
+The most obvious reason, familiar to most developers, is the need to "jump"
+between test methods and the initialization part.
+Then, over time, as the codebase grows and changes and as the number of test
+cases in the test class increases, developers may become unaware of the
+setup/teardown that happens for each test. This can lead to potential
+misinterpretations. Furthermore, a developer may end up with setup code that is
+unnecessary for certain tests, thus violating the principle of keeping tests
+minimal and setting up only what is needed.
+Next, using such methods can introduce another problem. They can lead to a
+shared state between tests if not managed properly. This harms test isolation,
+an extremely important quality of any test, which in turn can result in flaky
+tests.
 Moreover, using `@BeforeAll` and `@AfterAll` use static methods which inherit
-all disadvantages of the previous approach.
-____
+all disadvantages of the [previous approach](#static-methods).
 
-(don't allow)
-
-So, jtcop doesn't allow to use these annotations.
+Hence, `jtcop` doesn't allow the use of such `setUp`/`tearDown` methods.
 
 #### Test Extensions
 
