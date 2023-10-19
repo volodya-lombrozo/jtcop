@@ -363,17 +363,18 @@ such as static initialization methods, setup methods `@BeforeEach`
 and `@AfterEach`, JUnit extensions, and Fake Objects. The approach you choose
 for initializing your tests will determine their quality.
 
-#### Plain Old Static Methods
+#### Static Methods
 
-Often developers (and, to be honest me too) use static methods to configure
-common setup for all the tests in the class. For example:
+The first idea that comes to mind is using static methods. Developers often use
+static methods to configure a common setup for several tests in the class.
+Here's a simple example:
 
 ```java
 @Test
 void calculatesSum(){
   Summator s = init();
   Assertions.assertEquals(
-    2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
+    2, sum(1, 1), "Something went wrong, because 1 + 1 != 2"
   );
 }
 
@@ -384,30 +385,31 @@ private static Summator init(){
 }
 ```
 
-Well, from the first glance it looks like a good solution, but it has some
-problems. Usually, when such a method is used in the single class, it is not a
-big deal, despite the fact that it is a static method usually
-create [low cohesion and tight
-coupling](https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies).
-But when you start using it in many classes or even create something like
-a `TestUtils.java` to move all initialization in one place, it
-becomes [a problem](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-prerequisites-wrong-way):
+At first glance, it might seem like a good solution, but it does have inherent
+problems. When such a method is used within a single class, it's usually not a
+major concern, even though static methods typically lead to
+[low cohesion and tight coupling](https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies).
+However, issues arise when you begin to use it across multiple
+classes or try to consolidate such methods into a centralized `TestUtils.java`
+class. In this case the approach with static methods can become problematic:
 
-1. It confuses a developer, because `TestUtils` doesn’t have a counterpart in
-   the live code block.
-2. `TestUtils.java` might be considered as
-   an [anti-pattern](https://stackoverflow.com/questions/3340032/are-utility-classes-evil)
-   itself
-   or at least requires lots of experience to use them properly.
+1. It can lead to [confusion](#corresponding-production-class) for developers
+   since `TestUtils.java` doesn't correspond to any class in the production
+   code.
+2. `TestUtils.java` might be considered
+   an [anti-pattern](https://stackoverflow.com/questions/3340032/are-utility-classes-evil).
 
-So, jtcop considers that methods and utility classes as dangerous and doesn't
-allow them and you will the next exception message for the code above:
+Thus, `jtcop` deems static methods in tests and utility classes as dangerous and
+prohibits them. If you attempt to run `jtcop` against the previous code sample,
+you'll receive the following warning message:
 
 ```shell
-All methods of the test class 'SumTest.java' should be annotated with @Test annotation.
+All methods should be annotated with @Test annotation.
 ```
 
-#### Annotations @BeforeAll, @BeforeEach and @AfterAll, @AfterEach
+#### JUnit Setup Methods
+
+Annotations @BeforeAll, @BeforeEach and @AfterAll, @AfterEach
 
 annotations. (don't allow)
 
