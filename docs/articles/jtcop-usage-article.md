@@ -352,15 +352,16 @@ like `IT` or `ITCase`.
 
 ### Test Methods Only
 
-Sometimes when you write a test class with many test cases you might
-require to configure common setup for all the tests in the class.
-jtcop can guide you in this case too. But before, I would like to mention
-this rule is quite strict and since we don't use it in all our projects
-this feature is still in experimental stack, so it is disabled by default
-and you need to enable it manually (further I will
-explain [how to do this](#experimental).)
-Usually we have several ways to do it. Let's delve a bit deeper into each of
-them and compare.
+The next check is rather strict and is still considered
+an [experimental](#experimental) feature.
+However, the rule itself is simple: test classes should contain methods that are
+only annotated with the `@Test` annotation. You might wonder what to do with
+initialization methods or common code shared among different test cases. The
+answer isn't straightforward and this rule is designed to guide you with it.
+There aren't actually many options available. I'm referring to methods
+such as static initialization methods, setup methods `@BeforeEach`
+and `@AfterEach`, JUnit extensions, and Fake Objects. The approach you choose
+for initializing your tests will determine their quality.
 
 #### Plain Old Static Methods
 
