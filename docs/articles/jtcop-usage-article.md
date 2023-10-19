@@ -407,11 +407,12 @@ you'll receive the following warning message:
 All methods should be annotated with @Test annotation.
 ```
 
-#### JUnit Setup Methods
+#### SetUp and TearDown Methods
 
-Annotations @BeforeAll, @BeforeEach and @AfterAll, @AfterEach
-
-annotations. (don't allow)
+The next widely-used approach involves the so-called "setUp" methods.
+By "setUp" methods, I'm referring to those annotated
+with`@BeforeAll`, `@BeforeEach`, `@AfterAll`, or `@AfterEach`. An example of
+using these annotations is as follows:
 
 ```java
 Summator s;
@@ -431,14 +432,31 @@ void calculatesSum(){
 }
 ```
 
-Well, this methods makes the situation event worse, because all the tests
+This approach makes the situation even worse by many reasons. The most obvious
+and familiar for the most developers is the need to "jump" between test methods
+and initialization part. If the number of test cases in the test class grows,
+developers might not even realize the setup/teardown that happens for each test
+that is leading to potential misinterpretations.
+
+Then, using such methods leads to shared state between tests if not managed
+properly. That damages test isolation - extremly important quality of any test.
+Which in turn cause flaky tests.
+
+All the tests
 in the class will share the same number of varibles and will have to
 initiate them each time. Let's imagine a test class with 500 unit tests. I don't
-think that all of these tests will require the same initialization. Moreover,
-using `@BeforeAll` and `@AfterAll` exactely the same as using static methods.
-And one more thing - the developer will have to "compile" the test case in his
-head all the time by jumping beween the test method and the `@BeforeAll` method,
-which is tedious sometimes.
+think that all of these tests will require the same initialization.
+Over time, as the codebase grows and changes, maintaining these
+methods and ensuring they remain relevant and accurate for every test in the
+class can be challenging. You might end up with setup code that is
+unnecessary for some tests, thereby violating the principle of keeping tests
+minimal and only setting up what is needed.
+
+Moreover, using `@BeforeAll` and `@AfterAll` use static methods which inherit
+all disadvantages of the previous approach.
+____
+
+(don't allow)
 
 So, jtcop doesn't allow to use these annotations.
 
