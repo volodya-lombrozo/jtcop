@@ -491,34 +491,37 @@ setup logic.
 
 #### Fake Objects
 
-Onem ore approach for test configuration and initialization allowed by jtcop is
+One ore approach for test configuration and initialization allowed by jtcop is
 to use Fake objects
 suggested [here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
-They are placed together with other live objects,
-but have special “fake” behavior, for example, let's imagine that `Summator`
-class depends on some environmental conditions to provide summation and it might
-differ in different situations, but for some reason we want to exclude
-environmental conditions from the test. So, we can either mock it by using
-some mocking framework or create a Fake object. For example:
+They are placed together with other live objects, but have special “fake”
+behavior. By using this objects all the initialization might be done in the
+test itself, simplifying the test code and making it more readable.
+
+So, we can either mock it by using some mocking framework or create a Fake
+object. For example:
 
 ```java
-class Environment {
+class Discount {
   double multiplier() {
-    return 0.5; // real multiplier that we want to ignore.
+    // Usually we have 
+    // rather complicated
+    // logic here for 
+    // calculating discount.
   }
-  static class Fake extends Environment {
+  static class Fake extends Discount {
     @Override
     double multiplier() {
       return 1;
     }
   }}
 
-public class SumTest {
+public class PriceTest {
   @Test
-  void calculatesSum() {
-    Summator s = new Summator(new Enivornement.Fake());
+  void retrievesSamePrice() {
+    Price p = new Price(100, new Discount.Fake());
     Assertions.assertEquals(
-      2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"
+      100, p.total(), "Something went wrong, price didn't have to change"
     );
   }}
 ```
