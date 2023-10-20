@@ -452,10 +452,10 @@ Hence, `jtcop` doesn't allow the use of such `setUp`/`tearDown` methods.
 
 #### Test Extensions
 
-JUnit 5 has a feature
-called [Test Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions)
-that allows to create a custom extension to configure common setup for all the
-tests in the class. For example:
+Now, let's examine the approach supported by `jtcop`. JUnit 5
+offers [Test Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions)
+that allow for the creation of custom extensions. These extensions
+can be used to configure setup and teardown logic for all the tests in a class.
 
 ```java
 
@@ -481,15 +481,19 @@ class SummatorExtension implements ParameterResolver {
   }}
 ```
 
-In this case we avoided the need to keep utility classes, static methods and
-common state between tests. It is easy to reuse amond many test classes and
-separate unit tests.
-
-So, jtcop allows to use this approach.
+Extensions offer a way to craft more modular and reusable test setups. In this
+scenario, we've bypassed the need for utility classes, static
+methods, and shared states between tests. These extensions are easily reused
+across a multitude of test classes and standalone unit tests. What's more, these
+extensions often have insight into the current test class, method, annotations
+used, and other contextual details, paving the way for versatile and reusable
+setup logic.
 
 #### Fake Objects
 
-And the last approach allowed by jtcop is to use Fake objects.
+Onem ore approach for test configuration and initialization allowed by jtcop is
+to use Fake objects
+suggested [here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
 They are placed together with other live objects,
 but have special “fake” behavior, for example, let's imagine that `Summator`
 class depends on some environmental conditions to provide summation and it might
@@ -522,9 +526,7 @@ public class SumTest {
 In this case you can avoid using any annotations, utility classes, static
 methods:
 just use Fake objects. As for Fake objects aren't a part of the testing code,
-jtcoo doesn't consider them as a problem. It is just a short introduction
-into Fake objects, so you can read more about that approach right
-[here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
+jtcop doesn't consider them as a problem.
 
 ### Test Assertions
 
