@@ -531,14 +531,12 @@ initialization logic.
 
 ### Test Assertions
 
-The next important point that `jtcop` checks assertions in tests. The most
-important check is, of course, the presence of assertions in a test.
-As I already mentioned in the Gap Identification section, there are several
-already existing tools that have similar checks for assertions, but most of them
-aimed only on JUnit assertions and sometimes incomplete. `jtcop` also supports
-Hamcrest assertions and has more strict rules for assertions.
-
-For example the next test is incorrect:
+`jtcop` also underscores the need to validate assertions in tests.
+Recall the [Gap Identification](#gap-identification) section? Several tools out
+there offer similar checks. Yet, many of them focus solely on JUnit assertions
+or only catch high-level errors. `jtcop` supports both Hamcrest and JUnit
+assertions and adheres to stricter guidelines for assertions. To paint a
+clearer picture, let's dive into a few code snippets.
 
 ```java
 @Test
@@ -549,7 +547,9 @@ void calculatesSum(){
 }
 ```
 
-where the next is correct (I use Hamcrest assertion here):
+This code snippet lacks any assertions, meaning `jtcop` will warn about it.
+Check out the next snippet as a proper replacement, and note the use of the
+Hamcrest assertion.
 
 ```java
 @Test
@@ -562,11 +562,13 @@ void calculatesSum(){
 }
 ```
 
-Pay attention on explanatory messages in
-assertions `Something went wrong, because 1 + 1 != 2`.
-They are required too. For example, let's consider
-the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e2ae4e895c0c7a4b42f9d0122e5/src/test/java/com/github/lombrozo/testnames/CopTest.java#L38)
-(I simplified it a bit):
+Pay attention on the explanatory messages in the
+assertion `Something went wrong, because 1 + 1 != 2` from the code below.
+They're essential. Without such messages, it can
+sometimes be challenging to understand what went wrong during test execution,
+which can puzzle developers. For instance, consider this
+[real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e2ae4e895c0c7a4b42f9d0122e5/src/test/java/com/github/lombrozo/testnames/CopTest.java#L38).
+I've simplified it for clarity:
 
 ```java
 @Test
@@ -578,16 +580,16 @@ void checksSuccessfully(){
 }
 ```
 
-And, let's imagine this test fails, in this case you get the next exception 
-message:
+Now, suppose this test fails. In that scenario, you'll receive the following
+exception message:
 
 ```shell
 Expected: an empty collection
   but: <[Complaint$Text@548e6d58]>
 ```
 
-Not informative at all. Isn't it? But if you add explanatory message to the
-assertion:
+Not very informative, right? However, if you include an explanatory message in
+the assertion:
 
 ```java
 @Test
@@ -600,7 +602,7 @@ void checksSuccessfully(){
 }
 ```
 
-you will get the next message:
+With this inclusion, you're greeted with a far more insightful message:
 
 ```shell
 java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.
@@ -608,15 +610,14 @@ Expected: an empty collection
   but: <[Complaint$Text@548e6d58]>
 ```
 
-It is much better, isn't it? Of course in the perfect world, we will add more
-information (aka context, that explains initialisation values and gives a clue
-to the developer) to the message, but even now it is much better than the
-previous example, because it is clear
-and human-readable.
+In a perfect world, we'd offer more details — specifically, some context. This
+sheds light on initialization values and provides developers with valuable
+hints. As it stands, the message is significantly clearer and more approachable
+than what we had before.
 
-This feature was extremely useful for us, because we don't need to ask the
-developer to add explanatory messages to assertions, like we did it in numerous
-PR reviews. Now we just run jtcop and it will do it for us.
+This feature has really made a difference for us. We no longer need to ask
+developers to add explanations to their assertions in many PR reviews. Now, the
+`jtcop` handles that for us.
 
 ### Line Hitters
 
