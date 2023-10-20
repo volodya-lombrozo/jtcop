@@ -531,10 +531,12 @@ initialization logic.
 
 ### Test Assertions
 
-The next important point that jcop checks assertions in tests. The most
-important check is, of course, the presense of assertions in a test.
-jtcop understands two assertion types `JUnit` assertions and `Hamcrest`
-assertions.
+The next important point that `jtcop` checks assertions in tests. The most
+important check is, of course, the presence of assertions in a test.
+As I already mentioned in the Gap Identification section, there are several
+already existing tools that have similar checks for assertions, but most of them
+aimed only on JUnit assertions and sometimes incomplete. `jtcop` also supports
+Hamcrest assertions and has more strict rules for assertions.
 
 For example the next test is incorrect:
 
@@ -547,26 +549,15 @@ void calculatesSum(){
 }
 ```
 
-where the next is correct:
+where the next is correct (I use Hamcrest assertion here):
 
 ```java
 @Test
 void calculatesSum(){
-  Assertions.assertEquals(
-    2, sum(1,1), "Something went wrong, because 1 + 1 != 2"
-  );
-}
-```
-
-or with using Hamcrest assertions:
-
-```java
-@Test
-void calculatesSum(){
-  MatcherAssert.assertThat(
+  assertThat(
     "Something went wrong, because 1 + 1 != 2",
-    sum(1,1),
-    Matchers.equalTo(2)
+    sum(1, 1),
+    equalTo(2)
   );
 }
 ```
@@ -580,18 +571,19 @@ the [real example](https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e
 ```java
 @Test
 void checksSuccessfully(){
-  MatcherAssert.assertThat(
+  assertThat(
     new Cop(new Project.Fake()).inspection(),
-    Matchers.empty()
+    empty()
   );
 }
 ```
 
-And, let's imagine this test fails and you get the next exception message:
+And, let's imagine this test fails, in this case you get the next exception 
+message:
 
 ```shell
 Expected: an empty collection
-  but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+  but: <[Complaint$Text@548e6d58]>
 ```
 
 Not informative at all. Isn't it? But if you add explanatory message to the
@@ -600,10 +592,10 @@ assertion:
 ```java
 @Test
 void checksSuccessfully(){
-  MatcherAssert.assertThat(
+  assertThat(
     "Cop should not find any complaints in this case, but it has found something.",
     new Cop(new Project.Fake()).inspection(),
-    Matchers.empty()
+    empty()
   );
 }
 ```
@@ -613,7 +605,7 @@ you will get the next message:
 ```shell
 java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.
 Expected: an empty collection
-  but: <[com.github.lombrozo.testnames.Complaint$Text@548e6d58]>
+  but: <[Complaint$Text@548e6d58]>
 ```
 
 It is much better, isn't it? Of course in the perfect world, we will add more
