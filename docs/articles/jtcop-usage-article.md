@@ -491,24 +491,19 @@ setup logic.
 
 #### Fake Objects
 
-One ore approach for test configuration and initialization allowed by jtcop is
-to use Fake objects
-suggested [here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
-They are placed together with other live objects, but have special “fake”
-behavior. By using this objects all the initialization might be done in the
-test itself, simplifying the test code and making it more readable.
-
-So, we can either mock it by using some mocking framework or create a Fake
-object. For example:
+Another method for test configuration and setup that `jtcop` supports is the use
+of Fake objects, as
+recommended [here](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html).
+These are positioned with other production objects, yet they provide a unique
+"fake" behavior. By leveraging these objects, all setup can be handled directly
+in the test, making the code cleaner and easier to read.
 
 ```java
-class Discount {
-  double multiplier() {
-    // Usually we have 
-    // rather complicated
-    // logic here for 
-    // calculating discount.
-  }
+abstract class Discount {
+  // Usually we have rather complicated 
+  // logic here for calculating a discount.
+  abstract double multiplier();
+  
   static class Fake extends Discount {
     @Override
     double multiplier() {
@@ -521,15 +516,18 @@ public class PriceTest {
   void retrievesSamePrice() {
     Price p = new Price(100, new Discount.Fake());
     Assertions.assertEquals(
-      100, p.total(), "Something went wrong, price didn't have to change"
+      100, p.total(), "Something went wrong; the price shouldn't have changed"
     );
   }}
 ```
 
-In this case you can avoid using any annotations, utility classes, static
-methods:
-just use Fake objects. As for Fake objects aren't a part of the testing code,
-jtcop doesn't consider them as a problem.
+Fake objects often sit alongside production code, which is why `jtcop` doesn't
+classify them as test classes. While mixing production and test code might seem
+questionable, many projects have embraced this approach, finding it a practical
+way to set up tests. These Fake objects aren't exclusively for testing; you
+might sometimes integrate them into your production code. Additionally, this
+strategy eliminates the need for using Mock frameworks with intricate
+initialization logic.
 
 ### Test Assertions
 
