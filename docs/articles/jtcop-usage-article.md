@@ -744,23 +744,29 @@ just add the following configuration to your `pom.xml` file:
 Once done, all experimental features will be active in your project, giving
 cleaner and more organized tests.
 
-## Benefits of Using jtcop
+## Benefits
 
-* Consistency: jtcop helps us keep the tests similar across many projects. So
-  when you open a project that employs jtcop, it's much easier to understand
-  what
-  is going on with a project and which guides the project follows
-* Code Review: the main problem that was solved by jtcop is constantly
-  mentioned noisy messages like "put this class here", "use different name" for
-  it, or "it an antipattern". So by using jtcop we don't spend much time and
-  help the developer to solve all the problems even before pushing something to
-  us.
-* Improved Onboarding: One more effect which we got is that well-organized and
-  named test suites not only helps understand and maintain the code, it actually
-  reduce the time for explaining or writing down code style guides across
-  projects
-  many projects which simplified onboarding new programmers. We receive already
-  well-formatterd pull requests new team members without additional help,
+`jtcop` has already helped us in several ways:
+
+* **Code Review**: The primary issue addressed by `jtcop` is the frequent
+  appearance of comments such as "place this test class here", "rename this test
+  method", or "that's a testing anti-pattern". `jtcop` saves time and aid
+  developers in resolving these issues before even making a PR into a
+  repository.
+
+* **Improved Onboarding**: Another advantage we've observed is that
+  well-structured and appropriately named test methods not only facilitate code
+  understanding and maintenance, but also reduce the time spent explaining or
+  documenting code style guides across multiple projects. As a result, we often
+  receive well-formatted pull requests from new team members with little to no
+  additional guidance.
+
+* **Consistency**: `jtcop` ensures our tests remain consistent across numerous
+  projects. So, when you delve into a project that uses `jtcop`, it becomes
+  significantly easier to comprehend its workings and start contributing to it.
+
+Overall, integrating `jtcop` has significantly streamlined our processes,
+enhancing collaboration and understanding across our development projects.
 
 ## Future Plans
 
