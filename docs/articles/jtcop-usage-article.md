@@ -663,15 +663,7 @@ them as unreliable.
 ## Setting Up jtcop
 
 To get started with jtcop, simply add the plugin to your build configuration
-file. For Maven, the configuration appears as follows:
-
-To kick off with jtcop, you just need to plug it into your build configuration.
-If you're using Maven, here's how you'd do it:
-____
-
-To start using jtcop the only thing you need to do is to add the plugin
-to your build configuration file, for example, for Maven it looks like as
-follows
+file. If you're using Maven, here's how you can do it:
 
 ```xml
 
@@ -693,36 +685,16 @@ follows
 </build>
 ```
 
-The default phase for the plugin is verify, so you don't need to specify it.
-However, if you wish to modify it, simply add the desired phase to the execution
-section.
-To run jtcop, use the following command:
-
-By default, the plugin operates in the verify phase, so no need to spell it out.
-But if you have a reason to switch it up, just toss in the desired phase under
-the execution section.
-Running jtcop is a breeze. Use this command:
-___
-
-
-The default plugin phase is `verify`, so you don't need to specify it directly,
-but if you want to change it, just add the required `phase` to `execution`
-section.
-
-Also, you can run jtcop by using simple command:
+By default, the plugin operates in the `verify` phase, so no need to specify it.
+However, if you wish to modify it, simply add the desired phase to the
+`execution` section. Then, to run `jtcop`, use the following command:
 
 ```shell
 mvn jtcop:check
 ```
 
-Stumble upon an issue? Say, a test missing its buddy production class? You'll
-get a crystal-clear error message:
-
-If you encounter issues, such as a test lacking a corresponding production
-class, you'll receive a comprehensible error message:
-___
-Then, if you have some problem, for example, you test doesn't have corresponding
-production class, you will receive human readable explanatory message:
+If you stumble upon an issue, say, a test lacking a corresponding production
+class, you'll get a clear error message:
 
 ```shell
 [ERROR] Test SumTest doesn't have corresponding production class.
@@ -765,7 +737,9 @@ setting `failOnError` property:
   <failOnError>false</failOnError>
 </configuration>
 ```
-However, I highly recommend keeping the default setting to maintain high-quality tests.
+
+However, I highly recommend keeping the default setting to maintain high-quality
+tests.
 
 Still, my two cents? Leave it be. Helps keep those tests top-notch.
 ___
