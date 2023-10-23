@@ -353,7 +353,7 @@ like `IT` or `ITCase`.
 ### Test Methods Only
 
 The next check is rather strict and is still considered
-an [experimental](#experimental) feature.
+an [experimental](#experimental-features) feature.
 However, the rule itself is simple: test classes should contain methods that are
 only annotated with the `@Test` annotation. You might wonder what to do with
 initialization methods or common code shared among different test cases. The
@@ -657,12 +657,17 @@ void calculatesSum(){
 ```
 
 Yep, that’s our "Line Hitter" again, only this time, it's wearing the disguise
-of an assertion statement.  Luckily, `jtcop` can detect such tests and flag 
+of an assertion statement. Luckily, `jtcop` can detect such tests and flag
 them as unreliable.
 
-## How jtcop Works
+## Setting Up jtcop
 
-### Integration
+To get started with jtcop, simply add the plugin to your build configuration
+file. For Maven, the configuration appears as follows:
+
+To kick off with jtcop, you just need to plug it into your build configuration.
+If you're using Maven, here's how you'd do it:
+____
 
 To start using jtcop the only thing you need to do is to add the plugin
 to your build configuration file, for example, for Maven it looks like as
@@ -688,6 +693,18 @@ follows
 </build>
 ```
 
+The default phase for the plugin is verify, so you don't need to specify it.
+However, if you wish to modify it, simply add the desired phase to the execution
+section.
+To run jtcop, use the following command:
+
+By default, the plugin operates in the verify phase, so no need to spell it out.
+But if you have a reason to switch it up, just toss in the desired phase under
+the execution section.
+Running jtcop is a breeze. Use this command:
+___
+
+
 The default plugin phase is `verify`, so you don't need to specify it directly,
 but if you want to change it, just add the required `phase` to `execution`
 section.
@@ -698,6 +715,12 @@ Also, you can run jtcop by using simple command:
 mvn jtcop:check
 ```
 
+Stumble upon an issue? Say, a test missing its buddy production class? You'll
+get a crystal-clear error message:
+
+If you encounter issues, such as a test lacking a corresponding production
+class, you'll receive a comprehensible error message:
+___
 Then, if you have some problem, for example, you test doesn't have corresponding
 production class, you will receive human readable explanatory message:
 
@@ -709,6 +732,9 @@ production class, you will receive human readable explanatory message:
 [ERROR]  You can read more about the rule here: <link>
 ```
 
+Similarly, for the Line hitter pattern previously mentioned:
+And speaking of that pesky Line hitter pattern we chatted about earlier:
+___
 Or in case of Line hitter pattern, as it was discussed erlier:
 
 ```shell
@@ -719,6 +745,15 @@ Or in case of Line hitter pattern, as it was discussed erlier:
 [ERROR]  You can read more about the rule here: <link>
 ```
 
+By default, jtcop will halt the build if it detects issues with your tests. If
+you prioritize quality consistency but only want to check occasionally, you can
+configure jtcop to display warning messages by adjusting the failOnError
+property:
+
+Out of the box, jtcop won't hesitate to halt a build over test issues. If you're
+after consistent quality but only want occasional checks, tell jtcop to chill
+and just spit out warnings. Tweak the failOnError property:
+___
 jtcop by defult will stop the further build if your tests have some problems,
 if you require the same level of quality, if you need just to check
 time-to-time, you can "tell" jtcop to print warning messages instead by
@@ -730,11 +765,14 @@ setting `failOnError` property:
   <failOnError>false</failOnError>
 </configuration>
 ```
+However, I highly recommend keeping the default setting to maintain high-quality tests.
 
+Still, my two cents? Leave it be. Helps keep those tests top-notch.
+___
 But I highly recommend to leave it as is which will allow you to keep your tests
 with higher quality.
 
-#### Experimental
+#### Experimental features
 
 As I've already mentioned some features are still in experimental stack and
 if you want to use it, you might enable them by adding the next configuration
