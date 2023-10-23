@@ -662,7 +662,7 @@ them as unreliable.
 
 ## Setting Up jtcop
 
-To get started with jtcop, simply add the plugin to your build configuration
+To get started with `jtcop`, simply add the plugin to your build configuration
 file. If you're using Maven, here's how you can do it:
 
 ```xml
@@ -704,10 +704,7 @@ class, you'll get a clear error message:
 [ERROR]  You can read more about the rule here: <link>
 ```
 
-Similarly, for the Line hitter pattern previously mentioned:
-And speaking of that pesky Line hitter pattern we chatted about earlier:
-___
-Or in case of Line hitter pattern, as it was discussed erlier:
+Similarly, for the "Line Hitter" pattern previously mentioned:
 
 ```shell
 [ERROR] Method 'calculatesSum' contains line hitter anti-pattern.
@@ -717,19 +714,10 @@ Or in case of Line hitter pattern, as it was discussed erlier:
 [ERROR]  You can read more about the rule here: <link>
 ```
 
-By default, jtcop will halt the build if it detects issues with your tests. If
-you prioritize quality consistency but only want to check occasionally, you can
-configure jtcop to display warning messages by adjusting the failOnError
-property:
-
-Out of the box, jtcop won't hesitate to halt a build over test issues. If you're
-after consistent quality but only want occasional checks, tell jtcop to chill
-and just spit out warnings. Tweak the failOnError property:
-___
-jtcop by defult will stop the further build if your tests have some problems,
-if you require the same level of quality, if you need just to check
-time-to-time, you can "tell" jtcop to print warning messages instead by
-setting `failOnError` property:
+By default, `jtcop` will halt the build if it detects issues with your tests. If
+you only want to use it to highlight problems without interrupting the build,
+you can configure `jtcop` to display only warning messages by adjusting the
+failOnError property.
 
 ```xml
 
@@ -741,16 +729,10 @@ setting `failOnError` property:
 However, I highly recommend keeping the default setting to maintain high-quality
 tests.
 
-Still, my two cents? Leave it be. Helps keep those tests top-notch.
-___
-But I highly recommend to leave it as is which will allow you to keep your tests
-with higher quality.
-
 #### Experimental features
 
-As I've already mentioned some features are still in experimental stack and
-if you want to use it, you might enable them by adding the next configuration
-to your `pom.xml` file:
+As I mentioned earlier, some features are still experimental. To try them out,
+just add the following configuration to your `pom.xml` file:
 
 ```xml
 
@@ -759,8 +741,8 @@ to your `pom.xml` file:
 </configuration>
 ```
 
-Now, all experimental features will be applied to your project and you can
-get advantages of even better formatted and structured tests.
+Once done, all experimental features will be active in your project, giving
+cleaner and more organized tests.
 
 ## Benefits of Using jtcop
 
