@@ -621,38 +621,44 @@ developers to add explanations to their assertions in many PR reviews. Now, the
 
 ### Line Hitters
 
-First of all it is worth mentioning what
-is [Line Hitter]((https://stackoverflow.com/a/10323328/10423604)) is.
+The last feature I'd like to spotlight is
+the [Line Hitter](https://stackoverflow.com/a/10323328/10423604) anti-pattern
+detection.
 
 > At first glance, the tests cover everything and code coverage tools confirm it
 > with 100%, but in reality the tests merely hit the code, without doing any
 > output analysis.
 
-In other words, It is a test method that doesn't check anything. For example:
+What this means is that you might stumble upon a test method in a program that
+does not really verify anything. Take this for instance:
+
+```java
+@Test
+void calculatesSum(){
+  sum(1, 1);
+}
+```
+
+This typically happens when a developer is more into their code coverage
+numbers than genuinely ensuring the robustness of the test. There are tools that
+can spot when assertions are missing in tests. But, as you know, developers
+might always find a way around problems:
 
 ```java
 @Test
 void calculatesSum(){
   sum(1,1);
+  assertThat(
+    "I'm just hanging around",
+    true,
+    is(true)
+  );
 }
 ```
 
-This often happens when a developer writes in order to increase code coverage
-and doesn't care about the quality of the test.
-
-Some tools might find the absence of assertions in tests, and in this case
-developers might cheat a bit to avoid the problem:
-
-```java
-@Test
-void calculatesSum(){
-  sum(1,1);
-  Assertions.assertTrue(true,"I'm just hanging around");
-}
-```
-
-Well, it is the same "Line Hitter", but with assertion statement. So, jtcop
-is able to find such tests and mark them as incorrect.
+Yep, that’s our "Line Hitter" again, only this time, it's wearing the disguise
+of an assertion statement.  Luckily, `jtcop` can detect such tests and flag 
+them as unreliable.
 
 ## How jtcop Works
 
