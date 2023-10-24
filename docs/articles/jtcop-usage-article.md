@@ -796,20 +796,10 @@ and share your thoughts with us. We're always eager to get feedback
 or contributions from the community. Feel free to fork it if you want and craft
 your own test checkers that fit your needs, or simply use `jtcop` as is.
 
-## Final Thoughts
-
-Navigating through all the ideas about clear unit tests and best practice
-for writing them we created a tool which helps us to keep our tests more or less
-consistent, easy to read and orginized by similar principles. We have lots of
-plans for the future, but we hope that you will find jtcop useful even now.
-So, please, try it and share your thoughts with us, or create your own tool for
-your specific needs, because it can improve the quality of your code and save
-significant amount of time for you and your team.
-
 ## References
 
 Here is a list of articles and discussion threads that inspired us to create
-jtcop:
+`jtcop`:
 
 * [On the Layout of Tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html),
   Yegor Bugayenko
