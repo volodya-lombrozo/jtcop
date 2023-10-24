@@ -770,39 +770,31 @@ enhancing collaboration and understanding across our development projects.
 
 ## Future Plans
 
-### Roadmap
+Looking ahead, we're preparing to enhance `jtcop` with additional rules.
+One of our primary focuses is to address several anti-patterns like the ones
+highlighted in this
+insightful [StackOverflow thread](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
+Just to name a few:
 
-In the future we are going to add more rules to jtcop, for example we can check
-some anti-patterns, listed in
-that [thread](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue),
-lile
-"The Mockery" (when a unit test contains too many mocks), "Excessive Setup" (a
-test that requires a huge setup),
-"Wait and See" (a tests that needs to 'wait' a specific amount of time before it
-can 'see' if the code under test functioned as expected) and many others.
+* **The Mockery** - tests that have too many mocks.
+* **Excessive Setup** - tests that demand extensive setup.
+* **Wait and See** - tests that need to pause for a specific duration before
+  verifying if the tested code works as intended.
 
-Also, it would be great to add some rules for other languages, like Python,
-JavaScript, Go, etc, maybe by creating a separate tools for other languages.
-So, if you are inspired by our idea, you can create your own tool for your
-favorite language.
+It's worth noting that these are just a few examples; there's a broader spectrum
+of anti-patterns we're considering.
 
-We also faced with the problem with projects that already have a lot of tests
-written in a different style and sometimes it is extremely tedious to fix all
-the problems manually. So, one more direction which makes sense is automatic
-fixer, which will fix most of the problems automatically, but it is a bit more
-complicated task that will be implemented later as a separate tool. But if you
-already have some ideas how to implement it, please let us know and we will be
-happy to help you.
+Additionally, we've also encountered issues with projects that have many tests
+written in various styles. At times, it's incredibly tedious to address these
+issues manually. Thus, another viable avenue is developing an application that
+will automatically solve most of these problems.
 
-### Ask for contribution
-
-Of course jtcop is an open source tool, so we are always happy to receive any
-feedback or contribution from the community. Make forks if you need and create
-your own test checkers suitable for your needs, or just use the already existing
-plugin. If you have any ideas or suggestions, please, feel free to create an
-issue or pull request in
-our [repository](https://github.com/volodya-lombrozo/jtcop) and share your
-thoughts with us.
+So, if you have ideas or suggestions, please don't hesitate to open an issue or
+submit a pull request in
+our [repository](https://github.com/volodya-lombrozo/jtcop)
+and share your thoughts with us. We're always eager to get feedback
+or contributions from the community. Feel free to fork it if you want and craft
+your own test checkers that fit your needs, or simply use `jtcop` as is.
 
 ## Final Thoughts
 
