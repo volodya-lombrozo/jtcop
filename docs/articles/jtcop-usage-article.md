@@ -1,4 +1,4 @@
-# jtcop
+#  Mastering Test Code Quality Assurance
 
 ## Introduction
 
@@ -28,7 +28,7 @@ sufficient. There has been an increasing number of blog posts and articles
 discussing the importance of well-structured and formatted tests.
 But why is this so important?
 
-## Best Practice
+## Best Practices
 
 Well, every time I delve into a new project, I'm presented with an entirely new,
 distinct landscape. I start by reading the documentation and quickly delve into
@@ -295,7 +295,7 @@ Here is just a short summary how you can name your tests:
 | methodName_doesExpectedBehavior                          | add_doesReturnSum() or isUnderage_returnsTrue()            |
 | verbCondition (or verbResult)                            | calculatesSum() or deletesSuccessfully()                   |
 
-Jtcop prefers the last pattern:
+`jtcop` prefers the last pattern:
 
 1. Test names should use the present tense without a subject.
    For example, if you're testing a class `Animal` with a method `eat()`, the
