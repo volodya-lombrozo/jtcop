@@ -798,8 +798,21 @@ your own test checkers that fit your needs, or simply use `jtcop` as is.
 
 ## References
 
-Here is a list of articles and discussion threads that inspired us to create
-`jtcop`:
+There are articles and discussion threads that inspired the creation of `jtcop`.
+These might be helpful to delve deeper into the topic of test quality.
+
+Importance of testing:
+
+* [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
+  Grant Fritchey
+* [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
+  Bala Murugan
+* [Software Unit Testing: What Is That? Why Is it Important?](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor),
+  Anna Smith
+* [What Is Test-Driven Development and Why It’s Important](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import),
+  Anna Smith
+
+Best practices:
 
 * [On the Layout of Tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html),
   Yegor Bugayenko
@@ -815,11 +828,19 @@ Here is a list of articles and discussion threads that inspired us to create
   Yegor Bugayenko
 * [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java),
   Reshma Bidikar
-* [Importance of Testing](https://dzone.com/articles/importance-of-testing-grant-fritchey),
-  Grant Fritchey
-* [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
-  Bala Murugan
-* [Software Unit Testing: What Is That? Why Is it Important?](https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor),
-  Anna Smith
-* [What Is Test-Driven Development and Why It’s Important](https://dzone.com/articles/what-is-test-driven-development-and-why-its-import),
-  Anna Smith
+* [7 Popular Unit Test Naming Conventions](https://dzone.com/articles/7-popular-unit-test-naming)
+  Ajitesh Kumar
+* [Unit test naming best practices ](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
+  StackOverflow
+* [Best Practices for Writing Unit Tests: A Comprehensive Guide](https://dzone.com/articles/best-practices-for-writing-unit-tests-a-comprehens)
+  Or Hillel
+
+Other:
+
+* [A Detailed Guide on Flaky Tests: Causes, Detection, and Solutions](https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a)
+  Rhea Dube
+* [Static Classes Are Evil, Make Your Dependencies Explicit](https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies)
+  Vadim Samokhin
+* [Built-in Fake Objects](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html)
+  Yegor Bugayenko
+
