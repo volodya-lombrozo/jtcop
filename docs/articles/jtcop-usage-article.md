@@ -26,6 +26,57 @@ aspect so crucial?
 
 ## Best Practices
 
+###### Comments to fix
+
+1. Well? () - I can remove
+2. So - remove - too conversational —— this way
+3. “Delve into” —— redundancy —— dive deeper —— research this topic ——
+4. “Projects tests is wrong” - Project tests
+5. Moreover — secondly, “Moreover” — finial point - “it’s too early to use it in
+   the middle of text”
+6. “Paramount” —— redundancy
+7. “So, yes” — tooo informal
+8. “This and this” — I can remove one link
+9. “Furthermore” — extract the main idea for the entire paragraph
+10. “Lastly” in inner paragraph — “It’s also essention” - it’s better to replace
+11. Sometimes it’s a good think to add pointed list.
+12. Cut something????
+13. Simplify structure of the “Best Practice” — loosing focus
+14. “What did the author wanted to say?”
+15. Shortcuts (‘) — informal way to express
+
+###### Structure I want to get
+
+2. Plan of the BEST PRACTICES (one idea per one paragraph)
+    1. ENTIRE
+       1. I want to show how many best practice were suggested last yers
+      2. Well, every time…
+          1. Test are important in all aspects of development. They can be good
+             documentation and can guide you through the project
+      3. Moreover, when I want…
+          1. Tests help to add new features and fix bugs
+      4. Now, lets imagine…
+          1. Projects without test hard to support
+      5. So, yes…
+          1. But even if we have tests, it isn’t enough - they should be as good,
+             as production code
+      6. The first particulary significant aspect…
+          1. Test naming is an important practice. Lots of authors mentioned it.
+      7. Assertions also..
+          1. Good assertions in tests is an important practice. Lots of authors
+             mentioned it.
+      8. Furthermore, some…
+          1. Also we have a lot of different best practices. Numerous articles
+             were dedicated to this
+      9. So, yes, there’s…
+          1. Testing best practices are tacit knowledge that can be used for
+             creating better projects
+      10. But are all these…
+          1. If we have a tacit knowledge, do we have a tool which will help us to
+             follow this best practices?
+
+###### Original Text
+
 Well, every time I delve into a new project, I'm presented with an entirely new,
 distinct landscape. I start by reading the documentation and quickly delve into
 the project's tests. First and foremost, tests are much better than even some
