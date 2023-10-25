@@ -49,31 +49,135 @@ aspect so crucial?
 
 2. Plan of the BEST PRACTICES (one idea per one paragraph)
     1. ENTIRE
-       1. I want to show how many best practice were suggested last yers
-      2. Well, every time…
-          1. Test are important in all aspects of development. They can be good
-             documentation and can guide you through the project
-      3. Moreover, when I want…
-          1. Tests help to add new features and fix bugs
-      4. Now, lets imagine…
-          1. Projects without test hard to support
-      5. So, yes…
-          1. But even if we have tests, it isn’t enough - they should be as good,
-             as production code
-      6. The first particulary significant aspect…
-          1. Test naming is an important practice. Lots of authors mentioned it.
-      7. Assertions also..
-          1. Good assertions in tests is an important practice. Lots of authors
-             mentioned it.
-      8. Furthermore, some…
-          1. Also we have a lot of different best practices. Numerous articles
-             were dedicated to this
-      9. So, yes, there’s…
-          1. Testing best practices are tacit knowledge that can be used for
-             creating better projects
-      10. But are all these…
-          1. If we have a tacit knowledge, do we have a tool which will help us to
-             follow this best practices?
+        1. I want to show how many best practice were suggested last yers
+    2. Well, every time…
+        1. Test are important in all aspects of development. They can be good
+           documentation and can guide you through the project
+    3. Moreover, when I want…
+        1. Tests help to add new features and fix bugs
+    4. Now, lets imagine…
+        1. Projects without test hard to support
+    5. So, yes…
+        1. But even if we have tests, it isn’t enough - they should be as good,
+           as production code
+    6. The first particulary significant aspect…
+        1. Test naming is an important practice. Lots of authors mentioned it.
+    7. Assertions also..
+        1. Good assertions in tests is an important practice. Lots of authors
+           mentioned it.
+    8. Furthermore, some…
+        1. Also we have a lot of different best practices. Numerous articles
+           were dedicated to this
+    9. So, yes, there’s…
+        1. Testing best practices are tacit knowledge that can be used for
+           creating better projects
+    10. But are all these…
+        1. If we have a tacit knowledge, do we have a tool which will help us to
+           follow this best practices?
+
+###### Final text
+
+If tests are poorly formatted or show signs
+of [anti-patterns](https://dzone.com/articles/unit-testing-anti-patterns-full-list),
+it can make working with the project a challenge. This isn't just my point of
+view. Many articles stress the significance of well-structured tests and
+provide best practices and insights on this topic.
+
+A particularly significant aspect of these practices is how tests are named.
+Both articles,
+[Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test)
+and [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
+underscore the crucial role of effective test naming for documentation purposes.
+They advise against using the word "test" in test names, suggesting
+that appropriate naming can clearly describe the test's objective or what it
+intends to verify. Additionally, the
+article [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
+highlights not only the naming of test methods but also the importance of naming
+and ordering test variables. Both elements are essential for enhancing test
+readability and maintainability.
+
+____
+A bit ugly
+____
+The next important aspect is test assertions that play a pivotal role in testing
+best practices. For example, the
+article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+emphasizes choosing assertions over print statements in tests. Another
+consistent [recommendation](https://dzone.com/articles/clean-unit-testing)
+across various articles is to limit and organize assertions within a single
+test. The [AAA](https://stackoverflow.com/tags/arrange-act-assert/info)
+pattern (Arrange, Act, Assert) illustrates this by placing assertions at the end
+of the test method. Maintaining such a structured approach ensures that tests
+are clear and comprehensible for other developers.
+
+____
+Todo
+____
+
+Moreover, the transparency of the assertions themselves is crucial. They should
+come with clear, descriptive messages, as highlighted in articles like this and
+this.
+
+###### Shorted text
+
+Well, If tests are poorly formatted or even exhibit
+some [anti-patterns](https://dzone.com/articles/unit-testing-anti-patterns-full-list),
+it becomes challenging to work with the project. And of course, this isn't my
+original thought. There are numerous articles that emphasize the importance of
+well-structured and formatted tests, offering best practices and insights.
+
+The first particularly significant aspect of these practices is the way tests
+are named. Both the
+articles, [Anatomy of a Good Java Test](https://dzone.com/articles/anatomy-of-a-good-java-test)
+and [Importance of Unit Testing](https://dzone.com/articles/importance-of-unit-testing),
+stress the paramount importance of effective test naming, especially from a
+documentation perspective. They advise against the use of the word "test" in
+test names, emphasizing that proper naming can serve as a clear descriptor
+of what the test aims to verify or validate.
+
+Additionally,
+the [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing) article
+not only underscores effective test naming but also delves into the significance
+of variable naming and ordering, both pivotal for enhancing test readability.
+
+A significant aspect of testing practices is the naming of tests. The articles,
+Anatomy of a Good Java Test and Importance of Unit Testing, underscore the
+crucial role of effective test naming for documentation purposes. They recommend
+not using the word "test" in test names. Instead, proper naming can vividly
+convey the test's purpose or its verification aim. Furthermore, the article
+Clean Unit Testing stresses not just the naming of test methods, but also the
+significance of naming and sequencing test variables. Both components play a
+pivotal role in boosting test readability.
+
+Assertions also hold an important position in testing best practices.
+For instance, the
+article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
+strongly advises using assertions over print statements in tests. Another
+recurring theme in multiple articles is the principle of
+[limiting](https://dzone.com/articles/clean-unit-testing) and arranging
+assertions within a single unit test.
+The [AAA](https://stackoverflow.com/tags/arrange-act-assert/info)
+pattern (Arrange, Act, Assert) is a good example of positioning
+assertions at the tail end of the test method.
+Adopting such a consistent structure ensures that tests are straightforward and
+easily understandable to other developers.
+Additionally, the clarity of the assertions themselves is also of utmost
+importance.
+They should be accompanied by clear and expressive messages, as mentioned
+many times in numerous articles,
+like [this](https://dzone.com/articles/anatomy-of-a-good-java-test)
+and [this](https://www.yegor256.com/2023/01/19/layout-of-tests.html).
+
+Assertions play a pivotal role in testing best practices. For example, the
+article 7 Tips for Writing Better Unit Tests in Java emphasizes choosing
+assertions over print statements in tests. Another consistent recommendation
+across various articles is to limit and organize assertions within a single unit
+test. The AAA pattern (Arrange, Act, Assert) illustrates this by placing
+assertions at the conclusion of the test method. Maintaining such a structured
+approach ensures that tests are clear and comprehensible for other developers.
+Moreover, the transparency of the assertions themselves is crucial. They should
+come with clear, descriptive messages, as highlighted in articles like this and
+this.
 
 ###### Original Text
 
@@ -112,6 +216,7 @@ stress the paramount importance of effective test naming, especially from a
 documentation perspective. They advise against the use of the word "test" in
 test names, emphasizing that proper naming can serve as a clear descriptor
 of what the test aims to verify or validate.
+
 Additionally,
 the [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing) article
 not only underscores effective test naming but also delves into the significance
@@ -373,7 +478,7 @@ and we'll be happy to add it to the plugin.
 ### Corresponding Production Class
 
 Now, let's imagine we have a test class named `SumTest.java` with the test
-method `checksSum()`. But what if the test occasionally fails? I believe most
+method `checksSum()`. But what if the test occasionally fails? §believe most
 would attempt to locate the issue and find the original class where the problem
 occurred. But which class is it? The first guess would likely be `Sum.java`,
 right? Yet, you might not find it, perhaps because the production class is named
