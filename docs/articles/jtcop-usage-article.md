@@ -77,11 +77,11 @@ aspect so crucial?
 
 ###### Final text
 
-If tests are poorly formatted or show signs
+In short, if tests are poorly formatted or show signs
 of [anti-patterns](https://dzone.com/articles/unit-testing-anti-patterns-full-list),
-it can make working with the project a challenge. This isn't just my point of
-view. Many articles stress the significance of well-structured tests and
-provide best practices and insights on this topic.
+it can make working with the project a significant challenge. This isn't just my
+point of view. Many articles stress the significance of well-structured tests
+and provide best practices and insights on this topic.
 
 A particularly significant aspect of these practices is how tests are named.
 Both articles,
@@ -92,31 +92,20 @@ They advise against using the word "test" in test names, suggesting
 that appropriate naming can clearly describe the test's objective or what it
 intends to verify. Additionally, the
 article [Clean Unit Testing](https://dzone.com/articles/clean-unit-testing)
-highlights not only the naming of test methods but also the importance of naming
-and ordering test variables. Both elements are essential for enhancing test
-readability and maintainability.
+highlights not only the naming of test methods but also the importance for
+maintainability of correct naming and ordering test variables.
 
-____
-A bit ugly
-____
-The next important aspect is test assertions that play a pivotal role in testing
-best practices. For example, the
+Equally important, assertions play a pivotal role in testing best practices.
+Take, for instance, the
 article [7 Tips for Writing Better Unit Tests in Java](https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java)
-emphasizes choosing assertions over print statements in tests. Another
-consistent [recommendation](https://dzone.com/articles/clean-unit-testing)
-across various articles is to limit and organize assertions within a single
+that highlights the advantage of using assertions over print statements.
+Many experts also advise on organizing and limiting assertions within a single
 test. The [AAA](https://stackoverflow.com/tags/arrange-act-assert/info)
-pattern (Arrange, Act, Assert) illustrates this by placing assertions at the end
-of the test method. Maintaining such a structured approach ensures that tests
-are clear and comprehensible for other developers.
-
-____
-Todo
-____
-
-Moreover, the transparency of the assertions themselves is crucial. They should
-come with clear, descriptive messages, as highlighted in articles like this and
-this.
+pattern (Arrange, Act, Assert) is the perfect example of this intention:
+by positioning assertions at the end of the test method, it ensures clarity and
+readability for other developers. Continuing, the transparency of the
+assertions themselves is also important, as they should come with [descriptive
+messages](https://dzone.com/articles/anatomy-of-a-good-java-test).
 
 ###### Shorted text
 
@@ -178,6 +167,35 @@ approach ensures that tests are clear and comprehensible for other developers.
 Moreover, the transparency of the assertions themselves is crucial. They should
 come with clear, descriptive messages, as highlighted in articles like this and
 this.
+
+And there are even more different suggestions:
+
+* the appropriate use of
+  [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub)
+* avoiding "if" statements in test blocks
+* focusing on a single case in each unit,
+* making tests
+  as [isolated and automated](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+  as possible.
+* High code coverage
+* testing negative scenarios and borderline cases, in addition to positive ones.
+* avoid non-deterministic
+  and [flaky tests](https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a)
+* avoid
+  unit-test [anti-patterns](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
+
+So, yes, there's a lot of tacit knowledge that we can borrow from the community
+to craft good unit and integration tests. And this isn't the end of the story.
+There are other emerging ideas worth mentioning. For instance, the recent idea
+about the
+[layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
+emphasizes the importance of maintaining a structured "layout" for both
+unit and integration tests. This isn't merely about refactoring unit tests; it's
+about organizing them systematically within the source code.
+
+But are all these ideas and principles just theoretical, or do we have
+ready-made solutions that help us adhere to these principles and keep our tests
+consistent and clear?
 
 ###### Original Text
 
