@@ -107,6 +107,35 @@ readability for other developers. Continuing, the transparency of the
 assertions themselves is also important, as they should come with [descriptive
 messages](https://dzone.com/articles/anatomy-of-a-good-java-test).
 
+Actually, there are even more suggestions to consider:
+
+* Appropriate use of
+  [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub).
+* Avoiding "if" statements in test blocks.
+* Focusing on a single case in each unit
+* Making tests
+  as [isolated and automated](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
+  as possible.
+* Maintain
+  high [test and code coverage](https://dzone.com/articles/code-coverage-vs-test-coverage-which-is-better).
+* Testing negative scenarios and borderline cases, in addition to positive ones.
+* Avoiding non-deterministic results
+  and [flaky tests](https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a)
+* Avoiding
+  unit-test [anti-patterns](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
+
+However, this list isn't exhaustive. New best practices continue to emerge. For
+example, the recent idea
+about [layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
+highlights the importance of structuring both unit and integration tests within
+the source code. This isn't just about refactoring tests; it's
+about organizing them systematically within the source code.
+
+As you can see, the community provides a variety of best practices for creating
+quality tests. The real question, however, is: Are these principles just
+theoretical, or are there practical solutions that can help us achieve such
+quality?
+
 ###### Shorted text
 
 Well, If tests are poorly formatted or even exhibit
@@ -168,34 +197,54 @@ Moreover, the transparency of the assertions themselves is crucial. They should
 come with clear, descriptive messages, as highlighted in articles like this and
 this.
 
-And there are even more different suggestions:
+Actually, there are more suggestions to consider:
 
-* the appropriate use of
-  [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub)
-* avoiding "if" statements in test blocks
-* focusing on a single case in each unit,
-* making tests
+* Appropriate use of
+  [mocks and stubs](https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub).
+* Avoiding "if" statements in test blocks.
+* Focusing on a single case in each unit
+* Making tests
   as [isolated and automated](https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo)
   as possible.
-* High code coverage
-* testing negative scenarios and borderline cases, in addition to positive ones.
-* avoid non-deterministic
+* Maintain
+  high [test and code coverage](https://dzone.com/articles/code-coverage-vs-test-coverage-which-is-better).
+* Testing negative scenarios and borderline cases, in addition to positive ones.
+* Avoiding non-deterministic results
   and [flaky tests](https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a)
-* avoid
+* Avoiding
   unit-test [anti-patterns](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
 
-So, yes, there's a lot of tacit knowledge that we can borrow from the community
-to craft good unit and integration tests. And this isn't the end of the story.
-There are other emerging ideas worth mentioning. For instance, the recent idea
-about the
-[layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
-emphasizes the importance of maintaining a structured "layout" for both
-unit and integration tests. This isn't merely about refactoring unit tests; it's
+However, this list isn't exhaustive. New best practices continue to emerge. For
+example, the recent idea
+about [layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
+highlights the importance of structuring both unit and integration tests within
+the source code. This isn't just about refactoring tests; it's
 about organizing them systematically within the source code.
 
-But are all these ideas and principles just theoretical, or do we have
-ready-made solutions that help us adhere to these principles and keep our tests
-consistent and clear?
+And this isn't the end of the story. Other best practices still emerge.
+For instance, the recent idea about the
+[layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
+emphasizes the importance of maintaining a structured "layout" for both
+unit and integration tests. This isn't merely about refactoring tests; it's
+about organizing them systematically within the source code.
+
+So, yes, there's a lot of tacit knowledge that we can borrow from the community
+to craft good tests. But are all these principles just theoretical, or
+do we have ready-made solutions that help us to keep our tests consistent and
+clear?
+
+While the community offers a wealth of insights for crafting quality tests, the
+question remains: Are these principles merely theoretical, or are there
+practical solutions to ensure our tests are consistent and clear?
+
+AS you can see, the community offers a wide range of best practices for crafting
+quality tests. The only question remains: Are these principles merely
+theoretical, or are there any practical solutions that can help us?
+
+As you can see, the community provides a variety of best practices for creating
+quality tests. The real question, however, is: Are these principles just
+theoretical, or are there practical solutions that can help us achieve such
+quality?
 
 ###### Original Text
 
@@ -274,8 +323,7 @@ as well as the
 unit-test [anti-patterns](https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue)
 I've previously mentioned.
 
-So, yes, there's a lot of tacit knowledge that we can borrow from the community
-to craft good unit and integration tests. And this isn't the end of the story.
+And this isn't the end of the story.
 There are other emerging ideas worth mentioning. For instance, the recent idea
 about the
 [layout of tests](https://www.yegor256.com/2023/01/19/layout-of-tests.html)
@@ -283,6 +331,8 @@ emphasizes the importance of maintaining a structured "layout" for both
 unit and integration tests. This isn't merely about refactoring unit tests; it's
 about organizing them systematically within the source code.
 
+So, yes, there's a lot of tacit knowledge that we can borrow from the community
+to craft good tests.
 But are all these ideas and principles just theoretical, or do we have
 ready-made solutions that help us adhere to these principles and keep our tests
 consistent and clear?
