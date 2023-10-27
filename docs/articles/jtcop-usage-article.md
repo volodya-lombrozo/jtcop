@@ -211,53 +211,49 @@ anti-patterns.
 
 ### Other
 
-Actually there are many other tools that can be used for detecting test issues,
-like
+Actually, there are other tools available for detecting issues related to test
+quality. Some notable ones include:
 
 * [SpotBugs](https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html#iju-assert-method-invoked-from-run-method)
-  which can check for correct usage of setUp/tearDown methods, empty test cases
-  and wrongly used assertions.
-* [ErrorProne](https://errorprone.info/bugpatterns)
-  checks test signature and forbids usage of "test" in test name. Finds
-  redundant
-  methods (without `@Test` and `@Ignore` annotations), assertions that check
-  reference equality to itself, and a bit more checks for tests.
+  checks for correct usage of setUp/tearDown methods, empty test cases, and
+  improper use of assertions.
+* [ErrorProne](https://errorprone.info/bugpatterns) examines test signatures and
+  forbids the use of "test" in test names, identifies redundant methods
+  without `@Test` and `@Ignore` and offers some other test-related checks.
 * [MegaLinter](https://github.com/oxsecurity/megalinter#languages)
-  or [Qulice](https://github.com/yegor256/qulice) just combine already mentioned
-  linters like PMD and Checkstyle, so they just repeat the same checks.
-* [Coverity](https://scan.coverity.com) is a proprietary tool, that, to best my
-  knowledge also have many checks for tests like checking assertions and various
-  resource leaks.
-  Although [some people](https://stackoverflow.com/questions/173763/coverity-for-java-static-analysis)
-  say that its features comparable with PMD and SpotBug. At least they used to
-  be.
+  and [Qulice](https://github.com/yegor256/qulice) primarily combine previously
+  mentioned linters like PMD and Checkstyle. Essentially, they just bundle
+  checks from other linters.
+* [Coverity](https://scan.coverity.com) is a proprietary tool that has numerous
+  checks, including those for assertions and various resource leaks.
+  However, [some users](https://stackoverflow.com/questions/173763/coverity-for-java-static-analysis)
+  argue that its features are similar to those PMD and SpotBugs.
 * [Jtest](https://www.parasoft.com/products/parasoft-jtest/) is another
-  proprietary tool that might check test quality. It actually has almost all the
-  features that was mentioned previously including but no limiting checks for
-  assertion statements, initialization methods and even more. Here is the entire
-  list
-  of [checks](https://docs.parasoft.com/display/JTEST1041/CQA+Supported+Rules).
+  proprietary tool that has a comprehensive set of features.
+  This includes checks for assertion statements, initialization methods, and
+  more. The complete list of checks can be
+  found [here](https://docs.parasoft.com/display/JTEST1041/CQA+Supported+Rules).
 
-And there are a lot more tools worth mentioning
-like [Checkmarx Glossary](https://checkmarx.com/glossary/static-code-analysis-for-java/), [Klocwork](https://www.perforce.com/products/klocwork), [CodeSonar](https://codesecure.com/integrations/),
-and even more that we just can't cover in this article.
+There are numerous other tools,
+including [Checkmarx Glossary](https://checkmarx.com/glossary/static-code-analysis-for-java/),
+[Klocwork](https://www.perforce.com/products/klocwork),
+[CodeSonar](https://codesecure.com/integrations/), among many others, that we
+simply can't cover in this article.
 
-In summary, while static analyzers like Checkstyle, PMD, and SonarQube and
-others offer a range of rules and checks to ensure code quality, there are
-noticeable gaps in their capability to holistically address test-related
-concerns. Checkstyle primarily focuses on Java production code consistency and
-offers limited features specifically for tests, necessitating users to craft
-their own checkers for unique test-related constraints. PMD offers a
-comprehensive set of rules for JUnit assertions, but it lacks
-support for widely-used frameworks like Hamcrest and does not check method
-naming patterns. SonarQube offers a broad array of rules, many of which overlap
-with PMD.
-However, it still falls short in examining certain critical test checks, such as
-Hamcrest assertions, test anti-patterns, and the correct placement of tests.
-Other tools have similar limitations or are proprietary and while these tools
-lay a foundation for maintaining test code quality, there is still significant
-room for improvement in aligning with industry test standards and best
-practices.
+In summary, tools like Checkstyle, PMD, SonarQube, and others offer numerous
+rules to ensure test code quality. However, noticeable gaps exist in their
+ability to tackle certain test-related issues. Checkstyle is primarily designed
+for Java production code, and its features for tests are limited. This often
+requires users to develop their own checkers for specific scenarios. PMD
+has a robust set of rules for JUnit assertions, yet it doesn't support popular
+frameworks like Hamcrest or method naming patterns. SonarQube provides an
+extensive rule set, which overlaps with PMD in
+many areas. However, it lacks some vital test checks, including those for
+Hamcrest assertions and test anti-patterns. Other tools have their own
+limitations, or they are proprietary. Significantly, none of the aforementioned
+tools focus on the proper placement and naming of test classes. Thus, even
+though these tools provide a foundation for test code quality, there's a notable
+gap in terms of aligning with industry test standards and best practices.
 
 ## Introducing jtcop
 
