@@ -209,23 +209,7 @@ knowledge, SonarQube doesn't check Hamcrest assertions and doesn't maintain the
 layout of tests. It also doesn't show much concern about checking test
 anti-patterns.
 
-In summary, while static analyzers like Checkstyle, PMD, and SonarQube offer a
-range of rules and checks to ensure code quality, there are noticeable gaps in
-their capability to holistically address test-related concerns.
-Checkstyle primarily focuses on Java production code consistency and offers
-limited features specifically for tests, necessitating users to craft their own
-checkers for unique test-related constraints. PMD offers a comprehensive set of
-rules for JUnit assertions, but it lacks
-support for widely-used frameworks like Hamcrest and does not check method
-naming patterns.
-SonarQube offers a broad array of rules, many of which overlap with PMD.
-However, it still falls short in examining certain critical test checks, such as
-Hamcrest assertions, test anti-patterns, and the correct placement of tests.
-Collectively, while these tools lay a foundation for maintaining test code
-quality, there is still significant room for improvement in aligning with
-industry test standards and best practices.
-
-## Other
+### Other
 
 Actually there are many other tools that can be used for detecting test issues,
 like
@@ -254,6 +238,26 @@ like
   list
   of [checks](https://docs.parasoft.com/display/JTEST1041/CQA+Supported+Rules).
 
+And there are a lot more tools worth mentioning
+like [Checkmarx Glossary](https://checkmarx.com/glossary/static-code-analysis-for-java/), [Klocwork](https://www.perforce.com/products/klocwork), [CodeSonar](https://codesecure.com/integrations/),
+and even more that we just can't cover in this article.
+
+In summary, while static analyzers like Checkstyle, PMD, and SonarQube and
+others offer a range of rules and checks to ensure code quality, there are
+noticeable gaps in their capability to holistically address test-related
+concerns. Checkstyle primarily focuses on Java production code consistency and
+offers limited features specifically for tests, necessitating users to craft
+their own checkers for unique test-related constraints. PMD offers a
+comprehensive set of rules for JUnit assertions, but it lacks
+support for widely-used frameworks like Hamcrest and does not check method
+naming patterns. SonarQube offers a broad array of rules, many of which overlap
+with PMD.
+However, it still falls short in examining certain critical test checks, such as
+Hamcrest assertions, test anti-patterns, and the correct placement of tests.
+Other tools have similar limitations or are proprietary and while these tools
+lay a foundation for maintaining test code quality, there is still significant
+room for improvement in aligning with industry test standards and best
+practices.
 
 ## Introducing jtcop
 
