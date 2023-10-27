@@ -225,6 +225,36 @@ Collectively, while these tools lay a foundation for maintaining test code
 quality, there is still significant room for improvement in aligning with
 industry test standards and best practices.
 
+## Other
+
+Actually there are many other tools that can be used for detecting test issues,
+like
+
+* [SpotBugs](https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html#iju-assert-method-invoked-from-run-method)
+  which can check for correct usage of setUp/tearDown methods, empty test cases
+  and wrongly used assertions.
+* [ErrorProne](https://errorprone.info/bugpatterns)
+  checks test signature and forbids usage of "test" in test name. Finds
+  redundant
+  methods (without `@Test` and `@Ignore` annotations), assertions that check
+  reference equality to itself, and a bit more checks for tests.
+* [MegaLinter](https://github.com/oxsecurity/megalinter#languages)
+  or [Qulice](https://github.com/yegor256/qulice) just combine already mentioned
+  linters like PMD and Checkstyle, so they just repeat the same checks.
+* [Coverity](https://scan.coverity.com) is a proprietary tool, that, to best my
+  knowledge also have many checks for tests like checking assertions and various
+  resource leaks.
+  Although [some people](https://stackoverflow.com/questions/173763/coverity-for-java-static-analysis)
+  say that its features comparable with PMD and SpotBug. At least they used to
+  be.
+* [Jtest](https://www.parasoft.com/products/parasoft-jtest/) is another
+  proprietary tool that might check test quality. It actually has almost all the
+  features that was mentioned previously including but no limiting checks for
+  assertion statements, initialization methods and even more. Here is the entire
+  list
+  of [checks](https://docs.parasoft.com/display/JTEST1041/CQA+Supported+Rules).
+
+
 ## Introducing jtcop
 
 In order to address the aforementioned gaps, we developed a new static
