@@ -209,7 +209,7 @@ knowledge, SonarQube doesn't check Hamcrest assertions and doesn't maintain the
 layout of tests. It also doesn't show much concern about checking test
 anti-patterns.
 
-### Other
+### Others
 
 Actually, there are other tools available for detecting issues related to test
 quality. Some notable ones include:
