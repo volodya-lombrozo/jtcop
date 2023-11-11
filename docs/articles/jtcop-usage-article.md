@@ -324,7 +324,7 @@ and we'll be happy to add it to the plugin.
 ### Corresponding Production Class
 
 Now, let's imagine we have a test class named `SumTest.java` with the test
-method `checksSum()`. But what if the test occasionally fails? §believe most
+method `checksSum()`. But what if the test occasionally fails? Most
 would attempt to locate the issue and find the original class where the problem
 occurred. But which class is it? The first guess would likely be `Sum.java`,
 right? Yet, you might not find it, perhaps because the production class is named
@@ -436,7 +436,7 @@ between test methods and the initialization part.
 Then, over time, as the codebase grows and changes and as the number of test
 cases in the test class increases, developers may become unaware of the
 setup/teardown that happens for each test. This can lead to potential
-misinterpretations. Furthermore, a developer may end up with setup code that is
+problems. A developer may end up with setup code that is
 unnecessary for certain tests, thus violating the principle of keeping tests
 minimal and setting up only what is needed.
 Next, using such methods can introduce another problem. They can lead to a
@@ -529,11 +529,10 @@ initialization logic.
 
 ### Test Assertions
 
-`jtcop` also underscores the need to validate assertions in tests.
-Recall the [Gap Identification](#gap-identification) section? Several tools out
-there offer similar checks. Yet, many of them focus solely on JUnit assertions
-or only catch high-level errors. `jtcop` supports both Hamcrest and JUnit
-assertions and adheres to stricter guidelines for assertions. To paint a
+`jtcop` also underscores the need to validate assertions in tests. Several tools
+out there offer similar checks. Yet, many of them focus solely on JUnit
+assertions or only catch high-level errors. `jtcop` supports both Hamcrest and
+JUnit assertions and adheres to stricter guidelines for assertions. To paint a
 clearer picture, let's dive into a few code snippets.
 
 ```java
@@ -715,7 +714,7 @@ Similarly, for the "Line Hitter" pattern previously mentioned:
 By default, `jtcop` will halt the build if it detects issues with your tests. If
 you only want to use it to highlight problems without interrupting the build,
 you can configure `jtcop` to display only warning messages by adjusting the
-failOnError property.
+`failOnError` property.
 
 ```xml
 
