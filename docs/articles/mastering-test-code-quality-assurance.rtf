@@ -1,0 +1,817 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 \fmodern Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel0 \b \fs36 Mastering Test Code Quality Assurance\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Introduction\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Over the years, many articles have highlighted the importance of unit and integration tests and their benefits. They enable quick and accurate {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/importance-of-unit-testing"}}{\fldrslt{\ul
+identification of errors
+}}}
+, simplify the debugging process, support {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo"}}{\fldrslt{\ul
+safe refactoring
+}}}
+, and prove {\field{\*\fldinst{HYPERLINK "https://www.yegor256.com/2019/12/03/testing-in-code-review.html"}}{\fldrslt{\ul
+invaluable during code reviews
+}}}
+. These tests can also significantly reduce {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/what-is-test-driven-development-and-why-its-import"}}{\fldrslt{\ul
+development costs
+}}}
+, help catch mistakes early, and ensure the final product {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor"}}{\fldrslt{\ul
+aligns well with its specifications
+}}}
+. As such, testing is often viewed as a {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/importance-of-testing-grant-fritchey"}}{\fldrslt{\ul
+central part
+}}}
+ of the development process. However, within the developer community, it\u8217's become clear in recent years that merely having unit and integration tests isn\u8217't enough. A growing number of blog posts and articles emphasize the need for well-structured and formatted tests. So, why is this aspect so crucial?\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Best Practices\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In short, poorly formatted tests or those exhibiting {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/unit-testing-anti-patterns-full-list"}}{\fldrslt{\ul
+anti-patterns
+}}}
+ can significantly hamper a project\u8217's progress. It\u8217's not just my perspective. Many articles stress the significance of well-structured tests and provide best practices and insights on this topic.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 One element that frequently emerges as pivotal in these discussions is the naming of tests. Two articles in particular, {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/anatomy-of-a-good-java-test"}}{\fldrslt{\ul
+Anatomy of a Good Java Test
+}}}
+ and {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/importance-of-unit-testing"}}{\fldrslt{\ul
+Importance of Unit Testing
+}}}
+, underscore the crucial role of effective test naming. They advise against using the word \u8220"test\u8221" in test names, suggesting that appropriate naming can clearly describe the test\u8217's objective or what it intends to verify. Additionally, the article {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/clean-unit-testing"}}{\fldrslt{\ul
+Clean Unit Testing
+}}}
+ highlights not only the naming of test methods but also the importance for maintainability of correct naming and ordering test variables.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Branching out from naming, assertions are another cornerstone in testing best practices. Take, for instance, the article {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java"}}{\fldrslt{\ul
+7 Tips for Writing Better Unit Tests in Java
+}}}
+ that highlights the advantage of using assertions over print statements. Other industry experts often emphasize limiting the number of assertions and correctly positioning them within a single test. The {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/tags/arrange-act-assert/info"}}{\fldrslt{\ul
+AAA
+}}}
+ pattern (Arrange, Act, Assert) is the perfect example of this intention: by positioning assertions at the end of the test method, it ensures clarity and readability for other developers. Moreover, the transparency of the assertions themselves is also important. For instance, they should come with {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/anatomy-of-a-good-java-test"}}{\fldrslt{\ul
+descriptive messages
+}}}
+.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In fact, there are more suggestions to keep in mind:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Appropriate usage of {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/3459287/whats-the-difference-between-a-mock-stub"}}{\fldrslt{\ul
+mocks and stubs
+}}}
+.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Avoiding \u8220"if\u8221" statements in test blocks.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Focusing on a single case in each unit\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Making tests as {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo"}}{\fldrslt{\ul
+isolated and automated
+}}}
+ as possible.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Maintaining high {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/code-coverage-vs-test-coverage-which-is-better"}}{\fldrslt{\ul
+test and code coverage
+}}}
+.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Testing negative scenarios and borderline cases, in addition to positive ones.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Avoiding non-deterministic results and {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a"}}{\fldrslt{\ul
+flaky tests
+}}}
+\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab Avoiding unit-test {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue"}}{\fldrslt{\ul
+anti-patterns
+}}}
+\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Yet, the realm of best practices is ever-evolving and this list isn\u8217't exhaustive. New best practices continue to emerge. For example, the recent idea about {\field{\*\fldinst{HYPERLINK "https://www.yegor256.com/2023/01/19/layout-of-tests.html"}}{\fldrslt{\ul
+layout of tests
+}}}
+ highlights the importance of structuring both unit and integration tests within the source code. It\u8217's not just about refactoring tests anymore but also about organizing them systematically within the source code.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In summation, as you can see, the community provides a variety of best practices for creating quality tests. The real question, however, is: Are these principles just theoretical, or are there practical solutions that can help us achieve such quality?\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Gap Identification\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Yes, I\u8217'm referring to static analyzers. Let\u8217's briefly examine the most widely used ones, even though there are many similar tools available. I will focus only on rules and checks that help to address at least some best practices discovered previously.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Checkstyle\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\field{\*\fldinst{HYPERLINK "https://checkstyle.sourceforge.io"}}{\fldrslt{\ul
+Checkstyle
+}}}
+ is a development tool that helps programmers write Java code that adheres to a coding standard. In other words, Checkstyle is a static code analysis tool ({\field{\*\fldinst{HYPERLINK "https://en.wikipedia.org/wiki/Lint_(software)"}}{\fldrslt{\ul
+linter
+}}}
+) used in the Java world. Although Checkstyle doesn\u8217't provide features specifically tailored for tests, many of its features are applicable to test code, just as they are to production code. It can assist with javadoc comments, indentation, line length, cyclomatic complexity, etc. However, to the best of my knowledge, the only feature related to tests is the ability to enforce the test names convention by developing a specific checker. So, yes, before using it, you need to develop your own {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/24415234/configure-checkstyle-method-names-for-test-methods-only"}}{\fldrslt{\ul
+checker
+}}}
+ first.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Thus, while Checkstyle is a general tool that focuses solely on Java code, it doesn\u8217't specifically address issues with tests. It doesn\u8217't consider specific rules related to assertion checks, identification of anti-patterns, or maintaining the layout of tests - all of which are essential to keep tests consistent and clear in line with industry requirements and best practices.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 PMD\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\field{\*\fldinst{HYPERLINK "https://pmd.github.io"}}{\fldrslt{\ul
+PMD
+}}}
+ is one more source code analyzer similar to Checkstyle. It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. While it supports many different languages, here we are interested in Java only. PMD, comparing with Checkstyle, has much more rules that check tests quality, for example (but not limited to):\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junitassertionsshouldincludemessage"}}{\fldrslt{\ul
+JUnitAssertionsShouldIncludeMessage
+}}}
+ - requires JUnit assertions include a message.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestcontainstoomanyasserts"}}{\fldrslt{\ul
+JUnitTestContainsTooManyAsserts
+}}}
+ checks if JUnit or TestNG test contains too many assertion statements.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://pmd.github.io/pmd/pmd_rules_java_bestpractices.html#junittestsshouldincludeassert"}}{\fldrslt{\ul
+JUnitTestsShouldIncludeAssert
+}}}
+ checks that JUnit tests include at least one assertion.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#testclasswithouttestcases"}}{\fldrslt{\ul
+TestClassWithoutTestCases
+}}}
+ checks that test classes have at least one testing method.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 5.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://pmd.github.io/pmd/pmd_rules_java_errorprone.html#unnecessarybooleanassertion"}}{\fldrslt{\ul
+UnnecessaryBooleanAssertion
+}}}
+ checks that JUnit assertions are used correctly without {\f1 assertTrue(true)} statements (line-hitter anti-pattern detection.)\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Here is a short example of test violations that PMD can find:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 public class Foo extends TestCase \{ \line
+  public void testSomething() \{\line
+    // [JUnitAssertionsShouldIncludeMessage] Use the form:\line
+    // assertEquals("Foo does not equals bar", "foo", "bar");\line
+    // instead\line
+    assertEquals("foo", "bar");\line
+  \}\}\line
+\line
+//[TestClassWithoutTestCases] Consider adding test methods if it is a test:\line
+public class Bar extends TestCase \{\}\line
+\line
+public class MyTestCase extends TestCase \{ \line
+  // Ok\line
+  public void testMyCaseWithOneAssert() \{\line
+    boolean myVar = false;\line
+    assertFalse("should be false", myVar);\line
+  \}\line
+    \line
+  //[JUnitTestsShouldIncludeAssert]\line
+  //Bad, don't have any asserts \line
+  public void testSomething() \{\line
+    Bar b = findBar();\line
+    b.work();\line
+  \}\line
+\line
+  //[JUnitTestContainsTooManyAsserts]: \line
+  //Bad, too many asserts (assuming max=1)\line
+  public void testMyCaseWithMoreAsserts() \{\line
+    boolean myVar = false;\line
+    assertFalse("myVar should be false", myVar);\line
+    assertEquals("should equals false", false, myVar);\line
+    //[UnnecessaryBooleanAssertion] Bad, serves no real purpose - remove it:\line
+    assertTrue(true);\line
+  \}\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 However, all these checks are designed primarily for JUnit assertions and, in some cases, for AssertJ. They don\u8217't support {\field{\*\fldinst{HYPERLINK "https://hamcrest.org"}}{\fldrslt{\ul
+Hamcrest
+}}}
+ assertions, which are widely adopted in the industry. Also, while PMD can check method names, these checks are relatively simple. They focus on aspects such as method name length, avoiding special characters like underscores, and adhering to {\field{\*\fldinst{HYPERLINK "https://en.wikipedia.org/wiki/Camel_case"}}{\fldrslt{\ul
+camel case
+}}}
+ naming conventions. Consequently, these checks are primarily intended for production code only and don\u8217't examine specific {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/7-popular-unit-test-naming"}}{\fldrslt{\ul
+test name patterns
+}}}
+. Moreover, to the best of my knowledge, PMD doesn\u8217't identify structural mistakes or verify the correct placement of methods. Thus, PMD provides a rather limited set of checks for tests.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Sonar Qube\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\field{\*\fldinst{HYPERLINK "https://www.sonarqube.org"}}{\fldrslt{\ul
+SonarQube
+}}}
+ is also a widely used tool for checking code quality. SonarQube has a lot of rules similar to PMD that can be applied to tests, for example:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-2187/"}}{\fldrslt{\ul
+TestCases should contain tests
+}}}
+.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-2699/"}}{\fldrslt{\ul
+Literal boolean values and nulls should not be used in assertions.
+}}}
+\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-5863/"}}{\fldrslt{\ul
+Assertions should not compare an object to itself.
+}}}
+\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-2698/"}}{\fldrslt{\ul
+Test assertions should include messages.
+}}}
+\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 5.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-5961/"}}{\fldrslt{\ul
+Test methods should not contain too many assertions.
+}}}
+\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 6.\tx360\tab {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-5976/"}}{\fldrslt{\ul
+Similar tests should be grouped in a single Parameterized test.
+}}}
+\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 At the time of writing this text, there are around {\field{\*\fldinst{HYPERLINK "https://rules.sonarsource.com/java/tag/tests/RSPEC-2701/"}}{\fldrslt{\ul
+45 rules
+}}}
+ specifically designed for tests. As you might have noticed, SonarQube has more rules than PMD, although many of them overlap. However, to the best of my knowledge, SonarQube doesn\u8217't check Hamcrest assertions and doesn\u8217't maintain the layout of tests. It also doesn\u8217't show much concern about checking test anti-patterns.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Others\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Actually, there are other tools available for detecting issues related to test quality. Some notable ones include:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html#iju-assert-method-invoked-from-run-method"}}{\fldrslt{\ul
+SpotBugs
+}}}
+ checks for correct usage of setUp/tearDown methods, empty test cases, and improper use of assertions.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://errorprone.info/bugpatterns"}}{\fldrslt{\ul
+ErrorProne
+}}}
+ examines test signatures and forbids the use of \u8220"test\u8221" in test names, identifies redundant methods without {\f1 @Test} and {\f1 @Ignore} and offers some other test-related checks.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://github.com/oxsecurity/megalinter#languages"}}{\fldrslt{\ul
+MegaLinter
+}}}
+ and {\field{\*\fldinst{HYPERLINK "https://github.com/yegor256/qulice"}}{\fldrslt{\ul
+Qulice
+}}}
+ primarily combine previously mentioned linters like PMD and Checkstyle. Essentially, they just bundle checks from other linters.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://scan.coverity.com"}}{\fldrslt{\ul
+Coverity
+}}}
+ is a proprietary tool that has numerous checks, including those for assertions and various resource leaks. However, {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/173763/coverity-for-java-static-analysis"}}{\fldrslt{\ul
+some users
+}}}
+ argue that its features are similar to those PMD and SpotBugs.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://www.parasoft.com/products/parasoft-jtest/"}}{\fldrslt{\ul
+Jtest
+}}}
+ is another proprietary tool that has a comprehensive set of features. This includes checks for assertion statements, initialization methods, and more. The complete list of checks can be found {\field{\*\fldinst{HYPERLINK "https://docs.parasoft.com/display/JTEST1041/CQA+Supported+Rules"}}{\fldrslt{\ul
+here
+}}}
+.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 There are numerous other tools, including {\field{\*\fldinst{HYPERLINK "https://checkmarx.com/glossary/static-code-analysis-for-java/"}}{\fldrslt{\ul
+Checkmarx Glossary
+}}}
+, {\field{\*\fldinst{HYPERLINK "https://www.perforce.com/products/klocwork"}}{\fldrslt{\ul
+Klocwork
+}}}
+, {\field{\*\fldinst{HYPERLINK "https://codesecure.com/integrations/"}}{\fldrslt{\ul
+CodeSonar
+}}}
+, among many others, that we simply can\u8217't cover in this article.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In summary, tools like Checkstyle, PMD, SonarQube, and others offer numerous rules to ensure test code quality. However, noticeable gaps exist in their ability to tackle certain test-related issues. Checkstyle is primarily designed for Java production code, and its features for tests are limited. This often requires users to develop their own checkers for specific scenarios. PMD has a robust set of rules for JUnit assertions, yet it doesn\u8217't support popular frameworks like Hamcrest or method naming patterns. SonarQube provides an extensive rule set, which overlaps with PMD in many areas. However, it lacks some vital test checks, including those for Hamcrest assertions and test anti-patterns. Other tools have their own limitations, or they are proprietary. Significantly, none of the aforementioned tools focus on the proper placement and naming of test classes. Thus, even though these tools provide a foundation for test code quality, there\u8217's a notable gap in terms of aligning with industry test standards and best practices.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Introducing jtcop\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In order to address the aforementioned gaps, we developed a new static analyzer called {\field{\*\fldinst{HYPERLINK "https://github.com/volodya-lombrozo/jtcop"}}{\fldrslt{\ul
+jtcop
+}}}
+ that focuses on test quality in Java projects. It is a simple Maven plugin that checks tests for common mistakes and anti-patterns. We use it in our projects, and it has helped us maintain consistent and clear tests. It also speeds up PR reviews significantly by preventing recurring comments about issues like improper test placement or naming. Although, we don\u8217't think our rules are the only good way to set up tests, so feel free to share your ideas and suggestions by submitting tickets and PRs. In the following, I\u8217'll explain how jtcop fits into the landscape of static analysis tools, which checks it utilizes, and how it can assist you in your everyday programming.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Test Names\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 I\u8217'm sure you know there are many ways to name your test. For example, you can find various {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/7-popular-unit-test-naming"}}{\fldrslt{\ul
+test naming conventions
+}}}
+ or even some {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/155436/unit-test-naming-best-practices"}}{\fldrslt{\ul
+threads
+}}}
+ that have lengthy discussions on how to do it correctly. Here is just a short summary how you can name your tests:\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx4246\clbrdrb\brdrs\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Pattern\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Example\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 methodName_stateUnderTest_expected\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 add_negativeNumbers_throwsException()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 {\b when}_condition_{\b then}_expected\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 when_ageLessThan18_then_isUnderageIsTrue()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 {\b given}_precondition_{\b when}_action_{\b then}_result\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 given_userIsAdmin_when_deleteIsCalled_then_deleteSuccess()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 test[methodName]\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 testAdd() or testIsUnderage()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 {\b should}_expectedBehavior_when_condition\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 should_throwException_when_negativeNumbersAreAdded()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 methodName_expected\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 add_returnsSum() or isUnderage_returnsTrue()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 {\b can}Action\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 canDeleteUser() or canCalculateSum()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 methodName_doesExpectedBehavior\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 add_doesReturnSum() or isUnderage_returnsTrue()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4246\cellx8639
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 verbCondition (or verbResult)\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 calculatesSum() or deletesSuccessfully()\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 jtcop} prefers the last pattern:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab Test names should use the present tense without a subject. For example, if you\u8217're testing a class {\f1 Animal} with a method {\f1 eat()}, the test name should be {\f1 eats()}. If you need to add more context, do it after the verb \u8211- for instance, {\f1 eatsApplesOnly()}.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab Test names should use {\field{\*\fldinst{HYPERLINK "https://en.wikipedia.org/wiki/Camel_case"}}{\fldrslt{\ul
+camelCase
+}}}
+.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 3.\tx360\tab Name shouldn\u8217't use the word \u8220"test\u8221", as it is redundant. The {\f1 @Test} annotation is sufficient.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 4.\tx360\tab Special characters like {\f1 _} and {\f1 $} are forbidden.\sa180\par}
+{
+\trowd \trgaph120
+\clbrdrb\brdrs\cellx4320\clbrdrb\brdrs\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Correct Names\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 Incorrect Names\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 eats()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 testEats()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 eatsApplesOnly()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 TestEatsApplesOnly()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 runsQuickly()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 _runsQuickly()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 jumpsOverFence()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 jumps_over_fence()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 drinksWater()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 drinks$Water()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 sleepsAtNight()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 sleepsZZZ()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 chewsGum()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 test_chewsGum()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 listensToMusic()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 listens_To_Music()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 walksInPark()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 WalksInPark()\par}
+\cell}
+}
+\intbl\row}
+{
+\trowd \trgaph120
+\cellx4320\cellx8640
+\trkeep\intbl
+{
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 barksLoudly()\par}
+\cell}
+{{\pard\intbl \ql \f0 \sa0 \li0 \fi0 barks__loudly()\par}
+\cell}
+}
+\intbl\row}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This style has been chosen by many developers and is widely used in numerous projects. If you prefer a different pattern for test naming, just let us know, and we\u8217'll be happy to add it to the plugin.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Corresponding Production Class\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Now, let\u8217's imagine we have a test class named {\f1 SumTest.java} with the test method {\f1 checksSum()}. But what if the test occasionally fails? Most would attempt to locate the issue and find the original class where the problem occurred. But which class is it? The first guess would likely be {\f1 Sum.java}, right? Yet, you might not find it, perhaps because the production class is named something like {\f1 Addition.java} or {\f1 Calculator.java}. This mismatch in naming conventions can lead to significant confusion and longer troubleshooting times. In other words, if you have a test class named {\f1 SumTest.java} and the corresponding production class is {\f1 Addition.java}, it can be very confusing. The more appropriate naming for the test class would be {\f1 AdditionTest.java}. Essentially, the name of the test class isn\u8217't merely a label; it serves as a pointer to the production class, helping developers pinpoint potential issues.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This is where {\f1 jtcop} comes into play. It helps ensure that your tests are consistent with your production classes and suggests appropriate naming conventions for them, effectively addressing the problem described. If you\u8217're further interested in this issue, you can read about it {\field{\*\fldinst{HYPERLINK "https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes"}}{\fldrslt{\ul
+here
+}}}
+.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The only exception in this case is integration tests. They are usually named like {\f1 AdditionIT.java} or {\f1 AdditionIntegrationTest.java}. However, they should be placed in a separate package, such as {\f1 it}, and have an appropriate suffix like {\f1 IT} or {\f1 ITCase}.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Test Methods Only\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The next check is rather strict and is still considered an {\field{\*\fldinst{HYPERLINK "#experimental-features"}}{\fldrslt{\ul
+experimental
+}}}
+ feature. However, the rule itself is simple: test classes should contain methods that are only annotated with the {\f1 @Test} annotation. You might wonder what to do with initialization methods or common code shared among different test cases. The answer isn\u8217't straightforward and this rule is designed to guide you with it. There aren\u8217't actually many options available. I\u8217'm referring to methods such as static initialization methods, setup methods {\f1 @BeforeEach} and {\f1 @AfterEach}, JUnit extensions, and Fake Objects. The approach you choose for initializing your tests will determine their quality.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel3 \b \fs24 Static Methods\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The first idea that comes to mind is using static methods. Developers often use static methods to configure a common setup for several tests in the class. Here\u8217's a simple example:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void calculatesSum()\{\line
+  Summator s = init();\line
+  Assertions.assertEquals(\line
+    2, sum(1, 1), "Something went wrong, because 1 + 1 != 2"\line
+  );\line
+\}\line
+\line
+private static Summator init()\{\line
+  Summator s = new Summator();\line
+  // Setup\line
+  return s;\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 At first glance, it might seem like a good solution, but it does have inherent problems. When such a method is used within a single class, it\u8217's usually not a major concern, even though static methods typically lead to {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies"}}{\fldrslt{\ul
+low cohesion and tight coupling
+}}}
+. However, issues arise when you begin to use it across multiple classes or try to consolidate such methods into a centralized {\f1 TestUtils.java} class. In this case the approach with static methods can become problematic:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 1.\tx360\tab It can lead to {\field{\*\fldinst{HYPERLINK "#corresponding-production-class"}}{\fldrslt{\ul
+confusion
+}}}
+ for developers since {\f1 TestUtils.java} doesn\u8217't correspond to any class in the production code.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 2.\tx360\tab {\f1 TestUtils.java} might be considered an {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/3340032/are-utility-classes-evil"}}{\fldrslt{\ul
+anti-pattern
+}}}
+.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Thus, {\f1 jtcop} deems static methods in tests and utility classes as dangerous and prohibits them. If you attempt to run {\f1 jtcop} against the previous code sample, you\u8217'll receive the following warning message:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 All methods should be annotated with @Test annotation.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel3 \b \fs24 SetUp and TearDown Methods\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The next widely-used approach involves the so-called \u8220"setUp\u8221" methods. By \u8220"setUp\u8221" methods, I\u8217'm referring to those annotated with{\f1 @BeforeAll}, {\f1 @BeforeEach}, {\f1 @AfterAll}, or {\f1 @AfterEach}. An example of using these annotations is as follows:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 Summator s;\line
+\line
+@BeforeEach\line
+void setUp()\{\line
+  s = new Summator();\line
+  // Setup\line
+\}\line
+\line
+@Test\line
+void calculatesSum()\{\line
+  Summator s=init();\line
+  Assertions.assertEquals(\line
+    2, sum(1,1), "Something went wrong, because 1 + 1 != 2"\line
+  );\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This approach makes the situation even worse for many reasons. The most obvious reason, familiar to most developers, is the need to \u8220"jump\u8221" between test methods and the initialization part. Then, over time, as the codebase grows and changes and as the number of test cases in the test class increases, developers may become unaware of the setup/teardown that happens for each test. This can lead to potential problems. A developer may end up with setup code that is unnecessary for certain tests, thus violating the principle of keeping tests minimal and setting up only what is needed. Next, using such methods can introduce another problem. They can lead to a shared state between tests if not managed properly. This harms test isolation, an extremely important quality of any test, which in turn can result in flaky tests. Moreover, using {\f1 @BeforeAll} and {\f1 @AfterAll} use static methods which inherit all disadvantages of the {\field{\*\fldinst{HYPERLINK "#static-methods"}}{\fldrslt{\ul
+previous approach
+}}}
+.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Hence, {\f1 jtcop} doesn\u8217't allow the use of such {\f1 setUp}/{\f1 tearDown} methods.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel3 \b \fs24 Test Extensions\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Now, let\u8217's examine the approach supported by {\f1 jtcop}. JUnit 5 offers {\field{\*\fldinst{HYPERLINK "https://junit.org/junit5/docs/current/user-guide/#extensions"}}{\fldrslt{\ul
+Test Extensions
+}}}
+ that allow for the creation of custom extensions. These extensions can be used to configure setup and teardown logic for all the tests in a class.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 \line
+@ExtendWith(SummatorExtension.class)\line
+public class SumTest \{\line
+  @Test\line
+  void calculatesSum(Summator s) \{\line
+    Assertions.assertEquals(\line
+      2, s.sum(1, 1), "Something went wrong, because 1 + 1 != 2"\line
+    );\line
+  \}\}\line
+\line
+class SummatorExtension implements ParameterResolver \{\line
+  @Override\line
+  public boolean supportsParameter(ParameterContext pctx, ExtensionContext ectx) \{\line
+    return pctx.getParameter().getType() == Summator.class;\line
+  \}\line
+  @Override\line
+  public Object resolveParameter(\line
+    Summator s =new Summator();\line
+    // Setup\line
+    return s;\line
+  \}\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Extensions offer a way to craft more modular and reusable test setups. In this scenario, we\u8217've bypassed the need for utility classes, static methods, and shared states between tests. These extensions are easily reused across a multitude of test classes and standalone unit tests. What\u8217's more, these extensions often have insight into the current test class, method, annotations used, and other contextual details, paving the way for versatile and reusable setup logic.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel3 \b \fs24 Fake Objects\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Another method for test configuration and setup that {\f1 jtcop} supports is the use of Fake objects, as recommended {\field{\*\fldinst{HYPERLINK "https://www.yegor256.com/2014/09/23/built-in-fake-objects.html"}}{\fldrslt{\ul
+here
+}}}
+. These are positioned with other production objects, yet they provide a unique \u8220"fake\u8221" behavior. By leveraging these objects, all setup can be handled directly in the test, making the code cleaner and easier to read.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 abstract class Discount \{\line
+  // Usually we have rather complicated \line
+  // logic here for calculating a discount.\line
+  abstract double multiplier();\line
+  \line
+  static class Fake extends Discount \{\line
+    @Override\line
+    double multiplier() \{\line
+      return 1;\line
+    \}\line
+  \}\}\line
+\line
+public class PriceTest \{\line
+  @Test\line
+  void retrievesSamePrice() \{\line
+    Price p = new Price(100, new Discount.Fake());\line
+    Assertions.assertEquals(\line
+      100, p.total(), "Something went wrong; the price shouldn't have changed"\line
+    );\line
+  \}\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Fake objects often sit alongside production code, which is why {\f1 jtcop} doesn\u8217't classify them as test classes. While mixing production and test code might seem questionable, many projects have embraced this approach, finding it a practical way to set up tests. These Fake objects aren\u8217't exclusively for testing; you might sometimes integrate them into your production code. Additionally, this strategy eliminates the need for using Mock frameworks with intricate initialization logic.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Test Assertions\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 jtcop} also underscores the need to validate assertions in tests. Several tools out there offer similar checks. Yet, many of them focus solely on JUnit assertions or only catch high-level errors. {\f1 jtcop} supports both Hamcrest and JUnit assertions and adheres to stricter guidelines for assertions. To paint a clearer picture, let\u8217's dive into a few code snippets.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void calculatesSum()\{\line
+  if(sum(1, 1) != 2)\{\line
+    throw new RuntimeException("1 + 1 != 2");\line
+  \}\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This code snippet lacks any assertions, meaning {\f1 jtcop} will warn about it. Check out the next snippet as a proper replacement, and note the use of the Hamcrest assertion.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void calculatesSum()\{\line
+  assertThat(\line
+    "Something went wrong, because 1 + 1 != 2",\line
+    sum(1, 1),\line
+    equalTo(2)\line
+  );\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Pay attention on the explanatory messages in the assertion {\f1 Something went wrong, because 1 + 1 != 2} from the code below. They\u8217're essential. Without such messages, it can sometimes be challenging to understand what went wrong during test execution, which can puzzle developers. For instance, consider this {\field{\*\fldinst{HYPERLINK "https://github.com/volodya-lombrozo/jtcop/blob/c742a5cad69d4e2ae4e895c0c7a4b42f9d0122e5/src/test/java/com/github/lombrozo/testnames/CopTest.java#L38"}}{\fldrslt{\ul
+real example
+}}}
+. I\u8217've simplified it for clarity:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void checksSuccessfully()\{\line
+  assertThat(\line
+    new Cop(new Project.Fake()).inspection(),\line
+    empty()\line
+  );\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Now, suppose this test fails. In that scenario, you\u8217'll receive the following exception message:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 Expected: an empty collection\line
+  but: <[Complaint$Text@548e6d58]>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Not very informative, right? However, if you include an explanatory message in the assertion:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void checksSuccessfully()\{\line
+  assertThat(\line
+    "Cop should not find any complaints in this case, but it has found something.",\line
+    new Cop(new Project.Fake()).inspection(),\line
+    empty()\line
+  );\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 With this inclusion, you\u8217're greeted with a far more insightful message:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 java.lang.AssertionError: Cop should not find any complaints in this case, but it has found something.\line
+Expected: an empty collection\line
+  but: <[Complaint$Text@548e6d58]>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 In a perfect world, we\u8217'd offer more details \u8212- specifically, some context. This sheds light on initialization values and provides developers with valuable hints. As it stands, the message is significantly clearer and more approachable than what we had before.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This feature has really made a difference for us. We no longer need to ask developers to add explanations to their assertions in many PR reviews. Now, the {\f1 jtcop} handles that for us.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel2 \b \fs28 Line Hitters\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The last feature I\u8217'd like to spotlight is the {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/a/10323328/10423604"}}{\fldrslt{\ul
+Line Hitter
+}}}
+ anti-pattern detection.\par}
+{\pard \ql \f0 \sa180 \li720 \fi0 At first glance, the tests cover everything and code coverage tools confirm it with 100%, but in reality the tests merely hit the code, without doing any output analysis.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 What this means is that you might stumble upon a test method in a program that does not really verify anything. Take this for instance:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void calculatesSum()\{\line
+  sum(1, 1);\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This typically happens when a developer is more into their code coverage numbers than genuinely ensuring the robustness of the test. There are tools that can spot when assertions are missing in tests. But, as you know, developers might always find a way around problems:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 @Test\line
+void calculatesSum()\{\line
+  sum(1,1);\line
+  assertThat(\line
+    "I'm just hanging around",\line
+    true,\line
+    is(true)\line
+  );\line
+\}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Yep, that\u8217's our \u8220"Line Hitter\u8221" again, only this time, it\u8217's wearing the disguise of an assertion statement. Luckily, {\f1 jtcop} can detect such tests and flag them as unreliable.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Setting Up jtcop\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 To get started with {\f1 jtcop}, simply add the plugin to your build configuration file. If you\u8217're using Maven, here\u8217's how you can do it:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 \line
+<build>\line
+  <plugins>\line
+    <plugin>\line
+      <groupId>com.github.volodya-lombrozo</groupId>\line
+      <artifactId>jtcop-maven-plugin</artifactId>\line
+      <version>1.1.1</version>\line
+      <executions>\line
+        <execution>\line
+          <goals>\line
+            <goal>check</goal>\line
+          </goals>\line
+        </execution>\line
+      </executions>\line
+    </plugin>\line
+  </plugins>\line
+</build>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 By default, the plugin operates in the {\f1 verify} phase, so no need to specify it. However, if you wish to modify it, simply add the desired phase to the {\f1 execution} section. Then, to run {\f1 jtcop}, use the following command:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 mvn jtcop:check\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you stumble upon an issue, say, a test lacking a corresponding production class, you\u8217'll get a clear error message:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 [ERROR] Test SumTest doesn't have corresponding production class.\line
+[ERROR]  Either rename or move the test class ./SumTest.java.\line
+[ERROR]  You can also ignore the rule by adding @SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass") annotation.\line
+[ERROR]  Rule: RuleAllTestsHaveProductionClass.\line
+[ERROR]  You can read more about the rule here: <link>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Similarly, for the \u8220"Line Hitter\u8221" pattern previously mentioned:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 [ERROR] Method 'calculatesSum' contains line hitter anti-pattern.\line
+[ERROR]  Write valuable assertion for this test.\line
+[ERROR]  You can also ignore the rule by adding @SuppressWarnings("JTCOP.RuleLineHitter") annotation.\line
+[ERROR]  Rule: RuleLineHitter.\line
+[ERROR]  You can read more about the rule here: <link>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 By default, {\f1 jtcop} will halt the build if it detects issues with your tests. If you only want to use it to highlight problems without interrupting the build, you can configure {\f1 jtcop} to display only warning messages by adjusting the {\f1 failOnError} property.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 \line
+<configuration>\line
+  <failOnError>false</failOnError>\line
+</configuration>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 However, I highly recommend keeping the default setting to maintain high-quality tests.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel3 \b \fs24 Experimental features\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 As I mentioned earlier, some features are still experimental. To try them out, just add the following configuration to your {\f1 pom.xml} file:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 \line
+<configuration>\line
+  <experimental>true</experimental>\line
+</configuration>\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Once done, all experimental features will be active in your project, giving cleaner and more organized tests.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Benefits\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\f1 jtcop} has already helped us in several ways:\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab {\b Code Review}: The primary issue addressed by {\f1 jtcop} is the frequent appearance of comments such as \u8220"place this test class here\u8221", \u8220"rename this test method\u8221", or \u8220"that\u8217's a testing anti-pattern\u8221". {\f1 jtcop} saves time and aid developers in resolving these issues before even making a PR into a repository.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab {\b Improved Onboarding}: Another advantage we\u8217've observed is that well-structured and appropriately named test methods not only facilitate code understanding and maintenance, but also reduce the time spent explaining or documenting code style guides across multiple projects. As a result, we often receive well-formatted pull requests from new team members with little to no additional guidance.\par}
+{\pard \ql \f0 \sa180 \li360 \fi-360 \bullet \tx360\tab {\b Consistency}: {\f1 jtcop} ensures our tests remain consistent across numerous projects. So, when you delve into a project that uses {\f1 jtcop}, it becomes significantly easier to comprehend its workings and start contributing to it.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Overall, integrating {\f1 jtcop} has significantly streamlined our processes, enhancing collaboration and understanding across our development projects.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 Future Plans\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Looking ahead, we\u8217're preparing to enhance {\f1 jtcop} with additional rules. One of our primary focuses is to address several anti-patterns like the ones highlighted in this insightful {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue"}}{\fldrslt{\ul
+StackOverflow thread
+}}}
+ Just to name a few:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\b The Mockery} - tests that have too many mocks.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\b Excessive Setup} - tests that demand extensive setup.\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\b Wait and See} - tests that need to pause for a specific duration before verifying if the tested code works as intended.\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 It\u8217's worth noting that these are just a few examples; there\u8217's a broader spectrum of anti-patterns we\u8217're considering.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Additionally, we\u8217've also encountered issues with projects that have many tests written in various styles. At times, it\u8217's incredibly tedious to address these issues manually. Thus, another viable avenue is developing an application that will automatically solve most of these problems.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 So, if you have ideas or suggestions, please don\u8217't hesitate to open an issue or submit a pull request in our {\field{\*\fldinst{HYPERLINK "https://github.com/volodya-lombrozo/jtcop"}}{\fldrslt{\ul
+repository
+}}}
+ and share your thoughts with us. We\u8217're always eager to get feedback or contributions from the community. Feel free to fork it if you want and craft your own test checkers that fit your needs, or simply use {\f1 jtcop} as is.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \outlinelevel1 \b \fs32 References\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 There are articles and discussion threads that inspired the creation of {\f1 jtcop}. These might be helpful to delve deeper into the topic of test quality.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Importance of testing:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/importance-of-testing-grant-fritchey"}}{\fldrslt{\ul
+Importance of Testing
+}}}
+, Grant Fritchey\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/importance-of-unit-testing"}}{\fldrslt{\ul
+Importance of Unit Testing
+}}}
+, Bala Murugan\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/software-unit-testing-what-is-that-why-is-it-impor"}}{\fldrslt{\ul
+Software Unit Testing: What Is That? Why Is it Important?
+}}}
+, Anna Smith\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/what-is-test-driven-development-and-why-its-import"}}{\fldrslt{\ul
+What Is Test-Driven Development and Why It\u8217's Important
+}}}
+, Anna Smith\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Best practices:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://www.yegor256.com/2023/01/19/layout-of-tests.html"}}{\fldrslt{\ul
+On the Layout of Tests
+}}}
+, Yegor Bugayenko\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue"}}{\fldrslt{\ul
+Unit testing Anti-patterns catalogue
+}}}
+, StackOverflow\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/anatomy-of-a-good-java-test"}}{\fldrslt{\ul
+Anatomy of a Good Java Test
+}}}
+, Sam Atkinson\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/java-unit-testing-best-practices-how-to-get-the-mo"}}{\fldrslt{\ul
+Java Unit Testing Best Practices
+}}}
+, Brian McGlauflin\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/clean-unit-testing"}}{\fldrslt{\ul
+Clean Unit Testing
+}}}
+, Alex Staveley\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/unit-testing-anti-patterns-full-list"}}{\fldrslt{\ul
+Unit Testing Anti-Patterns \u8212- Full List
+}}}
+, Yegor Bugayenko\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/7-tips-for-writing-better-unit-tests-in-java"}}{\fldrslt{\ul
+7 Tips for Writing Better Unit Tests in Java
+}}}
+, Reshma Bidikar\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/7-popular-unit-test-naming"}}{\fldrslt{\ul
+7 Popular Unit Test Naming Conventions
+}}}
+ Ajitesh Kumar\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/155436/unit-test-naming-best-practices"}}{\fldrslt{\ul
+Unit test naming best practices
+}}}
+ StackOverflow\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/best-practices-for-writing-unit-tests-a-comprehens"}}{\fldrslt{\ul
+Best Practices for Writing Unit Tests: A Comprehensive Guide
+}}}
+ Or Hillel\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Other:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/a-detailed-guide-on-flaky-tests-causes-detection-a"}}{\fldrslt{\ul
+A Detailed Guide on Flaky Tests: Causes, Detection, and Solutions
+}}}
+ Rhea Dube\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/static-classes-are-evil-or-make-your-dependencies"}}{\fldrslt{\ul
+Static Classes Are Evil, Make Your Dependencies Explicit
+}}}
+ Vadim Samokhin\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\field{\*\fldinst{HYPERLINK "https://www.yegor256.com/2014/09/23/built-in-fake-objects.html"}}{\fldrslt{\ul
+Built-in Fake Objects
+}}}
+ Yegor Bugayenko\sa180\par}
+}
