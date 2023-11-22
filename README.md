@@ -63,7 +63,7 @@ In order to do that, just add the next snippet to the `<plugins>` section:
 <plugin>
   <groupId>com.github.volodya-lombrozo</groupId>
   <artifactId>jtcop-maven-plugin</artifactId>
-  <version>0.1.16</version>
+  <version>1.1.1</version>
   <executions>
     <execution>
       <goals>
