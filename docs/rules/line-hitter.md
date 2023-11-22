@@ -1,4 +1,14 @@
-@todo #242:30min Add documentation for the RuleAssertTrueHitter.
-The documentation should be added to the `docs/rules/assert-true-hitter.md` file.
-The documentation should contain the description of the rule and the
-examples of the correct and incorrect code.
+# Line hitter
+At first glance, the tests cover everything and code coverage tools confirm it with 100%, but in reality the tests merely hit the code, without doing any output analysis.
+
+## Example
+```java
+    @Test
+    void someTest() {
+        // some code have to be covered
+        assertThat("msg", true, Matchers.equalTo(true));
+        assertThat("msg", false, Matchers.equalTo(false));
+        assertThat("msg", true || false, Matchers.equalTo(true));
+    }
+```
+
