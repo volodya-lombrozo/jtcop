@@ -11,4 +11,3 @@ At first glance, the tests cover everything and code coverage tools confirm it w
         assertThat("msg", true || false, equalTo(true));
     }
 ```
-
