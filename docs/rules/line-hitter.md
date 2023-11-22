@@ -6,9 +6,9 @@ At first glance, the tests cover everything and code coverage tools confirm it w
     @Test
     void someTest() {
         // some code have to be covered
-        assertThat("msg", true, Matchers.equalTo(true));
-        assertThat("msg", false, Matchers.equalTo(false));
-        assertThat("msg", true || false, Matchers.equalTo(true));
+        assertThat("msg", true, equalTo(true));
+        assertThat("msg", false, equalTo(false));
+        assertThat("msg", true || false, equalTo(true));
     }
 ```
 
