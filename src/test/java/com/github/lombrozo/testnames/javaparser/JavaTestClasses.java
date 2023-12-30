@@ -156,12 +156,12 @@ enum JavaTestClasses {
     }
 
     /**
-     * Creates {@link TestClassJavaParser} for current class.
+     * Creates {@link JavaParserTestClass} for current class.
      * @param suppressed Rules excluded for entire project.
-     * @return Concrete test class implementation - {@link TestClassJavaParser}.
+     * @return Concrete test class implementation - {@link JavaParserTestClass}.
      */
-    TestClassJavaParser toTestClass(final String... suppressed) {
-        return new TestClassJavaParser(
+    JavaParserTestClass toTestClass(final String... suppressed) {
+        return new JavaParserTestClass(
             Paths.get("."),
             this.inputStream(),
             Arrays.asList(suppressed)

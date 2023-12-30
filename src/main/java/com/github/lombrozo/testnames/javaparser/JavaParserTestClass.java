@@ -43,7 +43,7 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.1.0
  */
-public final class TestClassJavaParser implements TestClass {
+public final class JavaParserTestClass implements TestClass {
 
     /**
      * Path to java class.
@@ -66,8 +66,8 @@ public final class TestClassJavaParser implements TestClass {
      *
      * @param klass Path to the class
      */
-    TestClassJavaParser(final Path klass) {
-        this(klass, TestClassJavaParser.parse(klass));
+    JavaParserTestClass(final Path klass) {
+        this(klass, JavaParserTestClass.parse(klass));
     }
 
     /**
@@ -76,8 +76,8 @@ public final class TestClassJavaParser implements TestClass {
      * @param klass Path to the class
      * @param exclusions Rules excluded for entire project.
      */
-    TestClassJavaParser(final Path klass, final Collection<String> exclusions) {
-        this(klass, TestClassJavaParser.parse(klass), exclusions);
+    JavaParserTestClass(final Path klass, final Collection<String> exclusions) {
+        this(klass, JavaParserTestClass.parse(klass), exclusions);
     }
 
     /**
@@ -86,8 +86,8 @@ public final class TestClassJavaParser implements TestClass {
      * @param klass Path to the class
      * @param stream Parsed Java class
      */
-    TestClassJavaParser(final Path klass, final InputStream stream) {
-        this(klass, TestClassJavaParser.parse(stream));
+    JavaParserTestClass(final Path klass, final InputStream stream) {
+        this(klass, JavaParserTestClass.parse(stream));
     }
 
     /**
@@ -96,7 +96,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param klass Path to the class
      * @param parsed Parsed class.
      */
-    private TestClassJavaParser(final Path klass, final Sticky<JavaParserClass> parsed) {
+    private JavaParserTestClass(final Path klass, final Sticky<JavaParserClass> parsed) {
         this(klass, new Unchecked<>(parsed), Collections.emptySet());
     }
 
@@ -107,12 +107,12 @@ public final class TestClassJavaParser implements TestClass {
      * @param stream Parsed Java class
      * @param exclusions Rules excluded for entire project.
      */
-    TestClassJavaParser(
+    JavaParserTestClass(
         final Path klass,
         final InputStream stream,
         final Collection<String> exclusions
     ) {
-        this(klass, TestClassJavaParser.parse(stream), exclusions);
+        this(klass, JavaParserTestClass.parse(stream), exclusions);
     }
 
     /**
@@ -122,7 +122,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param parsed Parsed class.
      * @param exclusions Rules excluded for entire project.
      */
-    TestClassJavaParser(
+    JavaParserTestClass(
         final Path klass,
         final Sticky<JavaParserClass> parsed,
         final Collection<String> exclusions
@@ -136,7 +136,7 @@ public final class TestClassJavaParser implements TestClass {
      * @param unit Parsed class.
      * @param exclusions Rules excluded for entire project.
      */
-    TestClassJavaParser(
+    JavaParserTestClass(
         final Path path,
         final Unchecked<JavaParserClass> unit,
         final Collection<String> exclusions
@@ -156,7 +156,7 @@ public final class TestClassJavaParser implements TestClass {
         try {
             return this.unit.value()
                 .methods(new TestsOnly())
-                .map(method -> new TestCaseJavaParser(method, this))
+                .map(method -> new JavaParserTestCase(method, this))
                 .collect(Collectors.toSet());
         } catch (final UncheckedIOException | ParseProblemException ex) {
             throw new IllegalStateException(
@@ -181,7 +181,7 @@ public final class TestClassJavaParser implements TestClass {
 
     @Override
     public TestClassCharacteristics characteristics() {
-        return new CharacteristicsJavaParser(this.unit.value());
+        return new JavaParserCharacteristics(this.unit.value());
     }
 
     /**

@@ -28,11 +28,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link CharacteristicsJavaParser}.
+ * Test case for {@link JavaParserCharacteristics}.
  *
  * @since 0.1.19
  */
-final class CharacteristicsJavaParserTest {
+final class JavaParserCharacteristicsTest {
 
     @Test
     void createsCharacteristics() {

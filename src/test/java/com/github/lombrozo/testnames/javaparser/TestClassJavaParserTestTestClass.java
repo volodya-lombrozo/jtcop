@@ -41,11 +41,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link TestClassJavaParser}.
+ * Test case for {@link JavaParserTestClass}.
  *
  * @since 0.1.0
  */
-final class TestClassJavaParserTest {
+final class TestClassJavaParserTestTestClass {
 
     @Test
     void getsNames() {
@@ -104,7 +104,7 @@ final class TestClassJavaParserTest {
         final Path test = temp.resolve("TestNotFound.java");
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new TestClassJavaParser(test).all(),
+            () -> new JavaParserTestClass(test).all(),
             String.format(
                 "We expected that exception will be thrown, because file %s not found",
                 test
@@ -116,7 +116,7 @@ final class TestClassJavaParserTest {
     void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new TestClassJavaParser(temp, new InputStreamOf("Not Java")).all(),
+            () -> new JavaParserTestClass(temp, new InputStreamOf("Not Java")).all(),
             String.format(
                 "We expected that exception will be thrown, because file %s is not Java",
                 temp

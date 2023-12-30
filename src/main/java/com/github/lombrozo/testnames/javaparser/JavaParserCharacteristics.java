@@ -23,31 +23,50 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.ProductionClass;
-import java.nio.file.Path;
+import com.github.lombrozo.testnames.JUnitExtension;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
 
 /**
- * The production class that is represented by JavaParser.
+ * JavaParser implementation of {@link TestClassCharacteristics}.
  *
- * @since 0.2
+ * @since 0.1.19
  */
-public final class ProductionClassJavaParser implements ProductionClass {
+final class JavaParserCharacteristics implements TestClassCharacteristics {
 
     /**
-     * The path to production class.
+     * JavaParser parsed class.
      */
-    private final Path path;
+    private final JavaParserClass klass;
 
     /**
-     * Primary ctor.
-     * @param klass The path to production class.
+     * Constructor.
+     * @param klass JavaParser parsed class.
      */
-    ProductionClassJavaParser(final Path klass) {
-        this.path = klass;
+    JavaParserCharacteristics(final JavaParserClass klass) {
+        this.klass = klass;
     }
 
     @Override
-    public String name() {
-        return this.path.getFileName().toString();
+    public boolean isJUnitExtension() {
+        return this.klass.parents().stream()
+            .map(JUnitExtension::new)
+            .anyMatch(JUnitExtension::isJUnitExtension);
+    }
+
+    @Override
+    public boolean isIntegrationTest() {
+        return this.klass.pckg()
+            .map(pckg -> pckg.endsWith(".it") || "it".equals(pckg))
+            .orElse(false);
+    }
+
+    @Override
+    public int numberOfTests() {
+        return (int) this.klass.methods(new TestsOnly()).count();
+    }
+
+    @Override
+    public int numberOfMethods() {
+        return (int) this.klass.methods().count();
     }
 }

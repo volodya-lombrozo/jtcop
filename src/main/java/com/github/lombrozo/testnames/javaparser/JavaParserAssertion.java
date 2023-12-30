@@ -23,50 +23,58 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import com.github.lombrozo.testnames.JUnitExtension;
-import com.github.lombrozo.testnames.TestClassCharacteristics;
+import com.github.javaparser.ast.expr.MethodCallExpr;
+import java.util.Optional;
 
 /**
- * JavaParser implementation of {@link TestClassCharacteristics}.
+ * The assertion of the test method.
  *
- * @since 0.1.19
+ * @since 0.1.15
  */
-final class CharacteristicsJavaParser implements TestClassCharacteristics {
+public final class JavaParserAssertion implements ParsedAssertion {
 
     /**
-     * JavaParser parsed class.
+     * The method call.
      */
-    private final JavaParserClass klass;
+    private final MethodCallExpr call;
 
     /**
-     * Constructor.
-     * @param klass JavaParser parsed class.
+     * Ctor.
+     * @param method The method call.
      */
-    CharacteristicsJavaParser(final JavaParserClass klass) {
-        this.klass = klass;
+    JavaParserAssertion(final MethodCallExpr method) {
+        this.call = method;
     }
 
     @Override
-    public boolean isJUnitExtension() {
-        return this.klass.parents().stream()
-            .map(JUnitExtension::new)
-            .anyMatch(JUnitExtension::isJUnitExtension);
+    public Optional<String> explanation() {
+        final Optional<String> result;
+        final ParsedAssertion junit = new AssertionOfJUnit(this.call);
+        final ParsedAssertion hamcrest = new AssertionOfHamcrest(this.call);
+        if (junit.isAssertion()) {
+            result = junit.explanation();
+        } else if (hamcrest.isAssertion()) {
+            result = hamcrest.explanation();
+        } else {
+            result = Optional.empty();
+        }
+        return result;
     }
 
     @Override
-    public boolean isIntegrationTest() {
-        return this.klass.pckg()
-            .map(pckg -> pckg.endsWith(".it") || "it".equals(pckg))
-            .orElse(false);
+    public boolean isLineHitter() {
+        return new AssertionOfJUnit(this.call).isLineHitter()
+            || new AssertionOfHamcrest(this.call).isLineHitter();
     }
 
     @Override
-    public int numberOfTests() {
-        return (int) this.klass.methods(new TestsOnly()).count();
+    public boolean isAssertion() {
+        return new AssertionOfJUnit(this.call).isAssertion()
+            || new AssertionOfHamcrest(this.call).isAssertion();
     }
 
     @Override
-    public int numberOfMethods() {
-        return (int) this.klass.methods().count();
+    public String toString() {
+        return this.call.toString();
     }
 }

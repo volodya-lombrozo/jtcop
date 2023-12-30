@@ -23,25 +23,31 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
-import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import com.github.lombrozo.testnames.ProductionClass;
+import java.nio.file.Path;
 
 /**
- * Test for {@link ProductionClassJavaParser}.
+ * The production class that is represented by JavaParser.
  *
  * @since 0.2
  */
-class ProductionClassJavaParserTest {
+public final class JavaParserProductionClass implements ProductionClass {
 
-    @Test
-    void returnsName() {
-        final String name = "SomeJava.java";
-        MatcherAssert.assertThat(
-            "ProductionClassJavaParser returns wrong name",
-            new ProductionClassJavaParser(Paths.get(name)).name(),
-            Matchers.equalTo(name)
-        );
+    /**
+     * The path to production class.
+     */
+    private final Path path;
+
+    /**
+     * Primary ctor.
+     * @param klass The path to production class.
+     */
+    JavaParserProductionClass(final Path klass) {
+        this.path = klass;
+    }
+
+    @Override
+    public String name() {
+        return this.path.getFileName().toString();
     }
 }
