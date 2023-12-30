@@ -33,6 +33,11 @@ import java.util.Collection;
 /**
  * The rule checks if test case contains a "Line Hitter"
  * antipattern.
+ * Previousely this class has a name `RuleLineHitter`, but I had to rename it for
+ * the following reasons:
+ * "Class 'RuleLineHitter' has bad naming, class ends with '-er' suffix"
+ * You can read more about this issue
+ * <a href="https://github.com/l3r8yJ/oop-cop/issues/105">here</a>
  *
  * @since 1.0.1
  */
@@ -69,7 +74,7 @@ public final class LineHitterRule implements Rule {
     }
 
     /**
-     * Just checks if collections contains line hitter.
+     * Just checks if collections contain line hitter.
      *
      * @return True if contains line hitter
      */
