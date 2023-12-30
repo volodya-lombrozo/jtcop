@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.2
  */
-class TestCaseJavaParserTestTestCase {
+class JavaParserTestCaseTest {
 
     @Test
     void convertsToString() {

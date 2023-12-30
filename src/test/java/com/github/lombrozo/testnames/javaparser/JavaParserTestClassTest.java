@@ -45,7 +45,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @since 0.1.0
  */
-final class TestClassJavaParserTestTestClass {
+final class JavaParserTestClassTest {
 
     @Test
     void getsNames() {

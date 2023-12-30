@@ -35,7 +35,7 @@ class AssertionsTest {
     private final static String CONSTANT = "Message";
 
     @Test
-    @SuppressWarnings("JTCOP.RuleLineHitter")
+    @SuppressWarnings("JTCOP.LineHitterRule")
     void checksJUnitAssertions() {
         Assertions.assertEquals("1", "1", message());
         Assertions.assertEquals("1", "1", "Message");
