@@ -250,8 +250,8 @@ SOFTWARE.
           </plugin>
           <plugin>
             <groupId>ru.l3r8y</groupId>
-            <artifactId>sa-tan</artifactId>
-            <version>0.1.5</version>
+            <artifactId>oop-cop</artifactId>
+            <version>0.1.6</version>
             <executions>
               <execution>
                 <goals>
@@ -259,6 +259,9 @@ SOFTWARE.
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <maxClassNameLen>35</maxClassNameLen>
+            </configuration>
           </plugin>
           <plugin>
             <groupId>org.jacoco</groupId>
