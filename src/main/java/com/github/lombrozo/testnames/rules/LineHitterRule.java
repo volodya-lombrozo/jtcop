@@ -36,7 +36,7 @@ import java.util.Collection;
  *
  * @since 1.0.1
  */
-public final class RuleLineHitter implements Rule {
+public final class LineHitterRule implements Rule {
 
     /**
      * The test case.
@@ -48,7 +48,7 @@ public final class RuleLineHitter implements Rule {
      *
      * @param test The test case to check
      */
-    public RuleLineHitter(final TestCase test) {
+    public LineHitterRule(final TestCase test) {
         this.test = test;
     }
 
