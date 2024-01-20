@@ -143,7 +143,6 @@ final class JavaParserClass {
             && "empty".equals(this.cast().getNameAsString());
     }
 
-
     /**
      * Retrieves the name of the superclass.
      * @return The name of the superclass.
@@ -152,11 +151,11 @@ final class JavaParserClass {
         final String res;
         final String def = "java.lang.Object";
         if (this.klass instanceof ClassOrInterfaceDeclaration) {
-            ClassOrInterfaceDeclaration klass = (ClassOrInterfaceDeclaration) this.klass;
-            if (klass.isInterface()) {
+            final ClassOrInterfaceDeclaration definition = (ClassOrInterfaceDeclaration) this.klass;
+            if (definition.isInterface()) {
                 res = def;
             } else {
-                res = klass.getExtendedTypes()
+                res = definition.getExtendedTypes()
                     .stream().findFirst()
                     .map(ClassOrInterfaceType::getNameAsString)
                     .orElse(def);

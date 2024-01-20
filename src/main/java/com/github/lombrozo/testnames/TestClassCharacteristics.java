@@ -133,6 +133,7 @@ public interface TestClassCharacteristics {
          * @param ntests The number of tests in the class.
          * @param nmethods The total number of methods in the class.
          * @param integration Is the test class an Integration test?
+         * @param parent The parent class name.
          * @checkstyle ParameterNumberCheck (10 lines)
          */
         public Fake(

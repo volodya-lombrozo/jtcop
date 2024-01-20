@@ -51,11 +51,12 @@ public final class RuleInheritanceInTests implements Rule {
 
     @Override
     public Collection<Complaint> complaints() {
+        final Collection<Complaint> result;
         final String parent = this.clazz.characteristics().parent();
         if (parent.equals("java.lang.Object")) {
-            return Collections.emptyList();
+            result = Collections.emptyList();
         } else {
-            return Collections.singleton(
+            result = Collections.singleton(
                 new ComplaintLinked(
                     String.format(
                         "The test class '%s' has the parent class '%s'. Inheritance in tests is dangerous for maintainability",
@@ -71,5 +72,6 @@ public final class RuleInheritanceInTests implements Rule {
                 )
             );
         }
+        return result;
     }
 }
