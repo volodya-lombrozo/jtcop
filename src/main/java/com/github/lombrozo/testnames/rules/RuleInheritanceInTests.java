@@ -58,12 +58,12 @@ public final class RuleInheritanceInTests implements Rule {
             return Collections.singleton(
                 new ComplaintLinked(
                     String.format(
-                        "The test class '%s' has parent class '%s', inheritance in tests is dangerous for maintainability",
+                        "The test class '%s' has the parent class '%s'. Inheritance in tests is dangerous for maintainability",
                         this.clazz.name(),
                         parent
                     ),
                     String.format(
-                        "Please rename remove all the parents classes from the %s test class",
+                        "Please remove all the parents classes from the %s test class",
                         this.clazz.name()
                     ),
                     this.getClass(),
