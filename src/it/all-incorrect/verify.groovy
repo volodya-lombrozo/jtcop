@@ -38,6 +38,6 @@ String log = new File(basedir, 'build.log').text;
   "Test name 'testAnother' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
   "Test name 'testAnother' doesn't follow naming rules, because the test name has to be written using present tense",
   "Method 'containsLineHitter' contains line hitter anti-pattern",
-  "The class 'UsesInheritenceTest' uses inheritance in tests, which is dangerous",
+  "The test class 'UsesInheritenceTest' uses inheritance, which is dangerous for maintainability",
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 true

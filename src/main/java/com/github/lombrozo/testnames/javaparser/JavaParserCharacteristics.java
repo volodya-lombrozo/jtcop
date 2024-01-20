@@ -69,4 +69,19 @@ final class JavaParserCharacteristics implements TestClassCharacteristics {
     public int numberOfMethods() {
         return (int) this.klass.methods().count();
     }
+
+    @Override
+    public String parent() {
+        return this.klass.parents()
+            .stream()
+            .findFirst()
+            .orElseThrow(
+                () -> new IllegalStateException(
+                    String.format(
+                        "Can't get parent of class %s",
+                        this.klass
+                    )
+                )
+            ).getName();
+    }
 }

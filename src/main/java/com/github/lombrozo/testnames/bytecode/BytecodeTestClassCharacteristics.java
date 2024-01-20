@@ -93,6 +93,21 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
         return this.klass.getDeclaredMethods().length;
     }
 
+    @Override
+    public String parent() {
+        try {
+            return this.klass.getSuperclass().getName();
+        } catch (final NotFoundException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't get parent of class %s",
+                    this.klass.getName()
+                ),
+                exception
+            );
+        }
+    }
+
     /**
      * Checks whether a method is test-method.
      * @param method To check.
