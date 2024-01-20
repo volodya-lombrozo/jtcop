@@ -34,7 +34,7 @@ import java.util.Collections;
  * The rule that checks a test class doesn't use inheritance.
  * @since 1.2.0
  */
-public final class RuleInheritenceInTests implements Rule {
+public final class RuleInheritanceInTests implements Rule {
 
     /**
      * Test class.
@@ -45,7 +45,7 @@ public final class RuleInheritenceInTests implements Rule {
      * Constructor.
      * @param clazz Test class.
      */
-    public RuleInheritenceInTests(final TestClass clazz) {
+    public RuleInheritanceInTests(final TestClass clazz) {
         this.clazz = clazz;
     }
 
