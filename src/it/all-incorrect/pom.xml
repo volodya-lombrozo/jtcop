@@ -28,7 +28,11 @@ SOFTWARE.
   <artifactId>jtcop-it</artifactId>
   <version>@project.version@</version>
   <packaging>jar</packaging>
-  <description>Integration test</description>
+  <description>
+    Integration test that checks most of the possible mistakes.
+    If you need to run only this test, use the following command:
+    "mvn clean integration-test invoker:run -Dinvoker.test=all-incorrect -DskipTests"
+  </description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
