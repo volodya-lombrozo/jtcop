@@ -23,15 +23,47 @@
  */
 package com.github.lombrozo.testnames.rules;
 
-import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import org.junit.jupiter.api.extension.ExecutionCondition;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import com.github.lombrozo.testnames.Assertion;
+import com.github.lombrozo.testnames.TestCase;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
-public class JUnitCondition implements ExecutionCondition {
-    @Override
-    public ConditionEvaluationResult evaluateExecutionCondition(
-        final ExtensionContext extensionContext
-    ) {
-        return null;
+/**
+ * Test case for {@link LineHitterRule}.
+ *
+ * @since 1.0.1
+ */
+class LineHitterRuleTest {
+
+    @Test
+    void checksClassWithoutHitterCorrectly() {
+        MatcherAssert.assertThat(
+            "Test class without line hitter should not have complaints",
+            new LineHitterRule(
+                new TestCase.Fake(
+                    "Test",
+                    new Assertion.Empty()
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    @Test
+    void checksClassWithHitterCorrectly() {
+        MatcherAssert.assertThat(
+            "Test class with line hitter should have complaints",
+            new LineHitterRule(
+                new TestCase.Fake(
+                    new Assertion.Fake(
+                        "msg",
+                        true
+                    )
+                )
+            ).complaints(),
+            Matchers.hasSize(1)
+        );
     }
 }

@@ -25,81 +25,53 @@ package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
-import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Suppressed rule.
- *
- * @since 0.1.14
+ * The rule that checks a test class doesn't use inheritance.
+ * @since 1.2.0
  */
-public final class RuleSuppressed implements Rule {
-    /**
-     * The delegate.
-     */
-    private final Rule delegate;
+public final class RuleInheritanceInTests implements Rule {
 
     /**
-     * The suppressed rules.
+     * Test class.
      */
-    private final Collection<String> suppressed;
+    private final TestClass clazz;
 
     /**
-     * Ctor.
-     * @param rule The delegate
-     * @param test The test
+     * Constructor.
+     * @param clazz Test class.
      */
-    public RuleSuppressed(final Rule rule, final TestClass test) {
-        this(rule, test.suppressed());
-    }
-
-    /**
-     * Ctor.
-     * @param rule The delegate
-     */
-    RuleSuppressed(final Rule rule) {
-        this(rule, Collections.singleton(rule.getClass().getSimpleName()));
-    }
-
-    /**
-     * Ctor.
-     * @param rule Rule to suppress
-     * @param test Test case
-     */
-    RuleSuppressed(final Rule rule, final TestCase test) {
-        this(rule, test.suppressed());
-    }
-
-    /**
-     * Ctor.
-     * @param rule The delegate
-     * @param hidden The suppressed rules
-     */
-    private RuleSuppressed(final Rule rule, final Collection<String> hidden) {
-        this.delegate = rule;
-        this.suppressed = hidden;
+    public RuleInheritanceInTests(final TestClass clazz) {
+        this.clazz = clazz;
     }
 
     @Override
     public Collection<Complaint> complaints() {
         final Collection<Complaint> result;
-        if (this.isSuppressed()) {
+        final String parent = this.clazz.characteristics().parent();
+        if (parent.equals("java.lang.Object")) {
             result = Collections.emptyList();
         } else {
-            result = this.delegate.complaints();
+            result = Collections.singleton(
+                new ComplaintLinked(
+                    String.format(
+                        "The test class '%s' has the parent class '%s'. Inheritance in tests is dangerous for maintainability",
+                        this.clazz.name(),
+                        parent
+                    ),
+                    String.format(
+                        "Please remove all the parents classes from the %s test class",
+                        this.clazz.name()
+                    ),
+                    this.getClass(),
+                    "inheritance-in-tests.md"
+                )
+            );
         }
         return result;
-    }
-
-    /**
-     * Check if suppressed.
-     * @return True if suppressed
-     */
-    private boolean isSuppressed() {
-        return this.suppressed.stream().anyMatch(
-            hidden -> hidden.equals(this.delegate.getClass().getSimpleName())
-        );
     }
 }

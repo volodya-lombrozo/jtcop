@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,17 +40,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests for {@link ProjectJavaParser}.
+ * Tests for {@link JavaParserProject}.
  *
  * @since 0.2
  */
-final class ProjectJavaParserTest {
+final class JavaParserProjectTest {
 
     @Test
     void returnsProductionClasses(@TempDir final Path tmp) throws IOException {
         final String name = "ProductionClass.java";
         Files.write(tmp.resolve(name), "".getBytes(StandardCharsets.UTF_8));
-        final Collection<ProductionClass> classes = new ProjectJavaParser(
+        final Collection<ProductionClass> classes = new JavaParserProject(
             tmp,
             tmp
         ).productionClasses();
@@ -77,7 +77,7 @@ final class ProjectJavaParserTest {
     void returnsNotProductionClasses(@TempDir final Path tmp) throws IOException {
         final String name = "TestClass.java";
         Files.write(tmp.resolve(name), "final class TestClass{}".getBytes(StandardCharsets.UTF_8));
-        final Collection<TestClass> classes = new ProjectJavaParser(
+        final Collection<TestClass> classes = new JavaParserProject(
             tmp,
             tmp
         ).testClasses();
@@ -101,7 +101,7 @@ final class ProjectJavaParserTest {
     void ignoresAllRulesThatWasAddedToExclusions(@TempDir final Path temp) throws IOException {
         Files.copy(JavaTestClasses.WRONG_NAME.inputStream(), temp.resolve("WrongName.java"));
         final String[] exclusions = {"JTCOP.CustomRule", "FreeExclusion"};
-        final Collection<TestClass> classes = new ProjectJavaParser(
+        final Collection<TestClass> classes = new JavaParserProject(
             temp,
             temp,
             Arrays.asList(exclusions)
@@ -146,7 +146,7 @@ final class ProjectJavaParserTest {
             JavaTestClasses.PACKAGE_INFO.inputStream(),
             temp.resolve("AnnotationDeclaration.java")
         );
-        final Collection<TestClass> classes = new ProjectJavaParser(
+        final Collection<TestClass> classes = new JavaParserProject(
             temp,
             temp
         ).testClasses();
@@ -160,7 +160,7 @@ final class ProjectJavaParserTest {
     @Test
     void ignoresPackageInfoClasses(@TempDir final Path temp) throws IOException {
         Files.copy(JavaTestClasses.PACKAGE_INFO.inputStream(), temp.resolve("package-info.java"));
-        final Collection<TestClass> classes = new ProjectJavaParser(
+        final Collection<TestClass> classes = new JavaParserProject(
             temp,
             temp
         ).testClasses();
@@ -177,7 +177,7 @@ final class ProjectJavaParserTest {
             JavaTestClasses.SUPPRESSED_INTERFACE.inputStream(),
             temp.resolve("SuppressedInterface.java")
         );
-        final Collection<TestClass> classes = new ProjectJavaParser(
+        final Collection<TestClass> classes = new JavaParserProject(
             temp,
             temp
         ).testClasses();
@@ -194,7 +194,7 @@ final class ProjectJavaParserTest {
             JavaTestClasses.JUNIT_CALLBACK.inputStream(),
             temp.resolve("JUnitCallback.java")
         );
-        final Collection<TestClass> classes = new ProjectJavaParser(temp, temp).testClasses();
+        final Collection<TestClass> classes = new JavaParserProject(temp, temp).testClasses();
         MatcherAssert.assertThat(
             String.format("Project has to return exactly one class, but was: %s", classes),
             classes,
@@ -213,7 +213,7 @@ final class ProjectJavaParserTest {
             JavaTestClasses.JUNIT_CONDITION.inputStream(),
             temp.resolve("JUnitCondition.java")
         );
-        final Collection<TestClass> classes = new ProjectJavaParser(temp, temp).testClasses();
+        final Collection<TestClass> classes = new JavaParserProject(temp, temp).testClasses();
         MatcherAssert.assertThat(
             String.format("Project has to return exactly one class, but was: %s", classes),
             classes,

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import java.nio.file.Path;
  *
  * @since 0.2
  */
-public final class ProductionClassJavaParser implements ProductionClass {
+public final class JavaParserProductionClass implements ProductionClass {
 
     /**
      * The path to production class.
@@ -42,7 +42,7 @@ public final class ProductionClassJavaParser implements ProductionClass {
      * Primary ctor.
      * @param klass The path to production class.
      */
-    ProductionClassJavaParser(final Path klass) {
+    JavaParserProductionClass(final Path klass) {
         this.path = klass;
     }
 

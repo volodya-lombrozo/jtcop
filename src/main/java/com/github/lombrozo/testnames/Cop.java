@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames;
 import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestCases;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
+import com.github.lombrozo.testnames.rules.RuleInheritanceInTests;
 import com.github.lombrozo.testnames.rules.RuleOnlyTestMethods;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
@@ -106,6 +107,7 @@ final class Cop {
                 suspect.test()
             ),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
+            new RuleSuppressed(new RuleInheritanceInTests(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleCorrectTestCases(suspect.test()), suspect.test())
         );
     }

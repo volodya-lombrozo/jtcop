@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,27 +21,5 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.javaparser;
-
-import java.nio.file.Paths;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
-
-/**
- * Test for {@link ProductionClassJavaParser}.
- *
- * @since 0.2
- */
-class ProductionClassJavaParserTest {
-
-    @Test
-    void returnsName() {
-        final String name = "SomeJava.java";
-        MatcherAssert.assertThat(
-            "ProductionClassJavaParser returns wrong name",
-            new ProductionClassJavaParser(Paths.get(name)).name(),
-            Matchers.equalTo(name)
-        );
-    }
+class AbstractTest {
 }

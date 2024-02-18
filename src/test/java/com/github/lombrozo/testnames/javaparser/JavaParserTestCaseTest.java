@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,18 +36,18 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link TestCaseJavaParser}.
+ * Test case for {@link JavaParserTestCase}.
  *
  * @since 0.2
  */
-class TestCaseJavaParserTest {
+class JavaParserTestCaseTest {
 
     @Test
     void convertsToString() {
         final String name = "name";
         MatcherAssert.assertThat(
             "Test case should be converted to string which contains its name",
-            new TestCaseJavaParser(name).toString(),
+            new JavaParserTestCase(name).toString(),
             Matchers.stringContainsInOrder(
                 String.format(
                     "method=var %s()",
@@ -62,8 +62,8 @@ class TestCaseJavaParserTest {
         final String name = "nm";
         MatcherAssert.assertThat(
             "Test cases with the same name should have the same hash code",
-            new TestCaseJavaParser(name).hashCode(),
-            Matchers.is(new TestCaseJavaParser(name).hashCode())
+            new JavaParserTestCase(name).hashCode(),
+            Matchers.is(new JavaParserTestCase(name).hashCode())
         );
     }
 
@@ -72,8 +72,8 @@ class TestCaseJavaParserTest {
         final String name = "nme";
         MatcherAssert.assertThat(
             "Test cases with the same name should be equal",
-            new TestCaseJavaParser(name),
-            Matchers.equalTo(new TestCaseJavaParser(name))
+            new JavaParserTestCase(name),
+            Matchers.equalTo(new JavaParserTestCase(name))
         );
     }
 
@@ -138,7 +138,7 @@ class TestCaseJavaParserTest {
     @Test
     @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     void parsesMethodsAssertionsForJUnit() {
-        final TestClassJavaParser parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
+        final JavaParserTestClass parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
         final String method = "junit";
         final Optional<TestCase> tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
@@ -169,7 +169,7 @@ class TestCaseJavaParserTest {
 
     @Test
     void parsesPackageJava() {
-        final TestClassJavaParser parser = JavaTestClasses.PACKAGE_INFO.toTestClass();
+        final JavaParserTestClass parser = JavaTestClasses.PACKAGE_INFO.toTestClass();
         MatcherAssert.assertThat(
             "Java package has to be parsed, but doesn't have to contain test cases",
             parser.all(),

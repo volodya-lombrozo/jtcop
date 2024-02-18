@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -91,6 +91,21 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
     @Override
     public int numberOfMethods() {
         return this.klass.getDeclaredMethods().length;
+    }
+
+    @Override
+    public String parent() {
+        try {
+            return this.klass.getSuperclass().getName();
+        } catch (final NotFoundException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't get parent of class %s",
+                    this.klass.getName()
+                ),
+                exception
+            );
+        }
     }
 
     /**

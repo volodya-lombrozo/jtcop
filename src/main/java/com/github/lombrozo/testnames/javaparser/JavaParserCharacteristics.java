@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import com.github.lombrozo.testnames.TestClassCharacteristics;
  *
  * @since 0.1.19
  */
-final class CharacteristicsJavaParser implements TestClassCharacteristics {
+final class JavaParserCharacteristics implements TestClassCharacteristics {
 
     /**
      * JavaParser parsed class.
@@ -42,7 +42,7 @@ final class CharacteristicsJavaParser implements TestClassCharacteristics {
      * Constructor.
      * @param klass JavaParser parsed class.
      */
-    CharacteristicsJavaParser(final JavaParserClass klass) {
+    JavaParserCharacteristics(final JavaParserClass klass) {
         this.klass = klass;
     }
 
@@ -68,5 +68,10 @@ final class CharacteristicsJavaParser implements TestClassCharacteristics {
     @Override
     public int numberOfMethods() {
         return (int) this.klass.methods().count();
+    }
+
+    @Override
+    public String parent() {
+        return this.klass.superclass();
     }
 }

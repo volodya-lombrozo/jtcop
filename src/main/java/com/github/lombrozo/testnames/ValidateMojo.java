@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames;
 
 import com.github.lombrozo.testnames.bytecode.BytecodeProject;
 import com.github.lombrozo.testnames.complaints.ComplaintCompound;
-import com.github.lombrozo.testnames.javaparser.ProjectJavaParser;
+import com.github.lombrozo.testnames.javaparser.JavaParserProject;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -136,7 +136,7 @@ public final class ValidateMojo extends AbstractMojo {
         return Stream.concat(
             this.generated(suppressed),
             Stream.of(
-                new ProjectJavaParser(
+                new JavaParserProject(
                     Paths.get(this.project.getCompileSourceRoots().get(0)),
                     Paths.get(this.project.getTestCompileSourceRoots().get(0)),
                     suppressed
@@ -165,7 +165,7 @@ public final class ValidateMojo extends AbstractMojo {
     private Stream<Project> generated(final Set<String> suppressed) {
         return Stream.of(
             new BytecodeProject(this.sources, this.tests),
-            new ProjectJavaParser(
+            new JavaParserProject(
                 this.sources.toPath(),
                 this.tests.toPath(),
                 suppressed

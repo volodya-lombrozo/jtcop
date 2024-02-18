@@ -21,17 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.rules;
 
-import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import org.junit.jupiter.api.extension.ExecutionCondition;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
-public class JUnitCondition implements ExecutionCondition {
-    @Override
-    public ConditionEvaluationResult evaluateExecutionCondition(
-        final ExtensionContext extensionContext
-    ) {
-        return null;
+class UsesInheritenceTest extends AbstractTest{
+
+    @Test
+    void checksSum() {
+        Assertions.assertTrue((1 + 1) == 2, "message");
+
     }
+
 }

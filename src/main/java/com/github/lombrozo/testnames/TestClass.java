@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -146,7 +146,7 @@ public interface TestClass {
          * @param suppressed Suppressed rules
          */
         public Fake(final List<String> suppressed) {
-            this("FakeClassTest", Collections.emptyList(), suppressed);
+            this(Fake.DEFAULT_NAME, Collections.emptyList(), suppressed);
         }
 
         /**
@@ -155,7 +155,7 @@ public interface TestClass {
          * @param all All cases
          */
         public Fake(final List<String> suppressed, final TestCase... all) {
-            this("FakeClassTest", Arrays.asList(all), suppressed);
+            this(Fake.DEFAULT_NAME, Arrays.asList(all), suppressed);
         }
 
         /**
@@ -183,6 +183,19 @@ public interface TestClass {
             final List<String> suppressed
         ) {
             this(name, all, suppressed, new TestClassCharacteristics.Fake(false));
+        }
+
+        /**
+         * Constructor.
+         * @param parent The parent class name
+         */
+        Fake(final String parent) {
+            this(
+                Fake.DEFAULT_NAME,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                new TestClassCharacteristics.Fake(parent)
+            );
         }
 
         /**

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ import java.util.stream.Stream;
  *
  * @since 0.2
  */
-public final class ProjectJavaParser implements Project {
+public final class JavaParserProject implements Project {
 
     /**
      * The main path where production classes are placed.
@@ -62,7 +62,7 @@ public final class ProjectJavaParser implements Project {
      * @param test The test path where test classes are placed.
      * @param exclusions The rules that have to be excluded from execution.
      */
-    public ProjectJavaParser(
+    public JavaParserProject(
         final Path main,
         final Path test,
         final Collection<String> exclusions
@@ -77,7 +77,7 @@ public final class ProjectJavaParser implements Project {
      * @param main The main path where production classes are placed.
      * @param test The test path where test classes are placed.
      */
-    ProjectJavaParser(final Path main, final Path test) {
+    JavaParserProject(final Path main, final Path test) {
         this(main, test, Collections.emptyList());
     }
 
@@ -90,7 +90,7 @@ public final class ProjectJavaParser implements Project {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .map(ProductionClassJavaParser::new)
+                    .map(JavaParserProductionClass::new)
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);
@@ -118,7 +118,7 @@ public final class ProjectJavaParser implements Project {
                                 && !parsed.isPackageInfo();
                         }
                     )
-                    .map(klass -> new TestClassJavaParser(klass, this.exclusions))
+                    .map(klass -> new JavaParserTestClass(klass, this.exclusions))
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);

@@ -21,17 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.rules;
+package com.github.lombrozo.testnames.javaparser;
 
-import org.junit.jupiter.api.extension.ConditionEvaluationResult;
-import org.junit.jupiter.api.extension.ExecutionCondition;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import java.nio.file.Paths;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
-public class JUnitCondition implements ExecutionCondition {
-    @Override
-    public ConditionEvaluationResult evaluateExecutionCondition(
-        final ExtensionContext extensionContext
-    ) {
-        return null;
+/**
+ * Test for {@link JavaParserProductionClass}.
+ *
+ * @since 0.2
+ */
+class JavaParserProductionClassTest {
+
+    @Test
+    void returnsName() {
+        final String name = "SomeJava.java";
+        MatcherAssert.assertThat(
+            "ProductionClassJavaParser returns wrong name",
+            new JavaParserProductionClass(Paths.get(name)).name(),
+            Matchers.equalTo(name)
+        );
     }
 }

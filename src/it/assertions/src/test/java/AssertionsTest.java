@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ class AssertionsTest {
     private final static String CONSTANT = "Message";
 
     @Test
-    @SuppressWarnings("JTCOP.RuleLineHitter")
+    @SuppressWarnings("JTCOP.LineHitterRule")
     void checksJUnitAssertions() {
         Assertions.assertEquals("1", "1", message());
         Assertions.assertEquals("1", "1", "Message");

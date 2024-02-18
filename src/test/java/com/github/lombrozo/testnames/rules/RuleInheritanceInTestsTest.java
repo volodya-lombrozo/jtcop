@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,47 +23,41 @@
  */
 package com.github.lombrozo.testnames.rules;
 
-import com.github.lombrozo.testnames.Assertion;
-import com.github.lombrozo.testnames.TestCase;
+import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestClassCharacteristics;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link RuleLineHitter}.
- *
- * @since 1.0.1
+ * Test cases for {@link RuleInheritanceInTests}.
+ * @since 1.2
  */
-class RuleLineHitterTest {
+class RuleInheritanceInTestsTest {
 
     @Test
-    void checksClassWithoutHitterCorrectly() {
+    void doesNotFoundParents() {
         MatcherAssert.assertThat(
-            "Test class without line hitter should not have complaints",
-            new RuleLineHitter(
-                new TestCase.Fake(
-                    "Test",
-                    new Assertion.Empty()
-                )
-            ).complaints(),
-            Matchers.empty()
+            "Should not find any complaints if there are no parents",
+            new RuleInheritanceInTests(new TestClass.Fake()).complaints(),
+            Matchers.emptyIterable()
         );
     }
 
-    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
-    void checksClassWithHitterCorrectly() {
+    void hasSomeParent() {
+        final String parent = "some.parent.Parent";
+        final TestClass.Fake clazz = new TestClass.Fake(new TestClassCharacteristics.Fake(parent));
         MatcherAssert.assertThat(
-            "Test class with line hitter should have complaints",
-            new RuleLineHitter(
-                new TestCase.Fake(
-                    new Assertion.Fake(
-                        "msg",
-                        true
-                    )
+            "Should find complaint if there is a parent",
+            new RuleInheritanceInTests(clazz).complaints().iterator().next().message(),
+            Matchers.containsString(
+                String.format(
+                    "The test class '%s' has the parent class '%s'. Inheritance in tests is dangerous for maintainability",
+                    clazz.name(),
+                    parent
                 )
-            ).complaints(),
-            Matchers.hasSize(1)
+            )
         );
     }
 }

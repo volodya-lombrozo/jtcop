@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -141,6 +141,29 @@ final class JavaParserClass {
     boolean isPackageInfo() {
         return this.klass instanceof ClassOrInterfaceDeclaration
             && "empty".equals(this.cast().getNameAsString());
+    }
+
+    /**
+     * Retrieves the name of the superclass.
+     * @return The name of the superclass.
+     */
+    String superclass() {
+        final String res;
+        final String def = "java.lang.Object";
+        if (this.klass instanceof ClassOrInterfaceDeclaration) {
+            final ClassOrInterfaceDeclaration definition = (ClassOrInterfaceDeclaration) this.klass;
+            if (definition.isInterface()) {
+                res = def;
+            } else {
+                res = definition.getExtendedTypes()
+                    .stream().findFirst()
+                    .map(ClassOrInterfaceType::getNameAsString)
+                    .orElse(def);
+            }
+        } else {
+            res = def;
+        }
+        return res;
     }
 
     /**

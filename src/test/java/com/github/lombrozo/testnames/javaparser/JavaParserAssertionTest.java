@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,11 +31,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test for {@link AssertionOfJavaParser}.
+ * Test for {@link JavaParserAssertion}.
  *
  * @since 0.1.15
  */
-class AssertionOfJavaParserTest {
+class JavaParserAssertionTest {
 
     /**
      * Expectation message for the tests that check the number of assertions.
@@ -44,15 +44,15 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesJunitAssertionOnly() {
-        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
+        final List<JavaParserAssertion> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("junit")
             .statements()
-            .map(AssertionOfJavaParser::new)
-            .filter(AssertionOfJavaParser::isAssertion)
+            .map(JavaParserAssertion::new)
+            .filter(JavaParserAssertion::isAssertion)
             .collect(Collectors.toList());
         final int expected = 1;
         MatcherAssert.assertThat(
-            String.format(AssertionOfJavaParserTest.EXACTLY_FORM, expected, all.size()),
+            String.format(JavaParserAssertionTest.EXACTLY_FORM, expected, all.size()),
             all,
             Matchers.hasSize(expected)
         );
@@ -60,15 +60,15 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesHamcrestAssertionOnly() {
-        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
+        final List<JavaParserAssertion> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("hamcrestAssertion")
             .statements()
-            .map(AssertionOfJavaParser::new)
-            .filter(AssertionOfJavaParser::isAssertion)
+            .map(JavaParserAssertion::new)
+            .filter(JavaParserAssertion::isAssertion)
             .collect(Collectors.toList());
         final int expected = 2;
         MatcherAssert.assertThat(
-            String.format(AssertionOfJavaParserTest.EXACTLY_FORM, expected, all.size()),
+            String.format(JavaParserAssertionTest.EXACTLY_FORM, expected, all.size()),
             all,
             Matchers.hasSize(expected)
         );
@@ -76,15 +76,15 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesSeveralAssertionsFromDifferentLibraries() {
-        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
+        final List<JavaParserAssertion> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("severalFrameworks")
             .statements()
-            .map(AssertionOfJavaParser::new)
-            .filter(AssertionOfJavaParser::isAssertion)
+            .map(JavaParserAssertion::new)
+            .filter(JavaParserAssertion::isAssertion)
             .collect(Collectors.toList());
         final int expected = 4;
         MatcherAssert.assertThat(
-            String.format(AssertionOfJavaParserTest.EXACTLY_FORM, expected, all.size()),
+            String.format(JavaParserAssertionTest.EXACTLY_FORM, expected, all.size()),
             all,
             Matchers.hasSize(expected)
         );
@@ -92,11 +92,11 @@ class AssertionOfJavaParserTest {
 
     @Test
     void extractsMessagesFromAllAssertions() {
-        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
+        final List<JavaParserAssertion> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("severalFrameworks")
             .statements()
-            .map(AssertionOfJavaParser::new)
-            .filter(AssertionOfJavaParser::isAssertion)
+            .map(JavaParserAssertion::new)
+            .filter(JavaParserAssertion::isAssertion)
             .collect(Collectors.toList());
         MatcherAssert.assertThat(
             String.format(
@@ -106,7 +106,7 @@ class AssertionOfJavaParserTest {
                     .collect(Collectors.toList())
             ),
             all.stream()
-                .map(AssertionOfJavaParser::explanation)
+                .map(JavaParserAssertion::explanation)
                 .allMatch(Optional::isPresent),
             Matchers.is(true)
         );
@@ -114,11 +114,11 @@ class AssertionOfJavaParserTest {
 
     @Test
     void parsesAssertionsWithoutMessage() {
-        final List<AssertionOfJavaParser> all = JavaTestClasses.TEST_WITH_ASSERTIONS
+        final List<JavaParserAssertion> all = JavaTestClasses.TEST_WITH_ASSERTIONS
             .method("assertionsWithoutMesssages")
             .statements()
-            .map(AssertionOfJavaParser::new)
-            .filter(AssertionOfJavaParser::isAssertion)
+            .map(JavaParserAssertion::new)
+            .filter(JavaParserAssertion::isAssertion)
             .collect(Collectors.toList());
         MatcherAssert.assertThat(
             String.format(
@@ -128,7 +128,7 @@ class AssertionOfJavaParserTest {
                     .collect(Collectors.toList())
             ),
             all.stream()
-                .map(AssertionOfJavaParser::explanation)
+                .map(JavaParserAssertion::explanation)
                 .noneMatch(Optional::isPresent),
             Matchers.is(true)
         );

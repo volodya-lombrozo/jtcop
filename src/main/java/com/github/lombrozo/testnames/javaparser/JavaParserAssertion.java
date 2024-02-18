@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import java.util.Optional;
  *
  * @since 0.1.15
  */
-public final class AssertionOfJavaParser implements ParsedAssertion {
+public final class JavaParserAssertion implements ParsedAssertion {
 
     /**
      * The method call.
@@ -42,7 +42,7 @@ public final class AssertionOfJavaParser implements ParsedAssertion {
      * Ctor.
      * @param method The method call.
      */
-    AssertionOfJavaParser(final MethodCallExpr method) {
+    JavaParserAssertion(final MethodCallExpr method) {
         this.call = method;
     }
 

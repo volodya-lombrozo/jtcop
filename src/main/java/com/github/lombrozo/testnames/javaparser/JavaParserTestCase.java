@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import lombok.Data;
  * @since 0.1.0
  */
 @Data
-final class TestCaseJavaParser implements TestCase {
+final class JavaParserTestCase implements TestCase {
 
     /**
      * Method declaration.
@@ -58,7 +58,7 @@ final class TestCaseJavaParser implements TestCase {
      *
      * @param name Java method name.
      */
-    TestCaseJavaParser(final String name) {
+    JavaParserTestCase(final String name) {
         this(new MethodDeclaration(new NodeList<>(), new VarType(), name));
     }
 
@@ -68,7 +68,7 @@ final class TestCaseJavaParser implements TestCase {
      * @param method Java method
      * @checkstyle ParameterNameCheck (6 lines)
      */
-    private TestCaseJavaParser(final MethodDeclaration method) {
+    private JavaParserTestCase(final MethodDeclaration method) {
         this(method, new TestClass.Fake());
     }
 
@@ -77,7 +77,7 @@ final class TestCaseJavaParser implements TestCase {
      * @param method Java method
      * @param parent Parent test class
      */
-    TestCaseJavaParser(
+    JavaParserTestCase(
         final MethodDeclaration method,
         final TestClass parent
     ) {
@@ -89,7 +89,7 @@ final class TestCaseJavaParser implements TestCase {
      * @param method Java method
      * @param parent Parent test class
      */
-    TestCaseJavaParser(
+    JavaParserTestCase(
         final JavaParserMethod method,
         final TestClass parent
     ) {
@@ -113,7 +113,7 @@ final class TestCaseJavaParser implements TestCase {
     @Override
     public Collection<Assertion> assertions() {
         return this.method.statements()
-            .map(AssertionOfJavaParser::new)
+            .map(JavaParserAssertion::new)
             .filter(ParsedAssertion::isAssertion)
             .collect(Collectors.toList());
     }

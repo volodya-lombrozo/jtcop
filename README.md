@@ -34,6 +34,7 @@ mvn com.github.volodya-lombrozo:jtcop-maven-plugin:check
 ```
 
 or short version:
+
 ```shell
 mvn jtcop:check
 ```
@@ -45,34 +46,32 @@ just run the next maven command with specified version:
 ```shell
 mvn com.github.volodya-lombrozo:jtcop-maven-plugin:0.1.16:check
 ```
+
 or snapshot version:
+
 ```shell
 mvn com.github.volodya-lombrozo:jtcop-maven-plugin:1.0-SNAPSHOT:check
 ```
 
 ### Add the plugin to your `pom.xml`
 
-The more convenient way to use the plugin is to add it to your `pom.xml` file.
-In order to do that, just add the next snippet to your `pom.xml`:
+The more convenient way to use the plugin is to add it to `pom.xml` file.
+In order to do that, just add the next snippet to the `<plugins>` section:
 
 ```xml
 
-<build>
-  <plugins>
-    <plugin>
-      <groupId>com.github.volodya-lombrozo</groupId>
-      <artifactId>jtcop-maven-plugin</artifactId>
-      <version>0.1.16</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>check</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
+<plugin>
+  <groupId>com.github.volodya-lombrozo</groupId>
+  <artifactId>jtcop-maven-plugin</artifactId>
+  <version>1.2.0</version>
+  <executions>
+    <execution>
+      <goals>
+        <goal>check</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
 ```
 
 The default plugin phase is `verify`, so you don't need to specify it directly,

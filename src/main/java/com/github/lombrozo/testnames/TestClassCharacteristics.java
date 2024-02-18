@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022-2023 Volodya
+ * Copyright (c) 2022-2024 Volodya Lombrozo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +58,12 @@ public interface TestClassCharacteristics {
     int numberOfMethods();
 
     /**
+     * The parent class name.
+     * @return The parent class name.
+     */
+    String parent();
+
+    /**
      * Fake implementation for test characteristics.
      *
      * @since 0.1.19
@@ -65,6 +71,11 @@ public interface TestClassCharacteristics {
     @EqualsAndHashCode
     @ToString
     final class Fake implements TestClassCharacteristics {
+
+        /**
+         * The default parent class name.
+         */
+        private static final String DEFAULT_PARENT = "java.lang.Object";
 
         /**
          * Is the test class a JUnit extension?
@@ -87,11 +98,24 @@ public interface TestClassCharacteristics {
         private final boolean integration;
 
         /**
+         * The parent class name.
+         */
+        private final String parent;
+
+        /**
          * Constructor.
          * @param extension Is the test class a JUnit extension?
          */
         public Fake(final boolean extension) {
-            this(extension, 0, 0, false);
+            this(extension, 0, 0, false, Fake.DEFAULT_PARENT);
+        }
+
+        /**
+         * Constructor.
+         * @param parent The parent class name.
+         */
+        public Fake(final String parent) {
+            this(false, 0, 0, false, parent);
         }
 
         /**
@@ -100,7 +124,7 @@ public interface TestClassCharacteristics {
          * @param nmethods The total number of methods in the class.
          */
         public Fake(final int ntests, final int nmethods) {
-            this(false, ntests, nmethods, false);
+            this(false, ntests, nmethods, false, Fake.DEFAULT_PARENT);
         }
 
         /**
@@ -109,18 +133,21 @@ public interface TestClassCharacteristics {
          * @param ntests The number of tests in the class.
          * @param nmethods The total number of methods in the class.
          * @param integration Is the test class an Integration test?
+         * @param parent The parent class name.
          * @checkstyle ParameterNumberCheck (10 lines)
          */
         public Fake(
             final boolean extension,
             final int ntests,
             final int nmethods,
-            final boolean integration
+            final boolean integration,
+            final String parent
         ) {
             this.junit = extension;
             this.tests = ntests;
             this.methods = nmethods;
             this.integration = integration;
+            this.parent = parent;
         }
 
         @Override
@@ -141,6 +168,11 @@ public interface TestClassCharacteristics {
         @Override
         public int numberOfMethods() {
             return this.methods;
+        }
+
+        @Override
+        public String parent() {
+            return this.parent;
         }
     }
 
@@ -171,6 +203,11 @@ public interface TestClassCharacteristics {
         @Override
         public int numberOfMethods() {
             return 0;
+        }
+
+        @Override
+        public String parent() {
+            return Fake.DEFAULT_PARENT;
         }
     }
 }
