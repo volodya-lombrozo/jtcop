@@ -841,3 +841,6 @@ Other:
 * [Built-in Fake Objects](https://www.yegor256.com/2014/09/23/built-in-fake-objects.html)
   Yegor Bugayenko
 
+Published version:
+https://dzone.com/articles/mastering-test-code-quality-assurance
+
