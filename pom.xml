@@ -251,7 +251,7 @@ SOFTWARE.
           <plugin>
             <groupId>ru.l3r8y</groupId>
             <artifactId>oop-cop</artifactId>
-            <version>0.2.8</version>
+            <version>0.2.9</version>
             <executions>
               <execution>
                 <goals>
