@@ -125,7 +125,7 @@ public interface Project {
      *
      * @since 0.1.17
      */
-    class Combined implements Project {
+    final class Combined implements Project {
 
         /**
          * All projects.
@@ -171,7 +171,7 @@ public interface Project {
      * @since 1.0.1
      */
     @SuppressWarnings("PMD.TestClassWithoutTestCases")
-    class WithoutTests implements Project {
+    final class WithoutTests implements Project {
 
         /**
          * Original project.

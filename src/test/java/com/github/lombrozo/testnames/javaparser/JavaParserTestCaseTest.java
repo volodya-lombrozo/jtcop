@@ -40,6 +40,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.2
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class JavaParserTestCaseTest {
 
     @Test

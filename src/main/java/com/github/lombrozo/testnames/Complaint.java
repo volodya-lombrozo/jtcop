@@ -42,7 +42,7 @@ public interface Complaint {
      * Text complaint.
      * @since 0.2
      */
-    class Text implements Complaint {
+    final class Text implements Complaint {
 
         /**
          * Complaint message.

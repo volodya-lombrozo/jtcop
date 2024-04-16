@@ -32,7 +32,11 @@ import java.util.function.Predicate;
  *
  * @since 0.1.15
  */
-@SuppressWarnings("PMD.JUnit4TestShouldUseTestAnnotation")
+@SuppressWarnings({
+    "PMD.JUnit4TestShouldUseTestAnnotation",
+    "PMD.JUnitTestsShouldIncludeAssert",
+    "PMD.TestClassWithoutTestCases"
+})
 final class TestsOnly implements Predicate<MethodDeclaration> {
 
     @Override
