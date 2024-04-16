@@ -1,7 +1,7 @@
 architect:
   - volodya-lombrozo
 docker:
-  image: yegor256/rultor-image:1.13.0
+  image:  lombrozo/rultor-image-java:master
 merge:
   script: mvn clean install -Pqulice --errors --batch-mode
 release:
