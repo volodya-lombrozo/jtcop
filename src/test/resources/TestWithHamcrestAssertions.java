@@ -41,6 +41,23 @@ class TestWithHamcrestAssertions {
      */
     private final static Supplier<String> DEFAULT_SUPPLIER = () -> TestWithJUnitAssertions.DEFAULT_EXPLANATION;
 
+    /**
+     * Static final message for assertions.
+     */
+    private static final String MSG = "MESSAGE";
+
+    @Test
+    void checksTheCaseFrom357issue() {
+        // This test were added to check the issue #357
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/347
+        MatcherAssert.assertThat(
+            TestWithHamcrestAssertions.MSG,
+            "1",
+            Matchers.equalTo("1")
+        );
+    }
+
     @Test
     void withMessages() {
         MatcherAssert.assertThat(

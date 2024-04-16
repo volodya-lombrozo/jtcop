@@ -56,7 +56,11 @@ class StingExpression {
         final Optional<String> result;
         if (this.expr.isStringLiteralExpr()) {
             result = Optional.of(this.expr.asStringLiteralExpr().asString());
-        } else if (this.expr.isNameExpr() || this.expr.isMethodCallExpr()) {
+        } else if (
+            this.expr.isNameExpr()
+                || this.expr.isMethodCallExpr()
+                || this.expr.isFieldAccessExpr()
+        ) {
             result = new UnknownMessage().message();
         } else {
             result = Optional.empty();

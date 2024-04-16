@@ -126,16 +126,31 @@ class AssertionOfHamcrestTest {
         );
     }
 
+    @Test
+    void findsExplanationMessage() {
+        final AssertionOfHamcrest first = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .method("checksTheCaseFrom357issue")
+            .statements()
+            .map(AssertionOfHamcrest::new)
+            .filter(AssertionOfHamcrest::isAssertion)
+            .findFirst().orElseThrow(() -> new AssertionError("No assertions found"));
+        MatcherAssert.assertThat(
+            String.format("We expect that assertion has a valid message", first),
+            first.explanation().orElseThrow(() -> new AssertionError("No explanation found")),
+            Matchers.equalTo("Unknown message. The message will be known only in runtime")
+        );
+    }
+
     @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
     void checksCorrectlyOnLineHitters() {
         final List<AssertionOfHamcrest> assertions =
             JavaTestClasses.HAMCREST_ASSERT_TRUE_LINE_HITTER
-            .method("checksHitter")
-            .statements()
-            .map(AssertionOfHamcrest::new)
-            .filter(AssertionOfHamcrest::isLineHitter)
-            .collect(Collectors.toList());
+                .method("checksHitter")
+                .statements()
+                .map(AssertionOfHamcrest::new)
+                .filter(AssertionOfHamcrest::isLineHitter)
+                .collect(Collectors.toList());
         MatcherAssert.assertThat(
             String.format("%s contains two line hitters", assertions),
             assertions,
