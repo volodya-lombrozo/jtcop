@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.17
  */
-class ProjectTest {
+final class ProjectTest {
 
     @Test
     void createsCombinedProject() {

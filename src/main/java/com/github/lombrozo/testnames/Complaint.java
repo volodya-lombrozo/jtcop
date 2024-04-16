@@ -47,19 +47,19 @@ public interface Complaint {
         /**
          * Complaint message.
          */
-        private final String text;
+        private final String msg;
 
         /**
          * Main constructor.
          * @param message Complaint message.
          */
         public Text(final String message) {
-            this.text = message;
+            this.msg = message;
         }
 
         @Override
         public String message() {
-            return this.text;
+            return this.msg;
         }
     }
 }

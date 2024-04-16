@@ -41,7 +41,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @since 0.1.17
  */
-class BytecodeProjectTest {
+final class BytecodeProjectTest {
 
     @Test
     @SuppressWarnings("JTCOP.RuleNotContainsTestWord")

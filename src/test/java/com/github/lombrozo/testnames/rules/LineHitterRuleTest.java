@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.0.1
  */
-class LineHitterRuleTest {
+final class LineHitterRuleTest {
 
     @Test
     void checksClassWithoutHitterCorrectly() {

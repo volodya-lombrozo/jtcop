@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.2
  */
-class CopTest {
+final class CopTest {
 
     @Test
     void checksSuccessfully() {

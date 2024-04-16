@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
  *
  * @since 0.1.0
  */
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class RuleCorrectTestCases implements Rule {
 
     /**

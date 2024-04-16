@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * Test cases for {@link ComplaintClass}.
  * @since 0.2
  */
-class ComplaintClassTest {
+final class ComplaintClassTest {
 
     @Test
     void returnsSimpleMessageIfDoesNotHaveComplaints() {

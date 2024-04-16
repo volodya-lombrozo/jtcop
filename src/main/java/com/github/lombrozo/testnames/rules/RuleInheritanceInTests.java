@@ -34,6 +34,7 @@ import java.util.Collections;
  * The rule that checks a test class doesn't use inheritance.
  * @since 1.2.0
  */
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class RuleInheritanceInTests implements Rule {
 
     /**
@@ -53,7 +54,7 @@ public final class RuleInheritanceInTests implements Rule {
     public Collection<Complaint> complaints() {
         final Collection<Complaint> result;
         final String parent = this.clazz.characteristics().parent();
-        if (parent.equals("java.lang.Object")) {
+        if ("java.lang.Object".equals(parent)) {
             result = Collections.emptyList();
         } else {
             result = Collections.singleton(

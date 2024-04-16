@@ -170,6 +170,7 @@ public interface Project {
      *
      * @since 1.0.1
      */
+    @SuppressWarnings("PMD.TestClassWithoutTestCases")
     class WithoutTests implements Project {
 
         /**
