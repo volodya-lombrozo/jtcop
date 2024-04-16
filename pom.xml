@@ -233,7 +233,7 @@ SOFTWARE.
           <plugin>
             <groupId>com.github.volodya-lombrozo</groupId>
             <artifactId>jtcop-maven-plugin</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
             <configuration>
               <exclusions>
                 <exclusion>JTCOP.RuleNotContainsTestWord</exclusion>
