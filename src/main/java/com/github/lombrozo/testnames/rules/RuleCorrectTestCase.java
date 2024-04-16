@@ -36,6 +36,7 @@ import java.util.stream.Stream;
  *
  * @since 0.1.0
  */
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class RuleCorrectTestCase implements Rule {
 
     /**

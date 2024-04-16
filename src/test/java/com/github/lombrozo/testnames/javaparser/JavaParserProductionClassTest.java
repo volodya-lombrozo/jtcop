@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.2
  */
-class JavaParserProductionClassTest {
+final class JavaParserProductionClassTest {
 
     @Test
     void returnsName() {

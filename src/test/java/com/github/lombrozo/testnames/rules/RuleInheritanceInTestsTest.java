@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
  * Test cases for {@link RuleInheritanceInTests}.
  * @since 1.2
  */
-class RuleInheritanceInTestsTest {
+final class RuleInheritanceInTestsTest {
 
     @Test
     void doesNotFoundParents() {

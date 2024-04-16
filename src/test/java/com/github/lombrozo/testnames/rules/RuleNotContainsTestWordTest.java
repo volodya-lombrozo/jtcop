@@ -36,7 +36,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * Test for {@link RuleNotContainsTestWord}.
  * @since 0.2.0
  */
-class RuleNotContainsTestWordTest {
+final class RuleNotContainsTestWordTest {
 
     @ParameterizedTest
     @MethodSource("cases")

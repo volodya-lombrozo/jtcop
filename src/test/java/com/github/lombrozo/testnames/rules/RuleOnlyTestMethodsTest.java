@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.19
  */
-class RuleOnlyTestMethodsTest {
+final class RuleOnlyTestMethodsTest {
 
     @Test
     void checksClassCorrectly() {

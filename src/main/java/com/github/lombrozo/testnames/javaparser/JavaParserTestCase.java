@@ -41,6 +41,7 @@ import lombok.Data;
  * @since 0.1.0
  */
 @Data
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 final class JavaParserTestCase implements TestCase {
 
     /**

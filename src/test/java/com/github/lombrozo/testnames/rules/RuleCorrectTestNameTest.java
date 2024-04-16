@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  *
  * @since 0.1.17
  */
-class RuleCorrectTestNameTest {
+final class RuleCorrectTestNameTest {
 
     @Test
     void createsCorrectly() {

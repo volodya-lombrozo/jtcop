@@ -183,6 +183,7 @@ public interface TestClassCharacteristics {
      */
     @EqualsAndHashCode
     @ToString
+    @SuppressWarnings("PMD.TestClassWithoutTestCases")
     final class IntegrationTest implements TestClassCharacteristics {
 
         @Override

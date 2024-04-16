@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.15
  */
-class JavaParserAssertionTest {
+final class JavaParserAssertionTest {
 
     /**
      * Expectation message for the tests that check the number of assertions.

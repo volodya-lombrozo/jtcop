@@ -40,7 +40,7 @@ import org.junit.jupiter.api.io.TempDir;
  *  every-day development.
  */
 @Disabled
-class ModelSourceFileSystemTest {
+final class ModelSourceFileSystemTest {
 
     @Test
     void loadsFromFileSystem(@TempDir final Path temp) throws IOException {

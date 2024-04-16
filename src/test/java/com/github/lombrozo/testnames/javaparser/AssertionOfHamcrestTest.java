@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.15
  */
-class AssertionOfHamcrestTest {
+final class AssertionOfHamcrestTest {
 
     @Test
     void parsesAllHamcrestAssertions() {

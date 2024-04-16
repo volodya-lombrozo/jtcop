@@ -38,7 +38,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @since 0.1.17
  */
-class BytecodeTestClassTest {
+final class BytecodeTestClassTest {
 
     @Test
     void checksIfBytecodeIsJUnitExtension(@TempDir final Path temp) throws Exception {

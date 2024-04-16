@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.17
  */
-class ProjectWithoutJUnitExtensionsTest {
+final class ProjectWithoutJUnitExtensionsTest {
 
     @Test
     void returnsProductionClassesFromOrigin() {
