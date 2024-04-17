@@ -40,8 +40,22 @@ class AssertionsTest {
     private static final String MSG = "MESSAGE";
 
     @Test
-    void checksTheCaseFrom357issue() {
-        // This test were added to check the issue #357
+    void checksTheCaseFrom353issueWithAssertionInLoop() {
+        // This test were added to check the issue #353
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/347
+        for (int i = 0; i < 10; ++i) {
+            MatcherAssert.assertThat(
+                AssertionsTest.MSG,
+                "1",
+                Matchers.equalTo("1")
+            );
+        }
+    }
+
+    @Test
+    void checksTheCaseFrom347issue() {
+        // This test were added to check the issue #347
         // You can read more about it here:
         // https://github.com/volodya-lombrozo/jtcop/issues/347
         MatcherAssert.assertThat(
