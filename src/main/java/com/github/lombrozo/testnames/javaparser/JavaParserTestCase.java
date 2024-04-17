@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 import lombok.Data;
 
 /**
- * Parser for test case.
+ * Parser for a test case.
  *
  * @since 0.1.0
  */

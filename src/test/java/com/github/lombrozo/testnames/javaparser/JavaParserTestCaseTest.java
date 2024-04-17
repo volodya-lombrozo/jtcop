@@ -30,7 +30,9 @@ import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -165,6 +167,30 @@ final class JavaParserTestCaseTest {
             String.format("The '%s' assertion message is wrong", assertion),
             assertion.explanation().get(),
             Matchers.equalTo("JUnit explanation")
+        );
+    }
+
+    @Test
+    void parsesAssertionInsideLoop() {
+        final JavaParserTestClass parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
+        final String method = "checksTheCaseFrom353issueWithAssertionInLoop";
+        final TestCase tested = parser.all().stream()
+            .filter(test -> method.equals(test.name()))
+            .findFirst()
+            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
+        final Collection<Assertion> assertions = tested.assertions();
+        MatcherAssert.assertThat(
+            String.format("The '%s' method has to contain at least one assertion", method),
+            assertions,
+            Matchers.hasSize(1)
+        );
+        final Assertion assertion = assertions.stream()
+            .findFirst()
+            .orElseThrow(() -> new AssertionError("Assertion not found"));
+        MatcherAssert.assertThat(
+            String.format("The '%s' assertion has to contain an explanation", assertion),
+            assertion.explanation().isPresent(),
+            Matchers.is(true)
         );
     }
 
