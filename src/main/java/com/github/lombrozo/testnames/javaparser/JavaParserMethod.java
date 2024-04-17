@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.nodeTypes.NodeWithBody;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import java.util.stream.Stream;
@@ -76,7 +77,7 @@ final class JavaParserMethod {
      * @return Method statements.
      */
     Stream<MethodCallExpr> statements() {
-        return JavaParserMethod.unrollStatements(this.body().getStatements().stream())
+        return JavaParserMethod.flatStatements(this.body().getStatements().stream())
             .filter(Statement::isExpressionStmt)
             .map(JavaParserMethod::toExpression)
             .filter(Expression::isMethodCallExpr)
@@ -86,35 +87,27 @@ final class JavaParserMethod {
     /**
      * This method unrolls inner method statements.
      * In other words, if a statement is a type of block that contains inner statements,
-     * we simply unroll all these statements and return them as a flat stream."
-     * @param statements Statements to unroll.
+     * we simply unroll all these statements and return them as a flat stream.
+     * @param stmts Statements to unroll.
      * @return Stream of statements.
      */
-    private static Stream<Statement> unrollStatements(
-        final Stream<? extends Statement> statements
-    ) {
-        return statements.flatMap(statement -> {
-            Stream<Statement> result;
-            if (statement.isForEachStmt()) {
-                result = JavaParserMethod.unrollStatements(
-                    statement.asForEachStmt().getBody().asBlockStmt().getStatements().stream());
-            } else if (statement.isForStmt()) {
-                result = JavaParserMethod.unrollStatements(
-                    statement.asForStmt().getBody().asBlockStmt().getStatements().stream());
-            } else if (statement.isWhileStmt()) {
-                result = JavaParserMethod.unrollStatements(
-                    statement.asWhileStmt().getBody().asBlockStmt().getStatements().stream());
-            } else if (statement.isBlockStmt()) {
-                result = JavaParserMethod.unrollStatements(
-                    statement.asBlockStmt().getStatements().stream());
-            } else if (statement.isTryStmt()) {
-                result = JavaParserMethod.unrollStatements(
-                    statement.asTryStmt().getTryBlock().getStatements().stream());
-            } else {
-                result = Stream.of(statement);
+    private static Stream<Statement> flatStatements(final Stream<? extends Statement> stmts) {
+        return stmts.flatMap(
+            statement -> {
+                final Stream<Statement> result;
+                if (statement instanceof NodeWithBody) {
+                    result = JavaParserMethod.flatStatements(
+                        ((NodeWithBody<?>) statement).getBody()
+                            .asBlockStmt()
+                            .getStatements()
+                            .stream()
+                    );
+                } else {
+                    result = Stream.of(statement);
+                }
+                return result;
             }
-            return result;
-        });
+        );
     }
 
     /**
@@ -138,11 +131,8 @@ final class JavaParserMethod {
      * @return Expression
      */
     private static Expression toExpression(final Statement statement) {
-        return statement.toExpressionStmt()
-            .orElseThrow(
-                () -> {
-                    throw new IllegalStateException("Statement is not expression");
-                }
-            ).getExpression();
+        return statement.toExpressionStmt().orElseThrow(
+            () -> new IllegalStateException("Statement is not expression")
+        ).getExpression();
     }
 }
