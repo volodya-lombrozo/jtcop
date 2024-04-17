@@ -76,11 +76,45 @@ final class JavaParserMethod {
      * @return Method statements.
      */
     Stream<MethodCallExpr> statements() {
-        return this.body().getStatements().stream()
+        return JavaParserMethod.unrollStatements(this.body().getStatements().stream())
             .filter(Statement::isExpressionStmt)
             .map(JavaParserMethod::toExpression)
             .filter(Expression::isMethodCallExpr)
             .map(MethodCallExpr.class::cast);
+    }
+
+    /**
+     * This method unrolls inner method statements.
+     * In other words, if a statement is a type of block that contains inner statements,
+     * we simply unroll all these statements and return them as a flat stream."
+     * @param statements Statements to unroll.
+     * @return Stream of statements.
+     */
+    private static Stream<Statement> unrollStatements(
+        final Stream<? extends Statement> statements
+    ) {
+        return statements.flatMap(statement -> {
+            Stream<Statement> result;
+            if (statement.isForEachStmt()) {
+                result = JavaParserMethod.unrollStatements(
+                    statement.asForEachStmt().getBody().asBlockStmt().getStatements().stream());
+            } else if (statement.isForStmt()) {
+                result = JavaParserMethod.unrollStatements(
+                    statement.asForStmt().getBody().asBlockStmt().getStatements().stream());
+            } else if (statement.isWhileStmt()) {
+                result = JavaParserMethod.unrollStatements(
+                    statement.asWhileStmt().getBody().asBlockStmt().getStatements().stream());
+            } else if (statement.isBlockStmt()) {
+                result = JavaParserMethod.unrollStatements(
+                    statement.asBlockStmt().getStatements().stream());
+            } else if (statement.isTryStmt()) {
+                result = JavaParserMethod.unrollStatements(
+                    statement.asTryStmt().getTryBlock().getStatements().stream());
+            } else {
+                result = Stream.of(statement);
+            }
+            return result;
+        });
     }
 
     /**
