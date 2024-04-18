@@ -40,6 +40,63 @@ class AssertionsTest {
     private static final String MSG = "MESSAGE";
 
     @Test
+    void checksTheCaseFrom357issueLambda() {
+        // This test were added to check the issue #357
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/347
+        Runnable r = () -> {
+            MatcherAssert.assertThat(
+                "TO ADD ASSERTION MESSAGE",
+                "1",
+                Matchers.equalTo("1")
+            );
+        };
+    }
+
+    @Test
+    void checksTheCaseFrom357issueIfStatement() {
+        // This test were added to check the issue #357
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/357
+        final int threads = Runtime.getRuntime().availableProcessors() + 10;
+        final ExecutorService service = Executors.newFixedThreadPool(threads);
+        final PhPackage pckg = new PhPackage(PhPackageTest.DEFAULT_PACKAGE);
+        final Set<Integer> basket = Collections.synchronizedSet(new HashSet<>(threads));
+        final CountDownLatch latch = new CountDownLatch(1);
+        Stream.generate(
+            () -> (Runnable) () -> {
+                try {
+                    latch.await();
+                    basket.add(Integer.valueOf(1));
+                } catch (final InterruptedException exception) {
+                    Thread.currentThread().interrupt();
+                    throw new IllegalStateException(
+                        "The testing thread was interrupted, current basket size %d",
+                        exception
+                    );
+                }
+            }
+        ).limit(threads).forEach(service::submit);
+        latch.countDown();
+        service.shutdown();
+        if (service.awaitTermination(1, TimeUnit.SECONDS)) {
+            MatcherAssert.assertThat(
+                "TO ADD ASSERTION MESSAGE",
+                basket.size(),
+                Matchers.equalTo(threads)
+            );
+        } else {
+            throw new IllegalStateException(
+                String.format(
+                    "Failed to wait for threads to finish. Current basket size %d, but expected %d",
+                    basket.size(),
+                    threads
+                )
+            );
+        }
+    }
+
+    @Test
     void checksTheCaseFrom353issueWithAssertionInLoop() {
         // This test were added to check the issue #353
         // You can read more about it here:
