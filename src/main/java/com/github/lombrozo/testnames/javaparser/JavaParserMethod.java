@@ -28,7 +28,11 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithBody;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -101,6 +105,26 @@ final class JavaParserMethod {
                             .asBlockStmt()
                             .getStatements()
                             .stream()
+                    );
+                } else if (statement instanceof IfStmt) {
+                    final IfStmt ifstmt = (IfStmt) statement;
+                    final Collection<Statement> statements = new ArrayList<>(3);
+                    if (ifstmt.hasThenBlock()) {
+                        statements.add(ifstmt.getThenStmt());
+                    }
+                    if (ifstmt.hasElseBlock()) {
+                        statements.add(
+                            ifstmt.getElseStmt()
+                                .orElseThrow(
+                                    () -> new IllegalStateException(
+                                        "Else block is absent. It's impossible")
+                                )
+                        );
+                    }
+                    result = JavaParserMethod.flatStatements(statements.stream());
+                } else if (statement.isBlockStmt()) {
+                    result = JavaParserMethod.flatStatements(
+                        statement.asBlockStmt().getStatements().stream()
                     );
                 } else {
                     result = Stream.of(statement);
