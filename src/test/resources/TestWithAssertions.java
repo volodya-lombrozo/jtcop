@@ -95,7 +95,7 @@ class TestWithAssertions {
     }
 
     @Test
-    void checksTheCaseFrom353issueWithAssertionInIfStatement() {
+    void checksTheCaseFrom357issueWithAssertionInIfStatement() {
         // This test were added to check the issue #357
         // You can read more about it here:
         // https://github.com/volodya-lombrozo/jtcop/issues/357
@@ -107,5 +107,20 @@ class TestWithAssertions {
                 Matchers.equalTo("1")
             );
         }
+    }
+
+    @Test
+    void checksTheCaseFrom357issueWithAssertionInClosure() {
+        // This test were added to check the issue #357
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/357
+        Runnable r = () -> {
+            MatcherAssert.assertThat(
+                "Assertion inside if statement",
+                "1",
+                Matchers.equalTo("1")
+            );
+        };
+        r.run();
     }
 }

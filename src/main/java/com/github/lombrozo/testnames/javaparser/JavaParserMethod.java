@@ -23,16 +23,21 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.VariableDeclarationExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithBody;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -126,11 +131,46 @@ final class JavaParserMethod {
                     result = JavaParserMethod.flatStatements(
                         statement.asBlockStmt().getStatements().stream()
                     );
+                } else if (statement.isExpressionStmt()) {
+                    final Expression expression = statement.asExpressionStmt().getExpression();
+                    if (expression.isMethodCallExpr()) {
+                        result = Stream.of(statement);
+                    } else {
+                        result = JavaParserMethod.flatStatements(expression);
+                    }
                 } else {
                     result = Stream.of(statement);
                 }
                 return result;
             }
+        );
+    }
+
+    static Stream<Statement> flatStatements(final Expression expression) {
+        List<Statement> statements = new ArrayList<>(0);
+        List<Expression> expressions = new ArrayList<>(0);
+        List<VariableDeclarator> declarators = new ArrayList<>(0);
+        if (expression.isLambdaExpr()) {
+            return JavaParserMethod.flatStatements(Stream.of(expression.asLambdaExpr().getBody()));
+        }
+        for (final Node node : expression.getChildNodes()) {
+            if (node instanceof Statement) {
+                statements.add((Statement) node);
+            } else if (node instanceof VariableDeclarator) {
+                declarators.add((VariableDeclarator) node);
+            }
+        }
+        final Stream<Statement> a = declarators.stream()
+            .map(VariableDeclarator::getInitializer)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .flatMap(JavaParserMethod::flatStatements);
+        return Stream.concat(
+            Stream.concat(
+                a,
+                statements.stream()
+            ),
+            expressions.stream().flatMap(JavaParserMethod::flatStatements)
         );
     }
 
