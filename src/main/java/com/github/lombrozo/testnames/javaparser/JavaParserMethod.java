@@ -28,10 +28,8 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.VariableDeclarationExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithBody;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import java.util.ArrayList;
@@ -99,7 +97,11 @@ final class JavaParserMethod {
      * we simply unroll all these statements and return them as a flat stream.
      * @param stmts Statements to unroll.
      * @return Stream of statements.
+     * @todo #357:90min Refactor 'flatStatements' method to make it more readable.
+     *  The method 'flatStatements' is too complex and hard to read. It should be refactored
+     *  to make it more readable and maintainable.
      */
+    @SuppressWarnings("PMD.CognitiveComplexity")
     private static Stream<Statement> flatStatements(final Stream<? extends Statement> stmts) {
         return stmts.flatMap(
             statement -> {
@@ -122,7 +124,8 @@ final class JavaParserMethod {
                             ifstmt.getElseStmt()
                                 .orElseThrow(
                                     () -> new IllegalStateException(
-                                        "Else block is absent. It's impossible")
+                                        "Else block is absent. It's impossible"
+                                    )
                                 )
                         );
                     }
@@ -146,32 +149,42 @@ final class JavaParserMethod {
         );
     }
 
-    static Stream<Statement> flatStatements(final Expression expression) {
-        List<Statement> statements = new ArrayList<>(0);
-        List<Expression> expressions = new ArrayList<>(0);
-        List<VariableDeclarator> declarators = new ArrayList<>(0);
+    /**
+     * This method extracts statements from Expression.
+     * @param expression Expression to extract statements from.
+     * @return Stream of statements.
+     * @todo #357:90min Refactor 'flatStatements' method to make it more readable.
+     *  The method 'flatStatements' is too complex and hard to read. It should be refactored
+     *  to make it more readable and maintainable. The method should be split into smaller
+     *  methods with clear responsibilities.
+     */
+    @SuppressWarnings("PMD.CognitiveComplexity")
+    private static Stream<Statement> flatStatements(final Expression expression) {
+        final Stream<Statement> result;
         if (expression.isLambdaExpr()) {
-            return JavaParserMethod.flatStatements(Stream.of(expression.asLambdaExpr().getBody()));
-        }
-        for (final Node node : expression.getChildNodes()) {
-            if (node instanceof Statement) {
-                statements.add((Statement) node);
-            } else if (node instanceof VariableDeclarator) {
-                declarators.add((VariableDeclarator) node);
+            result = JavaParserMethod.flatStatements(
+                Stream.of(expression.asLambdaExpr().getBody())
+            );
+        } else {
+            final List<Statement> statements = new ArrayList<>(0);
+            final List<VariableDeclarator> declarators = new ArrayList<>(0);
+            for (final Node node : expression.getChildNodes()) {
+                if (node instanceof Statement) {
+                    statements.add((Statement) node);
+                } else if (node instanceof VariableDeclarator) {
+                    declarators.add((VariableDeclarator) node);
+                }
             }
-        }
-        final Stream<Statement> a = declarators.stream()
-            .map(VariableDeclarator::getInitializer)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .flatMap(JavaParserMethod::flatStatements);
-        return Stream.concat(
-            Stream.concat(
-                a,
+            result = Stream.concat(
+                declarators.stream()
+                    .map(VariableDeclarator::getInitializer)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .flatMap(JavaParserMethod::flatStatements),
                 statements.stream()
-            ),
-            expressions.stream().flatMap(JavaParserMethod::flatStatements)
-        );
+            );
+        }
+        return result;
     }
 
     /**
