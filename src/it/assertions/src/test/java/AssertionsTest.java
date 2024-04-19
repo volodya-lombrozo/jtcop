@@ -63,6 +63,20 @@ class AssertionsTest {
     }
 
     @Test
+    void checksTheCaseFrom357issueLabbdaAsParam() {
+        // This test were added to check the issue #357
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/357
+        Stream.generate(() -> (Runnable) () -> {
+            MatcherAssert.assertThat(
+                "Lambda as a parameter assertion",
+                1,
+                Matchers.equalTo(1)
+            );
+        }).limit(1).forEach(Runnable::run);
+    }
+
+    @Test
     void checksTheCaseFrom357issueIfStatement() throws InterruptedException {
         // This test were added to check the issue #357
         // You can read more about it here:
