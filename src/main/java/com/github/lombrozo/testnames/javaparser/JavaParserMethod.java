@@ -137,7 +137,16 @@ final class JavaParserMethod {
                 } else if (statement.isExpressionStmt()) {
                     final Expression expression = statement.asExpressionStmt().getExpression();
                     if (expression.isMethodCallExpr()) {
-                        result = Stream.of(statement);
+                        final MethodCallExpr call = expression.asMethodCallExpr();
+                        result = Stream.concat(
+                            Stream.concat(
+                                call.getScope()
+                                    .map(JavaParserMethod::flatStatements)
+                                    .orElseGet(Stream::empty),
+                                Stream.of(statement)
+                            ),
+                            call.getArguments().stream().flatMap(JavaParserMethod::flatStatements)
+                        );
                     } else {
                         result = JavaParserMethod.flatStatements(expression);
                     }
@@ -165,22 +174,34 @@ final class JavaParserMethod {
             result = JavaParserMethod.flatStatements(
                 Stream.of(expression.asLambdaExpr().getBody())
             );
+        } else if (expression.isMethodCallExpr()) {
+            final MethodCallExpr call = expression.asMethodCallExpr();
+            result = Stream.concat(
+                call.getScope().map(JavaParserMethod::flatStatements).orElseGet(Stream::empty),
+                call.getArguments().stream().flatMap(JavaParserMethod::flatStatements)
+            );
         } else {
             final List<Statement> statements = new ArrayList<>(0);
             final List<VariableDeclarator> declarators = new ArrayList<>(0);
+            final List<Expression> expressions = new ArrayList<>(0);
             for (final Node node : expression.getChildNodes()) {
                 if (node instanceof Statement) {
                     statements.add((Statement) node);
                 } else if (node instanceof VariableDeclarator) {
                     declarators.add((VariableDeclarator) node);
+                } else if (node instanceof Expression) {
+                    expressions.add((Expression) node);
                 }
             }
             result = Stream.concat(
-                declarators.stream()
-                    .map(VariableDeclarator::getInitializer)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .flatMap(JavaParserMethod::flatStatements),
+                Stream.concat(
+                    declarators.stream()
+                        .map(VariableDeclarator::getInitializer)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .flatMap(JavaParserMethod::flatStatements),
+                    expressions.stream().flatMap(JavaParserMethod::flatStatements)
+                ),
                 statements.stream()
             );
         }

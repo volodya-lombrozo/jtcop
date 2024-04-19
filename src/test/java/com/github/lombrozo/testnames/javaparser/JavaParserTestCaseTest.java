@@ -226,6 +226,25 @@ final class JavaParserTestCaseTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
+    void parsesAssertionInsideLambdaAsParam() {
+        final JavaParserTestClass parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
+        final String method = "checksTheCaseFrom357issueWithAssertionAsParam";
+        final TestCase tested = parser.all().stream()
+            .filter(test -> method.equals(test.name()))
+            .findFirst()
+            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
+        final Assertion assertion = tested.assertions().stream()
+            .findFirst()
+            .orElseThrow(() -> new AssertionError("Assertion not found"));
+        MatcherAssert.assertThat(
+            String.format("The '%s' assertion has to contain an explanation", assertion),
+            assertion.explanation().isPresent(),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
     void parsesPackageJava() {
         final JavaParserTestClass parser = JavaTestClasses.PACKAGE_INFO.toTestClass();
         MatcherAssert.assertThat(

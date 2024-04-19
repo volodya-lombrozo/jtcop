@@ -28,6 +28,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
 
 class TestWithAssertions {
     @Test
@@ -122,5 +123,16 @@ class TestWithAssertions {
             );
         };
         r.run();
+    }
+
+    @Test
+    void checksTheCaseFrom357issueWithAssertionAsParam() {
+        Stream.generate(() -> (Runnable) () -> {
+            MatcherAssert.assertThat(
+                "Lambda as a parameter assertion",
+                1,
+                Matchers.equalTo(1)
+            );
+        }).limit(1).forEach(Runnable::run);
     }
 }
