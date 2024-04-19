@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
+import java.util.function.Consumer;
 
 
 class AssertionsTest {
@@ -74,6 +75,20 @@ class AssertionsTest {
                 Matchers.equalTo(1)
             );
         }).limit(1).forEach(Runnable::run);
+    }
+
+    @Test
+    void checksTheCaseFrom357issueLabbdaAsParamAfterAConstructor() {
+        // This test were added to check the issue #357
+        // You can read more about it here:
+        // https://github.com/volodya-lombrozo/jtcop/issues/357
+        new AssertionsTest.Same(this).together(f -> {
+            MatcherAssert.assertThat(
+                "The class should be the same as the one that was passed to the constructor",
+                f,
+                Matchers.equalTo(this)
+            );
+        });
     }
 
     @Test
@@ -224,5 +239,17 @@ class AssertionsTest {
 
     private String message() {
         return "Message";
+    }
+
+    private static class Same {
+        private final AssertionsTest test;
+
+        public Same(final AssertionsTest test) {
+            this.test = test;
+        }
+
+        void together(Consumer<AssertionsTest> supplier) {
+            supplier.accept(this.test);
+        }
     }
 }
