@@ -200,7 +200,7 @@ final class JavaParserTestCaseTest {
             .findFirst()
             .orElseThrow(() -> new AssertionError("Assertion not found"));
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
+            String.format("The '%s' assertion has to contain some explanation", assertion),
             assertion.explanation().isPresent(),
             Matchers.is(true)
         );
