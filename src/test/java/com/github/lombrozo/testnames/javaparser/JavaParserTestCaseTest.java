@@ -275,7 +275,7 @@ final class JavaParserTestCaseTest {
         final int expected = 1;
         MatcherAssert.assertThat(
             String.format(
-            "Mockery has to be parsed: %s, but number of tests (%s) doesn't match with expected %s",
+                "Mockery has to be parsed: %s, but number of tests (%s) doesn't match with expected %s",
                 parser.all(),
                 tests,
                 expected
@@ -292,8 +292,8 @@ final class JavaParserTestCaseTest {
         final Set<String> expected = new SetOf<>("RuleTestCaseContainsMockery");
         MatcherAssert.assertThat(
             String.format(
-            "Suppressed mockery parsed: %s, but suppression (%s) does not match with expected (%s)",
-            parser.all(),
+                "Suppressed mockery parsed: %s, but suppression (%s) does not match with expected (%s)",
+                parser.all(),
                 suppressed,
                 expected
             ),
@@ -304,16 +304,13 @@ final class JavaParserTestCaseTest {
 
     @Test
     void parsesStatements() {
-        final TestCase parser = new ListOf<>(
+        final Collection<String> statements = new ListOf<>(
             JavaTestClasses.MOCKERY_TEST.toTestClass().all()
-        ).get(0);
-        final Collection<String> statements = parser.statements();
+        ).get(0).statements();
         final List<String> expected = new ListOf<>(
-            "final List list = Mockito.mock(List.class);",
-            "final Set set = Mockito.mock(Set.class);",
-            "final Map map = Mockito.mock(Map.class);",
-            "Mockito.when(list.get(0)).thenReturn(\"jeff\");",
-            "Mockito.when(map.get(\"test\")).thenReturn(\"jeff\");"
+            "Mockito.when(Mockito.mock(List.class).get(0)).thenReturn(\"jeff\");",
+            "Mockito.when(Mockito.mock(Map.class).get(\"test\")).thenReturn(\"jeff\");",
+            "Mockito.when(Mockito.mock(Set.class).add(1)).thenReturn(true);"
         );
         MatcherAssert.assertThat(
             String.format(

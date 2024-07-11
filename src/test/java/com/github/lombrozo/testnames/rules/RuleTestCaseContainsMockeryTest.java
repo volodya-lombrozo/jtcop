@@ -24,7 +24,6 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.javaparser.JavaTestClasses;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
@@ -40,11 +39,13 @@ final class RuleTestCaseContainsMockeryTest {
 
     @Test
     void complaintsAboutMockery() {
-        final TestCase test = new ListOf<>(
-            JavaTestClasses.MOCKERY_TEST.toTestClass().all()
-        ).get(0);
         final Complaint complaint = new ListOf<>(
-            new RuleTestCaseContainsMockery(test, 2).complaints()
+            new RuleTestCaseContainsMockery(
+                new ListOf<>(
+                    JavaTestClasses.MOCKERY_TEST.toTestClass().all()
+                ).get(0),
+                2
+            ).complaints()
         ).get(0);
         final String text =
             "'testsSomething' contains excessive number of mocks: 3. max allowed: 2";

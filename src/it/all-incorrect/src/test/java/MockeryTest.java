@@ -31,10 +31,8 @@ final class MockeryTest {
 
     @Test
     void testsSomething() {
-        final List list = Mockito.mock(List.class);
-        final Set set = Mockito.mock(Set.class);
-        final Map map = Mockito.mock(Map.class);
-        Mockito.when(list.get(0)).thenReturn("jeff");
-        Mockito.when(map.get("test")).thenReturn("jeff");
+        Mockito.when(Mockito.mock(List.class).get(0)).thenReturn("jeff");
+        Mockito.when(Mockito.mock(Map.class).get("test")).thenReturn("jeff");
+        Mockito.when(Mockito.mock(Set.class).add(1)).thenReturn(true);
     }
 }
