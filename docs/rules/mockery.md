@@ -4,7 +4,7 @@ Sometimes mocking can be good, and handy. But sometimes developers can lose
 themselves in their effort to mock out what isn’t being tested. In this case, a
 unit test contains so many mocks, stubs, and/or fakes that the system under
 test isn’t even being tested at all, instead data returned from mocks is what
-is being tested.
+is being tested. [Source][SA-description].
 
 ## Bad
 
@@ -62,3 +62,4 @@ In order to suppress this rule, you can use the following annotation
 `@SuppressedWarnings("JTCOP.RuleTestCaseContainsMockery")`.
 
 [Fake Objects]: https://www.yegor256.com/2014/09/23/built-in-fake-objects.html
+[SA-description]: https://stackoverflow.com/questions/333682/unit-testing-anti-patterns-catalogue/333686#333686
