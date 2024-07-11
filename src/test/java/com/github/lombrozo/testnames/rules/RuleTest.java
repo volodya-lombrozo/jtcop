@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -75,7 +76,8 @@ final class RuleTest {
     })
     void validatesCorrectly(final String name, final boolean expected) {
         final Collection<Complaint> complaints = new RuleCorrectTestCase(
-            new TestCase.Fake(name, new Assertion.Fake("Some message"))
+            new TestCase.Fake(name, new Assertion.Fake("Some message")),
+            0
         ).complaints();
         MatcherAssert.assertThat(
             complaints.toString(),

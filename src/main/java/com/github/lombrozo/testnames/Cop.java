@@ -58,7 +58,8 @@ final class Cop {
      * @todo #393:35min Refactor Cop ctor to accept number of arguments.
      *  We should refactor ctor to accept a number of argument from one
      *  object with them. For instance: new Args(new Arg("maxNumberOfMocks", 2), ...).
-     *  The same object should be applied to Cop#regular method.
+     *  The same object should be applied to Cop#regular method. We should
+     *  adjust RuleCorrectTestCases ctor too.
      */
     Cop(final Project proj, final int mocks) {
         this(proj, Cop.regular(mocks));

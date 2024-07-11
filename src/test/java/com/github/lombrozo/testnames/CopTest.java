@@ -39,7 +39,8 @@ final class CopTest {
         MatcherAssert.assertThat(
             "Cop should not find any complaints.",
             new Cop(
-                new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake())
+                new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake()),
+                0
             ).inspection(),
             Matchers.empty()
         );
@@ -53,7 +54,8 @@ final class CopTest {
                 new Project.Fake(
                     new ProductionClass.Fake("CustomClass"),
                     new TestClass.Fake()
-                )
+                ),
+                0
             ).inspection(),
             Matchers.hasSize(1)
         );

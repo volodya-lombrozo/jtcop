@@ -44,7 +44,7 @@ final class RuleTestCaseContainsMockeryTest {
             JavaTestClasses.MOCKERY_TEST.toTestClass().all()
         ).get(0);
         final Complaint complaint = new ListOf<>(
-            new RuleTestCaseContainsMockery(test, 2L).complaints()
+            new RuleTestCaseContainsMockery(test, 2).complaints()
         ).get(0);
         final String text =
             "'testsSomething' contains excessive number of mocks: 3. max allowed: 2";
