@@ -54,9 +54,14 @@ final class Cop {
     /**
      * Ctor.
      * @param proj The project to check.
+     * @param mocks Max number of mocks allowed
+     * @todo #393:35min Refactor Cop ctor to accept number of arguments.
+     *  We should refactor ctor to accept a number of argument from one
+     *  object with them. For instance: new Args(new Arg("maxNumberOfMocks", 2), ...).
+     *  The same object should be applied to Cop#regular method.
      */
-    Cop(final Project proj) {
-        this(proj, Cop.regular());
+    Cop(final Project proj, final int mocks) {
+        this(proj, Cop.regular(mocks));
     }
 
     /**
@@ -100,7 +105,7 @@ final class Cop {
      * Regular law.
      * @return The regular law which will be applied to all projects.
      */
-    private static Function<Suspect, Stream<Rule>> regular() {
+    private static Function<Suspect, Stream<Rule>> regular(final int mocks) {
         return suspect -> Stream.of(
             new RuleSuppressed(
                 new RuleAllTestsHaveProductionClass(suspect.project(), suspect.test()),
@@ -108,7 +113,7 @@ final class Cop {
             ),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleInheritanceInTests(suspect.test()), suspect.test()),
-            new RuleSuppressed(new RuleCorrectTestCases(suspect.test()), suspect.test())
+            new RuleSuppressed(new RuleCorrectTestCases(suspect.test(), mocks), suspect.test())
         );
     }
 }

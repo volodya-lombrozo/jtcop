@@ -48,8 +48,9 @@ public final class RuleCorrectTestCase implements Rule {
      * Ctor.
      *
      * @param test The test case to check
+     * @param max Max number of mocks allowed
      */
-    RuleCorrectTestCase(final TestCase test) {
+    RuleCorrectTestCase(final TestCase test, final int max) {
         this.all = Stream.of(
             new RuleNotCamelCase(test),
             new RuleNotContainsTestWord(test),
@@ -57,7 +58,8 @@ public final class RuleCorrectTestCase implements Rule {
             new RuleNotUsesSpecialCharacters(test),
             new RulePresentTense(test),
             new RuleAssertionMessage(test),
-            new LineHitterRule(test)
+            new LineHitterRule(test),
+            new RuleTestCaseContainsMockery(test, max)
         ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
     }
 

@@ -107,13 +107,22 @@ public final class ValidateMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.directory}/generated-test-sources")
     private File tests;
 
+    /**
+     * Max number of mocks allowed.
+     * Needed for {@link com.github.lombrozo.testnames.rules.RuleTestCaseContainsMockery}.
+     */
+    @Parameter(defaultValue = "2")
+    private int maxNumberOfMocks;
+
     @Override
     public void execute() throws MojoFailureException {
         this.getLog().info("Validating tests...");
         final ProjectWithoutJUnitExtensions proj = new ProjectWithoutJUnitExtensions(
             new Project.Combined(this.projects())
         );
-        final Collection<Complaint> complaints = new ArrayList<>(new Cop(proj).inspection());
+        final Collection<Complaint> complaints = new ArrayList<>(
+            new Cop(proj, this.maxNumberOfMocks).inspection()
+        );
         if (this.experimental) {
             complaints.addAll(new Cop(proj, Cop.experimental()).inspection());
         }

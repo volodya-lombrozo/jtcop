@@ -28,7 +28,7 @@ import org.cactoos.list.ListOf;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-@SuppressWarnings("JTCOP.TestCaseContainsMockery")
+@SuppressWarnings("JTCOP.RuleTestCaseContainsMockery")
 final class MockeryTest {
 
   @Test

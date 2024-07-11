@@ -47,19 +47,30 @@ public final class RuleCorrectTestCases implements Rule {
     private final TestClass tests;
 
     /**
+     * Max number of mocks allowed.
+     */
+    private final int maxNumberOfMocks;
+
+    /**
      * Ctor.
      *
      * @param cases The cases to check
+     * @param mocks Max number of mocks allowed
      */
-    public RuleCorrectTestCases(final TestClass cases) {
+    public RuleCorrectTestCases(final TestClass cases, final int mocks) {
         this.tests = cases;
+        this.maxNumberOfMocks = mocks;
     }
 
     @Override
     public Collection<Complaint> complaints() {
         final List<Complaint> list = this.tests.all().stream()
-            .map(test -> new RuleSuppressed(new RuleCorrectTestCase(test), test))
-            .map(Rule::complaints)
+            .map(
+                test ->
+                    new RuleSuppressed(
+                        new RuleCorrectTestCase(test, this.maxNumberOfMocks), test
+                    )
+            ).map(Rule::complaints)
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
         final Collection<Complaint> result;

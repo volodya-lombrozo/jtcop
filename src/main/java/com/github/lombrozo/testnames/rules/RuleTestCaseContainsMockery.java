@@ -34,6 +34,10 @@ import java.util.Collection;
  * Mockery rule.
  *
  * @since 1.3.4
+ * @todo #393:45min Add support for detecting mocks from other frameworks.
+ *  We should add support for detecting not only Mockito mocks, but mocks from
+ *  other frameworks too. We should even try to detect "generic" mocks without
+ *  a need to stick to the specific framework or library.
  */
 public final class RuleTestCaseContainsMockery implements Rule {
 
@@ -45,7 +49,7 @@ public final class RuleTestCaseContainsMockery implements Rule {
     /**
      * Allowed number of mocks.
      */
-    private final Long allowed;
+    private final int allowed;
 
     /**
      * Ctor.
@@ -53,7 +57,7 @@ public final class RuleTestCaseContainsMockery implements Rule {
      * @param tst   Test case
      * @param allwd Allowed number of mocks.
      */
-    public RuleTestCaseContainsMockery(final TestCase tst, final Long allwd) {
+    public RuleTestCaseContainsMockery(final TestCase tst, final int allwd) {
         this.test = tst;
         this.allowed = allwd;
     }
@@ -62,7 +66,7 @@ public final class RuleTestCaseContainsMockery implements Rule {
     public Collection<Complaint> complaints() {
         final Long mocks = new NumberOfMockitoMocks(this.test).value();
         return new RuleConditional(
-            () -> mocks > this.allowed,
+            () -> mocks > (long) this.allowed,
             new ComplaintLinked(
                 String.format(
                     "Test case '%s' contains excessive number of mocks: %s. max allowed: %s",
