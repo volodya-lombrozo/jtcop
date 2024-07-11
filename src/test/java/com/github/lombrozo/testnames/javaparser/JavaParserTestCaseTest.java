@@ -309,11 +309,11 @@ final class JavaParserTestCaseTest {
         ).get(0);
         final Collection<String> statements = parser.statements();
         final List<String> expected = new ListOf<>(
-            "Mockito.mock(List.class)",
-            "Mockito.mock(Set.class)",
-            "Mockito.mock(Map.class)",
-            "Mockito.when(list.get(0)).thenReturn(\"jeff\")",
-            "Mockito.when(map.get(\"test\")).thenReturn(\"jeff\")"
+            "final List list = Mockito.mock(List.class);",
+            "final Set set = Mockito.mock(Set.class);",
+            "final Map map = Mockito.mock(Map.class);",
+            "Mockito.when(list.get(0)).thenReturn(\"jeff\");",
+            "Mockito.when(map.get(\"test\")).thenReturn(\"jeff\");"
         );
         MatcherAssert.assertThat(
             String.format(

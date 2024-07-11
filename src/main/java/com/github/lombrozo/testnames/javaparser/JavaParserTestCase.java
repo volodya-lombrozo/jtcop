@@ -27,7 +27,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.type.VarType;
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
@@ -124,7 +124,7 @@ final class JavaParserTestCase implements TestCase {
     @Override
     public Collection<String> statements() {
         return this.method.asMethodDeclaration()
-            .findAll(MethodCallExpr.class)
+            .findAll(ExpressionStmt.class)
             .stream()
             .map(Node::toString)
             .collect(Collectors.toList());
