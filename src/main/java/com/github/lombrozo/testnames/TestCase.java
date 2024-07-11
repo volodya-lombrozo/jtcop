@@ -24,6 +24,7 @@
 
 package com.github.lombrozo.testnames;
 
+import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -56,6 +57,12 @@ public interface TestCase {
     Collection<Assertion> assertions();
 
     /**
+     * The method statements.
+     * @return The list of statements.
+     */
+    Collection<String> statements();
+
+    /**
      * The fake test case.
      *
      * @since 0.1.0
@@ -85,6 +92,11 @@ public interface TestCase {
         private final Collection<Assertion> assertions;
 
         /**
+         * Statements.
+         */
+        private final Collection<String> statements;
+
+        /**
          * Ctor.
          */
         public Fake() {
@@ -106,7 +118,12 @@ public interface TestCase {
          * @param asserts The method assertions.
          */
         public Fake(final Assertion... asserts) {
-            this(Fake.FAKE_NAME, Collections.emptyList(), Arrays.asList(asserts));
+            this(
+                Fake.FAKE_NAME,
+                Collections.emptyList(),
+                Arrays.asList(asserts),
+                Collections.emptyList()
+            );
         }
 
         /**
@@ -115,7 +132,12 @@ public interface TestCase {
          * @param asserts Assertions of test case
          */
         public Fake(final String name, final Assertion... asserts) {
-            this(name, Collections.emptyList(), Arrays.asList(asserts));
+            this(
+                name,
+                Collections.emptyList(),
+                Arrays.asList(asserts),
+                Collections.emptyList()
+            );
         }
 
         /**
@@ -124,7 +146,12 @@ public interface TestCase {
          * @param suppressed The suppressed rules
          */
         public Fake(final String name, final Collection<String> suppressed) {
-            this(name, suppressed, Collections.emptyList());
+            this(
+                name,
+                suppressed,
+                Collections.emptyList(),
+                Collections.emptyList()
+            );
         }
 
         /**
@@ -136,11 +163,13 @@ public interface TestCase {
         public Fake(
             final String name,
             final Collection<String> suppressed,
-            final Collection<Assertion> assertions
+            final Collection<Assertion> assertions,
+            final Collection<String> statements
         ) {
             this.name = name;
             this.suppressed = suppressed;
             this.assertions = assertions;
+            this.statements = statements;
         }
 
         @Override
@@ -156,6 +185,11 @@ public interface TestCase {
         @Override
         public Collection<Assertion> assertions() {
             return Collections.unmodifiableCollection(this.assertions);
+        }
+
+        @Override
+        public Collection<String> statements() {
+            return Collections.unmodifiableCollection(this.statements);
         }
     }
 }

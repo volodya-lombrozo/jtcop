@@ -76,12 +76,14 @@ final class RuleCorrectTestCasesTest {
                     new TestCase.Fake(
                         "remove",
                         Collections.singletonList("RulePresentTense"),
-                        Collections.singletonList(new Assertion.Fake())
+                        Collections.singletonList(new Assertion.Fake()),
+                        Collections.emptyList()
                     ),
                     new TestCase.Fake(
                         "create",
                         Collections.singletonList("RulePresentTense"),
-                        Collections.singletonList(new Assertion.Fake())
+                        Collections.singletonList(new Assertion.Fake()),
+                        Collections.emptyList()
                     )
                 )
             ).complaints(),

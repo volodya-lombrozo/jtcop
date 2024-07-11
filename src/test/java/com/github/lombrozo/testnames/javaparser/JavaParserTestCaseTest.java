@@ -30,8 +30,10 @@ import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.cactoos.list.ListOf;
 import org.cactoos.set.SetOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -296,6 +298,30 @@ final class JavaParserTestCaseTest {
                 expected
             ),
             suppressed,
+            new IsEqual<>(expected)
+        );
+    }
+
+    @Test
+    void parsesStatements() {
+        final TestCase parser = new ListOf<>(
+            JavaTestClasses.MOCKERY_TEST.toTestClass().all()
+        ).get(0);
+        final Collection<String> statements = parser.statements();
+        final List<String> expected = new ListOf<>(
+            "Mockito.mock(List.class)",
+            "Mockito.mock(Set.class)",
+            "Mockito.mock(Map.class)",
+            "Mockito.when(list.get(0)).thenReturn(\"jeff\")",
+            "Mockito.when(map.get(\"test\")).thenReturn(\"jeff\")"
+        );
+        MatcherAssert.assertThat(
+            String.format(
+                "Parsed statements %s do not match with expected %s",
+                statements,
+                expected
+            ),
+            statements,
             new IsEqual<>(expected)
         );
     }
