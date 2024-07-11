@@ -34,6 +34,9 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link RuleTestCaseContainsMockery}.
  *
  * @since 1.3.4
+ * @todo #393:30min Create #doesNotComplants unit test for positive scenarios too.
+ *  We should introduce a unit test(s) for positive scenarios too. We should
+ *  check allowed number of mocks and if testcase has a respected suppression.
  */
 final class RuleTestCaseContainsMockeryTest {
 
