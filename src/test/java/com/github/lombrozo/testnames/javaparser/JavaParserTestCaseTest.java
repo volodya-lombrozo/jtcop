@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import org.cactoos.set.SetOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -278,6 +279,23 @@ final class JavaParserTestCaseTest {
                 expected
             ),
             tests,
+            new IsEqual<>(expected)
+        );
+    }
+
+    @Test
+    void parsesSuppressedMockery() {
+        final JavaParserTestClass parser = JavaTestClasses.MOCKERY_SUPPRESSED.toTestClass();
+        final Collection<String> suppressed = parser.suppressed();
+        final Set<String> expected = new SetOf<>("TestCaseContainsMockery");
+        MatcherAssert.assertThat(
+            String.format(
+            "Suppressed mockery parsed: %s, but suppression (%s) does not match with expected (%s)",
+            parser.all(),
+                suppressed,
+                expected
+            ),
+            suppressed,
             new IsEqual<>(expected)
         );
     }
