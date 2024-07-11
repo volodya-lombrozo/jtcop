@@ -35,7 +35,7 @@ import org.cactoos.io.ResourceOf;
  * @since 0.1.14
  */
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
-enum JavaTestClasses {
+public enum JavaTestClasses {
 
     /**
      * Test class with only suppressed methods.
@@ -170,7 +170,7 @@ enum JavaTestClasses {
      * @param suppressed Rules excluded for entire project.
      * @return Concrete test class implementation - {@link JavaParserTestClass}.
      */
-    JavaParserTestClass toTestClass(final String... suppressed) {
+    public JavaParserTestClass toTestClass(final String... suppressed) {
         return new JavaParserTestClass(
             Paths.get("."),
             this.inputStream(),
