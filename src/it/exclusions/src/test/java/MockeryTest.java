@@ -31,7 +31,7 @@ final class MockeryTest {
 
     @Test
     @SuppressWarnings("JTCOP.RuleTestCaseContainsMockery")
-    void testsSomething() {
+    void checksSomething() {
         final List list = Mockito.mock(List.class);
         final Set set = Mockito.mock(Set.class);
         final Map map = Mockito.mock(Map.class);

@@ -74,9 +74,6 @@ SOFTWARE.
                 <exclusion>
                   JTCOP.RuleAssertionMessage
                 </exclusion>
-                <exclusion>
-                  JTCOP.RuleNotContainsTestWord
-                </exclusion>
               </exclusions>
             </configuration>
           </execution>
