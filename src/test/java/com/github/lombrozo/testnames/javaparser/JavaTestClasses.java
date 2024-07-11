@@ -140,7 +140,17 @@ enum JavaTestClasses {
     /**
      * Assert true line hitter for junit.
      */
-    JUNIT_ASSERT_TRUE_LINE_HITTER("JunitAssertTrueHitter.java");
+    JUNIT_ASSERT_TRUE_LINE_HITTER("JunitAssertTrueHitter.java"),
+
+    /**
+     * Test case with mockery.
+     */
+    MOCKERY_TEST("Mockery.java"),
+
+    /**
+     * Test case with suppressed mockery.
+     */
+    MOCKERY_SUPPRESSED("MockerySuppressed.java");
 
     /**
      * Java file name in resources.

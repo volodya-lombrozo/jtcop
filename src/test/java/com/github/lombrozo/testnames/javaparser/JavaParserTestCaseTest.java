@@ -31,8 +31,10 @@ import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -260,6 +262,23 @@ final class JavaParserTestCaseTest {
             "Java enum has to be parsed, but doesn't have to be a JUnit extension",
             JavaTestClasses.ENUM.toTestClass().characteristics().isJUnitExtension(),
             Matchers.is(false)
+        );
+    }
+
+    @Test
+    void parsesMockery() {
+        final JavaParserTestClass parser = JavaTestClasses.MOCKERY_TEST.toTestClass();
+        final int tests = parser.characteristics().numberOfTests();
+        final int expected = 1;
+        MatcherAssert.assertThat(
+            String.format(
+            "Mockery has to be parsed: %s, but number of tests (%s) doesn't match with expected %s",
+                parser.all(),
+                tests,
+                expected
+            ),
+            tests,
+            new IsEqual<>(expected)
         );
     }
 }
