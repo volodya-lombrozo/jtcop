@@ -45,7 +45,7 @@ final class NumberOfMockitoMocksTest {
         final long expected = 3L;
         MatcherAssert.assertThat(
             String.format(
-            "Test case parsed: %s, but number of mocks (%s) does not match with expected (%s)",
+                "Test case parsed: %s, but number of mocks (%s) does not match with expected (%s)",
                 test.toString(),
                 mocks,
                 expected

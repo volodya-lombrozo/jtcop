@@ -104,6 +104,7 @@ final class Cop {
 
     /**
      * Regular law.
+     * @param mocks Max number of mocks allowed
      * @return The regular law which will be applied to all projects.
      */
     private static Function<Suspect, Stream<Rule>> regular(final int mocks) {

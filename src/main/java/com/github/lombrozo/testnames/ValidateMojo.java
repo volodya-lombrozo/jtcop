@@ -110,6 +110,7 @@ public final class ValidateMojo extends AbstractMojo {
     /**
      * Max number of mocks allowed.
      * Needed for {@link com.github.lombrozo.testnames.rules.RuleTestCaseContainsMockery}.
+     * @checkstyle MemberNameCheck (3 lines)
      */
     @Parameter(defaultValue = "2")
     private int maxNumberOfMocks;

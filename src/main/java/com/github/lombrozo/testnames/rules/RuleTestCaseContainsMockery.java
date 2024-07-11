@@ -54,8 +54,8 @@ public final class RuleTestCaseContainsMockery implements Rule {
     /**
      * Ctor.
      *
-     * @param tst   Test case
-     * @param allwd Allowed number of mocks.
+     * @param tst Test case
+     * @param allwd Allowed number of mocks
      */
     public RuleTestCaseContainsMockery(final TestCase tst, final int allwd) {
         this.test = tst;
@@ -69,12 +69,12 @@ public final class RuleTestCaseContainsMockery implements Rule {
             () -> mocks > (long) this.allowed,
             new ComplaintLinked(
                 String.format(
-                    "Test case '%s' contains excessive number of mocks: %s. max allowed: %s",
+                    "Method '%s' contains excessive number of mocks: %s. max allowed: %s",
                     this.test.name(),
                     mocks,
                     this.allowed
                 ),
-                "Simplify mocking in test case",
+                "Simplify mocking in test case or stick to fakes",
                 this.getClass(),
                 "mockery.md"
             )

@@ -289,7 +289,7 @@ final class JavaParserTestCaseTest {
     void parsesSuppressedMockery() {
         final JavaParserTestClass parser = JavaTestClasses.MOCKERY_SUPPRESSED.toTestClass();
         final Collection<String> suppressed = parser.suppressed();
-        final Set<String> expected = new SetOf<>("TestCaseContainsMockery");
+        final Set<String> expected = new SetOf<>("RuleTestCaseContainsMockery");
         MatcherAssert.assertThat(
             String.format(
             "Suppressed mockery parsed: %s, but suppression (%s) does not match with expected (%s)",

@@ -21,44 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.lombrozo.testnames.javaparser;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-import com.github.lombrozo.testnames.TestCase;
-import java.util.regex.Pattern;
-import org.cactoos.Scalar;
+final class MockeryTest {
 
-/**
- * Number of Mockito mocks in the test case.
- *
- * @since 1.3.4
- */
-public final class NumberOfMockitoMocks implements Scalar<Long> {
-
-    /**
-     * Mockito Mock Pattern.
-     */
-    private static final Pattern MOCK_PATTERN =
-        Pattern.compile("^(mock\\(.*?\\);)|(Mockito\\.mock\\(.*?\\);)$");
-
-    /**
-     * Test case.
-     */
-    private final TestCase test;
-
-    /**
-     * Ctor.
-     * @param tst Test case
-     */
-    public NumberOfMockitoMocks(final TestCase tst) {
-        this.test = tst;
-    }
-
-    @Override
-    public Long value() {
-        return this.test.statements().stream()
-            .filter(
-                statement ->
-                    NumberOfMockitoMocks.MOCK_PATTERN.matcher(statement).find()
-            ).count();
+    @Test
+    @SuppressWarnings("JTCOP.RuleTestCaseContainsMockery")
+    void testsSomething() {
+        final List list = Mockito.mock(List.class);
+        final Set set = Mockito.mock(Set.class);
+        final Map map = Mockito.mock(Map.class);
+        Mockito.when(list.get(0)).thenReturn("jeff");
+        Mockito.when(map.get("test")).thenReturn("jeff");
     }
 }

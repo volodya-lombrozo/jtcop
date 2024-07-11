@@ -48,6 +48,7 @@ public final class RuleCorrectTestCases implements Rule {
 
     /**
      * Max number of mocks allowed.
+     * @checkstyle MemberNameCheck (3 lines)
      */
     private final int maxNumberOfMocks;
 

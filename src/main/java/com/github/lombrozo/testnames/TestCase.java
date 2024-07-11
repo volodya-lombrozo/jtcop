@@ -24,7 +24,6 @@
 
 package com.github.lombrozo.testnames;
 
-import com.github.javaparser.ast.expr.MethodCallExpr;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -68,7 +67,7 @@ public interface TestCase {
      * @since 0.1.0
      */
     @Data
-    @SuppressWarnings("PMD.TestClassWithoutTestCases")
+    @SuppressWarnings({"PMD.TestClassWithoutTestCases", "PMD.DataClass"})
     final class Fake implements TestCase {
 
         /**
@@ -159,6 +158,8 @@ public interface TestCase {
          * @param name The name of test case
          * @param suppressed The suppressed rules
          * @param assertions The method assertions
+         * @param statements The method statements
+         * @checkstyle ParameterNumberCheck (2 lines)
          */
         public Fake(
             final String name,

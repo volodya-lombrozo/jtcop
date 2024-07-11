@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link RuleTestCaseContainsMockeryTest}.
+ * Test case for {@link RuleTestCaseContainsMockery}.
  *
  * @since 1.3.4
  */
