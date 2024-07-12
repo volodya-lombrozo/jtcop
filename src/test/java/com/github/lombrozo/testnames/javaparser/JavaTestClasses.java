@@ -150,7 +150,17 @@ public enum JavaTestClasses {
     /**
      * Test case with suppressed mockery.
      */
-    MOCKERY_SUPPRESSED("MockerySuppressed.java");
+    MOCKERY_SUPPRESSED("MockerySuppressed.java"),
+
+    /**
+     * Valid test with acceptable number of mocks.
+     */
+    MOCKERY_ACCEPTABLE("MockeryValidTest.java"),
+
+    /**
+     * Test with unused mocks.
+     */
+    MOCKS_UNUSED("MocksUnusedTest.java");
 
     /**
      * Java file name in resources.

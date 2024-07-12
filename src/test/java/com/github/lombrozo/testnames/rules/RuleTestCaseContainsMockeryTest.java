@@ -24,19 +24,23 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.javaparser.JavaTestClasses;
+import java.util.Collection;
+import java.util.stream.Stream;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link RuleTestCaseContainsMockery}.
  *
  * @since 1.3.4
- * @todo #393:30min Create #doesNotComplants unit test for positive scenarios too.
- *  We should introduce a unit test(s) for positive scenarios too. We should
- *  check allowed number of mocks and if testcase has a respected suppression.
  */
 final class RuleTestCaseContainsMockeryTest {
 
@@ -60,6 +64,29 @@ final class RuleTestCaseContainsMockeryTest {
             ),
             complaint.message(),
             Matchers.containsString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("classes")
+    void doesNotComplaints(final TestClass test) {
+        final Collection<Complaint> complaints = new RuleTestCaseContainsMockery(
+            new ListOf<>(test.all()).get(0), 2
+        ).complaints();
+        MatcherAssert.assertThat(
+            String.format(
+            "Complaints received: %s, but should be empty!",
+                complaints
+            ),
+            complaints.isEmpty(),
+            new IsEqual<>(true)
+        );
+    }
+
+    private static Stream<Arguments> classes() {
+        return Stream.of(
+            Arguments.of(JavaTestClasses.MOCKERY_ACCEPTABLE.toTestClass()),
+            Arguments.of(JavaTestClasses.MOCKS_UNUSED.toTestClass())
         );
     }
 }
