@@ -24,15 +24,30 @@
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 final class MockeryValidTest {
 
+    /**
+     * Test case that uses acceptable number of mocks.
+     *  This test case should pass {@link com.github.lombrozo.testnames.rules.RuleTestCaseContainsMockery}
+     *  since it contains aacceptable number of mocks (2), the maximum is 2 (default).
+     */
     @Test
-    void testsSomething() {
+    void testsSomethingWithAcceptableNumberOfMocks() {
         Mockito.when(Mockito.mock(List.class).get(0)).thenReturn("jeff");
         Mockito.when(Mockito.mock(Map.class).get("test")).thenReturn("jeff");
+    }
+
+    /**
+     * Test case without mocks at all.
+     *  This test case should pass {@link com.github.lombrozo.testnames.rules.RuleTestCaseContainsMockery}
+     *  since it does not contain 0 mocks, the maximum is 2 (default).
+     */
+    @Test
+    void testsSomethingWithoutMocks() {
+        Mockito.when(new ListOf<>().get(0)).thenReturn("jeff");
+        Mockito.when(new MapOf<>().get("test")).thenReturn("jeff");
     }
 }

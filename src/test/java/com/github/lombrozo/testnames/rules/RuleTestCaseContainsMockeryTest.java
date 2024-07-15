@@ -85,8 +85,7 @@ final class RuleTestCaseContainsMockeryTest {
 
     private static Stream<Arguments> classes() {
         return Stream.of(
-            Arguments.of(JavaTestClasses.MOCKERY_ACCEPTABLE.toTestClass()),
-            Arguments.of(JavaTestClasses.MOCKS_UNUSED.toTestClass())
+            Arguments.of(JavaTestClasses.MOCKERY_VALID.toTestClass())
         );
     }
 }

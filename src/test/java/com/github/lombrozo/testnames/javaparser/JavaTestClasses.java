@@ -155,12 +155,7 @@ public enum JavaTestClasses {
     /**
      * Valid test with acceptable number of mocks.
      */
-    MOCKERY_ACCEPTABLE("MockeryValidTest.java"),
-
-    /**
-     * Test with unused mocks.
-     */
-    MOCKS_UNUSED("MocksUnusedTest.java");
+    MOCKERY_VALID("MockeryValidTest.java");
 
     /**
      * Java file name in resources.
