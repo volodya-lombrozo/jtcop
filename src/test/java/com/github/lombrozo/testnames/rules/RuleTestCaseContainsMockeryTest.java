@@ -24,7 +24,7 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.javaparser.JavaTestClasses;
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -68,14 +68,14 @@ final class RuleTestCaseContainsMockeryTest {
     }
 
     @ParameterizedTest
-    @MethodSource("classes")
-    void doesNotComplaints(final TestClass test) {
+    @MethodSource("cases")
+    void doesNotComplaints(final TestCase test) {
         final Collection<Complaint> complaints = new RuleTestCaseContainsMockery(
-            new ListOf<>(test.all()).get(0), 2
+            test, 2
         ).complaints();
         MatcherAssert.assertThat(
             String.format(
-            "Complaints received: %s, but should be empty!",
+                "Complaints received: %s, but should be empty!",
                 complaints
             ),
             complaints.isEmpty(),
@@ -83,9 +83,8 @@ final class RuleTestCaseContainsMockeryTest {
         );
     }
 
-    private static Stream<Arguments> classes() {
-        return Stream.of(
-            Arguments.of(JavaTestClasses.MOCKERY_VALID.toTestClass())
-        );
+    private static Stream<Arguments> cases() {
+        return new ListOf<>(JavaTestClasses.MOCKERY_VALID.toTestClass().all())
+            .stream().map(Arguments::of);
     }
 }
