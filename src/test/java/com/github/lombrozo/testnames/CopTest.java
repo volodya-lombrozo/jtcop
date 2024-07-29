@@ -40,7 +40,7 @@ final class CopTest {
             "Cop should not find any complaints.",
             new Cop(
                 new Project.Fake(new ProductionClass.Fake(), new TestClass.Fake()),
-                0
+                new Parameters("maxNumberOfMocks", 0)
             ).inspection(),
             Matchers.empty()
         );
@@ -55,7 +55,7 @@ final class CopTest {
                     new ProductionClass.Fake("CustomClass"),
                     new TestClass.Fake()
                 ),
-                0
+                new Parameters("maxNumberOfMocks", 0)
             ).inspection(),
             Matchers.hasSize(1)
         );

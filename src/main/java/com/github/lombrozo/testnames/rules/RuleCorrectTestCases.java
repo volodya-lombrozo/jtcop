@@ -25,6 +25,7 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.Parameters;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.complaints.ComplaintClass;
@@ -52,13 +53,17 @@ public final class RuleCorrectTestCases implements Rule {
      */
     private final int maxNumberOfMocks;
 
+    public RuleCorrectTestCases(final TestClass tests, final Parameters parameters) {
+        this(tests, parameters.intValue("maxNumberOfMocks").orElse(2));
+    }
+
     /**
      * Ctor.
      *
      * @param cases The cases to check
      * @param mocks Max number of mocks allowed
      */
-    public RuleCorrectTestCases(final TestClass cases, final int mocks) {
+    RuleCorrectTestCases(final TestClass cases, final int mocks) {
         this.tests = cases;
         this.maxNumberOfMocks = mocks;
     }

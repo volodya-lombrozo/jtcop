@@ -47,6 +47,11 @@ final class Cop {
     private final Project project;
 
     /**
+     * Parameters for rules.
+     */
+    private final Parameters parameters;
+
+    /**
      * The law to check the project.
      */
     private final Function<Suspect, Stream<Rule>> law;
@@ -54,15 +59,10 @@ final class Cop {
     /**
      * Ctor.
      * @param proj The project to check.
-     * @param mocks Max number of mocks allowed
-     * @todo #393:35min Refactor Cop ctor to accept number of arguments.
-     *  We should refactor ctor to accept a number of argument from one
-     *  object with them. For instance: new Args(new Arg("maxNumberOfMocks", 2), ...).
-     *  The same object should be applied to Cop#regular method. We should
-     *  adjust RuleCorrectTestCases ctor too.
+     * @param parameters Parameters for rules.
      */
-    Cop(final Project proj, final int mocks) {
-        this(proj, Cop.regular(mocks));
+    Cop(final Project proj, final Parameters parameters) {
+        this(proj, Cop.regular(parameters));
     }
 
     /**
@@ -74,7 +74,22 @@ final class Cop {
         final Project project,
         final Function<Suspect, Stream<Rule>> law
     ) {
+        this(project, new Parameters(), law);
+    }
+
+    /**
+     * Ctor.
+     * @param project The project to check.
+     * @param parameters Parameters for rules.
+     * @param law The law to check the project.
+     */
+    private Cop(
+        final Project project,
+        final Parameters parameters,
+        final Function<Suspect, Stream<Rule>> law
+    ) {
         this.project = project;
+        this.parameters = parameters;
         this.law = law;
     }
 
@@ -104,10 +119,10 @@ final class Cop {
 
     /**
      * Regular law.
-     * @param mocks Max number of mocks allowed
+     * @param parameters Parameters for rules.
      * @return The regular law which will be applied to all projects.
      */
-    private static Function<Suspect, Stream<Rule>> regular(final int mocks) {
+    private static Function<Suspect, Stream<Rule>> regular(final Parameters parameters) {
         return suspect -> Stream.of(
             new RuleSuppressed(
                 new RuleAllTestsHaveProductionClass(suspect.project(), suspect.test()),
@@ -115,7 +130,7 @@ final class Cop {
             ),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleInheritanceInTests(suspect.test()), suspect.test()),
-            new RuleSuppressed(new RuleCorrectTestCases(suspect.test(), mocks), suspect.test())
+            new RuleSuppressed(new RuleCorrectTestCases(suspect.test(), parameters), suspect.test())
         );
     }
 }

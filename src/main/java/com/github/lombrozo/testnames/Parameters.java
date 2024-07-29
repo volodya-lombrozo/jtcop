@@ -60,7 +60,7 @@ public final class Parameters {
      * @param name Name of the parameter.
      * @return Integer value.
      */
-    OptionalInt intValue(final String name) {
+    public OptionalInt intValue(final String name) {
         final OptionalInt result;
         if (!this.params.containsKey(name)) {
             result = OptionalInt.empty();

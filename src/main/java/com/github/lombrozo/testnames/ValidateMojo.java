@@ -122,7 +122,7 @@ public final class ValidateMojo extends AbstractMojo {
             new Project.Combined(this.projects())
         );
         final Collection<Complaint> complaints = new ArrayList<>(
-            new Cop(proj, this.maxNumberOfMocks).inspection()
+            new Cop(proj, new Parameters("maxNumberOfMocks", this.maxNumberOfMocks)).inspection()
         );
         if (this.experimental) {
             complaints.addAll(new Cop(proj, Cop.experimental()).inspection());
