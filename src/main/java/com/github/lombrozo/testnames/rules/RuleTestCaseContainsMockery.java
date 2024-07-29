@@ -24,6 +24,7 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.Parameters;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
@@ -50,6 +51,15 @@ public final class RuleTestCaseContainsMockery implements Rule {
      * Allowed number of mocks.
      */
     private final int allowed;
+
+    /**
+     * Ctor.
+     * @param test Test case.
+     * @param params Parameters.
+     */
+    public RuleTestCaseContainsMockery(final TestCase test, final Parameters params) {
+        this(test, params.intValue("maxNumberOfMocks").orElse(2));
+    }
 
     /**
      * Ctor.

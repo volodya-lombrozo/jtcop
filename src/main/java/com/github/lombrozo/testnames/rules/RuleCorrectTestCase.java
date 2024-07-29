@@ -25,6 +25,7 @@
 package com.github.lombrozo.testnames.rules;
 
 import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.Parameters;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
@@ -48,9 +49,9 @@ public final class RuleCorrectTestCase implements Rule {
      * Ctor.
      *
      * @param test The test case to check
-     * @param max Max number of mocks allowed
+     * @param parameters Parameters to use for the check.
      */
-    RuleCorrectTestCase(final TestCase test, final int max) {
+    RuleCorrectTestCase(final TestCase test, final Parameters parameters) {
         this.all = Stream.of(
             new RuleNotCamelCase(test),
             new RuleNotContainsTestWord(test),
@@ -59,7 +60,7 @@ public final class RuleCorrectTestCase implements Rule {
             new RulePresentTense(test),
             new RuleAssertionMessage(test),
             new LineHitterRule(test),
-            new RuleTestCaseContainsMockery(test, max)
+            new RuleTestCaseContainsMockery(test, parameters)
         ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
     }
 

@@ -47,8 +47,7 @@ final class RuleCorrectTestCasesTest {
                 new TestClass.Fake(
                     new TestCase.Fake("removes", new Assertion.Fake()),
                     new TestCase.Fake("creates", new Assertion.Fake())
-                ),
-                0
+                )
             ).complaints(),
             Matchers.empty()
         );
@@ -62,8 +61,7 @@ final class RuleCorrectTestCasesTest {
                 new TestClass.Fake(
                     new TestCase.Fake("remove", new Assertion.Fake()),
                     new TestCase.Fake("create", new Assertion.Fake())
-                ),
-                0
+                )
             ).complaints(),
             Matchers.allOf(Matchers.hasSize(1))
         );
@@ -87,8 +85,7 @@ final class RuleCorrectTestCasesTest {
                         Collections.singletonList(new Assertion.Fake()),
                         Collections.emptyList()
                     )
-                ),
-                0
+                )
             ).complaints(),
             Matchers.empty()
         );
@@ -103,7 +100,7 @@ final class RuleCorrectTestCasesTest {
         );
         MatcherAssert.assertThat(
             "Should skip suppressed checks on class level.",
-            new RuleSuppressed(new RuleCorrectTestCases(klass, 0), klass).complaints(),
+            new RuleSuppressed(new RuleCorrectTestCases(klass), klass).complaints(),
             Matchers.empty()
         );
     }
