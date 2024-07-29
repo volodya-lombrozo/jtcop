@@ -47,11 +47,6 @@ final class Cop {
     private final Project project;
 
     /**
-     * Parameters for rules.
-     */
-    private final Parameters parameters;
-
-    /**
      * The law to check the project.
      */
     private final Function<Suspect, Stream<Rule>> law;
@@ -82,22 +77,7 @@ final class Cop {
         final Project project,
         final Function<Suspect, Stream<Rule>> law
     ) {
-        this(project, new Parameters(), law);
-    }
-
-    /**
-     * Ctor.
-     * @param project The project to check.
-     * @param parameters Parameters for rules.
-     * @param law The law to check the project.
-     */
-    private Cop(
-        final Project project,
-        final Parameters parameters,
-        final Function<Suspect, Stream<Rule>> law
-    ) {
         this.project = project;
-        this.parameters = parameters;
         this.law = law;
     }
 

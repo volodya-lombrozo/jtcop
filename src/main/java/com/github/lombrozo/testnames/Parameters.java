@@ -62,9 +62,7 @@ public final class Parameters {
      */
     public OptionalInt intValue(final String name) {
         final OptionalInt result;
-        if (!this.params.containsKey(name)) {
-            result = OptionalInt.empty();
-        } else {
+        if (this.params.containsKey(name)) {
             final Object value = this.params.get(name);
             if (!(value instanceof Integer)) {
                 throw new IllegalArgumentException(
@@ -74,6 +72,8 @@ public final class Parameters {
                 );
             }
             result = OptionalInt.of(Integer.class.cast(value));
+        } else {
+            result = OptionalInt.empty();
         }
         return result;
     }
@@ -83,13 +83,13 @@ public final class Parameters {
      * @param params Parameters pairs like "name", "value", "name2", "value2".
      * @return Map.
      */
-    private static Map<String, ?> fromArray(final Object[] params) {
+    private static Map<String, ?> fromArray(final Object... params) {
         if (params.length % 2 != 0) {
             throw new IllegalArgumentException("Parameters list should be even");
         }
         final Map<String, Object> res = new HashMap<>(0);
-        for (int i = 0; i < params.length; i += 2) {
-            res.put((String) params[i], params[i + 1]);
+        for (int index = 0; index < params.length; index += 2) {
+            res.put((String) params[index], params[index + 1]);
         }
         return res;
     }
