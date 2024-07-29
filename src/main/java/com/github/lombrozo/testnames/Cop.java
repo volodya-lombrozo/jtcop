@@ -58,6 +58,14 @@ final class Cop {
 
     /**
      * Ctor.
+     * @param project The project to check.
+     */
+    Cop(final Project project) {
+        this(project, new Parameters());
+    }
+
+    /**
+     * Ctor.
      * @param proj The project to check.
      * @param parameters Parameters for rules.
      */
