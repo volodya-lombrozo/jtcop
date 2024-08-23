@@ -237,6 +237,31 @@ class AssertionsTest {
         );
     }
 
+    @Test
+    void findsAssertionsInBlockOfTryStatement() {
+        try {
+            MatcherAssert.assertThat(
+                "Message",
+                "1",
+                Matchers.equalTo("1")
+            );
+        } catch (RuntimeException e) {
+        }
+    }
+
+    @Test
+    void findsAssertionsInCatchOfTryStatement() {
+        try {
+            System.out.println("Hello");
+        } catch (RuntimeException e) {
+            MatcherAssert.assertThat(
+                message(),
+                "1",
+                Matchers.equalTo("1")
+            );
+        }
+    }
+
     private String message() {
         return "Message";
     }

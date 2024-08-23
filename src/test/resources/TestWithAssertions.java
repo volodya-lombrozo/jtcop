@@ -150,4 +150,19 @@ class TestWithAssertions {
         }
     }
 
+    @Test
+    void checksTheCaseFrom413issueWithAssertionInCatchBlock() {
+        // https://github.com/volodya-lombrozo/jtcop/issues/413
+        try {
+            System.nanoTime();
+        } catch (RuntimeException e) {
+            MatcherAssert.assertThat(
+                "Assertion inside try statement",
+                "1",
+                Matchers.equalTo("1")
+            );
+            e.printStackTrace();
+        }
+    }
+
 }
