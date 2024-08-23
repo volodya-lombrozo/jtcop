@@ -135,4 +135,19 @@ class TestWithAssertions {
             );
         }).limit(1).forEach(Runnable::run);
     }
+
+    @Test
+    void checksTheCaseFrom413issueWithAssertionInTryStatement() {
+        // https://github.com/volodya-lombrozo/jtcop/issues/413
+        try {
+            MatcherAssert.assertThat(
+                "Assertion inside try statement",
+                "1",
+                Matchers.equalTo("1")
+            );
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
