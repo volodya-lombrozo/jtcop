@@ -48,6 +48,21 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("PMD.TooManyMethods")
 final class JavaParserTestCaseTest {
 
+    /**
+     * Message for assertion.
+     */
+    private static final String MESSAGE = "The '%s' assertion has to contain an explanation";
+
+    /**
+     * Not found message for assertions.
+     */
+    private static final String NOT_FOUND = "Assertion not found";
+
+    /**
+     * Method not found message.
+     */
+    private static final String METHOD_NFOUND = "Method %s not found";
+
     @Test
     void convertsToString() {
         final String name = "name";
@@ -162,7 +177,7 @@ final class JavaParserTestCaseTest {
         );
         final Assertion assertion = assertions.iterator().next();
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
+            String.format(JavaParserTestCaseTest.MESSAGE, assertion),
             assertion.explanation().isPresent(),
             Matchers.is(true)
         );
@@ -181,12 +196,16 @@ final class JavaParserTestCaseTest {
         final TestCase tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
             .findFirst()
-            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
+            .orElseThrow(
+                () -> new AssertionError(
+                    String.format(JavaParserTestCaseTest.METHOD_NFOUND, method)
+                )
+            );
         final Assertion assertion = tested.assertions().stream()
             .findFirst()
-            .orElseThrow(() -> new AssertionError("Assertion not found"));
+            .orElseThrow(() -> new AssertionError(JavaParserTestCaseTest.NOT_FOUND));
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
+            String.format(JavaParserTestCaseTest.MESSAGE, assertion),
             assertion.explanation().isPresent(),
             Matchers.is(true)
         );
@@ -200,10 +219,14 @@ final class JavaParserTestCaseTest {
         final TestCase tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
             .findFirst()
-            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
+            .orElseThrow(
+                () -> new AssertionError(
+                    String.format(JavaParserTestCaseTest.METHOD_NFOUND, method)
+                )
+            );
         final Assertion assertion = tested.assertions().stream()
             .findFirst()
-            .orElseThrow(() -> new AssertionError("Assertion not found"));
+            .orElseThrow(() -> new AssertionError(JavaParserTestCaseTest.NOT_FOUND));
         MatcherAssert.assertThat(
             String.format("The '%s' assertion has to contain some explanation", assertion),
             assertion.explanation().isPresent(),
@@ -219,12 +242,16 @@ final class JavaParserTestCaseTest {
         final TestCase tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
             .findFirst()
-            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
+            .orElseThrow(
+                () -> new AssertionError(
+                    String.format(JavaParserTestCaseTest.METHOD_NFOUND, method)
+                )
+            );
         final Assertion assertion = tested.assertions().stream()
             .findFirst()
-            .orElseThrow(() -> new AssertionError("Assertion not found"));
+            .orElseThrow(() -> new AssertionError(JavaParserTestCaseTest.NOT_FOUND));
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
+            String.format(JavaParserTestCaseTest.MESSAGE, assertion),
             assertion.explanation().isPresent(),
             Matchers.is(true)
         );
@@ -238,49 +265,61 @@ final class JavaParserTestCaseTest {
         final TestCase tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
             .findFirst()
-            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
+            .orElseThrow(
+                () -> new AssertionError(
+                    String.format(JavaParserTestCaseTest.METHOD_NFOUND, method)
+                )
+            );
         final Assertion assertion = tested.assertions().stream()
             .findFirst()
-            .orElseThrow(() -> new AssertionError("Assertion not found"));
+            .orElseThrow(() -> new AssertionError(JavaParserTestCaseTest.NOT_FOUND));
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
+            String.format(JavaParserTestCaseTest.MESSAGE, assertion),
             assertion.explanation().isPresent(),
             Matchers.is(true)
         );
     }
 
     @Test
-    void parsesAssertionInsideTryStatement(){
+    void parsesAssertionInsideTryStatement() {
         final JavaParserTestClass parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
         final String method = "checksTheCaseFrom413issueWithAssertionInTryStatement";
         final TestCase tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
             .findFirst()
-            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
-        final Assertion assertion = tested.assertions().stream()
+            .orElseThrow(
+                () -> new AssertionError(
+                    String.format(JavaParserTestCaseTest.METHOD_NFOUND, method)
+                )
+            );
+        final Assertion assrtion = tested.assertions().stream()
             .findFirst()
-            .orElseThrow(() -> new AssertionError("Assertion not found"));
+            .orElseThrow(() -> new AssertionError(JavaParserTestCaseTest.NOT_FOUND));
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
-            assertion.explanation().isPresent(),
+            String.format(JavaParserTestCaseTest.MESSAGE, assrtion),
+            assrtion.explanation().isPresent(),
             Matchers.is(true)
         );
     }
 
     @Test
-    void parsesAssertionInsideCatchBlock(){
+    void parsesAssertionInsideCatchBlock() {
         final JavaParserTestClass parser = JavaTestClasses.TEST_WITH_ASSERTIONS.toTestClass();
         final String method = "checksTheCaseFrom413issueWithAssertionInCatchBlock";
         final TestCase tested = parser.all().stream()
             .filter(test -> method.equals(test.name()))
             .findFirst()
-            .orElseThrow(() -> new AssertionError(String.format("Method %s not found", method)));
-        final Assertion assertion = tested.assertions().stream()
+            .orElseThrow(
+                () -> new AssertionError(
+                    String.format(JavaParserTestCaseTest.METHOD_NFOUND, method)
+                )
+            );
+        final Assertion assrtion = tested.assertions().stream()
             .findFirst()
-            .orElseThrow(() -> new AssertionError("Assertion not found"));
+            .orElseThrow(() -> new AssertionError(JavaParserTestCaseTest.NOT_FOUND));
         MatcherAssert.assertThat(
-            String.format("The '%s' assertion has to contain an explanation", assertion),
-            assertion.explanation().isPresent(),
+            String.format(JavaParserTestCaseTest.MESSAGE, assrtion),
+            assrtion.explanation().isPresent(),
             Matchers.is(true)
         );
     }
