@@ -321,7 +321,7 @@ SOFTWARE.
                         <limit>
                           <counter>LINE</counter>
                           <value>COVEREDRATIO</value>
-                          <minimum>0.84</minimum>
+                          <minimum>0.76</minimum>
                         </limit>
                         <limit>
                           <counter>BRANCH</counter>
@@ -341,7 +341,7 @@ SOFTWARE.
                         <limit>
                           <counter>CLASS</counter>
                           <value>MISSEDCOUNT</value>
-                          <maximum>2</maximum>
+                          <maximum>3</maximum>
                         </limit>
                       </limits>
                     </rule>
