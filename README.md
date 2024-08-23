@@ -87,6 +87,17 @@ but if you want to change it, just add the `phase` to `execution` section:
 </execution>
 ```
 
+## Skip the plugin execution
+
+If you want to skip the plugin execution, just set the `skip` property to `true`
+in the configuration:
+
+```xml
+<configuration>
+  <skip>true</skip>
+</configuration>
+```
+
 ## How to Contribute
 
 Fork repository, make changes, send us a pull request. We will review your
