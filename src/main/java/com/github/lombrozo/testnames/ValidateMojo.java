@@ -115,8 +115,24 @@ public final class ValidateMojo extends AbstractMojo {
     @Parameter(defaultValue = "2")
     private int maxNumberOfMocks;
 
+    /**
+     * Skip the validation.
+     */
+    @Parameter(defaultValue = "false")
+    private boolean skip;
+
     @Override
     public void execute() throws MojoFailureException {
+        if (this.skip) {
+            this.getLog().info(
+                "Validation by JTCOP is skipped because the configuration parameter 'skip' is set to 'true'."
+            );
+        } else {
+            this.validate();
+        }
+    }
+
+    private void validate() throws MojoFailureException {
         this.getLog().info("Validating tests...");
         final ProjectWithoutJUnitExtensions proj = new ProjectWithoutJUnitExtensions(
             new Project.Combined(this.projects())
