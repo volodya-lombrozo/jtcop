@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -109,15 +110,26 @@ final class JavaParserMethod {
      * @return List of statements.
      */
     private static List<Statement> statements(final Node node) {
-        final List<Statement> res = new ArrayList<>(0);
-        if (node instanceof Statement) {
-            res.add((Statement) node);
-        }
-        node.getChildNodes()
-            .stream()
-            .map(JavaParserMethod::statements)
-            .forEach(res::addAll);
-        return res;
+        return Stream.concat(
+            Stream.of(node)
+                .filter(Statement.class::isInstance)
+                .map(Statement.class::cast),
+            node.getChildNodes()
+                .stream()
+                .map(JavaParserMethod::statements)
+                .flatMap(Collection::stream)
+        ).collect(Collectors.toList());
+
+
+//        final List<Statement> res = new ArrayList<>(0);
+//        if (node instanceof Statement) {
+//            res.add((Statement) node);
+//        }
+//        node.getChildNodes()
+//            .stream()
+//            .map(JavaParserMethod::statements)
+//            .forEach(res::addAll);
+//        return res;
     }
 
     /**
