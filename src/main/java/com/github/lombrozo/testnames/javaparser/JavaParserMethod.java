@@ -103,62 +103,68 @@ final class JavaParserMethod {
      */
     @SuppressWarnings("PMD.CognitiveComplexity")
     private static Stream<Statement> flatStatements(final Stream<? extends Statement> stmts) {
-        return stmts.flatMap(
-            statement -> {
-                final Stream<Statement> result;
-                if (statement instanceof NodeWithBody) {
-                    result = JavaParserMethod.flatStatements(
-                        ((NodeWithBody<?>) statement).getBody()
-                            .asBlockStmt()
-                            .getStatements()
-                            .stream()
-                    );
-                } else if (statement instanceof IfStmt) {
-                    final IfStmt ifstmt = (IfStmt) statement;
-                    final Collection<Statement> statements = new ArrayList<>(3);
-                    if (ifstmt.hasThenBlock()) {
-                        statements.add(ifstmt.getThenStmt());
-                    }
-                    if (ifstmt.hasElseBlock()) {
-                        statements.add(
-                            ifstmt.getElseStmt()
-                                .orElseThrow(
-                                    () -> new IllegalStateException(
-                                        "Else block is absent. It's impossible"
-                                    )
-                                )
-                        );
-                    }
-                    result = JavaParserMethod.flatStatements(statements.stream());
-                } else if (statement.isBlockStmt()) {
-                    result = JavaParserMethod.flatStatements(
-                        statement.asBlockStmt().getStatements().stream()
-                    );
-                } else if (statement.isExpressionStmt()) {
-                    final Expression expression = statement.asExpressionStmt().getExpression();
-                    if (expression.isMethodCallExpr()) {
-                        final MethodCallExpr call = expression.asMethodCallExpr();
-                        result = Stream.concat(
-                            Stream.concat(
-                                call.getScope()
-                                    .map(JavaParserMethod::flatStatements)
-                                    .orElseGet(Stream::empty),
-                                Stream.of(statement)
-                            ),
-                            call.getArguments().stream().flatMap(JavaParserMethod::flatStatements)
-                        );
-                    } else {
-                        result = JavaParserMethod.flatStatements(expression);
-                    }
-                } else if (statement.isTryStmt()) {
-                    final List<Statement> statements = JavaParserMethod.statements(statement);
-                    result = statements.stream();
-                } else {
-                    result = Stream.of(statement);
-                }
-                return result;
-            }
-        );
+//        return stmts.map(statement -> statement.getChildNodes())
+//            .flatMap(nodes -> nodes.stream())
+//            .map(node -> statements(node))
+//            .flatMap(statements -> statements.stream());
+        return stmts.map(node-> statements(node)).flatMap(Collection::stream);
+
+//        return stmts.flatMap(
+//            statement -> {
+//                final Stream<Statement> result;
+//                if (statement instanceof NodeWithBody) {
+//                    result = JavaParserMethod.flatStatements(
+//                        ((NodeWithBody<?>) statement).getBody()
+//                            .asBlockStmt()
+//                            .getStatements()
+//                            .stream()
+//                    );
+//                } else if (statement instanceof IfStmt) {
+//                    final IfStmt ifstmt = (IfStmt) statement;
+//                    final Collection<Statement> statements = new ArrayList<>(3);
+//                    if (ifstmt.hasThenBlock()) {
+//                        statements.add(ifstmt.getThenStmt());
+//                    }
+//                    if (ifstmt.hasElseBlock()) {
+//                        statements.add(
+//                            ifstmt.getElseStmt()
+//                                .orElseThrow(
+//                                    () -> new IllegalStateException(
+//                                        "Else block is absent. It's impossible"
+//                                    )
+//                                )
+//                        );
+//                    }
+//                    result = JavaParserMethod.flatStatements(statements.stream());
+//                } else if (statement.isBlockStmt()) {
+//                    result = JavaParserMethod.flatStatements(
+//                        statement.asBlockStmt().getStatements().stream()
+//                    );
+//                } else if (statement.isExpressionStmt()) {
+//                    final Expression expression = statement.asExpressionStmt().getExpression();
+//                    if (expression.isMethodCallExpr()) {
+//                        final MethodCallExpr call = expression.asMethodCallExpr();
+//                        result = Stream.concat(
+//                            Stream.concat(
+//                                call.getScope()
+//                                    .map(JavaParserMethod::flatStatements)
+//                                    .orElseGet(Stream::empty),
+//                                Stream.of(statement)
+//                            ),
+//                            call.getArguments().stream().flatMap(JavaParserMethod::flatStatements)
+//                        );
+//                    } else {
+//                        result = JavaParserMethod.flatStatements(expression);
+//                    }
+//                } else if (statement.isTryStmt()) {
+//                    final List<Statement> statements = JavaParserMethod.statements(statement);
+//                    result = statements.stream();
+//                } else {
+//                    result = Stream.of(statement);
+//                }
+//                return result;
+//            }
+//        );
     }
 
     /**
