@@ -25,18 +25,10 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.nodeTypes.NodeWithBody;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -101,7 +93,7 @@ final class JavaParserMethod {
      */
     @SuppressWarnings("PMD.CognitiveComplexity")
     private static Stream<Statement> flatStatements(final Stream<? extends Statement> stmts) {
-        return stmts.map(JavaParserMethod::statements).flatMap(Collection::stream);
+        return stmts.flatMap(JavaParserMethod::statements);
     }
 
     /**
@@ -109,27 +101,15 @@ final class JavaParserMethod {
      * @param node Node to extract statements from.
      * @return List of statements.
      */
-    private static List<Statement> statements(final Node node) {
+    private static Stream<Statement> statements(final Node node) {
         return Stream.concat(
             Stream.of(node)
                 .filter(Statement.class::isInstance)
                 .map(Statement.class::cast),
             node.getChildNodes()
                 .stream()
-                .map(JavaParserMethod::statements)
-                .flatMap(Collection::stream)
-        ).collect(Collectors.toList());
-
-
-//        final List<Statement> res = new ArrayList<>(0);
-//        if (node instanceof Statement) {
-//            res.add((Statement) node);
-//        }
-//        node.getChildNodes()
-//            .stream()
-//            .map(JavaParserMethod::statements)
-//            .forEach(res::addAll);
-//        return res;
+                .flatMap(JavaParserMethod::statements)
+        );
     }
 
     /**
