@@ -38,7 +38,6 @@ import org.junit.jupiter.params.provider.CsvSource;
  *
  * @since 0.10
  */
-@Disabled
 final class RulePresentSimpleMlTest {
 
     /**
