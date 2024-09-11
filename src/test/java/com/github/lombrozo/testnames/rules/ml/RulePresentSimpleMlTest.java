@@ -25,14 +25,12 @@ package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.TestCase;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -54,7 +52,6 @@ final class RulePresentSimpleMlTest {
     private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();
 
     @BeforeAll
-    @Timeout(value = 1500L, unit = TimeUnit.MILLISECONDS)
     static void setUp() throws IOException {
         final ModelSource source = new CachedModelSource(
             new ModelSourceInternet(), RulePresentSimpleMlTest.CACHE

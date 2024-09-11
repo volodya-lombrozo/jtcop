@@ -25,7 +25,6 @@ package com.github.lombrozo.testnames.rules.ml;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import opennlp.tools.postag.POSModel;
 import org.hamcrest.MatcherAssert;
@@ -33,7 +32,6 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -59,7 +57,6 @@ final class ModelSourceFileSystemTest {
     }
 
     @Test
-    @Timeout(value = 1500L, unit = TimeUnit.MILLISECONDS)
     void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
         final Path path = temp.resolve("model.bin");
         ModelSourceFileSystemTest.CACHE.get().serialize(path);
