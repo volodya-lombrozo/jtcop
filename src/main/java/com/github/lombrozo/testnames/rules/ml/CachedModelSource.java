@@ -23,50 +23,58 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.concurrent.TimeUnit;
+import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicReference;
 import opennlp.tools.postag.POSModel;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Tests for {@link ModelSourceFileSystem}.
- * @since 0.10
+ * Cached model source.
+ *
+ * @see ModelSourceInternet
+ * @since 1.3.2
  */
-@Disabled
-final class ModelSourceFileSystemTest {
+public final class CachedModelSource implements ModelSource {
 
     /**
-     * Cache.
+     * Origin.
      */
-    private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();
+    private final ModelSource origin;
+    /**
+     * Memory.
+     */
+    private final AtomicReference<POSModel> memory;
 
-    @BeforeAll
-    static void setupCache() throws IOException {
-        final ModelSource model = new CachedModelSource(
-            new ModelSourceInternet(), ModelSourceFileSystemTest.CACHE
-        );
-        if (ModelSourceFileSystemTest.CACHE.get() == null) {
-            model.model();
-        }
+    /**
+     * Constructor.
+     *
+     * @param orgn Origin
+     * @param cache Memory
+     */
+    public CachedModelSource(
+        final ModelSource orgn,
+        final AtomicReference<POSModel> cache
+    ) {
+        this.origin = orgn;
+        this.memory = cache;
     }
 
-    @Test
-    @Timeout(value = 1500L, unit = TimeUnit.MILLISECONDS)
-    void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
-        final Path path = temp.resolve("model.bin");
-        ModelSourceFileSystemTest.CACHE.get().serialize(path);
-        MatcherAssert.assertThat(
-            String.format("Model from %s is null", path),
-            new ModelSourceFileSystem(path).model(),
-            Matchers.notNullValue()
-        );
+    @Override
+    public POSModel model() throws IOException {
+        final POSModel model;
+        final File cached = Paths.get("src/test/resources/ml/cached.bin").toFile();
+        final POSModel memorized = this.memory.get();
+        if (memorized != null) {
+            model = memorized;
+        } else if (cached.exists()) {
+            model = new POSModel(cached);
+            this.memory.set(model);
+        } else {
+            model = this.origin.model();
+            model.serialize(cached);
+            this.memory.set(model);
+        }
+        return model;
     }
 }
