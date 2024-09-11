@@ -25,6 +25,8 @@ package com.github.lombrozo.testnames.rules.ml;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicReference;
 import opennlp.tools.postag.POSModel;
@@ -71,6 +73,7 @@ public final class CachedModelSource implements ModelSource {
             model = new POSModel(cached);
             this.memory.set(model);
         } else {
+            Files.createDirectory(Paths.get(cached.getParent()));
             model = this.origin.model();
             model.serialize(cached);
             this.memory.set(model);
