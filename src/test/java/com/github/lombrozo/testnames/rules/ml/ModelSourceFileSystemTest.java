@@ -49,7 +49,7 @@ final class ModelSourceFileSystemTest {
     private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();
 
     @BeforeAll
-    static void setupCache() throws IOException {
+    static void setUp() throws IOException {
         final ModelSource model = new CachedModelSource(
             new ModelSourceInternet(), ModelSourceFileSystemTest.CACHE
         );
