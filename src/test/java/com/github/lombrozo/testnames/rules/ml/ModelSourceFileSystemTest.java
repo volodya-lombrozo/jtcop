@@ -38,10 +38,9 @@ final class ModelSourceFileSystemTest {
     @Test
     void loadsFromFileSystem(@TempDir final Path temp) throws Exception {
         final Path path = temp.resolve("model.bin");
-        new CachedModelSource(
-            new ModelSourceInternet(),
-            "src/test/resources/ml/cached.bin"
-        ).model().serialize(path);
+        new CachedModelSource(new ModelSourceInternet()).model().serialize(
+            path
+        );
         MatcherAssert.assertThat(
             String.format("Model from %s is null", path),
             new ModelSourceFileSystem(path).model(),

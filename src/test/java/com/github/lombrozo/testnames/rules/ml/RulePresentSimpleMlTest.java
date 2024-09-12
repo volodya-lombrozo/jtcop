@@ -46,10 +46,7 @@ final class RulePresentSimpleMlTest {
     @BeforeAll
     static void setUp() throws Exception {
         RulePresentSimpleMlTest.model = new POSTaggerME(
-            new CachedModelSource(
-                new ModelSourceInternet(),
-                "src/test/resources/ml/cached.bin"
-            ).model()
+            new CachedModelSource(new ModelSourceInternet()).model()
         );
     }
 
