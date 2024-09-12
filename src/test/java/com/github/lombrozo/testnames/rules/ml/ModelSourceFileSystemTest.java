@@ -28,7 +28,6 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicReference;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -36,7 +35,6 @@ import org.junit.jupiter.api.io.TempDir;
  * Tests for {@link ModelSourceFileSystem}.
  * @since 0.10
  */
-@Disabled
 final class ModelSourceFileSystemTest {
 
 //    private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();

@@ -104,7 +104,7 @@ public final class CachedModelSource implements ModelSource {
             model = new POSModel(this.cached);
             this.memory.set(model);
         } else {
-            if (!this.cached.exists()) {
+            if (!this.cached.toPath().isAbsolute() && !this.cached.exists()) {
                 Files.createDirectory(Paths.get(this.cached.getParent()));
             }
             model = this.origin.model();
