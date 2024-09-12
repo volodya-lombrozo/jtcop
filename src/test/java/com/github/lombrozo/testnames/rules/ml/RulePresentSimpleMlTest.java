@@ -24,8 +24,6 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.TestCase;
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
 import opennlp.tools.postag.POSTaggerME;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -46,11 +44,10 @@ final class RulePresentSimpleMlTest {
     private static POSTaggerME model;
 
     @BeforeAll
-    static void setUp() throws IOException {
+    static void setUp() {
         RulePresentSimpleMlTest.model = new POSTaggerME(
             new CachedModelSource(
                 new ModelSourceInternet(),
-                new AtomicReference<>(),
                 "src/test/resources/ml/cached.bin"
             ).model()
         );

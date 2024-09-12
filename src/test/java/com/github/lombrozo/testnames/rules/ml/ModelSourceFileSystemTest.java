@@ -23,9 +23,7 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.concurrent.atomic.AtomicReference;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -52,11 +50,10 @@ final class ModelSourceFileSystemTest {
 //    }
 
     @Test
-    void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
+    void loadsFromFileSystem(@TempDir final Path temp) throws Exception {
         final Path path = temp.resolve("model.bin");
         new CachedModelSource(
             new ModelSourceInternet(),
-            new AtomicReference<>(),
             "src/test/resources/ml/cached.bin"
         ).model().serialize(path);
         MatcherAssert.assertThat(

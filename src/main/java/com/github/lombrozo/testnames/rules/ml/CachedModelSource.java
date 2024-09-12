@@ -24,11 +24,10 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.concurrent.atomic.AtomicReference;
 import opennlp.tools.postag.POSModel;
+import org.cactoos.scalar.Sticky;
 
 /**
  * Cached model source.
@@ -43,11 +42,6 @@ public final class CachedModelSource implements ModelSource {
     private final ModelSource origin;
 
     /**
-     * Memory.
-     */
-    private final AtomicReference<POSModel> memory;
-
-    /**
      * Cached file.
      */
     private final File cached;
@@ -55,62 +49,68 @@ public final class CachedModelSource implements ModelSource {
     /**
      * Constructor.
      * @param orgn Origin
-     * @param cache Memory
      */
     public CachedModelSource(
-        final ModelSource orgn,
-        final AtomicReference<POSModel> cache
+        final ModelSource orgn
     ) {
-        this(orgn, cache, "src/test/resources/ml/cached.bin");
+        this(orgn, "src/test/resources/ml/cached.bin");
     }
 
     /**
      * Constructor.
      * @param orgn Origin
-     * @param cache Memory
      * @param location Location of cached file
      */
     public CachedModelSource(
         final ModelSource orgn,
-        final AtomicReference<POSModel> cache,
         final String location
     ) {
-        this(orgn, cache, Paths.get(location).toFile());
+        this(orgn, Paths.get(location).toFile());
     }
 
     /**
      * Primary constructor.
      * @param orgn Origin
-     * @param cache Memory
      * @param ccd Cached file
      */
     public CachedModelSource(
         final ModelSource orgn,
-        final AtomicReference<POSModel> cache,
         final File ccd
     ) {
         this.origin = orgn;
-        this.memory = cache;
         this.cached = ccd;
     }
 
     @Override
-    public POSModel model() throws IOException {
-        final POSModel model;
-        final POSModel memorized = this.memory.get();
-        if (memorized != null) {
-            model = memorized;
-        } else if (this.cached.exists()) {
-            model = new POSModel(this.cached);
-            this.memory.set(model);
-        } else {
-            if (!this.cached.toPath().isAbsolute() && !this.cached.exists()) {
-                Files.createDirectory(Paths.get(this.cached.getParent()));
-            }
-            model = this.origin.model();
-            model.serialize(this.cached);
-            this.memory.set(model);
+    public POSModel model() {
+        try {
+            return new Sticky<>(
+                () -> {
+                    final POSModel model;
+                    if (this.cached.exists()) {
+                        model = new POSModel(this.cached);
+                    } else {
+                        if (
+                            !this.cached.toPath().isAbsolute()
+                            && !this.cached.exists()
+                        ) {
+                            Files.createDirectory(
+                                Paths.get(
+                                    this.cached.getParent()
+                                )
+                            );
+                        }
+                        model = this.origin.model();
+                        model.serialize(this.cached);
+                    }
+                    return model;
+                }
+            ).value();
+        } catch (final Exception exception) {
+            throw new IllegalStateException(
+                "Cannot cache a model",
+                exception
+            );
         }
-        return model;
     }
 }

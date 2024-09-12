@@ -23,10 +23,8 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.atomic.AtomicReference;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -42,11 +40,10 @@ import org.junit.jupiter.api.io.TempDir;
 final class CachedModelSourceTest {
 
     @Test
-    void cachesModelInFile() throws IOException {
+    void cachesModelInFile() throws Exception {
         final String location = "src/test/resources/ml/cached.bin";
         new CachedModelSource(
             new ModelSourceInternet(),
-            new AtomicReference<>(),
             location
         ).model();
         MatcherAssert.assertThat(
@@ -61,19 +58,17 @@ final class CachedModelSourceTest {
 
     @Test
     @Tag("slow")
-    void loadsSecondTimeFaster(@TempDir final Path tmp) throws IOException {
+    void loadsSecondTimeFaster(@TempDir final Path tmp) {
         final Path path = tmp.resolve("testing.bin");
         final long before = System.currentTimeMillis();
         new CachedModelSource(
             new ModelSourceInternet(),
-            new AtomicReference<>(),
             path.toString()
         ).model();
         final long origin = System.currentTimeMillis() - before;
         final long start = System.currentTimeMillis();
         new CachedModelSource(
             new ModelSourceInternet(),
-            new AtomicReference<>(),
             path.toString()
         ).model();
         final long cached = System.currentTimeMillis() - start;
