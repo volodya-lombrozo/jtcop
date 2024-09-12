@@ -24,11 +24,15 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicReference;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for {@link CachedModelSource}.
@@ -52,6 +56,45 @@ final class CachedModelSourceTest {
             ),
             new ModelSourceFileSystem(Paths.get(location)).model(),
             Matchers.notNullValue()
+        );
+    }
+
+    @Test
+    @Tag("slow")
+    void loadsSecondTimeFaster(@TempDir final Path tmp) throws IOException {
+        final Path path = tmp.resolve("testing.bin");
+        final long before = System.currentTimeMillis();
+        new CachedModelSource(
+            new ModelSourceInternet(),
+            new AtomicReference<>(),
+            path.toString()
+        ).model();
+        final long origin = System.currentTimeMillis() - before;
+        final long start = System.currentTimeMillis();
+        new CachedModelSource(
+            new ModelSourceInternet(),
+            new AtomicReference<>(),
+            path.toString()
+        ).model();
+        final long cached = System.currentTimeMillis() - start;
+        final long expected = 250L;
+        MatcherAssert.assertThat(
+            String.format(
+            "Cached time: (%s ms) should be less than %s ms",
+                cached,
+                expected
+            ),
+            cached < expected,
+            new IsEqual<>(true)
+        );
+        MatcherAssert.assertThat(
+            String.format(
+                "Cached time: (%s ms) should be less than origin load time: (%s ms)",
+                cached,
+                origin
+            ),
+            cached < origin,
+            new IsEqual<>(true)
         );
     }
 }
