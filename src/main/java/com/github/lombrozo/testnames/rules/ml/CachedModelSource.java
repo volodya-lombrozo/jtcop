@@ -82,35 +82,25 @@ public final class CachedModelSource implements ModelSource {
     }
 
     @Override
-    public POSModel model() {
-        try {
-            return new Sticky<>(
-                () -> {
-                    final POSModel model;
-                    if (this.cached.exists()) {
-                        model = new POSModel(this.cached);
-                    } else {
-                        if (
-                            !this.cached.toPath().isAbsolute()
-                            && !this.cached.exists()
-                        ) {
-                            Files.createDirectory(
-                                Paths.get(
-                                    this.cached.getParent()
-                                )
-                            );
-                        }
-                        model = this.origin.model();
-                        model.serialize(this.cached);
+    public POSModel model() throws Exception {
+        return new Sticky<>(
+            () -> {
+                final POSModel model;
+                if (this.cached.exists()) {
+                    model = new POSModel(this.cached);
+                } else {
+                    if (!this.cached.toPath().isAbsolute() && !this.cached.exists()) {
+                        Files.createDirectory(
+                            Paths.get(
+                                this.cached.getParent()
+                            )
+                        );
                     }
-                    return model;
+                    model = this.origin.model();
+                    model.serialize(this.cached);
                 }
-            ).value();
-        } catch (final Exception exception) {
-            throw new IllegalStateException(
-                "Cannot cache a model",
-                exception
-            );
-        }
+                return model;
+            }
+        ).value();
     }
 }

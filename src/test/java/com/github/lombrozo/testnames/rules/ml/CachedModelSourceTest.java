@@ -58,7 +58,7 @@ final class CachedModelSourceTest {
 
     @Test
     @Tag("slow")
-    void loadsSecondTimeFaster(@TempDir final Path tmp) {
+    void loadsSecondTimeFaster(@TempDir final Path tmp) throws Exception {
         final Path path = tmp.resolve("testing.bin");
         final long before = System.currentTimeMillis();
         new CachedModelSource(

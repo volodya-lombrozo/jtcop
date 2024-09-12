@@ -23,7 +23,6 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import java.io.IOException;
 import opennlp.tools.postag.POSModel;
 
 /**
@@ -36,8 +35,8 @@ public interface ModelSource {
     /**
      * Returns Model {@link opennlp.tools.postag.POSModel} from source.
      * @return Model {@link opennlp.tools.postag.POSModel} from source.
-     * @throws IOException If there is a problem with reading the model.
+     * @throws Exception If there is a problem with reading the model.
      */
-    POSModel model() throws IOException;
+    POSModel model() throws Exception;
 
 }

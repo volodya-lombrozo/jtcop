@@ -44,7 +44,7 @@ final class RulePresentSimpleMlTest {
     private static POSTaggerME model;
 
     @BeforeAll
-    static void setUp() {
+    static void setUp() throws Exception {
         RulePresentSimpleMlTest.model = new POSTaggerME(
             new CachedModelSource(
                 new ModelSourceInternet(),
