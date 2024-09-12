@@ -33,10 +33,8 @@ import opennlp.tools.postag.POSModel;
 /**
  * Cached model source.
  *
- * @see ModelSourceInternet
  * @since 1.3.2
  */
-@SuppressWarnings({"JTCOP.RuleCorrectTestName", "JTCOP.RuleAllTestsHaveProductionClass"})
 public final class CachedModelSource implements ModelSource {
 
     /**
