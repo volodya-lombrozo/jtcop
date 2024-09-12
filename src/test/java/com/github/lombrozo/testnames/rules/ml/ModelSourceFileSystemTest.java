@@ -35,20 +35,6 @@ import org.junit.jupiter.api.io.TempDir;
  */
 final class ModelSourceFileSystemTest {
 
-//    private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();
-//
-//    @BeforeAll
-//    static void setUp() throws IOException {
-//        final ModelSource model = new CachedModelSource(
-//            new ModelSourceInternet(),
-//            ModelSourceFileSystemTest.CACHE,
-//            "src/test/resources/ml/cached.bin"
-//        );
-//        if (ModelSourceFileSystemTest.CACHE.get() == null) {
-//            model.model();
-//        }
-//    }
-
     @Test
     void loadsFromFileSystem(@TempDir final Path temp) throws Exception {
         final Path path = temp.resolve("model.bin");
