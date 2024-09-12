@@ -10,4 +10,4 @@ release:
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}" "-DprocessPlugins=false"
     git commit -am "${tag}"
-    mvn clean install -P"deep,qulice" --errors --batch-mode
+    mvn clean install -Pqulice --errors --batch-mode
