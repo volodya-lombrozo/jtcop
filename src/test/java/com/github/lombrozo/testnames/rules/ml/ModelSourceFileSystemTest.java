@@ -26,10 +26,8 @@ package com.github.lombrozo.testnames.rules.ml;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicReference;
-import opennlp.tools.postag.POSModel;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -41,25 +39,28 @@ import org.junit.jupiter.api.io.TempDir;
 @Disabled
 final class ModelSourceFileSystemTest {
 
-    /**
-     * Cache.
-     */
-    private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();
-
-    @BeforeAll
-    static void setUp() throws IOException {
-        final ModelSource model = new CachedModelSource(
-            new ModelSourceInternet(), ModelSourceFileSystemTest.CACHE
-        );
-        if (ModelSourceFileSystemTest.CACHE.get() == null) {
-            model.model();
-        }
-    }
+//    private static final AtomicReference<POSModel> CACHE = new AtomicReference<>();
+//
+//    @BeforeAll
+//    static void setUp() throws IOException {
+//        final ModelSource model = new CachedModelSource(
+//            new ModelSourceInternet(),
+//            ModelSourceFileSystemTest.CACHE,
+//            "src/test/resources/ml/cached.bin"
+//        );
+//        if (ModelSourceFileSystemTest.CACHE.get() == null) {
+//            model.model();
+//        }
+//    }
 
     @Test
     void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
         final Path path = temp.resolve("model.bin");
-        ModelSourceFileSystemTest.CACHE.get().serialize(path);
+        new CachedModelSource(
+            new ModelSourceInternet(),
+            new AtomicReference<>(),
+            "src/test/resources/ml/cached.bin"
+        ).model().serialize(path);
         MatcherAssert.assertThat(
             String.format("Model from %s is null", path),
             new ModelSourceFileSystem(path).model(),
