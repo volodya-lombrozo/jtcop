@@ -45,7 +45,6 @@ public final class CachedModelSource implements ModelSource {
 
     /**
      * Constructor.
-     *
      * @param source Model source
      */
     public CachedModelSource(final ModelSource source) {
@@ -53,7 +52,7 @@ public final class CachedModelSource implements ModelSource {
     }
 
     /**
-     * Ctor.
+     * Constructor.
      * @param source Model source
      * @param location Cache location
      */
@@ -63,7 +62,6 @@ public final class CachedModelSource implements ModelSource {
 
     /**
      * Primary constructor.
-     *
      * @param sclr Model scalar
      */
     public CachedModelSource(final Scalar<POSModel> sclr) {
