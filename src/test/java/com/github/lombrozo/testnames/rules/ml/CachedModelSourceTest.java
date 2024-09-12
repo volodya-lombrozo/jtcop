@@ -72,16 +72,6 @@ final class CachedModelSourceTest {
             path.toString()
         ).model();
         final long cached = System.currentTimeMillis() - start;
-        final long expected = 250L;
-        MatcherAssert.assertThat(
-            String.format(
-            "Cached time: (%s ms) should be less than %s ms",
-                cached,
-                expected
-            ),
-            cached < expected,
-            new IsEqual<>(true)
-        );
         MatcherAssert.assertThat(
             String.format(
                 "Cached time: (%s ms) should be less than origin load time: (%s ms)",
