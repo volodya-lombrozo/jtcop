@@ -50,8 +50,12 @@ public final class CachedModelSource implements ModelSource {
     private final AtomicReference<POSModel> memory;
 
     /**
+     * Cached file.
+     */
+    private final File cached;
+
+    /**
      * Constructor.
-     *
      * @param orgn Origin
      * @param cache Memory
      */
@@ -59,24 +63,52 @@ public final class CachedModelSource implements ModelSource {
         final ModelSource orgn,
         final AtomicReference<POSModel> cache
     ) {
+        this(orgn, cache, "src/test/resources/ml/cached.bin");
+    }
+
+    /**
+     * Constructor.
+     * @param orgn Origin
+     * @param cache Memory
+     * @param location Location of cached file
+     */
+    public CachedModelSource(
+        final ModelSource orgn,
+        final AtomicReference<POSModel> cache,
+        final String location
+    ) {
+        this(orgn, cache, Paths.get(location).toFile());
+    }
+
+    /**
+     * Primary constructor.
+     * @param orgn Origin
+     * @param cache Memory
+     * @param ccd Cached file
+     */
+    public CachedModelSource(
+        final ModelSource orgn,
+        final AtomicReference<POSModel> cache,
+        final File ccd
+    ) {
         this.origin = orgn;
         this.memory = cache;
+        this.cached = ccd;
     }
 
     @Override
     public POSModel model() throws IOException {
         final POSModel model;
-        final File cached = Paths.get("src/test/resources/ml/cached.bin").toFile();
         final POSModel memorized = this.memory.get();
         if (memorized != null) {
             model = memorized;
-        } else if (cached.exists()) {
-            model = new POSModel(cached);
+        } else if (this.cached.exists()) {
+            model = new POSModel(this.cached);
             this.memory.set(model);
         } else {
-            Files.createDirectory(Paths.get(cached.getParent()));
+            Files.createDirectory(Paths.get(this.cached.getParent()));
             model = this.origin.model();
-            model.serialize(cached);
+            model.serialize(this.cached);
             this.memory.set(model);
         }
         return model;
