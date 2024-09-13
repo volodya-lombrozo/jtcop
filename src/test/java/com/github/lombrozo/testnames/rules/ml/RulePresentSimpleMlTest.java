@@ -91,6 +91,8 @@ final class RulePresentSimpleMlTest {
     }
 
     /**
+     * Test case for present tense on plural in test methods.
+     * @param name Test method name
      * @todo #248:25min Enable passesOnPlural test when plural speech detection will
      *  be implemented in {@link RulePresentSimpleMl}. Let's test that the following
      *  pattern: $pluralNoun_$pluralVerb... passes.
