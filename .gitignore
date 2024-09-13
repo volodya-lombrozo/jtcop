@@ -32,3 +32,6 @@ hs_err_pid*
 target
 !src/it/all-have-production-class/target
 !src/it/empty-project/target
+
+# Bin file
+*.bin

@@ -23,20 +23,32 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import opennlp.tools.postag.POSModel;
+import java.nio.file.Paths;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 /**
- * Model source for {@link opennlp.tools.postag.POSModel}.
+ * Tests for {@link CachedModelSource}.
  *
- * @since 0.10
+ * @since 1.3.2
  */
-public interface ModelSource {
+final class CachedModelSourceTest {
 
-    /**
-     * Returns Model {@link opennlp.tools.postag.POSModel} from source.
-     * @return Model {@link opennlp.tools.postag.POSModel} from source.
-     * @throws Exception If there is a problem with reading the model.
-     */
-    POSModel model() throws Exception;
-
+    @Test
+    void cachesModelInFile() throws Exception {
+        final String location = "src/test/resources/ml/cached.bin";
+        new CachedModelSource(
+            new ModelSourceInternet(),
+            location
+        ).model();
+        MatcherAssert.assertThat(
+            String.format(
+            "Model from %s is NULL, but it shouldn't",
+                location
+            ),
+            new ModelSourceFileSystem(Paths.get(location)).model(),
+            Matchers.notNullValue()
+        );
+    }
 }

@@ -24,12 +24,10 @@
 package com.github.lombrozo.testnames.rules.ml;
 
 import com.github.lombrozo.testnames.TestCase;
-import java.io.IOException;
 import opennlp.tools.postag.POSTaggerME;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -38,7 +36,6 @@ import org.junit.jupiter.params.provider.CsvSource;
  *
  * @since 0.10
  */
-@Disabled
 final class RulePresentSimpleMlTest {
 
     /**
@@ -47,8 +44,10 @@ final class RulePresentSimpleMlTest {
     private static POSTaggerME model;
 
     @BeforeAll
-    static void setUp() throws IOException {
-        RulePresentSimpleMlTest.model = new POSTaggerME(new ModelSourceInternet().model());
+    static void setUp() throws Exception {
+        RulePresentSimpleMlTest.model = new POSTaggerME(
+            new CachedModelSource(new ModelSourceInternet()).model()
+        );
     }
 
     @CsvSource({

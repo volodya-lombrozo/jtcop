@@ -23,29 +23,24 @@
  */
 package com.github.lombrozo.testnames.rules.ml;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for {@link ModelSourceFileSystem}.
  * @since 0.10
- * @todo #1:90min Enable ML tests when caching will be implemented.
- *  For not tests related to ML take lots of time and it's hard to develop in that mode.
- *  We have to implement a caching or increase the speed of tests in order to use them in
- *  every-day development.
  */
-@Disabled
 final class ModelSourceFileSystemTest {
 
     @Test
-    void loadsFromFileSystem(@TempDir final Path temp) throws IOException {
+    void loadsFromFileSystem(@TempDir final Path temp) throws Exception {
         final Path path = temp.resolve("model.bin");
-        new ModelSourceInternet().model().serialize(path);
+        new CachedModelSource(new ModelSourceInternet()).model().serialize(
+            path
+        );
         MatcherAssert.assertThat(
             String.format("Model from %s is null", path),
             new ModelSourceFileSystem(path).model(),
