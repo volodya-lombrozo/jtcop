@@ -93,7 +93,7 @@ final class RulePresentSimpleMlTest {
     /**
      * @todo #248:25min Enable passesOnPlural test when plural speech detection will
      *  be implemented in {@link RulePresentSimpleMl}. Let's test that the following
-     *  pattern: <PLURAL NOUN><PLURAL VERB>... passes.
+     *  pattern: $pluralNoun_$pluralVerb... passes.
      */
     @Disabled
     @CsvSource(
