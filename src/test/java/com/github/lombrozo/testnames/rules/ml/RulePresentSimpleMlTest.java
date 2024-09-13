@@ -28,6 +28,7 @@ import opennlp.tools.postag.POSTaggerME;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -79,6 +80,32 @@ final class RulePresentSimpleMlTest {
     })
     @ParameterizedTest
     void checksCorrectNames(final String name) {
+        MatcherAssert.assertThat(
+            String.format("Name '%s' has to be correct", name),
+            new RulePresentSimpleMl(
+                RulePresentSimpleMlTest.model,
+                new TestCase.Fake(name)
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    /**
+     * @todo #248:25min Enable passesOnPlural test when plural speech detection will
+     *  be implemented in {@link RulePresentSimpleMl}. Let's test that the following
+     *  pattern: <PLURAL NOUN><PLURAL VERB>... passes.
+     */
+    @Disabled
+    @CsvSource(
+        {
+            "theyBuildModel",
+            "theyPassTest",
+            "robotsDoGood",
+            "documentsServePeople"
+        }
+    )
+    @ParameterizedTest
+    void passesOnPlural(final String name) {
         MatcherAssert.assertThat(
             String.format("Name '%s' has to be correct", name),
             new RulePresentSimpleMl(
