@@ -28,6 +28,7 @@ import opennlp.tools.postag.POSTaggerME;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -81,6 +82,61 @@ final class RulePresentSimpleMlTest {
     void checksCorrectNames(final String name) {
         MatcherAssert.assertThat(
             String.format("Name '%s' has to be correct", name),
+            new RulePresentSimpleMl(
+                RulePresentSimpleMlTest.model,
+                new TestCase.Fake(name)
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    /**
+     * Test case for present tense on plural with subject at the beginning.
+     * @param name Test method name
+     * @todo #248:25min Enable passesOnPlural test when plural speech detection will
+     *  be implemented in {@link RulePresentSimpleMl}. Let's test that the following
+     *  pattern: $pluralNoun_$pluralVerb... passes.
+     */
+    @Disabled
+    @CsvSource(
+        {
+            "theyBuildModel",
+            "theyPassTest",
+            "robotsDoGood",
+            "documentsServePeople",
+            "humansCraftSolutions",
+            "machinesLearnPatterns",
+            "usersTrustSystem",
+            "algorithmsPredictOutcome",
+            "clientsReceiveNotifications",
+            "serversHandleRequest",
+            "employeesSubmitReport",
+            "devicesSyncData",
+            "botsRespondInstantly",
+            "studentsCompleteAssignments",
+            "applicationsRunSmoothly",
+            "tasksGenerateResults",
+            "administratorsManageAccess",
+            "dataDrivesDecisions",
+            "systemsProcessInput",
+            "dogsBark",
+            "catsPurr",
+            "birdsSing",
+            "fishSwim",
+            "treesGrow",
+            "riversFlow",
+            "carsRace",
+            "childrenPlay",
+            "studentsStudy"
+        }
+    )
+    @ParameterizedTest
+    void passesOnPluralWithSubjectAtTheBeginning(final String name) {
+        MatcherAssert.assertThat(
+            String.format(
+                "Test name with subject at the beginning should be correct, but it wasn't ('%s')",
+                name
+            ),
             new RulePresentSimpleMl(
                 RulePresentSimpleMlTest.model,
                 new TestCase.Fake(name)
