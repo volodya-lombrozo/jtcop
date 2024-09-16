@@ -91,7 +91,7 @@ final class RulePresentSimpleMlTest {
     }
 
     /**
-     * Test case for present tense on plural in test methods.
+     * Test case for present tense on plural with subject at the beginning.
      * @param name Test method name
      * @todo #248:25min Enable passesOnPlural test when plural speech detection will
      *  be implemented in {@link RulePresentSimpleMl}. Let's test that the following
@@ -103,13 +103,40 @@ final class RulePresentSimpleMlTest {
             "theyBuildModel",
             "theyPassTest",
             "robotsDoGood",
-            "documentsServePeople"
+            "documentsServePeople",
+            "humansCraftSolutions",
+            "machinesLearnPatterns",
+            "usersTrustSystem",
+            "algorithmsPredictOutcome",
+            "clientsReceiveNotifications",
+            "serversHandleRequest",
+            "employeesSubmitReport",
+            "devicesSyncData",
+            "botsRespondInstantly",
+            "studentsCompleteAssignments",
+            "applicationsRunSmoothly",
+            "tasksGenerateResults",
+            "administratorsManageAccess",
+            "dataDrivesDecisions",
+            "systemsProcessInput",
+            "dogsBark",
+            "catsPurr",
+            "birdsSing",
+            "fishSwim",
+            "treesGrow",
+            "riversFlow",
+            "carsRace",
+            "childrenPlay",
+            "studentsStudy"
         }
     )
     @ParameterizedTest
-    void passesOnPlural(final String name) {
+    void passesOnPluralWithSubjectAtTheBeginning(final String name) {
         MatcherAssert.assertThat(
-            String.format("Name '%s' has to be correct", name),
+            String.format(
+                "Test name with subject at the beginning should be correct, but it wasn't ('%s')",
+                name
+            ),
             new RulePresentSimpleMl(
                 RulePresentSimpleMlTest.model,
                 new TestCase.Fake(name)
