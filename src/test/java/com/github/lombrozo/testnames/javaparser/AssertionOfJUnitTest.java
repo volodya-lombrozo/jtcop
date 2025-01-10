@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1.15
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class AssertionOfJUnitTest {
 
     /**
