@@ -27,6 +27,12 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import java.nio.file.Path;
+import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.Arrays;
+import org.junit.jupiter.params.ParameterizedTest;
 
 /**
  * Test class.
@@ -40,10 +46,13 @@ public class CorrectTests {
      * You can read more about the issue right here:
      * https://github.com/volodya-lombrozo/jtcop/issues/453
      */
-    @Test
-    void generatesSyntaxForGrammar() {
-        final List<String> definitions = new ArrayList<>(0);
-        final String top = "rule";
+    @ParameterizedTest(name = "Generates programs for {0} grammar with top rule {1}")
+    @MethodSource("syntax")
+    void generatesSyntaxForGrammar(
+        final List<String> definitions,
+        final String top,
+        @TempDir final Path tmp
+    ) {
         String[] programs = definitions.stream().toArray(String[]::new);
         String message = "We expect that the randomly generated code will be verified without errors";
         try {
@@ -57,5 +66,13 @@ public class CorrectTests {
         } catch (Exception exception) {
             Assertions.fail(message, exception);
         }
+    }
+
+    static Stream<Arguments> syntax() {
+        return Stream.of(
+            Arguments.of(Arrays.asList("rule", "rule", "rule"), "rule"),
+            Arguments.of(Arrays.asList("rule", "rule", "rule"), "rule"),
+            Arguments.of(Arrays.asList("rule", "rule", "rule"), "rule")
+        );
     }
 }
