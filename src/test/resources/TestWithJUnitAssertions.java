@@ -25,6 +25,7 @@
 package com.github.lombrozo.testnames;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Assertions;
@@ -206,5 +207,29 @@ class TestWithJUnitAssertions {
             () -> {
             }
         );
+    }
+
+    /**
+     * This is test for the issur #453.
+     * You can read more about the issue right here:
+     * https://github.com/volodya-lombrozo/jtcop/issues/453
+     */
+    @Test
+    void generatesSyntaxForGrammar() {
+        final List<String> definitions = new ArrayList<>(0);
+        final String top = "rule";
+        String[] programs = definitions.stream().toArray(String[]::new);
+        String message = "We expect that the randomly generated code will be verified without errors";
+        try {
+            Assertions.assertDoesNotThrow(
+                () -> Stream.generate(() -> top)
+                    .limit(50)
+                    .peek(System.out::println)
+                    .count(),
+                message
+            );
+        } catch (Exception exception) {
+            Assertions.fail(message, exception);
+        }
     }
 }

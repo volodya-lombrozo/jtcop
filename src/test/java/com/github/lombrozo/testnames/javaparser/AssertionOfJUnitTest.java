@@ -184,6 +184,20 @@ final class AssertionOfJUnitTest {
         );
     }
 
+    @Test
+    void findsAssertionMessages() {
+        MatcherAssert.assertThat(
+            "All assertions should have explanation assertions",
+            JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS
+                .testCase("generatesSyntaxForGrammar")
+                .assertions()
+                .stream()
+                .map(Assertion::explanation)
+                .allMatch(Optional::isPresent),
+            Matchers.is(true)
+        );
+    }
+
     /**
      * Return assertions from method by name.
      *
