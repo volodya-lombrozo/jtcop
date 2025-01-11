@@ -22,6 +22,5 @@
  * SOFTWARE.
  */
 String log = new File(basedir, 'build.log').text;
-assert log.contains("BUILD SUCCESS")
-assert log.contains("Hello, World!")
+assert log.contains("All tests are valid")
 true

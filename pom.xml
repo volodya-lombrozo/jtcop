@@ -204,6 +204,7 @@ SOFTWARE.
           <streamLogsOnFailures>true</streamLogsOnFailures>
           <showErrors>true</showErrors>
           <skipInvocation>${skipITs}</skipInvocation>
+          <parallelThreads>4</parallelThreads>
         </configuration>
         <executions>
           <execution>
