@@ -22,5 +22,17 @@
  * SOFTWARE.
  */
 String log = new File(basedir, 'build.log').text;
-assert log.contains("All tests are valid")
+assert log.contains("All tests are valid"): "Some tests are invalid"
+String unexpected = '''
+[WARNING] *****************************************************************
+[WARNING] * Your build is requesting parallel execution, but this         *
+[WARNING] * project contains the following plugin(s) that have goals not  *
+[WARNING] * marked as thread-safe to support parallel execution.          *
+[WARNING] * While this /may/ work fine, please look for plugin updates    *
+[WARNING] * and/or request plugins be made thread-safe.                   *
+[WARNING] * If reporting an issue, report it against the plugin in        *
+[WARNING] * question, not against Apache Maven.                           *
+[WARNING] *****************************************************************
+'''
+assert !log.contains(unexpected): "Unexpected warning: $unexpected"
 true
