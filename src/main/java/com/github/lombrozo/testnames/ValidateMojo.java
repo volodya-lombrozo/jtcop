@@ -53,7 +53,7 @@ import org.apache.maven.project.MavenProject;
  *  We also have to add integration tests for the RuleAllTestsHaveProductionClass that will be
  *  able to check the test names in the compiled classes.
  */
-@Mojo(name = "check", defaultPhase = LifecyclePhase.VALIDATE)
+@Mojo(name = "check", defaultPhase = LifecyclePhase.VALIDATE, threadSafe = true)
 public final class ValidateMojo extends AbstractMojo {
 
     /**
