@@ -2,7 +2,7 @@
 
 Each test name has to be written by using [camel case](https://en.wikipedia.org/wiki/Camel_case).
 
-Correct examples:
+Correct:
 ```java
 public class UserTest {
     @Test
@@ -21,7 +21,7 @@ public class UserTest {
     }
 }
 ```
-Incorrect examples:
+Incorrect:
 ```java
 public class UserTest {
     @Test

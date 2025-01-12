@@ -34,7 +34,6 @@ import java.util.Collections;
  * The rule that checks a test class doesn't use inheritance.
  * @since 1.2.0
  */
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class RuleInheritanceInTests implements Rule {
 
     /**
