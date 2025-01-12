@@ -25,7 +25,7 @@ state or behavior from parent classes, leading to subtle bugs and making it
 harder to refactor tests in the future. Every test should clearly express its
 intent without relying on external hierarchy.
 
-### Exceptions
+### Ignoring the Rule
 
 To ignore this rule, annotate the test class
 with `@SuppressedWarnings("JTCOP.RuleInheritanceInTests")`.
