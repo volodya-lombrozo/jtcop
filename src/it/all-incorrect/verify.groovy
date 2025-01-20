@@ -23,7 +23,7 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  'Test name \'test\' doesn\'t follow naming rules, because test name doesn\'t have to contain the word \'test\'',
+  "Test name 'test' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
   "Test name 'test' doesn't follow naming rules, because the test name has to be written using present tense",
   "Test name 'test1' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
   "Test name 'test1' doesn't follow naming rules, because the test name has to be written using present tense",
