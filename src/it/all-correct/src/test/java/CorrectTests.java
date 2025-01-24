@@ -42,7 +42,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 public class CorrectTests {
 
     /**
-     * This is test for the issur #453.
+     * This is the test for the issue #471.
+     * You can read more about the issue right here:
+     * https://github.com/volodya-lombrozo/jtcop/issues/471
+     */
+    @Test
+    void routesNotWhenNotMatchAndNoSpareCmd() {
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
+            true
+        );
+    }
+
+    /**
+     * This is test for the issue #453.
      * You can read more about the issue right here:
      * https://github.com/volodya-lombrozo/jtcop/issues/453
      */
