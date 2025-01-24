@@ -36,6 +36,11 @@ import com.github.javaparser.ast.nodeTypes.NodeWithImplements;
 import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.javaparser.ast.nodeTypes.NodeWithName;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.resolution.SymbolResolver;
+import com.github.javaparser.symbolsolver.JavaSymbolSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.ClassLoaderTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -296,6 +301,16 @@ final class JavaParserClass {
     private static CompilationUnit parse(final Path path) {
         try {
             StaticJavaParser.getParserConfiguration()
+                .setSymbolResolver(
+                    new JavaSymbolSolver(
+                        new CombinedTypeSolver(
+                            new ReflectionTypeSolver(),
+                            new ClassLoaderTypeSolver(
+                                JavaParserClass.class.getClassLoader()
+                            )
+                        )
+                    )
+                )
                 .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
             return JavaParserClass.parse(Files.newInputStream(path));
         } catch (final IOException ex) {
@@ -313,6 +328,12 @@ final class JavaParserClass {
      */
     private static CompilationUnit parse(final InputStream stream) {
         StaticJavaParser.getParserConfiguration()
+            .setSymbolResolver(new JavaSymbolSolver(new CombinedTypeSolver(
+                new ReflectionTypeSolver(),
+                new ClassLoaderTypeSolver(
+                    JavaParserClass.class.getClassLoader()
+                )
+            )))
             .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
         return StaticJavaParser.parse(stream);
     }

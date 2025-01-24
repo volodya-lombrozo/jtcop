@@ -40,5 +40,6 @@ String log = new File(basedir, 'build.log').text;
   "Method 'containsLineHitter' contains line hitter anti-pattern",
   "The test class 'UsesInheritenceTest.java' has the parent class 'AbstractTest'. Inheritance in tests is dangerous for maintainability",
   "Method 'testsSomething' contains excessive number of mocks: 3. max allowed: 1.",
+  "Method 'checksAssertionWithoutMessage' has assertion without message",
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 true

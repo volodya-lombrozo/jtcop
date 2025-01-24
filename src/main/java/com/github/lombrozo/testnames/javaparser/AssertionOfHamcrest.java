@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.resolution.types.ResolvedType;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -72,9 +73,25 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         final Optional<Expression> first = arguments.getFirst();
         if (arguments.size() > 2 && first.isPresent()) {
             result = new StingExpression(first.get()).asString();
+        } else if (arguments.size() == 2 && first.isPresent()) {
+            final Optional<Expression> last = arguments.getLast();
+            if (last.isPresent() && last.get().calculateResolvedType().describe()
+                .equals("boolean")) {
+                result = new StingExpression(first.get()).asString();
+            } else {
+                result = Optional.empty();
+            }
         } else {
             result = Optional.empty();
         }
+//        final String describe = resolved.describe();
+//
+//        if (arguments.size() > 2 && first.isPresent()) {
+//            final ResolvedType type = first.get().calculateResolvedType();
+//            result = new StingExpression(first.get()).asString();
+//        } else {
+//            result = Optional.empty();
+//        }
         return result;
     }
 
@@ -112,6 +129,6 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         return (
             args.contains(String.format("equalTo(%s)", type))
                 || args.contains(String.format("Matchers.equalTo(%s)", type))
-            ) && args.contains(type);
+        ) && args.contains(type);
     }
 }
