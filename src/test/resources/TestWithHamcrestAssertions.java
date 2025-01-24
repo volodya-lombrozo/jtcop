@@ -98,4 +98,12 @@ class TestWithHamcrestAssertions {
             "JUnit explanation"
         );
     }
+
+    @Test
+    void checksTheCaseFrom471issue(){
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
+            true
+        );
+    }
 }

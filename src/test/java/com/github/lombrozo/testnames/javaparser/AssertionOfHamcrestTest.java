@@ -141,6 +141,21 @@ final class AssertionOfHamcrestTest {
         );
     }
 
+    @Test
+    void findsExplanationMessageForBooleanCheck() {
+        final AssertionOfHamcrest first = JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+            .method("checksTheCaseFrom471issue")
+            .statements()
+            .map(AssertionOfHamcrest::new)
+            .filter(AssertionOfHamcrest::isAssertion)
+            .findFirst().orElseThrow(() -> new AssertionError("not found assertion"));
+        MatcherAssert.assertThat(
+            String.format("We expect that assertion has a valid known message", first),
+            first.explanation().orElseThrow(() -> new AssertionError("explanation not found")),
+            Matchers.equalTo("Routes to command that not matched")
+        );
+    }
+
     @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
     @Test
     void checksCorrectlyOnLineHitters() {
