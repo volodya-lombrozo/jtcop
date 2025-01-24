@@ -301,16 +301,7 @@ final class JavaParserClass {
     private static CompilationUnit parse(final Path path) {
         try {
             StaticJavaParser.getParserConfiguration()
-                .setSymbolResolver(
-                    new JavaSymbolSolver(
-                        new CombinedTypeSolver(
-                            new ReflectionTypeSolver(),
-                            new ClassLoaderTypeSolver(
-                                JavaParserClass.class.getClassLoader()
-                            )
-                        )
-                    )
-                )
+                .setSymbolResolver(JavaParserClass.resolver())
                 .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
             return JavaParserClass.parse(Files.newInputStream(path));
         } catch (final IOException ex) {
@@ -328,13 +319,21 @@ final class JavaParserClass {
      */
     private static CompilationUnit parse(final InputStream stream) {
         StaticJavaParser.getParserConfiguration()
-            .setSymbolResolver(new JavaSymbolSolver(new CombinedTypeSolver(
-                new ReflectionTypeSolver(),
-                new ClassLoaderTypeSolver(
-                    JavaParserClass.class.getClassLoader()
-                )
-            )))
+            .setSymbolResolver(JavaParserClass.resolver())
             .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
         return StaticJavaParser.parse(stream);
+    }
+
+    /**
+     * Resolver for JavaParser.
+     * @return Symbol resolver.
+     */
+    private static SymbolResolver resolver() {
+        return new JavaSymbolSolver(
+            new CombinedTypeSolver(
+                new ReflectionTypeSolver(),
+                new ClassLoaderTypeSolver(Thread.currentThread().getContextClassLoader())
+            )
+        );
     }
 }

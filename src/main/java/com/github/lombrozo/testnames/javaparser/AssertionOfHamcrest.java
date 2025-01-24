@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.resolution.types.ResolvedType;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -75,8 +74,8 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
             result = new StingExpression(first.get()).asString();
         } else if (arguments.size() == 2 && first.isPresent()) {
             final Optional<Expression> last = arguments.getLast();
-            if (last.isPresent() && last.get().calculateResolvedType().describe()
-                .equals("boolean")) {
+            if (last.isPresent() && "boolean"
+                .equals(last.get().calculateResolvedType().describe())) {
                 result = new StingExpression(first.get()).asString();
             } else {
                 result = Optional.empty();
@@ -84,14 +83,6 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         } else {
             result = Optional.empty();
         }
-//        final String describe = resolved.describe();
-//
-//        if (arguments.size() > 2 && first.isPresent()) {
-//            final ResolvedType type = first.get().calculateResolvedType();
-//            result = new StingExpression(first.get()).asString();
-//        } else {
-//            result = Optional.empty();
-//        }
         return result;
     }
 
@@ -122,13 +113,9 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
      * @param type Type of hitter
      * @return True if contains hitter
      */
-    private static boolean containsHitter(
-        final Collection<String> args,
-        final String type
-    ) {
-        return (
-            args.contains(String.format("equalTo(%s)", type))
-                || args.contains(String.format("Matchers.equalTo(%s)", type))
-        ) && args.contains(type);
+    private static boolean containsHitter(final Collection<String> args, final String type) {
+        final String shortened = String.format("equalTo(%s)", type);
+        final String full = String.format("Matchers.equalTo(%s)", type);
+        return (args.contains(shortened) || args.contains(full)) && args.contains(type);
     }
 }
