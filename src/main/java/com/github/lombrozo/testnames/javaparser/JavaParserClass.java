@@ -40,6 +40,7 @@ import com.github.javaparser.resolution.SymbolResolver;
 import com.github.javaparser.symbolsolver.JavaSymbolSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ClassLoaderTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,22 +72,25 @@ final class JavaParserClass {
 
     /**
      * Ctor.
+     *
      * @param path Input stream with java class.
      */
-    JavaParserClass(final Path path) {
-        this(JavaParserClass.parse(path));
+    JavaParserClass(final Path path, final SymbolResolver resolver) {
+        this(JavaParserClass.parse(path, resolver));
     }
 
     /**
      * Ctor.
+     *
      * @param stream Input stream with java class.
      */
-    JavaParserClass(final InputStream stream) {
-        this(JavaParserClass.parse(stream));
+    JavaParserClass(final InputStream stream, final SymbolResolver resolver) {
+        this(JavaParserClass.parse(stream, resolver));
     }
 
     /**
      * Ctor.
+     *
      * @param unit Compilation unit.
      */
     JavaParserClass(final CompilationUnit unit) {
@@ -95,6 +99,7 @@ final class JavaParserClass {
 
     /**
      * Ctor.
+     *
      * @param unit Compilation unit.
      */
     private JavaParserClass(final Node unit) {
@@ -103,6 +108,7 @@ final class JavaParserClass {
 
     /**
      * Annotations of class.
+     *
      * @return Annotations of class.
      */
     SuppressedAnnotations annotations() {
@@ -111,6 +117,7 @@ final class JavaParserClass {
 
     /**
      * Methods of class.
+     *
      * @param filters Filters for methods.
      * @return Methods of class.
      */
@@ -124,6 +131,7 @@ final class JavaParserClass {
 
     /**
      * Checks if the class is an annotation.
+     *
      * @return True if an annotation
      */
     boolean isAnnotation() {
@@ -132,6 +140,7 @@ final class JavaParserClass {
 
     /**
      * Checks if the class is an interface.
+     *
      * @return True if an interface
      */
     boolean isInterface() {
@@ -141,6 +150,7 @@ final class JavaParserClass {
 
     /**
      * Checks if the class is a package-info.java.
+     *
      * @return True if a package-info.java
      */
     boolean isPackageInfo() {
@@ -150,6 +160,7 @@ final class JavaParserClass {
 
     /**
      * Retrieves the name of the superclass.
+     *
      * @return The name of the superclass.
      */
     String superclass() {
@@ -190,6 +201,7 @@ final class JavaParserClass {
 
     /**
      * Returns package of the class.
+     *
      * @return Package of the class.
      */
     Optional<String> pckg() {
@@ -208,6 +220,7 @@ final class JavaParserClass {
 
     /**
      * Loads class from the classpath.
+     *
      * @param name Name of the class.
      * @return Loaded class.
      */
@@ -229,6 +242,7 @@ final class JavaParserClass {
 
     /**
      * All the imports of the current class.
+     *
      * @return All the imports of the current class.
      */
     private Collection<String> imports() {
@@ -246,6 +260,7 @@ final class JavaParserClass {
 
     /**
      * Cast the class to NodeWithImplements.
+     *
      * @return NodeWithImplements
      */
     private NodeWithImplements<?> implement() {
@@ -260,6 +275,7 @@ final class JavaParserClass {
 
     /**
      * Cast the class to ClassOrInterfaceDeclaration.
+     *
      * @return ClassOrInterfaceDeclaration
      */
     private ClassOrInterfaceDeclaration cast() {
@@ -274,13 +290,14 @@ final class JavaParserClass {
 
     /**
      * Prestructor of class.
+     *
      * @param unit Compilation unit.
      * @return Node with class.
      * @todo #187:90min Provide refactoring for JavaParserClass and TestClassJavaParser.
-     *  The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
-     *  and have similar methods. The refactoring should be provided to make the code more
-     *  readable and maintainable. Also we have to count the different cases like records and
-     *  package-info classes, inner classes and so on. For each case we must have a test.
+     * The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
+     * and have similar methods. The refactoring should be provided to make the code more
+     * readable and maintainable. Also we have to count the different cases like records and
+     * package-info classes, inner classes and so on. For each case we must have a test.
      */
     private static Node fromCompilation(final CompilationUnit unit) {
         final Queue<Node> all = unit.getChildNodes()
@@ -295,15 +312,16 @@ final class JavaParserClass {
 
     /**
      * Parse java by path.
+     *
      * @param path Path to java file
      * @return Compilation unit.
      */
-    private static CompilationUnit parse(final Path path) {
+    private static CompilationUnit parse(final Path path, SymbolResolver resolver) {
         try {
             StaticJavaParser.getParserConfiguration()
-                .setSymbolResolver(JavaParserClass.resolver())
+                .setSymbolResolver(resolver)
                 .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
-            return JavaParserClass.parse(Files.newInputStream(path));
+            return JavaParserClass.parse(Files.newInputStream(path), resolver);
         } catch (final IOException ex) {
             throw new IllegalStateException(
                 String.format("Can't parse java file: %s", path.toAbsolutePath()),
@@ -314,26 +332,14 @@ final class JavaParserClass {
 
     /**
      * Parse java by input stream.
+     *
      * @param stream Input stream.
      * @return Compilation unit.
      */
-    private static CompilationUnit parse(final InputStream stream) {
+    private static CompilationUnit parse(final InputStream stream, final SymbolResolver resolver) {
         StaticJavaParser.getParserConfiguration()
-            .setSymbolResolver(JavaParserClass.resolver())
+            .setSymbolResolver(resolver)
             .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
         return StaticJavaParser.parse(stream);
-    }
-
-    /**
-     * Resolver for JavaParser.
-     * @return Symbol resolver.
-     */
-    private static SymbolResolver resolver() {
-        return new JavaSymbolSolver(
-            new CombinedTypeSolver(
-                new ReflectionTypeSolver(),
-                new ClassLoaderTypeSolver(Thread.currentThread().getContextClassLoader())
-            )
-        );
     }
 }

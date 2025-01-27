@@ -25,6 +25,7 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
+import com.github.javaparser.resolution.SymbolResolver;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
@@ -67,17 +68,19 @@ public final class JavaParserTestClass implements TestClass {
      * @param klass Path to the class
      */
     JavaParserTestClass(final Path klass) {
-        this(klass, JavaParserTestClass.parse(klass));
+        this(klass, JavaParserTestClass.parse(klass, JavaParserProject.resolver()));
     }
 
     /**
      * Ctor.
      *
      * @param klass Path to the class
-     * @param exclusions Rules excluded for entire project.
+     * @param exclusions Rules excluded for an entire project.
      */
-    JavaParserTestClass(final Path klass, final Collection<String> exclusions) {
-        this(klass, JavaParserTestClass.parse(klass), exclusions);
+    JavaParserTestClass(
+        final Path klass, final SymbolResolver resolver, final Collection<String> exclusions
+    ) {
+        this(klass, JavaParserTestClass.parse(klass, resolver), exclusions);
     }
 
     /**
@@ -86,8 +89,8 @@ public final class JavaParserTestClass implements TestClass {
      * @param klass Path to the class
      * @param stream Parsed Java class
      */
-    JavaParserTestClass(final Path klass, final InputStream stream) {
-        this(klass, JavaParserTestClass.parse(stream));
+    JavaParserTestClass(final Path klass, final SymbolResolver resolver, final InputStream stream) {
+        this(klass, JavaParserTestClass.parse(stream, resolver));
     }
 
     /**
@@ -105,14 +108,15 @@ public final class JavaParserTestClass implements TestClass {
      *
      * @param klass Path to the class
      * @param stream Parsed Java class
-     * @param exclusions Rules excluded for entire project.
+     * @param exclusions Rules excluded for an entire project.
      */
     JavaParserTestClass(
         final Path klass,
+        final SymbolResolver resolver,
         final InputStream stream,
         final Collection<String> exclusions
     ) {
-        this(klass, JavaParserTestClass.parse(stream), exclusions);
+        this(klass, JavaParserTestClass.parse(stream, resolver), exclusions);
     }
 
     /**
@@ -132,6 +136,7 @@ public final class JavaParserTestClass implements TestClass {
 
     /**
      * Constructor.
+     *
      * @param path Path to the class
      * @param unit Parsed class.
      * @param exclusions Rules excluded for entire project.
@@ -186,19 +191,23 @@ public final class JavaParserTestClass implements TestClass {
 
     /**
      * Parse Java class.
+     *
      * @param path Path to the class
      * @return Parsed class.
      */
-    private static Sticky<JavaParserClass> parse(final Path path) {
-        return new Sticky<>(() -> new JavaParserClass(path));
+    private static Sticky<JavaParserClass> parse(final Path path, final SymbolResolver resolver) {
+        return new Sticky<>(() -> new JavaParserClass(path, resolver));
     }
 
     /**
      * Parse Java class.
+     *
      * @param stream Raw class.
      * @return Parsed class.
      */
-    private static Sticky<JavaParserClass> parse(final InputStream stream) {
-        return new Sticky<>(() -> new JavaParserClass(stream));
+    private static Sticky<JavaParserClass> parse(
+        final InputStream stream, final SymbolResolver resolver
+    ) {
+        return new Sticky<>(() -> new JavaParserClass(stream, resolver));
     }
 }

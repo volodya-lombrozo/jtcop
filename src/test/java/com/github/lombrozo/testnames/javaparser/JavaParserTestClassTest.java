@@ -117,7 +117,11 @@ final class JavaParserTestClassTest {
     void throwsExceptionIfFileIsNotJava(@TempDir final Path temp) {
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaParserTestClass(temp, new InputStreamOf("Not Java")).all(),
+            () -> new JavaParserTestClass(
+                temp,
+                JavaParserProject.resolver(),
+                new InputStreamOf("Not Java")
+            ).all(),
             String.format(
                 "We expected that exception will be thrown, because file %s is not Java",
                 temp

@@ -178,6 +178,7 @@ public enum JavaTestClasses {
     public JavaParserTestClass toTestClass(final String... suppressed) {
         return new JavaParserTestClass(
             Paths.get("."),
+            JavaParserProject.resolver(),
             this.inputStream(),
             Arrays.asList(suppressed)
         );
@@ -189,7 +190,7 @@ public enum JavaTestClasses {
      * @return Method.
      */
     JavaParserMethod method(final String name) {
-        return new JavaParserClass(this.inputStream())
+        return new JavaParserClass(this.inputStream(), JavaParserProject.resolver())
             .methods(new ByName(name))
             .findFirst()
             .orElseThrow(() -> new MethodNotFound(name));

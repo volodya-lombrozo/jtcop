@@ -23,14 +23,23 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.javaparser.resolution.SymbolResolver;
+import com.github.javaparser.resolution.TypeSolver;
+import com.github.javaparser.symbolsolver.JavaSymbolSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.ClassLoaderTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
+import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.TestClass;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,6 +67,7 @@ public final class JavaParserProject implements Project {
 
     /**
      * Ctor.
+     *
      * @param main The main path where production classes are placed.
      * @param test The test path where test classes are placed.
      * @param exclusions The rules that have to be excluded from execution.
@@ -74,6 +84,7 @@ public final class JavaParserProject implements Project {
 
     /**
      * Ctor.
+     *
      * @param main The main path where production classes are placed.
      * @param test The test path where test classes are placed.
      */
@@ -112,13 +123,22 @@ public final class JavaParserProject implements Project {
                     .filter(path -> path.toString().endsWith(".java"))
                     .filter(
                         path -> {
-                            final JavaParserClass parsed = new JavaParserClass(path);
+                            final JavaParserClass parsed = new JavaParserClass(
+                                path,
+                                this.projectResolver()
+                            );
                             return !parsed.isAnnotation()
                                 && !parsed.isInterface()
                                 && !parsed.isPackageInfo();
                         }
                     )
-                    .map(klass -> new JavaParserTestClass(klass, this.exclusions))
+                    .map(
+                        klass -> new JavaParserTestClass(
+                            klass,
+                            this.projectResolver(),
+                            this.exclusions
+                        )
+                    )
                     .collect(Collectors.toList());
             } catch (final IOException exception) {
                 throw new IllegalStateException(exception);
@@ -127,6 +147,34 @@ public final class JavaParserProject implements Project {
             res = Collections.emptyList();
         }
         return res;
+    }
+
+    private SymbolResolver projectResolver() {
+        final List<TypeSolver> solvers = new ArrayList(0);
+        solvers.add(new ReflectionTypeSolver());
+        solvers.add(new ClassLoaderTypeSolver(Thread.currentThread().getContextClassLoader()));
+        if (Files.exists(this.main)) {
+            solvers.add(new JavaParserTypeSolver(this.main));
+        }
+        if (Files.exists(this.test)) {
+            solvers.add(new JavaParserTypeSolver(this.test));
+        }
+
+        return new JavaSymbolSolver(new CombinedTypeSolver(solvers.toArray(new TypeSolver[0])));
+    }
+
+    /**
+     * Resolver for JavaParser.
+     *
+     * @return Symbol resolver.
+     */
+    static SymbolResolver resolver() {
+        return new JavaSymbolSolver(
+            new CombinedTypeSolver(
+                new ReflectionTypeSolver(),
+                new ClassLoaderTypeSolver(Thread.currentThread().getContextClassLoader())
+            )
+        );
     }
 
 }
