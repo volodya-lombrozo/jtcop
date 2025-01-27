@@ -149,24 +149,14 @@ public final class JavaParserProject implements Project {
         return res;
     }
 
-    private SymbolResolver projectResolver() {
-        final List<TypeSolver> solvers = new ArrayList(0);
-        solvers.add(new ReflectionTypeSolver());
-        solvers.add(new ClassLoaderTypeSolver(Thread.currentThread().getContextClassLoader()));
-        if (Files.exists(this.main)) {
-            solvers.add(new JavaParserTypeSolver(this.main));
-        }
-        if (Files.exists(this.test)) {
-            solvers.add(new JavaParserTypeSolver(this.test));
-        }
-
-        return new JavaSymbolSolver(new CombinedTypeSolver(solvers.toArray(new TypeSolver[0])));
-    }
-
     /**
      * Resolver for JavaParser.
      *
      * @return Symbol resolver.
+     * @todo #482:30min Refactor {@link JavaParserProject#resolver()} ()} method.
+     *  Currently we use this method in tests. We should invent more simple way to
+     *  create resolver for tests. Moreover, we duplicate SymbolResolver parameter
+     *  in many methods. We should refactor it.
      */
     static SymbolResolver resolver() {
         return new JavaSymbolSolver(
@@ -177,4 +167,20 @@ public final class JavaParserProject implements Project {
         );
     }
 
+    /**
+     * Resolver for JavaParser.
+     * @return Symbol resolver.
+     */
+    private SymbolResolver projectResolver() {
+        final List<TypeSolver> solvers = new ArrayList(0);
+        solvers.add(new ReflectionTypeSolver());
+        solvers.add(new ClassLoaderTypeSolver(Thread.currentThread().getContextClassLoader()));
+        if (Files.exists(this.main)) {
+            solvers.add(new JavaParserTypeSolver(this.main));
+        }
+        if (Files.exists(this.test)) {
+            solvers.add(new JavaParserTypeSolver(this.test));
+        }
+        return new JavaSymbolSolver(new CombinedTypeSolver(solvers.toArray(new TypeSolver[0])));
+    }
 }

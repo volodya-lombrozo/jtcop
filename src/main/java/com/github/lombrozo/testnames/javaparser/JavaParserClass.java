@@ -37,11 +37,6 @@ import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.javaparser.ast.nodeTypes.NodeWithName;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.resolution.SymbolResolver;
-import com.github.javaparser.symbolsolver.JavaSymbolSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.ClassLoaderTypeSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
-import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -74,6 +69,7 @@ final class JavaParserClass {
      * Ctor.
      *
      * @param path Input stream with java class.
+     * @param resolver Symbol resolver.
      */
     JavaParserClass(final Path path, final SymbolResolver resolver) {
         this(JavaParserClass.parse(path, resolver));
@@ -83,6 +79,7 @@ final class JavaParserClass {
      * Ctor.
      *
      * @param stream Input stream with java class.
+     * @param resolver Symbol resolver.
      */
     JavaParserClass(final InputStream stream, final SymbolResolver resolver) {
         this(JavaParserClass.parse(stream, resolver));
@@ -294,10 +291,10 @@ final class JavaParserClass {
      * @param unit Compilation unit.
      * @return Node with class.
      * @todo #187:90min Provide refactoring for JavaParserClass and TestClassJavaParser.
-     * The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
-     * and have similar methods. The refactoring should be provided to make the code more
-     * readable and maintainable. Also we have to count the different cases like records and
-     * package-info classes, inner classes and so on. For each case we must have a test.
+     *  The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
+     *  and have similar methods. The refactoring should be provided to make the code more
+     *  readable and maintainable. Also we have to count the different cases like records and
+     *  package-info classes, inner classes and so on. For each case we must have a test.
      */
     private static Node fromCompilation(final CompilationUnit unit) {
         final Queue<Node> all = unit.getChildNodes()
@@ -314,9 +311,10 @@ final class JavaParserClass {
      * Parse java by path.
      *
      * @param path Path to java file
+     * @param resolver Symbol resolver.
      * @return Compilation unit.
      */
-    private static CompilationUnit parse(final Path path, SymbolResolver resolver) {
+    private static CompilationUnit parse(final Path path, final SymbolResolver resolver) {
         try {
             StaticJavaParser.getParserConfiguration()
                 .setSymbolResolver(resolver)
@@ -334,6 +332,7 @@ final class JavaParserClass {
      * Parse java by input stream.
      *
      * @param stream Input stream.
+     * @param resolver Symbol resolver.
      * @return Compilation unit.
      */
     private static CompilationUnit parse(final InputStream stream, final SymbolResolver resolver) {

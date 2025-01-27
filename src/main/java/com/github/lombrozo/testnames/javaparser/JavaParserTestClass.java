@@ -75,6 +75,7 @@ public final class JavaParserTestClass implements TestClass {
      * Ctor.
      *
      * @param klass Path to the class
+     * @param resolver Symbol resolver.
      * @param exclusions Rules excluded for an entire project.
      */
     JavaParserTestClass(
@@ -87,6 +88,7 @@ public final class JavaParserTestClass implements TestClass {
      * Ctor.
      *
      * @param klass Path to the class
+     * @param resolver Symbol resolver.
      * @param stream Parsed Java class
      */
     JavaParserTestClass(final Path klass, final SymbolResolver resolver, final InputStream stream) {
@@ -106,9 +108,11 @@ public final class JavaParserTestClass implements TestClass {
     /**
      * Ctor.
      *
-     * @param klass Path to the class
-     * @param stream Parsed Java class
+     * @param klass Path to the class.
+     * @param resolver Symbol resolver.
+     * @param stream Parsed Java class.
      * @param exclusions Rules excluded for an entire project.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     JavaParserTestClass(
         final Path klass,
@@ -192,7 +196,8 @@ public final class JavaParserTestClass implements TestClass {
     /**
      * Parse Java class.
      *
-     * @param path Path to the class
+     * @param path Path to the class.
+     * @param resolver Symbol resolver.
      * @return Parsed class.
      */
     private static Sticky<JavaParserClass> parse(final Path path, final SymbolResolver resolver) {
@@ -203,6 +208,7 @@ public final class JavaParserTestClass implements TestClass {
      * Parse Java class.
      *
      * @param stream Raw class.
+     * @param resolver Symbol resolver.
      * @return Parsed class.
      */
     private static Sticky<JavaParserClass> parse(
