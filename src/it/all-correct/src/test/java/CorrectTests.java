@@ -37,6 +37,7 @@ import org.hamcrest.MatcherAssert;
 
 /**
  * Test class.
+ *
  * @since 1.4
  */
 @SuppressWarnings("JTCOP.RuleAllTestsHaveProductionClass")
@@ -52,6 +53,19 @@ public class CorrectTests {
         MatcherAssert.assertThat(
             "Routes to command that not matched",
             true
+        );
+    }
+
+    /**
+     * This is the test for the issue #482.
+     * You can read more about the issue right here:
+     * https://github.com/volodya-lombrozo/jtcop/issues/482
+     */
+    @Test
+    void determinesTypesCorrectly() {
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
+            new BooleanScalar().value()
         );
     }
 
