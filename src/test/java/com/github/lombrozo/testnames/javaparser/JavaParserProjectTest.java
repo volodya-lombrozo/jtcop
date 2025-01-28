@@ -74,26 +74,13 @@ final class JavaParserProjectTest {
     }
 
     @Test
-    void returnsNotProductionClasses(@TempDir final Path tmp) throws IOException {
+    void ignoresClassesWithoutTests(@TempDir final Path tmp) throws IOException {
         final String name = "TestClass.java";
         Files.write(tmp.resolve(name), "final class TestClass{}".getBytes(StandardCharsets.UTF_8));
-        final Collection<TestClass> classes = new JavaParserProject(
-            tmp,
-            tmp
-        ).testClasses();
         MatcherAssert.assertThat(
-            String.format("Project has to have exactly one test class, but was %d", classes.size()),
-            classes,
-            Matchers.hasSize(1)
-        );
-        MatcherAssert.assertThat(
-            String.format(
-                "Test class name is wrong. Expected: %s, but was: %s",
-                name,
-                classes.iterator().next().name()
-            ),
-            classes.iterator().next().name(),
-            Matchers.equalTo(name)
+            "We expect that project has to ignore classes without tests",
+            new JavaParserProject(tmp, tmp).testClasses(),
+            Matchers.empty()
         );
     }
 
@@ -194,35 +181,23 @@ final class JavaParserProjectTest {
             JavaTestClasses.JUNIT_CALLBACK.inputStream(),
             temp.resolve("JUnitCallback.java")
         );
-        final Collection<TestClass> classes = new JavaParserProject(temp, temp).testClasses();
         MatcherAssert.assertThat(
-            String.format("Project has to return exactly one class, but was: %s", classes),
-            classes,
-            Matchers.hasSize(1)
-        );
-        MatcherAssert.assertThat(
-            "Class has to be JUnit extension, but was not",
-            classes.iterator().next().characteristics().isJUnitExtension(),
-            Matchers.is(true)
+            "We expect that JUnit callback class won't be returned as a test class",
+            new JavaParserProject(temp, temp).testClasses(),
+            Matchers.empty()
         );
     }
 
     @Test
-    void returnsClassParentsForJUnitExtension(@TempDir final Path temp) throws IOException {
+    void ignoresJUnitExtension(@TempDir final Path temp) throws IOException {
         Files.copy(
             JavaTestClasses.JUNIT_CONDITION.inputStream(),
             temp.resolve("JUnitCondition.java")
         );
-        final Collection<TestClass> classes = new JavaParserProject(temp, temp).testClasses();
         MatcherAssert.assertThat(
-            String.format("Project has to return exactly one class, but was: %s", classes),
-            classes,
-            Matchers.hasSize(1)
-        );
-        MatcherAssert.assertThat(
-            "Class has to be JUnit extension, but was not",
-            classes.iterator().next().characteristics().isJUnitExtension(),
-            Matchers.is(true)
+            "We expect that JUnit execution condition won't be returned as a test class",
+            new JavaParserProject(temp, temp).testClasses(),
+            Matchers.empty()
         );
     }
 }

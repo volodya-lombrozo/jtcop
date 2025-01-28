@@ -41,11 +41,17 @@ final class TestsOnly implements Predicate<MethodDeclaration> {
 
     @Override
     public boolean test(final MethodDeclaration declaration) {
-        return !declaration.isPrivate()
-            &&
-            (
-                declaration.isAnnotationPresent("Test")
-                    || declaration.isAnnotationPresent("ParameterizedTest")
-            );
+        return !declaration.isPrivate() && TestsOnly.withTestAnnotation(declaration);
+    }
+
+    /**
+     * Check if the method has a test annotation.
+     *
+     * @param declaration The method declaration.
+     * @return True if the method has a test annotation.
+     */
+    private static boolean withTestAnnotation(final MethodDeclaration declaration) {
+        return declaration.isAnnotationPresent("Test")
+            || declaration.isAnnotationPresent("ParameterizedTest");
     }
 }
