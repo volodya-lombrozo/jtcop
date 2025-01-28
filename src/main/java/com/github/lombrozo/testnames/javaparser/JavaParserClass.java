@@ -135,36 +135,8 @@ final class JavaParserClass {
     boolean isTest() {
         return !this.isAnnotation()
             && !this.isInterface()
-            && !this.isPackageInfo();
-    }
-
-    /**
-     * Checks if the class is an annotation.
-     *
-     * @return True if an annotation
-     */
-    boolean isAnnotation() {
-        return this.klass instanceof AnnotationDeclaration;
-    }
-
-    /**
-     * Checks if the class is an interface.
-     *
-     * @return True if an interface
-     */
-    boolean isInterface() {
-        return this.klass instanceof ClassOrInterfaceDeclaration
-            && this.cast().isInterface();
-    }
-
-    /**
-     * Checks if the class is a package-info.java.
-     *
-     * @return True if a package-info.java
-     */
-    boolean isPackageInfo() {
-        return this.klass instanceof ClassOrInterfaceDeclaration
-            && "empty".equals(this.cast().getNameAsString());
+            && !this.isPackageInfo()
+            && this.hasTests();
     }
 
     /**
@@ -225,6 +197,44 @@ final class JavaParserClass {
             );
         return unit.getPackageDeclaration()
             .map(NodeWithName::getNameAsString);
+    }
+
+    /**
+     * Whether the class has tests.
+     *
+     * @return True if the class has tests.
+     */
+    private boolean hasTests() {
+        return this.methods(new TestsOnly()).findAny().isPresent();
+    }
+
+    /**
+     * Checks if the class is an annotation.
+     *
+     * @return True if an annotation
+     */
+    private boolean isAnnotation() {
+        return this.klass instanceof AnnotationDeclaration;
+    }
+
+    /**
+     * Checks if the class is an interface.
+     *
+     * @return True if an interface
+     */
+    private boolean isInterface() {
+        return this.klass instanceof ClassOrInterfaceDeclaration
+            && this.cast().isInterface();
+    }
+
+    /**
+     * Checks if the class is a package-info.java.
+     *
+     * @return True if a package-info.java
+     */
+    private boolean isPackageInfo() {
+        return this.klass instanceof ClassOrInterfaceDeclaration
+            && "empty".equals(this.cast().getNameAsString());
     }
 
     /**
