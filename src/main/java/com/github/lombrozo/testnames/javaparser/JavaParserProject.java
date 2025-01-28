@@ -143,10 +143,10 @@ public final class JavaParserProject implements Project {
      * Resolver for JavaParser.
      *
      * @return Symbol resolver.
-     * @todo #482:30min Refactor {@link JavaParserProject#resolver()} ()} method.
-     * Currently we use this method in tests. We should invent more simple way to
-     * create resolver for tests. Moreover, we duplicate SymbolResolver parameter
-     * in many methods. We should refactor it.
+     * @todo #482:30min Refactor {@link JavaParserProject#resolver()} method.
+     *  Currently we use this method in tests. We should invent more simple way to
+     *  create resolver for tests. Moreover, we duplicate SymbolResolver parameter
+     *  in many methods. We should refactor it.
      */
     static SymbolResolver resolver() {
         return new JavaSymbolSolver(

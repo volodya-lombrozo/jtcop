@@ -126,7 +126,6 @@ final class JavaParserClass {
             .map(JavaParserMethod::new);
     }
 
-
     /**
      * Whether the class is a test.
      *
@@ -153,7 +152,8 @@ final class JavaParserClass {
                 res = def;
             } else {
                 res = definition.getExtendedTypes()
-                    .stream().findFirst()
+                    .stream()
+                    .findFirst()
                     .map(ClassOrInterfaceType::getNameAsString)
                     .orElse(def);
             }
@@ -313,10 +313,10 @@ final class JavaParserClass {
      * @param unit Compilation unit.
      * @return Node with class.
      * @todo #187:90min Provide refactoring for JavaParserClass and TestClassJavaParser.
-     * The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
-     * and have similar methods. The refactoring should be provided to make the code more
-     * readable and maintainable. Also we have to count the different cases like records and
-     * package-info classes, inner classes and so on. For each case we must have a test.
+     *  The JavaParserClass and TestClassJavaParser classes are very similar. They share some logic
+     *  and have similar methods. The refactoring should be provided to make the code more
+     *  readable and maintainable. Also we have to count the different cases like records and
+     *  package-info classes, inner classes and so on. For each case we must have a test.
      */
     private static Node fromCompilation(final CompilationUnit unit) {
         final Queue<Node> all = unit.getChildNodes()
