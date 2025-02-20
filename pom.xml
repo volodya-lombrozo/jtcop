@@ -204,7 +204,7 @@ SOFTWARE.
       <plugin>
         <groupId>ru.l3r8y</groupId>
         <artifactId>prefixed-maven-plugin</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
         <executions>
           <execution>
             <goals>
