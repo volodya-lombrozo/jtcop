@@ -25,6 +25,7 @@
 package com.github.lombrozo.testnames;
 
 import java.util.Collection;
+import ru.l3r8y.prefixed.annotation.RequirePrefix;
 
 /**
  * The rule for naming.
@@ -32,6 +33,7 @@ import java.util.Collection;
  * @since 0.1.0
  */
 @FunctionalInterface
+@RequirePrefix(prefix = "Rule")
 public interface Rule {
 
     /**

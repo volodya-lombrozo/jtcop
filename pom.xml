@@ -94,6 +94,11 @@ SOFTWARE.
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>ru.l3r8y</groupId>
+      <artifactId>prefixed-maven-plugin</artifactId>
+      <version>0.0.2</version>
+    </dependency>
+    <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
       <version>3.0</version>
@@ -193,6 +198,21 @@ SOFTWARE.
               <goal>helpmojo</goal>
               <goal>descriptor</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>ru.l3r8y</groupId>
+        <artifactId>prefixed-maven-plugin</artifactId>
+        <version>0.0.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <basepackage>com.github.lombrozo.testnames</basepackage>
+            </configuration>
           </execution>
         </executions>
       </plugin>
