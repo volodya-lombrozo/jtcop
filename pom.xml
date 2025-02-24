@@ -96,7 +96,7 @@ SOFTWARE.
     <dependency>
       <groupId>ru.l3r8y</groupId>
       <artifactId>prefixed-maven-plugin</artifactId>
-      <version>0.0.3</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
@@ -204,7 +204,7 @@ SOFTWARE.
       <plugin>
         <groupId>ru.l3r8y</groupId>
         <artifactId>prefixed-maven-plugin</artifactId>
-        <version>0.0.3</version>
+        <version>1.0.0</version>
         <executions>
           <execution>
             <goals>
