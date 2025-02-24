@@ -33,15 +33,11 @@ import java.util.Collection;
 /**
  * The rule checks if test case contains a "Line Hitter"
  * antipattern.
- * Previousely this class has a name `RuleLineHitter`, but I had to rename it for
- * the following reasons:
- * "Class 'RuleLineHitter' has bad naming, class ends with '-er' suffix"
- * You can read more about this issue
- * <a href="https://github.com/l3r8yJ/oop-cop/issues/105">here</a>
  *
- * @since 1.0.1
+ *  @since 1.0.1
  */
-public final class LineHitterRule implements Rule {
+@SuppressWarnings("OOP.ErSuffixCheck")
+public final class RuleLineHitter implements Rule {
 
     /**
      * The test case.
@@ -53,7 +49,7 @@ public final class LineHitterRule implements Rule {
      *
      * @param test The test case to check
      */
-    public LineHitterRule(final TestCase test) {
+    public RuleLineHitter(final TestCase test) {
         this.test = test;
     }
 

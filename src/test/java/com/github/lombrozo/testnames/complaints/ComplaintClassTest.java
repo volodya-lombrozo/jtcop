@@ -23,7 +23,7 @@
  */
 package com.github.lombrozo.testnames.complaints;
 
-import com.github.lombrozo.testnames.Complaint;
+import com.github.lombrozo.testnames.Complaint.ComplaintText;
 import com.github.lombrozo.testnames.TestClass;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -57,8 +57,8 @@ final class ComplaintClassTest {
             ),
             new ComplaintClass(
                 new TestClass.Fake(),
-                new Complaint.Text("haha"),
-                new Complaint.Text("haha")
+                new ComplaintText("haha"),
+                new ComplaintText("haha")
             ).message(),
             Matchers.equalTo(expected)
         );

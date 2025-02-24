@@ -23,6 +23,8 @@
  */
 package com.github.lombrozo.testnames;
 
+import ru.l3r8y.prefixed.annotation.RequirePrefix;
+
 /**
  * Complaint abstraction.
  * You can find all complaints in package {@link com.github.lombrozo.testnames.complaints}.
@@ -30,6 +32,7 @@ package com.github.lombrozo.testnames;
  * @since 0.2.0
  */
 @FunctionalInterface
+@RequirePrefix(prefix = "Complaint")
 public interface Complaint {
 
     /**
@@ -42,7 +45,7 @@ public interface Complaint {
      * Text complaint.
      * @since 0.2
      */
-    final class Text implements Complaint {
+    final class ComplaintText implements Complaint {
 
         /**
          * Complaint message.
@@ -53,7 +56,7 @@ public interface Complaint {
          * Main constructor.
          * @param message Complaint message.
          */
-        public Text(final String message) {
+        public ComplaintText(final String message) {
             this.msg = message;
         }
 

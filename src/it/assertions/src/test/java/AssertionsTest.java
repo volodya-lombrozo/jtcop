@@ -161,7 +161,7 @@ class AssertionsTest {
 
 
     @Test
-    @SuppressWarnings("JTCOP.LineHitterRule")
+    @SuppressWarnings("JTCOP.RuleLineHitter")
     void checksJUnitAssertions() {
         Assertions.assertEquals("1", "1", message());
         Assertions.assertEquals("1", "1", "Message");
