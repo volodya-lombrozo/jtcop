@@ -27,7 +27,6 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.stream.Stream;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -39,40 +38,45 @@ import org.junit.jupiter.params.provider.MethodSource;
 final class RuleNotContainsTestWordTest {
 
     @ParameterizedTest
-    @MethodSource("cases")
-    void checksSeveralNames(final TestCase test, final boolean empty) {
-        final String msg;
-        if (empty) {
-            msg = "We expect that test name doesn't contain 'test' word, but %s contains it";
-        } else {
-            msg = "We expect that test name contains 'test' word, but %s doesn't contain it";
-        }
+    @MethodSource("contains")
+    void checksNamesWithoutTestWord(final TestCase test) {
         MatcherAssert.assertThat(
-            String.format(msg, test.name()),
-            new RuleNotContainsTestWord(test).complaints().isEmpty(),
-            Matchers.equalTo(empty)
+            String.format(
+                "We expect that test name contains 'test' word, but %s doesn't contain it",
+                test.name()
+            ),
+            !new RuleNotContainsTestWord(test).complaints().isEmpty()
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("absent")
+    void checksNamesWithTestWord(final TestCase test) {
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect that test name doesn't contain 'test' word, but %s contains it",
+                test.name()
+            ),
+            new RuleNotContainsTestWord(test).complaints().isEmpty()
         );
     }
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private static Stream<Arguments> cases() {
-        return Stream.of(
-            RuleNotContainsTestWordTest.args("test", false),
-            RuleNotContainsTestWordTest.args("TEST", false),
-            RuleNotContainsTestWordTest.args("Test", false),
-            RuleNotContainsTestWordTest.args("tesT", true),
-            RuleNotContainsTestWordTest.args("teSt", true),
-            RuleNotContainsTestWordTest.args("tSst", true),
-            RuleNotContainsTestWordTest.args("tESt", true),
-            RuleNotContainsTestWordTest.args("tEsT", true),
-            RuleNotContainsTestWordTest.args("tEST", true),
-            RuleNotContainsTestWordTest.args("executesTo", true),
-            RuleNotContainsTestWordTest.args("createsTo", true),
-            RuleNotContainsTestWordTest.args("executesTO", true)
-        );
+    private static Stream<Arguments> contains() {
+        return Stream.of("test", "TEST", "Test", "IntegrationTestIT", "AnotherTestIT")
+            .map(TestCase.Fake::new)
+            .map(Arguments::of);
     }
 
-    private static Arguments args(final String name, final boolean correct) {
-        return Arguments.of(new TestCase.Fake(name), correct);
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private static Stream<Arguments> absent() {
+        return Stream.of(
+                "tesT", "teSt", "tSst",
+                "tESt", "tEsT", "tEST", "executesTo", "createsTo", "executesTO",
+                "IntegrationIT", "ServiceIT", "RepositoryIT"
+            )
+            .map(TestCase.Fake::new)
+            .map(Arguments::of);
     }
+
 }
