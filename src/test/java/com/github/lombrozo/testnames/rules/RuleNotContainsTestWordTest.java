@@ -27,6 +27,7 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.stream.Stream;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -45,7 +46,8 @@ final class RuleNotContainsTestWordTest {
                 "We expect that test name contains 'test' word, but %s doesn't contain it",
                 test.name()
             ),
-            !new RuleNotContainsTestWord(test).complaints().isEmpty()
+            new RuleNotContainsTestWord(test).complaints().isEmpty(),
+            Matchers.is(false)
         );
     }
 
@@ -57,7 +59,8 @@ final class RuleNotContainsTestWordTest {
                 "We expect that test name doesn't contain 'test' word, but %s contains it",
                 test.name()
             ),
-            new RuleNotContainsTestWord(test).complaints().isEmpty()
+            new RuleNotContainsTestWord(test).complaints().isEmpty(),
+            Matchers.is(true)
         );
     }
 
@@ -71,12 +74,9 @@ final class RuleNotContainsTestWordTest {
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> absent() {
         return Stream.of(
-                "tesT", "teSt", "tSst",
-                "tESt", "tEsT", "tEST", "executesTo", "createsTo", "executesTO",
-                "IntegrationIT", "ServiceIT", "RepositoryIT"
-            )
-            .map(TestCase.Fake::new)
-            .map(Arguments::of);
+            "tesT", "teSt", "tSst", "tESt", "tEsT", "tEST", "executesTo", "createsTo", "executesTO",
+            "IntegrationIT", "ServiceIT", "RepositoryIT"
+        ).map(TestCase.Fake::new).map(Arguments::of);
     }
 
 }
