@@ -95,7 +95,7 @@ public final class ComplaintLinked implements Complaint {
 
     @Override
     public String message() {
-        return new Complaint.Text(
+        return new ComplaintText(
             String.format(
                 "%s.%n\t%s.%n\tYou can also ignore the rule by adding @SuppressWarnings(\"JTCOP.%s\") annotation.%n\tRule: %s.%n\tYou can read more about the rule here: %s",
                 this.complaint,
