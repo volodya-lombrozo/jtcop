@@ -69,7 +69,7 @@ public final class RuleNotContainsTestWord implements Rule {
                 ).message(),
                 "Remove 'test' word from the test name",
                 this.getClass(),
-                "test-word.md"
+                "rule-not-contains-test-word.md"
             )
         ).complaints();
     }
