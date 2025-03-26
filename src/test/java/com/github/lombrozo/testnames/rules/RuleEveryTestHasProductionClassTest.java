@@ -250,4 +250,32 @@ final class RuleEveryTestHasProductionClassTest {
             Matchers.empty()
         );
     }
+
+    @Test
+    void ignoresNoTestClassWithoutTests() {
+        final TestClass.Fake test = new TestClass.Fake("Utility");
+        MatcherAssert.assertThat(
+            "We expect that test class without 'Test' suffix is ignored by the rule",
+            new RuleEveryTestHasProductionClass(
+                new Project.Fake(test),
+                test
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void checksNoTestClassWithTests() {
+        final TestClass.Fake test = new TestClass.Fake(
+            "UtilityWithMethods", new TestCase.Fake("checksCorrectness")
+        );
+        MatcherAssert.assertThat(
+            "We expect that even if a test class doesn't have a 'Test' suffix, it might be checked by the rule once it has tests",
+            new RuleEveryTestHasProductionClass(
+                new Project.Fake(test),
+                test
+            ).complaints(),
+            Matchers.hasSize(1)
+        );
+    }
 }

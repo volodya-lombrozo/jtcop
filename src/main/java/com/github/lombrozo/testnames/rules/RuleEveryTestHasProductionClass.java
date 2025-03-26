@@ -32,6 +32,7 @@ import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -94,34 +95,40 @@ public final class RuleEveryTestHasProductionClass implements Rule {
 
     @Override
     public Collection<Complaint> complaints() {
-        final Map<String, ProductionClass> classes = this.project.productionClasses()
-            .stream()
-            .filter(clazz -> RuleEveryTestHasProductionClass.isNotPackageInfo(clazz.name()))
-            .collect(
-                Collectors.toMap(
-                    RuleEveryTestHasProductionClass::correspondingTest,
-                    Function.identity(),
-                    (first, second) -> first
-                )
-            );
-        final Collection<Complaint> complaints = new ArrayList<>(0);
-        final String name = RuleEveryTestHasProductionClass.clean(this.test.name());
-        if (!classes.containsKey(name)
-            && !this.test.characteristics().isIntegrationTest()
-            && RuleEveryTestHasProductionClass.isNotPackageInfo(this.test.name())) {
-            complaints.add(
-                new ComplaintLinked(
-                    String.format("Test %s doesn't have corresponding production class", name),
-                    String.format(
-                        "Either rename or move the test class %s",
-                        this.test.path()
-                    ),
-                    this.getClass(),
-                    "all-have-production-class.md"
-                )
-            );
+        final Collection<Complaint> result;
+        if (this.isTest()) {
+            final Map<String, ProductionClass> classes = this.project.productionClasses()
+                .stream()
+                .filter(clazz -> RuleEveryTestHasProductionClass.isNotPackageInfo(clazz.name()))
+                .collect(
+                    Collectors.toMap(
+                        RuleEveryTestHasProductionClass::correspondingTest,
+                        Function.identity(),
+                        (first, second) -> first
+                    )
+                );
+            final Collection<Complaint> complaints = new ArrayList<>(0);
+            final String name = RuleEveryTestHasProductionClass.clean(this.test.name());
+            if (!classes.containsKey(name)
+                && !this.test.characteristics().isIntegrationTest()
+                && RuleEveryTestHasProductionClass.isNotPackageInfo(this.test.name())) {
+                complaints.add(
+                    new ComplaintLinked(
+                        String.format("Test %s doesn't have corresponding production class", name),
+                        String.format(
+                            "Either rename or move the test class %s",
+                            this.test.path()
+                        ),
+                        this.getClass(),
+                        "all-have-production-class.md"
+                    )
+                );
+            }
+            result = complaints;
+        } else {
+            result = Collections.emptyList();
         }
-        return complaints;
+        return result;
     }
 
     /**
@@ -159,5 +166,13 @@ public final class RuleEveryTestHasProductionClass implements Rule {
      */
     private static boolean isNotPackageInfo(final String name) {
         return !"package-info.java".equals(name);
+    }
+
+    /**
+     * Checks that the test is actually a test.
+     * @return True if the test is actually a test.
+     */
+    private boolean isTest() {
+        return this.test.name().endsWith("Test") || !this.test.all().isEmpty();
     }
 }
