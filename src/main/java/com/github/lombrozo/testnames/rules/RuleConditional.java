@@ -27,6 +27,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -57,6 +58,11 @@ public final class RuleConditional implements Rule {
     ) {
         this.predicate = check;
         this.complaint = warning;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(RuleConditional.class.getSimpleName());
     }
 
     @Override

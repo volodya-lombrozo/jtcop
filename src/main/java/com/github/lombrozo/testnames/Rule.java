@@ -25,14 +25,20 @@
 package com.github.lombrozo.testnames;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The rule for naming.
  *
  * @since 0.1.0
  */
-@FunctionalInterface
 public interface Rule {
+
+    /**
+     * Rule aliases.
+     * @return List of aliases
+     */
+    List<String> aliases();
 
     /**
      * Collection of complaints that Rule can produce.

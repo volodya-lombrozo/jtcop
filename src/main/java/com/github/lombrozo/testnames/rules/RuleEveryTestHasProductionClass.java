@@ -30,7 +30,9 @@ import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -41,12 +43,17 @@ import java.util.stream.Collectors;
  *
  * @since 0.2
  */
-public final class RuleAllTestsHaveProductionClass implements Rule {
+public final class RuleEveryTestHasProductionClass implements Rule {
 
     /**
      * The name of the rule.
      */
-    public static final String NAME = "RuleAllTestsHaveProductionClass";
+    public static final String NAME = "RuleEveryTestHasProductionClass";
+
+    /**
+     * The second name of the rule.
+     */
+    public static final String SECOND_NAME = "RuleAllTestsHaveProductionClass";
 
     /**
      * The pattern to replace the underscore sign "_".
@@ -73,28 +80,35 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      * @param proj The project to check.
      * @param test The test to check.
      */
-    public RuleAllTestsHaveProductionClass(final Project proj, final TestClass test) {
+    public RuleEveryTestHasProductionClass(final Project proj, final TestClass test) {
         this.project = proj;
         this.test = test;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Arrays.asList(
+            RuleEveryTestHasProductionClass.NAME, RuleEveryTestHasProductionClass.SECOND_NAME
+        );
     }
 
     @Override
     public Collection<Complaint> complaints() {
         final Map<String, ProductionClass> classes = this.project.productionClasses()
             .stream()
-            .filter(clazz -> RuleAllTestsHaveProductionClass.isNotPackageInfo(clazz.name()))
+            .filter(clazz -> RuleEveryTestHasProductionClass.isNotPackageInfo(clazz.name()))
             .collect(
                 Collectors.toMap(
-                    RuleAllTestsHaveProductionClass::correspondingTest,
+                    RuleEveryTestHasProductionClass::correspondingTest,
                     Function.identity(),
                     (first, second) -> first
                 )
             );
         final Collection<Complaint> complaints = new ArrayList<>(0);
-        final String name = RuleAllTestsHaveProductionClass.clean(this.test.name());
+        final String name = RuleEveryTestHasProductionClass.clean(this.test.name());
         if (!classes.containsKey(name)
             && !this.test.characteristics().isIntegrationTest()
-            && RuleAllTestsHaveProductionClass.isNotPackageInfo(this.test.name())) {
+            && RuleEveryTestHasProductionClass.isNotPackageInfo(this.test.name())) {
             complaints.add(
                 new ComplaintLinked(
                     String.format("Test %s doesn't have corresponding production class", name),
@@ -116,7 +130,7 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
      * @return The name of the test class that corresponds to the production class.
      */
     private static String correspondingTest(final ProductionClass clazz) {
-        return String.format("%sTest", RuleAllTestsHaveProductionClass.clean(clazz.name()));
+        return String.format("%sTest", RuleEveryTestHasProductionClass.clean(clazz.name()));
     }
 
     /**
@@ -133,8 +147,8 @@ public final class RuleAllTestsHaveProductionClass implements Rule {
         } else {
             plain = original;
         }
-        return RuleAllTestsHaveProductionClass.DOLLAR.matcher(
-            RuleAllTestsHaveProductionClass.UNDERSCORE.matcher(plain).replaceAll("")
+        return RuleEveryTestHasProductionClass.DOLLAR.matcher(
+            RuleEveryTestHasProductionClass.UNDERSCORE.matcher(plain).replaceAll("")
         ).replaceAll("");
     }
 

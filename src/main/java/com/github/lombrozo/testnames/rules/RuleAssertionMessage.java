@@ -31,13 +31,14 @@ import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * The rule that checks that test method has assertion and the assertion message is not empty.
  *
  * @since 0.1.15
  */
-class RuleAssertionMessage implements Rule {
+final class RuleAssertionMessage implements Rule {
 
     /**
      * The test case.
@@ -50,6 +51,11 @@ class RuleAssertionMessage implements Rule {
      */
     RuleAssertionMessage(final TestCase test) {
         this.method = test;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(RuleAssertionMessage.class.getSimpleName());
     }
 
     @Override

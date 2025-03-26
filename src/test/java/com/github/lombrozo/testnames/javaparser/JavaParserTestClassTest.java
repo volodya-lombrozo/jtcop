@@ -25,7 +25,7 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
+import com.github.lombrozo.testnames.rules.RuleEveryTestHasProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.nio.file.Path;
@@ -151,13 +151,13 @@ final class JavaParserTestClassTest {
         final String msg = String.format(
             "We expected that test class %s will contain only one suppressed rule %s",
             JavaTestClasses.SUPPRESSED_CLASS,
-            RuleAllTestsHaveProductionClass.NAME
+            RuleEveryTestHasProductionClass.SECOND_NAME
         );
         MatcherAssert.assertThat(msg, all, Matchers.hasSize(1));
         MatcherAssert.assertThat(
             msg,
             all.iterator().next(),
-            Matchers.equalTo(RuleAllTestsHaveProductionClass.NAME)
+            Matchers.equalTo(RuleEveryTestHasProductionClass.SECOND_NAME)
         );
     }
 
@@ -167,7 +167,7 @@ final class JavaParserTestClassTest {
             .toTestClass()
             .suppressed();
         final String[] expected = {
-            RuleAllTestsHaveProductionClass.NAME,
+            RuleEveryTestHasProductionClass.SECOND_NAME,
             RuleNotCamelCase.NAME,
             RuleNotContainsTestWord.NAME,
         };
@@ -188,7 +188,7 @@ final class JavaParserTestClassTest {
         final String[] expected = {
             custom,
             project,
-            RuleAllTestsHaveProductionClass.NAME,
+            RuleEveryTestHasProductionClass.SECOND_NAME,
             RuleNotCamelCase.NAME,
             RuleNotContainsTestWord.NAME,
         };
@@ -210,7 +210,7 @@ final class JavaParserTestClassTest {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_ANNOTATION
             .toTestClass()
             .suppressed();
-        final String expected = RuleAllTestsHaveProductionClass.NAME;
+        final String expected = RuleEveryTestHasProductionClass.SECOND_NAME;
         final String msg = String.format("Expected exactly %s rule, but was %s", expected, all);
         MatcherAssert.assertThat(
             msg, all, Matchers.hasSize(1)
@@ -225,7 +225,7 @@ final class JavaParserTestClassTest {
         final Collection<String> all = JavaTestClasses.SUPPRESSED_INTERFACE
             .toTestClass()
             .suppressed();
-        final String expected = RuleAllTestsHaveProductionClass.NAME;
+        final String expected = RuleEveryTestHasProductionClass.SECOND_NAME;
         final String msg = String.format("Expected only %s rule, but was %s", expected, all);
         MatcherAssert.assertThat(msg, all, Matchers.hasSize(1));
         MatcherAssert.assertThat(msg, all, Matchers.hasItem(expected));

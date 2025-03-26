@@ -29,6 +29,7 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Suppressed rule.
@@ -83,6 +84,11 @@ public final class RuleSuppressed implements Rule {
     }
 
     @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
+    }
+
+    @Override
     public Collection<Complaint> complaints() {
         final Collection<Complaint> result;
         if (this.isSuppressed()) {
@@ -99,7 +105,7 @@ public final class RuleSuppressed implements Rule {
      */
     private boolean isSuppressed() {
         return this.suppressed.stream().anyMatch(
-            hidden -> hidden.equals(this.delegate.getClass().getSimpleName())
+            hidden -> this.delegate.aliases().contains(hidden)
         );
     }
 }

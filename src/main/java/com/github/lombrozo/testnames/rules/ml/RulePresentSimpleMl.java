@@ -30,6 +30,7 @@ import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -65,6 +66,11 @@ public final class RulePresentSimpleMl implements Rule {
     RulePresentSimpleMl(final POSTaggerME tagger, final TestCase tst) {
         this.model = tagger;
         this.test = tst;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

@@ -30,6 +30,8 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The rule to check if test name uses special chars.
@@ -50,6 +52,11 @@ public final class RuleNotUsesSpecialCharacters implements Rule {
      */
     RuleNotUsesSpecialCharacters(final TestCase test) {
         this.test = test;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

@@ -30,6 +30,7 @@ import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * The rule that checks the correct name of an integration test class.
@@ -54,6 +55,11 @@ public final class RuleCorrectTestName implements Rule {
      */
     public RuleCorrectTestName(final TestClass klass) {
         this.test = klass;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

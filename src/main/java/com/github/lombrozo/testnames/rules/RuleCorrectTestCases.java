@@ -72,6 +72,11 @@ public final class RuleCorrectTestCases implements Rule {
     }
 
     @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
+    }
+
+    @Override
     public Collection<Complaint> complaints() {
         final List<Complaint> list = this.tests.all().stream()
             .map(

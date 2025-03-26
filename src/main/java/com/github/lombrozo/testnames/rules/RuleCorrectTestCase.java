@@ -29,6 +29,8 @@ import com.github.lombrozo.testnames.Parameters;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,6 +64,11 @@ public final class RuleCorrectTestCase implements Rule {
             new LineHitterRule(test),
             new RuleTestCaseContainsMockery(test, parameters)
         ).map(rule -> new RuleSuppressed(rule, test)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

@@ -30,6 +30,8 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import com.github.lombrozo.testnames.javaparser.NumberOfMockitoMocks;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Mockery rule.
@@ -70,6 +72,11 @@ public final class RuleTestCaseContainsMockery implements Rule {
     public RuleTestCaseContainsMockery(final TestCase tst, final int allwd) {
         this.test = tst;
         this.allowed = allwd;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

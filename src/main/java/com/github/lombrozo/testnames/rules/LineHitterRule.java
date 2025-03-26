@@ -28,7 +28,9 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The rule checks if test case contains a "Line Hitter"
@@ -55,6 +57,11 @@ public final class LineHitterRule implements Rule {
      */
     public LineHitterRule(final TestCase test) {
         this.test = test;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Arrays.asList("LineHitterRule");
     }
 
     @Override

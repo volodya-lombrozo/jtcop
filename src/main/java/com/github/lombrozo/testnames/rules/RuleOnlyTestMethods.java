@@ -30,6 +30,7 @@ import com.github.lombrozo.testnames.TestClassCharacteristics;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Checks that test class has only methods annotated with @Test annotation.
@@ -52,6 +53,11 @@ public final class RuleOnlyTestMethods implements Rule {
      */
     public RuleOnlyTestMethods(final TestClass klass) {
         this.klass = klass;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

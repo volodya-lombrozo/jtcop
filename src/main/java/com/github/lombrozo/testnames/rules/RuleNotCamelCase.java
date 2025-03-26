@@ -30,6 +30,8 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Rule to check test case on not camel case name.
@@ -55,6 +57,11 @@ public final class RuleNotCamelCase implements Rule {
      */
     RuleNotCamelCase(final TestCase test) {
         this.test = test;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

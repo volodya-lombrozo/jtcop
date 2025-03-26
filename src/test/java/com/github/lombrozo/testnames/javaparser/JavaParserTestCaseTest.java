@@ -25,7 +25,7 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
+import com.github.lombrozo.testnames.rules.RuleEveryTestHasProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.util.Arrays;
@@ -139,7 +139,7 @@ final class JavaParserTestCaseTest {
             .testCase(test)
             .suppressed();
         final String[] expected = {
-            RuleAllTestsHaveProductionClass.NAME,
+            RuleEveryTestHasProductionClass.SECOND_NAME,
             RuleNotContainsTestWord.NAME,
             RuleNotCamelCase.NAME,
             "AnotherRule",

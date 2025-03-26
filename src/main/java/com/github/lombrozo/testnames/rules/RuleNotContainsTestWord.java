@@ -30,6 +30,8 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -56,6 +58,11 @@ public final class RuleNotContainsTestWord implements Rule {
      */
     RuleNotContainsTestWord(final TestCase test) {
         this.test = test;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(RuleNotContainsTestWord.NAME);
     }
 
     @Override

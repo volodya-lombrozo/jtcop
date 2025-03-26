@@ -30,6 +30,8 @@ import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import com.github.lombrozo.testnames.complaints.ComplaintWrongTestName;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The rule checks if test case in present tense.
@@ -50,6 +52,11 @@ public final class RulePresentTense implements Rule {
      */
     RulePresentTense(final TestCase tst) {
         this.test = tst;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

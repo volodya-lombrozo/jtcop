@@ -29,6 +29,7 @@ import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * The rule that checks a test class doesn't use inheritance.
@@ -48,6 +49,11 @@ public final class RuleInheritanceInTests implements Rule {
      */
     public RuleInheritanceInTests(final TestClass clazz) {
         this.clazz = clazz;
+    }
+
+    @Override
+    public List<String> aliases() {
+        return Collections.singletonList(this.getClass().getSimpleName());
     }
 
     @Override

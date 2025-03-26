@@ -23,9 +23,9 @@
  */
 package com.github.lombrozo.testnames;
 
-import com.github.lombrozo.testnames.rules.RuleAllTestsHaveProductionClass;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestCases;
 import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
+import com.github.lombrozo.testnames.rules.RuleEveryTestHasProductionClass;
 import com.github.lombrozo.testnames.rules.RuleInheritanceInTests;
 import com.github.lombrozo.testnames.rules.RuleOnlyTestMethods;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
@@ -113,7 +113,7 @@ final class Cop {
     private static Function<Suspect, Stream<Rule>> regular(final Parameters parameters) {
         return suspect -> Stream.of(
             new RuleSuppressed(
-                new RuleAllTestsHaveProductionClass(suspect.project(), suspect.test()),
+                new RuleEveryTestHasProductionClass(suspect.project(), suspect.test()),
                 suspect.test()
             ),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
