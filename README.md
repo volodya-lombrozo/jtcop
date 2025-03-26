@@ -3,17 +3,16 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.volodya-lombrozo/jtcop-maven-plugin)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/volodya-lombrozo/jtcop/blob/main/LICENSE.txt)
 [![Hits-of-Code](https://hitsofcode.com/github/volodya-lombrozo/jtcop?branch=main&label=Hits-of-Code)](https://hitsofcode.com/github/volodya-lombrozo/jtcop/view?branch=main&label=Hits-of-Code)
-![Lines of code](https://img.shields.io/tokei/lines/github/volodya-lombrozo/jtcop?branch=main&label=Lines-of-Code)
 [![codecov](https://codecov.io/gh/volodya-lombrozo/jtcop/branch/main/graph/badge.svg)](https://codecov.io/gh/volodya-lombrozo/jtcop)
 
+<img src="logo-small.png" align="right"/>
+
 This repository was inspired by various articles and discussion threads (such as
-these
-ones: ["Unit test naming best practices"](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
+these: ["Unit test naming best practices"](https://stackoverflow.com/questions/155436/unit-test-naming-best-practices)
 and ["On The Layout of Tests"](https://www.yegor256.com/2023/01/19/layout-of-tests.html)),
-and it consolidates knowledge on
-best practices for organizing and naming tests. The purpose of jtcop is to
-enhance the clarity and maintainability of your tests. In other words, jtcop is
-a static linter similar to tools
+and it consolidates knowledge on best practices for organizing and naming tests.
+The purpose of jtcop is to enhance the clarity and maintainability of your
+tests. In other words, jtcop is a static linter similar to tools
 like [CheckStyle](https://checkstyle.sourceforge.io)
 or [PMD](https://pmd.github.io), but with a focus on test best practices.
 
@@ -93,6 +92,7 @@ If you want to skip the plugin execution, just set the `skip` property to `true`
 in the configuration:
 
 ```xml
+
 <configuration>
   <skip>true</skip>
 </configuration>
