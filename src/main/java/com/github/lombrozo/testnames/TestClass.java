@@ -39,6 +39,12 @@ import lombok.Data;
 public interface TestClass {
 
     /**
+     * Test class fields.
+     * @return Test class fields.
+     */
+    Collection<Field> fields();
+
+    /**
      * The name of class.
      *
      * @return The name of class as string
@@ -218,6 +224,11 @@ public interface TestClass {
         }
 
         @Override
+        public Collection<Field> fields() {
+            return Collections.emptyList();
+        }
+
+        @Override
         public String name() {
             return this.name;
         }
@@ -240,6 +251,79 @@ public interface TestClass {
         @Override
         public TestClassCharacteristics characteristics() {
             return this.props;
+        }
+    }
+
+    /**
+     * The test class with fields.
+     * @since 1.4
+     */
+    final class WithFields implements TestClass {
+
+        /**
+         * Fields.
+         */
+        private final List<Field> fields;
+
+        /**
+         * Origin test class.
+         */
+        private final TestClass origin;
+
+        /**
+         * Constructor.
+         * @param fields Fields
+         */
+        public WithFields(final Field... fields) {
+            this(Arrays.asList(fields));
+        }
+
+        /**
+         * Constructor.
+         * @param fields Fields.
+         */
+        WithFields(final List<Field> fields) {
+            this(fields, new Fake());
+        }
+
+        /**
+         * Constructor.
+         * @param fields Fields list.
+         * @param origin Origin test class.
+         */
+        WithFields(final List<Field> fields, final TestClass origin) {
+            this.fields = fields;
+            this.origin = origin;
+        }
+
+        @Override
+        public Collection<Field> fields() {
+            return Collections.unmodifiableList(this.fields);
+        }
+
+        @Override
+        public String name() {
+            return this.origin.name();
+        }
+
+        @Override
+        public Collection<TestCase> all() {
+            return this.origin.all();
+        }
+
+        @Override
+        public Path path() {
+            return this.origin.path();
+        }
+
+        @Override
+        public Collection<String> suppressed() {
+            return this.origin.suppressed();
+        }
+
+        @Override
+        public TestClassCharacteristics characteristics() {
+            return this.origin.characteristics();
         }
     }
 }

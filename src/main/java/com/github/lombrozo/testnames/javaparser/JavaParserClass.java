@@ -30,6 +30,7 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithImplements;
@@ -37,6 +38,7 @@ import com.github.javaparser.ast.nodeTypes.NodeWithMembers;
 import com.github.javaparser.ast.nodeTypes.NodeWithName;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.resolution.SymbolResolver;
+import com.github.lombrozo.testnames.Field;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -44,6 +46,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.function.Predicate;
@@ -197,6 +200,23 @@ final class JavaParserClass {
             );
         return unit.getPackageDeclaration()
             .map(NodeWithName::getNameAsString);
+    }
+
+    /**
+     * Class fields.
+     * @return Fields of the class.
+     */
+    Iterable<Field> fields() {
+        final Iterable<Field> result;
+        if (this.klass instanceof NodeWithMembers) {
+            final List<FieldDeclaration> fields = ((NodeWithMembers<?>) this.klass).getFields();
+            result = fields.stream()
+                .map(JavaParserField::new)
+                .collect(Collectors.toList());
+        } else {
+            result = Collections.emptyList();
+        }
+        return result;
     }
 
     /**

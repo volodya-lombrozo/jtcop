@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.complaints;
 import com.github.lombrozo.testnames.Complaint;
 import java.net.MalformedURLException;
 import java.net.URL;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -34,6 +35,7 @@ import lombok.ToString;
  * @since 0.1.15
  */
 @ToString
+@EqualsAndHashCode
 public final class ComplaintLinked implements Complaint {
 
     /**

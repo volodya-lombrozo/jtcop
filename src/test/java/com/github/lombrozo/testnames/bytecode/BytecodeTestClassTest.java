@@ -23,9 +23,11 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
+import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.TestClass;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
@@ -39,6 +41,39 @@ import org.junit.jupiter.api.io.TempDir;
  * @since 0.1.17
  */
 final class BytecodeTestClassTest {
+
+    @Test
+    void retrievesFields(@TempDir final Path temp) throws Exception {
+        final ResourceOf resource = new ResourceOf("generated/RuleName.class");
+        Files.write(temp.resolve("RuleName.class"), new BytesOf(resource).asBytes());
+        final TestClass test = new BytecodeProject(temp, temp)
+            .testClasses()
+            .iterator()
+            .next();
+        MatcherAssert.assertThat(
+            "We expected to get fields from the test class",
+            test.fields().stream().map(Field::name).collect(Collectors.toList()),
+            Matchers.containsInAnyOrder("PREFIX", "name")
+        );
+    }
+
+    @Test
+    void retrievesStaticFields(@TempDir final Path temp) throws Exception {
+        final ResourceOf resource = new ResourceOf("generated/RuleName.class");
+        Files.write(temp.resolve("RuleName.class"), new BytesOf(resource).asBytes());
+        final TestClass test = new BytecodeProject(temp, temp)
+            .testClasses()
+            .iterator()
+            .next();
+        MatcherAssert.assertThat(
+            "We expected to get all fields from the test class",
+            test.fields().stream()
+                .filter(Field::isStatic)
+                .map(Field::name)
+                .collect(Collectors.toList()),
+            Matchers.contains("PREFIX")
+        );
+    }
 
     @Test
     void checksIfBytecodeIsJUnitExtension(@TempDir final Path temp) throws Exception {

@@ -36,7 +36,15 @@ import java.util.Set;
 import java.util.stream.Stream;
 import java.util.function.Consumer;
 
-
+/**
+ * Test class for assertions.
+ *
+ * @since 0.1
+ * @todo #302:30min Allow suppression of the RuleProhibitStaticFields in the field level.
+ *  The RuleProhibitStaticFields should be suppressed in the field level.
+ *  Currently, the RuleProhibitStaticFields is suppressed in the class level only.
+ */
+@SuppressWarnings("JTCOP.RuleProhibitStaticFields")
 class AssertionsTest {
 
     /**
