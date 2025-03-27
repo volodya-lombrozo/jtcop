@@ -24,6 +24,7 @@
 package com.github.lombrozo.testnames.javaparser;
 
 import com.github.lombrozo.testnames.Assertion;
+import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.rules.RuleEveryTestHasProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
@@ -33,6 +34,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
 import org.cactoos.set.SetOf;
 import org.hamcrest.MatcherAssert;
@@ -395,6 +397,34 @@ final class JavaParserTestCaseTest {
             ),
             statements,
             new IsEqual<>(expected)
+        );
+    }
+
+    @Test
+    void parsesStaticFields() {
+        MatcherAssert.assertThat(
+            "Parsed static fields do not match with expected",
+            new ListOf<>(
+                JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS.toTestClass().fields()
+            ).stream().filter(Field::isStatic).map(Field::name).collect(Collectors.toList()),
+            Matchers.allOf(
+                Matchers.contains("DEFAULT_EXPLANATION", "DEFAULT_SUPPLIER"),
+                Matchers.not(Matchers.contains("number"))
+            )
+        );
+    }
+
+    @Test
+    void parsesInstanceFields() {
+        MatcherAssert.assertThat(
+            "Parsed instance fields do not match with expected",
+            new ListOf<>(
+                JavaTestClasses.TEST_WITH_JUNIT_ASSERTIONS.toTestClass().fields()
+            ).stream().filter(f -> !f.isStatic()).map(Field::name).collect(Collectors.toList()),
+            Matchers.allOf(
+                Matchers.contains("number"),
+                Matchers.not(Matchers.contains("DEFAULT_EXPLANATION", "DEFAULT_SUPPLIER"))
+            )
         );
     }
 }

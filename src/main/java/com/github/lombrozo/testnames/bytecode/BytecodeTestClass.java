@@ -23,12 +23,15 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
+import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import javassist.CtClass;
 
 /**
@@ -59,6 +62,13 @@ final class BytecodeTestClass implements TestClass {
     ) {
         this.file = path;
         this.klass = clazz;
+    }
+
+    @Override
+    public Collection<Field> fields() {
+        return Arrays.stream(this.klass.getDeclaredFields())
+            .map(BytecodeField::new)
+            .collect(Collectors.toList());
     }
 
     @Override

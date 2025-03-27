@@ -26,6 +26,7 @@ package com.github.lombrozo.testnames.javaparser;
 
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.resolution.SymbolResolver;
+import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.TestCase;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
@@ -36,6 +37,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.cactoos.list.ListOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -153,6 +155,11 @@ public final class JavaParserTestClass implements TestClass {
         this.path = path;
         this.unit = unit;
         this.exclusions = exclusions;
+    }
+
+    @Override
+    public Collection<Field> fields() {
+        return new ListOf<>(this.unit.value().fields());
     }
 
     @Override

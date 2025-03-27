@@ -28,6 +28,7 @@ import com.github.lombrozo.testnames.rules.RuleCorrectTestName;
 import com.github.lombrozo.testnames.rules.RuleEveryTestHasProductionClass;
 import com.github.lombrozo.testnames.rules.RuleInheritanceInTests;
 import com.github.lombrozo.testnames.rules.RuleOnlyTestMethods;
+import com.github.lombrozo.testnames.rules.RuleProhibitStaticFields;
 import com.github.lombrozo.testnames.rules.RuleSuppressed;
 import java.util.Collection;
 import java.util.function.Function;
@@ -116,6 +117,7 @@ final class Cop {
                 new RuleEveryTestHasProductionClass(suspect.project(), suspect.test()),
                 suspect.test()
             ),
+            new RuleSuppressed(new RuleProhibitStaticFields(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleCorrectTestName(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleInheritanceInTests(suspect.test()), suspect.test()),
             new RuleSuppressed(new RuleCorrectTestCases(suspect.test(), parameters), suspect.test())

@@ -43,6 +43,11 @@ class TestWithJUnitAssertions {
      */
     private final static Supplier<String> DEFAULT_SUPPLIER = () -> TestWithJUnitAssertions.DEFAULT_EXPLANATION;
 
+    /**
+     * Unnecessary number.
+     */
+    private final int number = 1;
+
     @Test
     void withMessages() {
         Assertions.assertEquals("1", "1", DEFAULT_EXPLANATION);
