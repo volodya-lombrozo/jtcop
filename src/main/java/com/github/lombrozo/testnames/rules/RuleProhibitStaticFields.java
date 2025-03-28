@@ -37,9 +37,6 @@ import java.util.stream.Collectors;
  * Check that a test class does not contain static literals.
  * Were suggested <a href="https://github.com/volodya-lombrozo/jtcop/issues/302">here</a>.
  * @since 1.4
- * @todo #302:30min Add an integration test for the RuleProhibitStaticFields check.
- *  The test should check that the RuleProhibitStaticFields check works correctly.
- *  The test should contain a test class with a static and instance fields.
  */
 public final class RuleProhibitStaticFields implements Rule {
 

@@ -37,6 +37,7 @@ String log = new File(basedir, 'build.log').text;
   "Test name 'createsWithAnothertest' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
   "Test name 'testAnother' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
   "Test name 'testAnother' doesn't follow naming rules, because the test name has to be written using present tense",
+  "The static field 'MSG' was found in the class 'StaticFieldsInTest.java'",
   "Method 'containsLineHitter' contains line hitter anti-pattern",
   "The test class 'UsesInheritenceTest.java' has the parent class 'AbstractTest'. Inheritance in tests is dangerous for maintainability",
   "Method 'testsSomething' contains excessive number of mocks: 3. max allowed: 1.",
