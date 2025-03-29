@@ -110,7 +110,7 @@ final class RuleProhibitStaticFieldsTest {
     }
 
     @Test
-    void complaintOnStaticFieldsWithDifferentSuppression() {
+    void complaintsOnStaticFieldsWithDifferentSuppression() {
         MatcherAssert.assertThat(
             "RuleProhibitStaticLiterals should complain on static fields with different suppression",
             new RuleProhibitStaticFields(
