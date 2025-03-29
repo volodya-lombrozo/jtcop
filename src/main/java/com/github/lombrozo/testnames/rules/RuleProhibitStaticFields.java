@@ -63,6 +63,7 @@ public final class RuleProhibitStaticFields implements Rule {
         final Collection<Complaint> result;
         final List<String> names = this.test.fields().stream()
             .filter(Field::isStatic)
+            .filter(field -> !this.suppressed(field))
             .map(Field::name)
             .collect(Collectors.toList());
         if (names.isEmpty()) {
@@ -87,5 +88,14 @@ public final class RuleProhibitStaticFields implements Rule {
             this.getClass(),
             "prohibit-static-fields.md"
         );
+    }
+
+    /**
+     * Is the rule suppressed for the field?
+     * @param field Field to check.
+     * @return True if the rule is suppressed for the field.
+     */
+    private boolean suppressed(final Field field) {
+        return field.suppressed().stream().anyMatch(name -> this.aliases().contains(name));
     }
 }

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Parser for test case.
+ * JavaParser suppressed annotations.
  *
  * @since 0.1.14
  */

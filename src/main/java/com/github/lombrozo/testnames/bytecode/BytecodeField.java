@@ -24,11 +24,21 @@
 package com.github.lombrozo.testnames.bytecode;
 
 import com.github.lombrozo.testnames.Field;
+import java.lang.annotation.RetentionPolicy;
+import java.util.Collections;
+import java.util.List;
 import javassist.CtField;
 import javassist.Modifier;
 
 /**
  * Class field in bytecode.
+ * <p>
+ * Pay attention, that {@link BytecodeField} returns empty list of suppressed rules
+ * in {@link #suppressed()} method. This is because it is not possible to
+ * determine the suppressed rules in bytecode. Reason is that {@link SuppressWarnings}
+ * has {@link RetentionPolicy#SOURCE} retention policy, so it is not available
+ * in bytecode.
+ * </p>
  * @since 1.4
  */
 public final class BytecodeField implements Field {
@@ -54,5 +64,10 @@ public final class BytecodeField implements Field {
     @Override
     public boolean isStatic() {
         return Modifier.isStatic(this.field.getModifiers());
+    }
+
+    @Override
+    public List<String> suppressed() {
+        return Collections.emptyList();
     }
 }

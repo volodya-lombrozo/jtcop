@@ -36,16 +36,19 @@ class TestWithJUnitAssertions {
     /**
      * Default explanation for assertions.
      */
+    @SuppressWarnings({"JTCOP.Monkey"})
     private final static String DEFAULT_EXPLANATION = "JUnit explanation";
 
     /**
      * Default supplier for assertions.
      */
+    @SuppressWarnings({"JTCOP.Donkey", "JTCOP.Elephant"})
     private final static Supplier<String> DEFAULT_SUPPLIER = () -> TestWithJUnitAssertions.DEFAULT_EXPLANATION;
 
     /**
      * Unnecessary number.
      */
+    @SuppressWarnings("JTCOP.Crocodile")
     private final int number = 1;
 
     @Test

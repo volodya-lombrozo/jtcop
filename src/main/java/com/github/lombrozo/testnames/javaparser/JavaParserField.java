@@ -29,7 +29,9 @@ import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.lombrozo.testnames.Field;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * JavaParser field.
@@ -62,6 +64,11 @@ final class JavaParserField implements Field {
     public boolean isStatic() {
         return this.field.getModifiers().stream()
             .anyMatch(modifier -> modifier.getKeyword() == Modifier.Keyword.STATIC);
+    }
+
+    @Override
+    public List<String> suppressed() {
+        return new SuppressedAnnotations(this.field).suppressed().collect(Collectors.toList());
     }
 
     /**
