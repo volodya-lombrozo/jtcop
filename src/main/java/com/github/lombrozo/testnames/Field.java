@@ -23,6 +23,10 @@
  */
 package com.github.lombrozo.testnames;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Field abstraction.
  * @since 1.4
@@ -42,6 +46,12 @@ public interface Field {
     boolean isStatic();
 
     /**
+     * Suppressed rules.
+     * @return Suppressed rules.
+     */
+    List<String> suppressed();
+
+    /**
      * Constant fake field.
      * @since 1.4
      */
@@ -55,6 +65,11 @@ public interface Field {
         @Override
         public boolean isStatic() {
             return false;
+        }
+
+        @Override
+        public List<String> suppressed() {
+            return Collections.emptyList();
         }
     }
 
@@ -101,6 +116,11 @@ public interface Field {
         public boolean isStatic() {
             return this.origin.isStatic();
         }
+
+        @Override
+        public List<String> suppressed() {
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -137,6 +157,62 @@ public interface Field {
         @Override
         public boolean isStatic() {
             return true;
+        }
+
+        @Override
+        public List<String> suppressed() {
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Field with suppressed rules.
+     * @since 1.4
+     */
+    final class Suppressed implements Field {
+
+        /**
+         * Delegate.
+         */
+        private final Field origin;
+
+        /**
+         * Suppressed rules.
+         */
+        private final List<String> rules;
+
+        /**
+         * Constructor.
+         * @param origin Origin field.
+         * @param suppressed Suppressed rules.
+         */
+        public Suppressed(final Field origin, final String... suppressed) {
+            this(origin, Arrays.asList(suppressed));
+        }
+
+        /**
+         * Constructor.
+         * @param origin Origin field.
+         * @param suppressed Suppressed rules.
+         */
+        Suppressed(final Field origin, final List<String> suppressed) {
+            this.origin = origin;
+            this.rules = suppressed;
+        }
+
+        @Override
+        public String name() {
+            return this.origin.name();
+        }
+
+        @Override
+        public boolean isStatic() {
+            return this.origin.isStatic();
+        }
+
+        @Override
+        public List<String> suppressed() {
+            return Collections.unmodifiableList(this.rules);
         }
     }
 }

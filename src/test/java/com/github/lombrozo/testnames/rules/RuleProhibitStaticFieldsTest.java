@@ -92,4 +92,31 @@ final class RuleProhibitStaticFieldsTest {
             Matchers.empty()
         );
     }
+
+    @Test
+    void skipsSuppressedFields() {
+        MatcherAssert.assertThat(
+            "RuleProhibitStaticLiterals should not complain on suppressed fields",
+            new RuleProhibitStaticFields(
+                new TestClass.WithFields(
+                    new Field.Suppressed(
+                        new Field.Static(),
+                        "RuleProhibitStaticFields"
+                    )
+                )
+            ).complaints(),
+            Matchers.empty()
+        );
+    }
+
+    @Test
+    void complaintsOnStaticFieldsWithDifferentSuppression() {
+        MatcherAssert.assertThat(
+            "RuleProhibitStaticLiterals should complain on static fields with different suppression",
+            new RuleProhibitStaticFields(
+                new TestClass.WithFields(new Field.Suppressed(new Field.Static(), "RuleUnknown"))
+            ).complaints(),
+            Matchers.not(Matchers.empty())
+        );
+    }
 }

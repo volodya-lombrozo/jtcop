@@ -40,21 +40,19 @@ import java.util.function.Consumer;
  * Test class for assertions.
  *
  * @since 0.1
- * @todo #302:30min Allow suppression of the RuleProhibitStaticFields in the field level.
- *  The RuleProhibitStaticFields should be suppressed in the field level.
- *  Currently, the RuleProhibitStaticFields is suppressed in the class level only.
  */
-@SuppressWarnings("JTCOP.RuleProhibitStaticFields")
 class AssertionsTest {
 
     /**
      * Default explanation for assertions.
      */
+    @SuppressWarnings("JTCOP.RuleProhibitStaticFields")
     private final static String CONSTANT = "Message";
 
     /**
      * Default message for assertions.
      */
+    @SuppressWarnings("JTCOP.RuleProhibitStaticFields")
     private static final String MSG = "MESSAGE";
 
     @Test
