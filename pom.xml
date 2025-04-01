@@ -199,7 +199,7 @@ SOFTWARE.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.5.2</version>
+        <version>3.5.3</version>
         <configuration>
           <excludedGroups>slow</excludedGroups>
           <excludes>
@@ -454,7 +454,7 @@ SOFTWARE.
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.5.2</version>
+            <version>3.5.3</version>
             <configuration>
               <!-- In order to include slow tests too -->
               <excludedGroups>nothing-to-exclude</excludedGroups>
