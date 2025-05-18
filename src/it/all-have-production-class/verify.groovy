@@ -23,7 +23,7 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  'Test CorrectTest doesn\'t have corresponding production class.',
+  'Test class \'CorrectTest\' doesn\'t have corresponding production class, either rename or move it (RuleEveryTestHasProductionClass)',
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 [
   'SuppressedTest doesn\'t have corresponding production class',

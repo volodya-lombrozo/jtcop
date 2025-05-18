@@ -70,7 +70,8 @@ public final class RuleCorrectTestName implements Rule {
             complaints = Collections.singleton(
                 new ComplaintWithRule(
                     String.format(
-                        "Test class name should start or end with one of the following prefixes: %s",
+                        "Test class '%s' name should start or end with one of the following prefixes: %s",
+                        name,
                         Arrays.toString(RuleCorrectTestName.ALLOWED_PREFIXES)
                     ),
                     this.getClass()
