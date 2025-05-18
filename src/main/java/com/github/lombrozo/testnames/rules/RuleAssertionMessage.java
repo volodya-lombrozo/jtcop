@@ -27,7 +27,7 @@ import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -93,11 +93,12 @@ final class RuleAssertionMessage implements Rule {
 
         @Override
         public String message() {
-            return new ComplaintLinked(
-                String.format("Method %s doesn't have assertion statements", this.method.name()),
-                "Please add at least one assertion statement to the test method",
-                RuleAssertionMessage.class,
-                "no-assertions.md"
+            return new ComplaintWithRule(
+                String.format(
+                    "Method '%s' doesn't have assertion statements, while their presence is expected",
+                    this.method.name()
+                ),
+                RuleAssertionMessage.class
             ).message();
         }
     }
@@ -131,15 +132,13 @@ final class RuleAssertionMessage implements Rule {
 
         @Override
         public String message() {
-            return new ComplaintLinked(
+            return new ComplaintWithRule(
                 String.format(
                     "Method '%s' has assertion without message: '%s'",
                     this.method.name(),
                     this.assertion
                 ),
-                "Please add the explanation message to make the test more readable",
-                RuleAssertionMessage.class,
-                "empty-assertion-message.md"
+                RuleAssertionMessage.class
             ).message();
         }
     }

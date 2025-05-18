@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -68,18 +68,12 @@ public final class RuleCorrectTestName implements Rule {
         final String name = this.test.name();
         if (RuleCorrectTestName.isIncorrectName(name)) {
             complaints = Collections.singleton(
-                new ComplaintLinked(
+                new ComplaintWithRule(
                     String.format(
                         "Test class name should start or end with one of the following prefixes: %s",
                         Arrays.toString(RuleCorrectTestName.ALLOWED_PREFIXES)
                     ),
-                    String.format(
-                        "Please rename the %s test class to start or end with one of the following prefixes: %s",
-                        name,
-                        Arrays.toString(RuleCorrectTestName.ALLOWED_PREFIXES)
-                    ),
-                    this.getClass(),
-                    "test-class-name.md"
+                    this.getClass()
                 )
             );
         } else {

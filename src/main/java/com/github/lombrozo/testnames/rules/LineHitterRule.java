@@ -27,7 +27,7 @@ import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -39,7 +39,7 @@ import java.util.List;
  * the following reasons:
  * "Class 'RuleLineHitter' has bad naming, class ends with '-er' suffix"
  * You can read more about this issue
- * <a href="https://github.com/l3r8yJ/oop-cop/issues/105">here</a>
+ * <a href="https://github.com/l3r8yJ/oop-cop/isslues/105">here</a>
  *
  * @since 1.0.1
  */
@@ -68,14 +68,11 @@ public final class LineHitterRule implements Rule {
     public Collection<Complaint> complaints() {
         return new RuleConditional(
             this::containsLineHitter,
-            new ComplaintLinked(
+            new ComplaintWithRule(
                 String.format(
-                    "Method '%s' contains line hitter anti-pattern",
-                    this.test.name()
+                    "Method '%s' does not have any valuable assertion", this.test.name()
                 ),
-                "Write valuable assertion for this test",
-                this.getClass(),
-                "line-hitter.md"
+                this.getClass()
             )
         ).complaints();
     }

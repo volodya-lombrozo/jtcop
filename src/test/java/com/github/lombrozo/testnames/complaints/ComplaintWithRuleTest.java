@@ -21,28 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.lombrozo.testnames.complaints;
 
-package com.github.lombrozo.testnames;
-
-import java.util.Collection;
-import java.util.List;
+import com.github.lombrozo.testnames.rules.RuleTestCaseContainsMockery;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 /**
- * The rule for naming.
+ * Tests for {@link ComplaintWithRule}.
  *
- * @since 0.1.0
+ * @since 1.4.1
  */
-public interface Rule {
+final class ComplaintWithRuleTest {
 
-    /**
-     * Rule aliases.
-     * @return List of aliases
-     */
-    List<String> aliases();
-
-    /**
-     * Collection of complaints that Rule can produce.
-     * @return Collection of complaints
-     */
-    Collection<Complaint> complaints();
+    @Test
+    void checksMessageFormatting() {
+        MatcherAssert.assertThat(
+            "Complaint message formatting does not match with expected format",
+            new ComplaintWithRule("Boom", RuleTestCaseContainsMockery.class).message(),
+            Matchers.equalTo("Boom (RuleTestCaseContainsMockery)")
+        );
+    }
 }

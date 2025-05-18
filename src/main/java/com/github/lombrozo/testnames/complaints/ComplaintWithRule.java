@@ -21,28 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.lombrozo.testnames.complaints;
 
-package com.github.lombrozo.testnames;
-
-import java.util.Collection;
-import java.util.List;
+import com.github.lombrozo.testnames.Complaint;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * The rule for naming.
+ * The complaint with the reference to rule name.
  *
- * @since 0.1.0
+ * @since 0.1.15
  */
-public interface Rule {
+@ToString
+@EqualsAndHashCode
+public final class ComplaintWithRule implements Complaint {
 
     /**
-     * Rule aliases.
-     * @return List of aliases
+     * The complaint message.
      */
-    List<String> aliases();
+    private final String complaint;
 
     /**
-     * Collection of complaints that Rule can produce.
-     * @return Collection of complaints
+     * Rule name.
      */
-    Collection<Complaint> complaints();
+    private final String rule;
+
+    /**
+     * Constructor.
+     * @param complaint The complaint message.
+     * @param rule The rule name
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public ComplaintWithRule(final String complaint, final Class<?> rule) {
+        this(complaint, rule.getSimpleName());
+    }
+
+    /**
+     * Constructor.
+     * @param complaint The complaint message.
+     * @param rule The rule name
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    private ComplaintWithRule(final String complaint, final String rule) {
+        this.complaint = complaint;
+        this.rule = rule;
+    }
+
+    @Override
+    public String message() {
+        return new Complaint.Text(String.format("%s (%s)", this.complaint, this.rule)).message();
+    }
 }
