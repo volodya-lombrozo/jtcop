@@ -115,7 +115,7 @@ public final class RuleEveryTestHasProductionClass implements Rule {
                 complaints.add(
                     new ComplaintWithRule(
                         String.format(
-                            "Test class \"%s\" doesn't have corresponding production class, either rename or move it",
+                            "Test class '%s' doesn't have corresponding production class, either rename or move it",
                             name
                         ),
                         this.getClass()

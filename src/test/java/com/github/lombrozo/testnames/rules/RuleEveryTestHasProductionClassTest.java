@@ -122,7 +122,7 @@ final class RuleEveryTestHasProductionClassTest {
             "Should have complaint with correct message",
             complaints.iterator().next().message(),
             Matchers.containsString(
-                "Test FakeClassTest doesn't have corresponding production class."
+                "Test class 'FakeClassTest' doesn't have corresponding production class, either rename or move it"
             )
         );
     }

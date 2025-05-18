@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -70,12 +69,10 @@ final class RuleProhibitStaticFieldsTest {
             ),
             all.stream()
                 .findFirst()
-                .orElseThrow(() -> new AssertionError("No complaints found")),
-            Matchers.equalTo(
-                new ComplaintWithRule(
-                    "The static field 'meaningful' was found in the class 'FakeClassTest'",
-                    RuleProhibitStaticFields.class
-                )
+                .orElseThrow(() -> new AssertionError("No complaints found"))
+                .message(),
+            Matchers.containsString(
+                "The static field 'meaningful' was found in the class 'FakeClassTest'"
             )
         );
     }

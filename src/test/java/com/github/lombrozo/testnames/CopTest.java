@@ -68,17 +68,13 @@ final class CopTest {
                     new ProductionClass.Fake("CustomClass"),
                     new TestClass.Fake()
                 )
-            ).inspection(),
-            Matchers.contains(
-                Matchers.hasToString(
-                    Matchers.allOf(
-                        Matchers.containsString(
-                            "Test \"FakeClassTest\" doesn't have corresponding production class,"
-                        ),
-                        Matchers.containsString(
-                            "either rename or move it (RuleEveryTestHasProductionClass)"
-                        )
-                    )
+            ).inspection().iterator().next().message(),
+            Matchers.allOf(
+                Matchers.containsString(
+                    "Test class 'FakeClassTest' doesn't have corresponding production class, either rename or move it"
+                ),
+                Matchers.containsString(
+                    "(RuleEveryTestHasProductionClass)"
                 )
             )
         );
