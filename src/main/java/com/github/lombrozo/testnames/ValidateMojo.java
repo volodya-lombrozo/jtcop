@@ -147,6 +147,9 @@ public final class ValidateMojo extends AbstractMojo {
             throw new MojoFailureException(new ComplaintCompound(complaints).message());
         } else if (!complaints.isEmpty()) {
             complaints.forEach(complaint -> this.getLog().warn(complaint.message()));
+            this.getLog().info(
+                "Read more about rules: https://github.com/volodya-lombrozo/jtcop/blob/main/docs/rules/"
+            );
         }
         if (complaints.isEmpty()) {
             this.getLog().info("All tests are valid");

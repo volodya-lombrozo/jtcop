@@ -70,7 +70,8 @@ public final class LineHitterRule implements Rule {
             this::containsLineHitter,
             new ComplaintWithRule(
                 String.format(
-                    "Method '%s' does not have any valuable assertion", this.test.name()
+                    "Method '%s' doesn't have any valuable assertion, which is known as \"Line-Hitter\" anti-pattern",
+                    this.test.name()
                 ),
                 this.getClass()
             )

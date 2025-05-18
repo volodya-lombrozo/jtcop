@@ -78,10 +78,5 @@ final class CopTest {
                 )
             )
         );
-        // Test FakeClassTest doesn't have corresponding production class.
-        //	Either rename or move the test class FakeClassTest.
-        //	You can also ignore the rule by adding @SuppressWarnings("JTCOP.RuleEveryTestHasProductionClass") annotation.
-        //	Rule: RuleEveryTestHasProductionClass.
-        //	You can read more about the rule here: https://github.com/volodya-lombrozo/jtcop/blob/main/docs/rules/all-have-production-class.md
     }
 }

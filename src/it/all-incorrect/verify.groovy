@@ -23,24 +23,25 @@
  */
 String log = new File(basedir, 'build.log').text;
 [
-  "Test name 'test' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'test' doesn't follow naming rules, because test name should not contain the word 'test'",
   "Test name 'test' doesn't follow naming rules, because the test name has to be written using present tense",
-  "Test name 'test1' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'test1' doesn't follow naming rules, because test name should not contain the word 'test'",
   "Test name 'test1' doesn't follow naming rules, because the test name has to be written using present tense",
   "Test name 'TEST' doesn't follow naming rules, because test has to be written by using Camel Case",
-  "Test name 'TEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'TEST' doesn't follow naming rules, because test name should not contain the word 'test'",
   "Test name 'TEST' doesn't follow naming rules, because the test name has to be written using present tense",
   "Test name 'TEST1' doesn't follow naming rules, because test has to be written by using Camel Case",
-  "Test name 'TEST1' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'TEST1' doesn't follow naming rules, because test name should not contain the word 'test'",
   "Test name 'TEST1' doesn't follow naming rules, because the test name has to be written using present tense",
-  "Test name 'createsTEST' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
-  "Test name 'createsWithAnothertest' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
-  "Test name 'testAnother' doesn't follow naming rules, because test name doesn't have to contain the word 'test'",
+  "Test name 'createsTEST' doesn't follow naming rules, because test name should not contain the word 'test'",
+  "Test name 'createsWithAnothertest' doesn't follow naming rules, because test name should not contain the word 'test'",
+  "Test name 'testAnother' doesn't follow naming rules, because test name should not contain the word 'test'",
   "Test name 'testAnother' doesn't follow naming rules, because the test name has to be written using present tense",
   "The static field 'MSG' was found in the class 'StaticFieldsInTest.java'",
-  "Method 'containsLineHitter' contains line hitter anti-pattern",
-  "The test class 'UsesInheritenceTest.java' has the parent class 'AbstractTest'. Inheritance in tests is dangerous for maintainability",
-  "Method 'testsSomething' contains excessive number of mocks: 3. max allowed: 1.",
+  "Method 'containsLineHitter' doesn't have any valuable assertion, which is known as \"Line-Hitter\" anti-pattern",
+  "The test class 'UsesInheritenceTest.java' has the parent class 'AbstractTest', while inheritance in tests is dangerous for maintainability",
+  "Method 'testsSomething' contains excessive number of mocks: 3. max allowed: 1",
   "Method 'checksAssertionWithoutMessage' has assertion without message",
+  "Read more about rules: https://github.com/volodya-lombrozo/jtcop/blob/main/docs/rules/"
 ].each { assert log.contains(it): "Log doesn't contain ['$it']" }
 true
