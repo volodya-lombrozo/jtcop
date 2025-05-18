@@ -31,12 +31,13 @@ import lombok.ToString;
  * The complaint with the reference to rule name.
  *
  * @since 0.1.15
- * @todo #527:60min Add line of the complaint.
- *  Currently, we don't have this attribute, but it can be helpful to include
- *  line number into the complaint message. E.g.:
+ * @todo #527:60min Add line and filename to the complaint message.
+ *  Currently, we don't have such attributes, but it can be helpful to include
+ *  line number and filename into the complaint message. E.g.:
  *  ```text
- *  [Foo.java:12]: bar (RuleNotContainsTestWord)
+ *  [org/foo/bar/Foo.java:12]: ... (RuleNotContainsTestWord)
  *  ```
+ *  Note, that filename path should be relativized to the `src/test/java` directory.
  */
 @ToString
 @EqualsAndHashCode
