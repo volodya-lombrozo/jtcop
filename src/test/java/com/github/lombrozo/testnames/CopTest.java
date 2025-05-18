@@ -58,4 +58,34 @@ final class CopTest {
             Matchers.hasSize(1)
         );
     }
+
+    @Test
+    void checksMessageFormat() {
+        MatcherAssert.assertThat(
+            "Complaint is not formatted as expected",
+            new Cop(
+                new Project.Fake(
+                    new ProductionClass.Fake("CustomClass"),
+                    new TestClass.Fake()
+                )
+            ).inspection(),
+            Matchers.contains(
+                Matchers.hasToString(
+                    Matchers.allOf(
+                        Matchers.containsString(
+                            "Test \"FakeClassTest\" doesn't have corresponding production class,"
+                        ),
+                        Matchers.containsString(
+                            "either rename or move it (RuleEveryTestHasProductionClass)"
+                        )
+                    )
+                )
+            )
+        );
+        // Test FakeClassTest doesn't have corresponding production class.
+        //	Either rename or move the test class FakeClassTest.
+        //	You can also ignore the rule by adding @SuppressWarnings("JTCOP.RuleEveryTestHasProductionClass") annotation.
+        //	Rule: RuleEveryTestHasProductionClass.
+        //	You can read more about the rule here: https://github.com/volodya-lombrozo/jtcop/blob/main/docs/rules/all-have-production-class.md
+    }
 }
