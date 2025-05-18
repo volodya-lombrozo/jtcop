@@ -31,6 +31,12 @@ import lombok.ToString;
  * The complaint with the reference to rule name.
  *
  * @since 0.1.15
+ * @todo #527:60min Add line of the complaint.
+ *  Currently, we don't have this attribute, but it can be helpful to include
+ *  line number into the complaint message. E.g.:
+ *  ```text
+ *  [Foo.java:12]: bar (RuleNotContainsTestWord)
+ *  ```
  */
 @ToString
 @EqualsAndHashCode
