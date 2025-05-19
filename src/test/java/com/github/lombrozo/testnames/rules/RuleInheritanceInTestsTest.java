@@ -53,7 +53,7 @@ final class RuleInheritanceInTestsTest {
             new RuleInheritanceInTests(clazz).complaints().iterator().next().message(),
             Matchers.containsString(
                 String.format(
-                    "The test class '%s' has the parent class '%s'. Inheritance in tests is dangerous for maintainability",
+                    "The test class '%s' has the parent class '%s'",
                     clazz.name(),
                     parent
                 )

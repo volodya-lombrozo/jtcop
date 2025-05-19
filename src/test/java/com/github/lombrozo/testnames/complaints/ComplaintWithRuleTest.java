@@ -23,44 +23,24 @@
  */
 package com.github.lombrozo.testnames.complaints;
 
-import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestClass;
+import com.github.lombrozo.testnames.rules.RuleTestCaseContainsMockery;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test cases for {@link ComplaintClass}.
- * @since 0.2
+ * Tests for {@link ComplaintWithRule}.
+ *
+ * @since 1.4.1
  */
-final class ComplaintClassTest {
+final class ComplaintWithRuleTest {
 
     @Test
-    void returnsSimpleMessageIfDoesNotHaveComplaints() {
-        final String expected =
-            "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.";
+    void checksMessageFormatting() {
         MatcherAssert.assertThat(
-            String.format("ComplaintClass returns wrong message, expected: %s", expected),
-            new ComplaintClass(new TestClass.Fake()).message(),
-            Matchers.equalTo(expected)
-        );
-    }
-
-    @Test
-    void returnsCompoundMessageIfHasSeveralComplaints() {
-        final String expected =
-            "The test class FakeClassTest (FakeClassTest:) has encountered some problems. Please review the results for more information.\n\t1) haha\n\t2) haha";
-        MatcherAssert.assertThat(
-            String.format(
-                "ComplaintClass returns wrong message for several complaints, expected: %s",
-                expected
-            ),
-            new ComplaintClass(
-                new TestClass.Fake(),
-                new Complaint.Text("haha"),
-                new Complaint.Text("haha")
-            ).message(),
-            Matchers.equalTo(expected)
+            "Complaint message formatting does not match with expected format",
+            new ComplaintWithRule("Boom", RuleTestCaseContainsMockery.class).message(),
+            Matchers.equalTo("Boom (RuleTestCaseContainsMockery)")
         );
     }
 }

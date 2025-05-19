@@ -1,0 +1,4 @@
+[default]
+extend-ignore-identifiers-re = [
+    "Onot", # false positive, used in EOlang names like `EObool$EOnot`
+]

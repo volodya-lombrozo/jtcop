@@ -122,7 +122,7 @@ public enum Tag {
 
     /**
      * Proper noun, plural.
-     * Example: Vikings, Gods, Alices, Africas, Asias.
+     * Example: Vikings, Gods, Alices, Monkeys.
      */
     NNPS("NNPS"),
 

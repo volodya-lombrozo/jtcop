@@ -27,7 +27,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Parameters;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import com.github.lombrozo.testnames.javaparser.NumberOfMockitoMocks;
 import java.util.Collection;
 import java.util.Collections;
@@ -84,16 +84,14 @@ public final class RuleTestCaseContainsMockery implements Rule {
         final Long mocks = new NumberOfMockitoMocks(this.test).value();
         return new RuleConditional(
             () -> mocks > (long) this.allowed,
-            new ComplaintLinked(
+            new ComplaintWithRule(
                 String.format(
                     "Method '%s' contains excessive number of mocks: %s. max allowed: %s",
                     this.test.name(),
                     mocks,
                     this.allowed
                 ),
-                "Simplify mocking in test case or stick to fakes",
-                this.getClass(),
-                "mockery.md"
+                this.getClass()
             )
         ).complaints();
     }

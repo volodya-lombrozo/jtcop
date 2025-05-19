@@ -58,4 +58,25 @@ final class CopTest {
             Matchers.hasSize(1)
         );
     }
+
+    @Test
+    void checksMessageFormat() {
+        MatcherAssert.assertThat(
+            "Complaint is not formatted as expected",
+            new Cop(
+                new Project.Fake(
+                    new ProductionClass.Fake("CustomClass"),
+                    new TestClass.Fake()
+                )
+            ).inspection().iterator().next().message(),
+            Matchers.allOf(
+                Matchers.containsString(
+                    "Test class 'FakeClassTest' doesn't have corresponding production class, either rename or move it"
+                ),
+                Matchers.containsString(
+                    "(RuleEveryTestHasProductionClass)"
+                )
+            )
+        );
+    }
 }

@@ -24,66 +24,58 @@
 package com.github.lombrozo.testnames.complaints;
 
 import com.github.lombrozo.testnames.Complaint;
-import com.github.lombrozo.testnames.TestClass;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Compound complaint for entire class.
- * @since 0.2
+ * The complaint with the reference to rule name.
+ *
+ * @since 0.1.15
+ * @todo #527:60min Add line and filename to the complaint message.
+ *  Currently, we don't have such attributes, but it can be helpful to include
+ *  line number and filename into the complaint message. E.g.:
+ *  ```text
+ *  [org/foo/bar/Foo.java:12]: ... (RuleNotContainsTestWord)
+ *  ```
+ *  Note, that filename path should be relativized to the `src/test/java` directory.
  */
 @ToString
-public final class ComplaintClass implements Complaint {
+@EqualsAndHashCode
+public final class ComplaintWithRule implements Complaint {
 
     /**
-     * Class.
+     * The complaint message.
      */
-    private final TestClass clazz;
+    private final String complaint;
 
     /**
-     * All class complaints.
+     * Rule name.
      */
-    private final Collection<? extends Complaint> complaints;
+    private final String rule;
 
     /**
      * Constructor.
-     * @param clazz Class.
-     * @param complaints Complaints.
+     * @param complaint The complaint message.
+     * @param rule The rule name
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    ComplaintClass(
-        final TestClass clazz,
-        final Complaint... complaints
-    ) {
-        this(clazz, Arrays.asList(complaints));
+    public ComplaintWithRule(final String complaint, final Class<?> rule) {
+        this(complaint, rule.getSimpleName());
     }
 
     /**
-     * The main constructor.
-     * @param clazz Class.
-     * @param complaints All complaints.
+     * Constructor.
+     * @param complaint The complaint message.
+     * @param rule The rule name
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
-    public ComplaintClass(
-        final TestClass clazz,
-        final Collection<? extends Complaint> complaints
-    ) {
-        this.clazz = clazz;
-        this.complaints = complaints;
+    private ComplaintWithRule(final String complaint, final String rule) {
+        this.complaint = complaint;
+        this.rule = rule;
     }
 
     @Override
     public String message() {
-        final AtomicInteger counter = new AtomicInteger(1);
-        return String.format(
-            "The test class %s (%s:) has encountered some problems. Please review the results for more information.%s",
-            this.clazz.name(),
-            this.clazz.path(),
-            this.complaints.stream()
-                .map(Complaint::message)
-                .map(message -> String.format("\n\t%d) %s", counter.getAndIncrement(), message))
-                .collect(Collectors.joining())
-        );
+        return new Complaint.Text(String.format("%s (%s)", this.complaint, this.rule)).message();
     }
 }

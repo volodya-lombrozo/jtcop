@@ -100,7 +100,7 @@ final class JavaParserTestCaseTest {
 
     @Test
     void parsesSuppressedAnnotations() {
-        final String test = "cheksTest";
+        final String test = "checksTest";
         final Collection<String> suppressed = JavaTestClasses.ONLY_METHODS_SUPPRESSED
             .testCase(test)
             .suppressed();
@@ -134,7 +134,7 @@ final class JavaParserTestCaseTest {
 
     @Test
     void parsesSuppressedAnnotationsForClassAndMethodTogether() {
-        final String test = "cheksTest";
+        final String test = "checksTest";
         final Collection<String> suppressed = JavaTestClasses.MANY_SUPPRESSED
             .testCase(test)
             .suppressed();

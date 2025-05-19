@@ -27,7 +27,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -68,17 +68,12 @@ public final class RuleOnlyTestMethods implements Rule {
             result = Collections.emptyList();
         } else {
             result = Collections.singleton(
-                new ComplaintLinked(
+                new ComplaintWithRule(
                     String.format(
-                        "All methods of the test class '%s' should be annotated with @Test annotation",
+                        "All methods of the test class \"%s\" should be annotated with @Test annotation",
                         this.klass.name()
                     ),
-                    String.format(
-                        "Please annotate all methods of the test class .%s with @Test annotation",
-                        this.klass.path()
-                    ),
-                    this.getClass(),
-                    "only-test-methods.md"
+                    this.getClass()
                 )
             );
         }

@@ -26,7 +26,7 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -64,18 +64,13 @@ public final class RuleInheritanceInTests implements Rule {
             result = Collections.emptyList();
         } else {
             result = Collections.singleton(
-                new ComplaintLinked(
+                new ComplaintWithRule(
                     String.format(
-                        "The test class '%s' has the parent class '%s'. Inheritance in tests is dangerous for maintainability",
+                        "The test class '%s' has the parent class '%s', while inheritance in tests is dangerous for maintainability",
                         this.clazz.name(),
                         parent
                     ),
-                    String.format(
-                        "Please remove all the parents classes from the %s test class",
-                        this.clazz.name()
-                    ),
-                    this.getClass(),
-                    "inheritance-in-tests.md"
+                    this.getClass()
                 )
             );
         }

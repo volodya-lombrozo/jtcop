@@ -26,7 +26,6 @@ package com.github.lombrozo.testnames.rules;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
 import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -70,14 +69,10 @@ final class RuleProhibitStaticFieldsTest {
             ),
             all.stream()
                 .findFirst()
-                .orElseThrow(() -> new AssertionError("No complaints found")),
-            Matchers.equalTo(
-                new ComplaintLinked(
-                    "The static field 'meaningful' was found in the class 'FakeClassTest'",
-                    "Please don't use static fields in the test class; it's better to use constants directly within the test methods.",
-                    RuleProhibitStaticFields.class,
-                    "prohibit-static-fields.md"
-                )
+                .orElseThrow(() -> new AssertionError("No complaints found"))
+                .message(),
+            Matchers.containsString(
+                "The static field 'meaningful' was found in the class 'FakeClassTest'"
             )
         );
     }

@@ -28,7 +28,6 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Parameters;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintClass;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -91,7 +90,7 @@ public final class RuleCorrectTestCases implements Rule {
         if (list.isEmpty()) {
             result = Collections.emptyList();
         } else {
-            result = Collections.singleton(new ComplaintClass(this.tests, list));
+            result = list;
         }
         return result;
     }

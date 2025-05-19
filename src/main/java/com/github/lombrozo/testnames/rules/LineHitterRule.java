@@ -27,7 +27,7 @@ import com.github.lombrozo.testnames.Assertion;
 import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestCase;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -68,14 +68,12 @@ public final class LineHitterRule implements Rule {
     public Collection<Complaint> complaints() {
         return new RuleConditional(
             this::containsLineHitter,
-            new ComplaintLinked(
+            new ComplaintWithRule(
                 String.format(
-                    "Method '%s' contains line hitter anti-pattern",
+                    "Method '%s' doesn't have any valuable assertion, which is known as \"Line-Hitter\" anti-pattern",
                     this.test.name()
                 ),
-                "Write valuable assertion for this test",
-                this.getClass(),
-                "line-hitter.md"
+                this.getClass()
             )
         ).complaints();
     }

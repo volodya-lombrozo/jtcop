@@ -45,5 +45,4 @@ public interface Rule {
      * @return Collection of complaints
      */
     Collection<Complaint> complaints();
-
 }

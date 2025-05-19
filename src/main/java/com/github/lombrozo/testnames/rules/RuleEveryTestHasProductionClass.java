@@ -28,7 +28,7 @@ import com.github.lombrozo.testnames.ProductionClass;
 import com.github.lombrozo.testnames.Project;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -113,14 +113,12 @@ public final class RuleEveryTestHasProductionClass implements Rule {
                 && !this.test.characteristics().isIntegrationTest()
                 && RuleEveryTestHasProductionClass.isNotPackageInfo(this.test.name())) {
                 complaints.add(
-                    new ComplaintLinked(
-                        String.format("Test %s doesn't have corresponding production class", name),
+                    new ComplaintWithRule(
                         String.format(
-                            "Either rename or move the test class %s",
-                            this.test.path()
+                            "Test class '%s' doesn't have corresponding production class, either rename or move it",
+                            name
                         ),
-                        this.getClass(),
-                        "all-have-production-class.md"
+                        this.getClass()
                     )
                 );
             }

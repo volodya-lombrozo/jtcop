@@ -27,7 +27,7 @@ import com.github.lombrozo.testnames.Complaint;
 import com.github.lombrozo.testnames.Field;
 import com.github.lombrozo.testnames.Rule;
 import com.github.lombrozo.testnames.TestClass;
-import com.github.lombrozo.testnames.complaints.ComplaintLinked;
+import com.github.lombrozo.testnames.complaints.ComplaintWithRule;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -80,13 +80,12 @@ public final class RuleProhibitStaticFields implements Rule {
      * @return Complaint
      */
     private Complaint complaint(final String name) {
-        return new ComplaintLinked(
+        return new ComplaintWithRule(
             String.format(
-                "The static field '%s' was found in the class '%s'", name, this.test.name()
+                "The static field '%s' was found in the class '%s', while those are prohibited",
+                name, this.test.name()
             ),
-            "Please don't use static fields in the test class; it's better to use constants directly within the test methods.",
-            this.getClass(),
-            "prohibit-static-fields.md"
+            this.getClass()
         );
     }
 

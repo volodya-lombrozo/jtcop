@@ -56,14 +56,14 @@ final class RuleCorrectTestCasesTest {
     @Test
     void validatesAllWithExceptions() {
         MatcherAssert.assertThat(
-            "Test class which tests are not in present simple should have one complaint.",
+            "Test class should receive both complaints",
             new RuleCorrectTestCases(
                 new TestClass.Fake(
                     new TestCase.Fake("remove", new Assertion.Fake()),
                     new TestCase.Fake("create", new Assertion.Fake())
                 )
             ).complaints(),
-            Matchers.allOf(Matchers.hasSize(1))
+            Matchers.allOf(Matchers.hasSize(2))
         );
     }
 
