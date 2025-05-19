@@ -28,7 +28,7 @@ package com.github.lombrozo.testnames;
 class TestWithoutTest {
 
     @SuppressWarnings("JTCOP.RuleNotCamelCase")
-    void supressStuff() {
+    void suppressStuff() {
     }
 
     @SuppressWarnings("JTCOP.RuleNotContainsTestWord")

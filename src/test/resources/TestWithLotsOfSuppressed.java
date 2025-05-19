@@ -47,7 +47,7 @@ class TestWithLotsOfSuppressed {
 
     @SuppressWarnings({"JTCOP.RuleNotCamelCase", "JTCOP.RuleNotContainsTestWord", "Custom"})
     @Test
-    void supressStuff() {
+    void suppressStuff() {
     }
 
     @SuppressWarnings({"JTCOP.AnotherRule", "JTCOP.UnknownRule", "PMD.Custom"})

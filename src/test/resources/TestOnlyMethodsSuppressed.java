@@ -30,7 +30,7 @@ class TestOnlyMethodsSuppressed {
 
     @SuppressWarnings({"JTCOP.RuleNotCamelCase", "JTCOP.RuleNotContainsTestWord", "Custom"})
     @Test
-    void supressStuff() {
+    void suppressStuff() {
     }
 
     @SuppressWarnings({"JTCOP.RuleNotContainsTestWord", "JTCOP.RuleNotCamelCase", "PMD.Custom"})
