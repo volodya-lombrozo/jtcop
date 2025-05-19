@@ -76,7 +76,7 @@ class TestWithAssertions {
     }
 
     @Test
-    void assertionsWithoutMesssages() {
+    void assertionsWithoutMessages() {
         MatcherAssert.assertThat(1, Matchers.is(1));
         Assertions.assertEquals(1, 1);
     }

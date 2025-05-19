@@ -25,7 +25,7 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-class UsesInheritenceTest extends AbstractTest{
+class UsesInheritanceTest extends AbstractTest{
 
     @Test
     void checksSum() {

@@ -28,10 +28,10 @@ package com.github.lombrozo.testnames;
 class TestWithoutTest {
 
     @SuppressWarnings("JTCOP.RuleNotCamelCase")
-    void supressSSS() {
+    void supressStuff() {
     }
 
     @SuppressWarnings("JTCOP.RuleNotContainsTestWord")
-    void cheksTest() {
+    void checksTest() {
     }
 }

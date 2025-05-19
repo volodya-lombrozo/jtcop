@@ -115,7 +115,7 @@ final class JavaParserAssertionTest {
     @Test
     void parsesAssertionsWithoutMessage() {
         final List<JavaParserAssertion> all = JavaTestClasses.TEST_WITH_ASSERTIONS
-            .method("assertionsWithoutMesssages")
+            .method("assertionsWithoutMessages")
             .statements()
             .map(JavaParserAssertion::new)
             .filter(JavaParserAssertion::isAssertion)

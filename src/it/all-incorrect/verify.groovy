@@ -39,7 +39,7 @@ String log = new File(basedir, 'build.log').text;
   "Test name 'testAnother' doesn't follow naming rules, because the test name has to be written using present tense (RulePresentTense)",
   "The static field 'MSG' was found in the class 'StaticFieldsInTest.java', while those are prohibited (RuleProhibitStaticFields)",
   "Method 'containsLineHitter' doesn't have any valuable assertion, which is known as \"Line-Hitter\" anti-pattern (LineHitterRule)",
-  "The test class 'UsesInheritenceTest.java' has the parent class 'AbstractTest', while inheritance in tests is dangerous for maintainability (RuleInheritanceInTests)",
+  "The test class 'UsesInheritanceTest.java' has the parent class 'AbstractTest', while inheritance in tests is dangerous for maintainability (RuleInheritanceInTests)",
   "Method 'testsSomething' contains excessive number of mocks: 3. max allowed: 1 (RuleTestCaseContainsMockery)",
   "Method 'checksAssertionWithoutMessage' has assertion without message",
   "Read more about rules: https://github.com/volodya-lombrozo/jtcop/blob/main/docs/rules/"

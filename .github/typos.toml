@@ -1,4 +1,5 @@
-[files]
-extend-exclude = [
-
+[default]
+extend-ignore-identifiers-re = [
+    "EOboolEOnotTest", # false positive
+    "EObool$EOnot", # false positive
 ]
