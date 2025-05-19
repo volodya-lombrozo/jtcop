@@ -39,7 +39,7 @@ import java.util.List;
  * the following reasons:
  * "Class 'RuleLineHitter' has bad naming, class ends with '-er' suffix"
  * You can read more about this issue
- * <a href="https://github.com/l3r8yJ/oop-cop/isslues/105">here</a>
+ * <a href="https://github.com/l3r8yJ/oop-cop/issues/105">here</a>
  *
  * @since 1.0.1
  */
