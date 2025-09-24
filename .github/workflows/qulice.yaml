@@ -1,5 +1,5 @@
 ---
-name: mvn
+name: qulice
 on:
   push:
     branches:
@@ -12,8 +12,8 @@ jobs:
     name: Tests
     strategy:
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-14]
-        java: [11, 17]
+        os: [ubuntu-24.04]
+        java: [17]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
@@ -27,4 +27,4 @@ jobs:
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
-      - run: mvn clean install -P"deep" --errors --batch-mode
+      - run: mvn clean install -P"qulice" --errors --batch-mode

@@ -36,3 +36,4 @@ target
 # Bin file
 *.bin
 .aider*
+.aidy/
