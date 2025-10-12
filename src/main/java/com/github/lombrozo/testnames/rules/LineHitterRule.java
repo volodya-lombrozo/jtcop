@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * The rule checks if test case contains a "Line Hitter"
  * antipattern.
- * Previousely this class has a name `RuleLineHitter`, but I had to rename it for
+ * Previously this class has a name `RuleLineHitter`, but I had to rename it for
  * the following reasons:
  * "Class 'RuleLineHitter' has bad naming, class ends with '-er' suffix"
  * You can read more about this issue

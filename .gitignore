@@ -37,3 +37,9 @@ target
 *.bin
 .aider*
 .aidy/
+
+.classpath
+.factorypath
+.project
+.settings/
+
