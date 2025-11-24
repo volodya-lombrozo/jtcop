@@ -1,3 +1,9 @@
+---
+title: RuleTestCaseContainsMockery
+id: mockery
+layout: default
+---
+
 # Mockery
 
 Sometimes mocking can be good, and handy. But sometimes developers can lose

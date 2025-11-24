@@ -1,11 +1,17 @@
+---
+title: RuleNotUsesSpecialCharacters
+id: not-uses-special-characters
+layout: default
+---
+
 # Test Name: Don't Use Special Characters
 
 Rule codename: _RuleNotUsesSpecialCharacters_
-___
 
 Each test name should not contain special characters like `$` or `_`.
 
 Wrong:
+
 ```java
 @Test
 void checks_successfully() {
@@ -19,6 +25,7 @@ void checks$unsuccessfully(){
 ```
 
 Correct:
+
 ```java
 @Test
 void checksSuccessfully() {

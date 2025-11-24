@@ -1,3 +1,9 @@
+---
+title: RuleNotCamelCase
+id: cammel-case
+layout: default
+---
+
 # Camel Case
 
 Each test name has to be written by using [camel case](https://en.wikipedia.org/wiki/Camel_case).

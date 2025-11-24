@@ -1,7 +1,12 @@
+---
+title: RuleAssertionMessage
+id: assertion-message
+layout: default
+---
+
 # Assertion Message: At Least One Assertion is Required
 
 Rule codename: _RuleAssertionMessage_
-___
 
 Each assertion in the test should have the description message.
 The assertion message should be meaningful and provide information

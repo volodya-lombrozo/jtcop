@@ -1,13 +1,19 @@
+---
+title: RuleAssertionMessage
+id: no-assertions
+layout: default
+---
+
 # Assertion Message: At Least One Assertion is Required
 
 Rule codename: _RuleAssertionMessage_
-___
 
 Each test case has to contain at least one assertion. The assertion message
 should be meaningful and provide information about the expected and actual
 values or behaviour.
 
 Wrong:
+
 ```java
 @Test
 void checks() {
@@ -27,6 +33,7 @@ void checks() {
 ```
 
 Correct:
+
 ```java
 @Test
 void checks() {
@@ -47,7 +54,7 @@ void checks() {
 
 We support only Hamcrest and JUnit 5 assertions. 
 
-Exceptions:
+In order to suppress this rule, you can use the following annotation:
 `@SuppressedWarnings("JTCOP.RuleAssertionMessage")`.
 
 You can read more about that

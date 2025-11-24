@@ -1,7 +1,13 @@
+---
+title: RuleProhibitStaticFields
+id: prohibit-static-fields
+layout: default
+---
+
 # Prohibit Static Fields in Test Classes
 
 Rule codename: _RuleProhibitStaticFields_
-___
+
 This rule ensures that test classes do not contain static fields. Static fields
 in test classes can lead to shared state between tests, which can cause tests to
 be interdependent and lead to flaky tests. Instead, constants should be used

@@ -43,3 +43,7 @@ target
 .project
 .settings/
 
+
+# jekyll
+docs/_site/
+_site/

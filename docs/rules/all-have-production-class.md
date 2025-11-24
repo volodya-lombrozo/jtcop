@@ -1,7 +1,14 @@
-**# All Tests Have Production Class
+---
+title: RuleAllTestsHaveProductionClass
+id: all-have-production-class
+rule: RuleAllTestsHaveProductionClass
+layout: default
+---
+
+# All Tests Have Production Class
 
 Rule codename: _RuleAllTestsHaveProductionClass_
-___
+
 The test class should have the same name as the production class, with the
 suffix `Test`. For instance, if there is a class named `User`, then there should
 be a test class named `UserTest`.
@@ -23,4 +30,4 @@ Annotations, Interfaces,
 ### Rationale
 
 You can read more about that
-rule [here](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes).**
+rule [here](https://www.yegor256.com/2023/01/19/layout-of-tests.html#test-classes).

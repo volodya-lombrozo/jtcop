@@ -1,6 +1,11 @@
+---
+title: RuleCorrectTestName
+id: correct-test-name
+layout: default
+---
+
 # Test Class Name
 Rule codename: _RuleCorrectTestName_
-___
 
 The test class name should start or end with one of the next prefixes:
 - `Test`
@@ -10,6 +15,7 @@ The test class name should start or end with one of the next prefixes:
 - `ITCase`
 
 Examples of valid test class names:
+
 ```java
 public class UserTest {
     // valid

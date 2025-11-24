@@ -1,7 +1,12 @@
+---
+title: RuleOnlyTestMethods
+id: only-test-methods
+layout: default
+---
+
 # Only test methods
 
 Rule codename: _RuleOnlyTestMethods_
-___
 
 Each test class has to contain **only** test methods. That is all.
 The _RuleOnlyTestMethods_ rule is rather strict, hence it is considered
@@ -10,7 +15,6 @@ please enable experimental features in your `pom.xml` file by switching the
 flag:
 
 ```xml
-
 <configuration>
   <experimental>true</experimental>
 </configuration>
