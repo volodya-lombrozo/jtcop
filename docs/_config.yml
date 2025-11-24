@@ -1,0 +1,30 @@
+title: jtcop
+email: volodya.lombrozo@gmail.com
+description: Maven Plugin for checking tests in Java projects
+baseurl: "/jtcop"
+url: "https://volodya.lombrozo.dev/jtcop"
+github_username:  volodya-lombrozo
+
+theme: just-the-docs
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - articles/
+  - docs/articles/
+
+# just-the-docs configs
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub."
+gh_edit_repository: "https://github.com/volodya-lombrozo/jtcop"
+gh_edit_source: docs
+gh_edit_branch: "main"
+gh_edit_view_mode: "tree"

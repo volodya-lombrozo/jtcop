@@ -1,11 +1,17 @@
+---
+title: RuleNotSpam
+id: not-spam
+layout: default
+---
+
 # Test Name: Do Not Repeat Characters
 
 Rule codename: _RuleNotSpam_
-___
 
 Each test name should be meaningful without any repeating characters.
 
 Wrong:
+
 ```java
 @Test
 void checksSss() {
@@ -19,6 +25,7 @@ void checksUnsuccessfullyYeaaa(){
 ```
 
 Correct:
+
 ```java
 @Test
 void checksSuccessfully() {

@@ -1,7 +1,12 @@
+---
+title: RuleNotContainsTestWord
+id: not-contains-test-word
+layout: default
+---
+
 # Avoid 'test' Word in Test Names
 
 Rule codename: _RuleNotContainsTestWord_
-___
 
 Test names should not contain the word 'test'. This rule ensures that test names
 are descriptive and do not rely on the generic term 'test', which can be
