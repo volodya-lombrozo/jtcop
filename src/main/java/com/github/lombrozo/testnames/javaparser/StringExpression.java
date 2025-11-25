@@ -33,7 +33,7 @@ import java.util.Optional;
  *
  * @since 0.1.15
  */
-class StingExpression {
+class StringExpression {
 
     /**
      * Java Parser expression.
@@ -44,7 +44,7 @@ class StingExpression {
      * Constructor.
      * @param expression Java Parser expression.
      */
-    StingExpression(final Expression expression) {
+    StringExpression(final Expression expression) {
         this.expr = expression;
     }
 

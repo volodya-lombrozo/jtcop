@@ -98,7 +98,7 @@ final class AssertionOfJUnit implements ParsedAssertion {
         if (Arrays.asList(AssertionOfJUnit.SPECIAL).contains(this.call.getName().toString())) {
             result = new UnknownMessage().message();
         } else if (min < args.size() && last.isPresent()) {
-            result = new StingExpression(last.get()).asString();
+            result = new StringExpression(last.get()).asString();
         } else {
             result = Optional.empty();
         }

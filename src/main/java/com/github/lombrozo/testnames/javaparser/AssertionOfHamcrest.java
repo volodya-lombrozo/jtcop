@@ -26,11 +26,13 @@ package com.github.lombrozo.testnames.javaparser;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.resolution.UnsolvedSymbolException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -71,12 +73,11 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         final NodeList<Expression> arguments = this.method.getArguments();
         final Optional<Expression> first = arguments.getFirst();
         if (arguments.size() > 2 && first.isPresent()) {
-            result = new StingExpression(first.get()).asString();
+            result = new StringExpression(first.get()).asString();
         } else if (arguments.size() == 2 && first.isPresent()) {
             final Optional<Expression> last = arguments.getLast();
-            if (last.isPresent() && "boolean"
-                .equals(last.get().calculateResolvedType().describe())) {
-                result = new StingExpression(first.get()).asString();
+            if (last.isPresent() && "boolean".equals(this.type(last.get()))) {
+                result = new StringExpression(first.get()).asString();
             } else {
                 result = Optional.empty();
             }
@@ -117,5 +118,23 @@ public final class AssertionOfHamcrest implements ParsedAssertion {
         final String shortened = String.format("equalTo(%s)", type);
         final String full = String.format("Matchers.equalTo(%s)", type);
         return (args.contains(shortened) || args.contains(full)) && args.contains(type);
+    }
+
+    /**
+     * Gets type of expression.
+     *
+     * @param expr Expression
+     * @return Type description
+     */
+    private String type(final Expression expr) {
+        String result;
+        try {
+            result = expr.calculateResolvedType().describe();
+        } catch (final UnsolvedSymbolException ex) {
+            Logger.getLogger(this.getClass().getName())
+                .warning(String.format("can't resolve type for '%s'", expr));
+            result = "unresolved";
+        }
+        return result;
     }
 }

@@ -24,10 +24,19 @@
 
 package com.github.lombrozo.testnames;
 
+import static com.mashape.unirest.http.Unirest.get;
+
+import some.framework.HttpResponse;
+import some.framework.HttpStatus;
+import some.framework.UnirestException;
+import some.framework.HttpResponseBodyMatcher;
+import some.framework.HttpResponseStatusMatcher;
 import java.util.function.Supplier;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 
 class TestWithHamcrestAssertions {
 
@@ -104,6 +113,28 @@ class TestWithHamcrestAssertions {
         MatcherAssert.assertThat(
             "Routes to command that not matched",
             true
+        );
+    }
+
+    /**
+     * This is test for the issue #594.
+     * You can read more about the issue right here:
+     * https://github.com/volodya-lombrozo/jtcop/issues/594
+     */
+    @Test
+    void checksTheCaseFromThe594issue() {
+        final HttpResponse<String> response = get("http://localhost:7000/rooms")
+            .queryString("capacity", "test")
+            .getHttpRequest()
+            .asString();
+        MatcherAssert.assertThat(
+            response,
+            Matchers.allOf(
+                new HttpResponseStatusMatcher(HttpStatus.BAD_REQUEST_400),
+                new HttpResponseBodyMatcher(
+                    "Parameter 'capacity' could not be processed, it should be of type Integer"
+                )
+            )
         );
     }
 }

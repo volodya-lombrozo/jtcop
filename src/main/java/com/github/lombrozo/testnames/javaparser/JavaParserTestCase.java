@@ -129,5 +129,4 @@ final class JavaParserTestCase implements TestCase {
             .map(Node::toString)
             .collect(Collectors.toList());
     }
-
 }
