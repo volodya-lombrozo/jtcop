@@ -180,7 +180,8 @@ public enum JavaTestClasses {
             Paths.get("."),
             JavaParserProject.resolver(),
             this.inputStream(),
-            Arrays.asList(suppressed)
+            Arrays.asList(suppressed),
+            "21"
         );
     }
 

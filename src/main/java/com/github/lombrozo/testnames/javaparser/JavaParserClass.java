@@ -60,7 +60,7 @@ import java.util.stream.Stream;
  *
  * @since 0.1.15
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.GodClass"})
 final class JavaParserClass {
 
     /**
@@ -75,7 +75,7 @@ final class JavaParserClass {
      * @param resolver Symbol resolver.
      */
     JavaParserClass(final Path path, final SymbolResolver resolver) {
-        this(JavaParserClass.parse(path, resolver));
+        this(path, resolver, "21");
     }
 
     /**
@@ -85,7 +85,29 @@ final class JavaParserClass {
      * @param resolver Symbol resolver.
      */
     JavaParserClass(final InputStream stream, final SymbolResolver resolver) {
-        this(JavaParserClass.parse(stream, resolver));
+        this(stream, resolver, "21");
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param path Input stream with java class.
+     * @param resolver Symbol resolver.
+    * @param level Language level.
+     */
+    JavaParserClass(final Path path, final SymbolResolver resolver, final String level) {
+        this(JavaParserClass.parse(path, resolver, level));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param stream Input stream with java class.
+     * @param resolver Symbol resolver.
+    * @param level Language level.
+     */
+    JavaParserClass(final InputStream stream, final SymbolResolver resolver, final String level) {
+        this(JavaParserClass.parse(stream, resolver, level));
     }
 
     /**
@@ -354,14 +376,19 @@ final class JavaParserClass {
      *
      * @param path Path to java file
      * @param resolver Symbol resolver.
+     * @param level Language level.
      * @return Compilation unit.
      */
-    private static CompilationUnit parse(final Path path, final SymbolResolver resolver) {
+    private static CompilationUnit parse(
+        final Path path,
+        final SymbolResolver resolver,
+        final String level
+    ) {
         try {
             StaticJavaParser.getParserConfiguration()
                 .setSymbolResolver(resolver)
-                .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
-            return JavaParserClass.parse(Files.newInputStream(path), resolver);
+                .setLanguageLevel(JavaParserClass.languageLevel(level));
+            return JavaParserClass.parse(Files.newInputStream(path), resolver, level);
         } catch (final IOException ex) {
             throw new IllegalStateException(
                 String.format("Can't parse java file: %s", path.toAbsolutePath()),
@@ -375,12 +402,80 @@ final class JavaParserClass {
      *
      * @param stream Input stream.
      * @param resolver Symbol resolver.
+     * @param level Language level.
      * @return Compilation unit.
      */
-    private static CompilationUnit parse(final InputStream stream, final SymbolResolver resolver) {
+    private static CompilationUnit parse(
+        final InputStream stream,
+        final SymbolResolver resolver,
+        final String level
+    ) {
         StaticJavaParser.getParserConfiguration()
             .setSymbolResolver(resolver)
-            .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
+            .setLanguageLevel(JavaParserClass.languageLevel(level));
         return StaticJavaParser.parse(stream);
+    }
+
+    /**
+    * Understand java level.
+    * @param level Level string.
+    * @return Language level.
+    * @checkstyle CyclomaticComplexity (50 lines)
+    * @checkstyle JavaNCSSCheck (50 lines)
+    */
+    private static ParserConfiguration.LanguageLevel languageLevel(final String level) {
+        final ParserConfiguration.LanguageLevel res;
+        final String lvl = level.trim().replace("JAVA_", "").replace("JDK_", "");
+        switch (lvl) {
+            case "1.8":
+                res = ParserConfiguration.LanguageLevel.JAVA_8;
+                break;
+            case "8":
+                res = ParserConfiguration.LanguageLevel.JAVA_8;
+                break;
+            case "9":
+                res = ParserConfiguration.LanguageLevel.JAVA_9;
+                break;
+            case "10":
+                res = ParserConfiguration.LanguageLevel.JAVA_10;
+                break;
+            case "11":
+                res = ParserConfiguration.LanguageLevel.JAVA_11;
+                break;
+            case "12":
+                res = ParserConfiguration.LanguageLevel.JAVA_12;
+                break;
+            case "13":
+                res = ParserConfiguration.LanguageLevel.JAVA_13;
+                break;
+            case "14":
+                res = ParserConfiguration.LanguageLevel.JAVA_14;
+                break;
+            case "15":
+                res = ParserConfiguration.LanguageLevel.JAVA_15;
+                break;
+            case "16":
+                res = ParserConfiguration.LanguageLevel.JAVA_16;
+                break;
+            case "17":
+                res = ParserConfiguration.LanguageLevel.JAVA_17;
+                break;
+            case "18":
+                res = ParserConfiguration.LanguageLevel.JAVA_18;
+                break;
+            case "19":
+                res = ParserConfiguration.LanguageLevel.JAVA_19;
+                break;
+            case "20":
+                res = ParserConfiguration.LanguageLevel.JAVA_20;
+                break;
+            case "21":
+                res = ParserConfiguration.LanguageLevel.JAVA_21;
+                break;
+            default:  throw new IllegalArgumentException(
+                String.format("Unsupported java level: %s", level)
+            );
+        }
+        return res;
     }
 }

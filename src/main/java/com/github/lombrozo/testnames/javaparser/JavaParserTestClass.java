@@ -68,9 +68,10 @@ public final class JavaParserTestClass implements TestClass {
      * Ctor.
      *
      * @param klass Path to the class
+     * @param level Language level
      */
-    JavaParserTestClass(final Path klass) {
-        this(klass, JavaParserTestClass.parse(klass, JavaParserProject.resolver()));
+    JavaParserTestClass(final Path klass, final String level) {
+        this(klass, JavaParserTestClass.parse(klass, JavaParserProject.resolver(), level));
     }
 
     /**
@@ -79,11 +80,16 @@ public final class JavaParserTestClass implements TestClass {
      * @param klass Path to the class
      * @param resolver Symbol resolver.
      * @param exclusions Rules excluded for an entire project.
+     * @param level Language level
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     JavaParserTestClass(
-        final Path klass, final SymbolResolver resolver, final Collection<String> exclusions
+        final Path klass,
+        final SymbolResolver resolver,
+        final Collection<String> exclusions,
+        final String level
     ) {
-        this(klass, JavaParserTestClass.parse(klass, resolver), exclusions);
+        this(klass, JavaParserTestClass.parse(klass, resolver, level), exclusions);
     }
 
     /**
@@ -92,9 +98,16 @@ public final class JavaParserTestClass implements TestClass {
      * @param klass Path to the class
      * @param resolver Symbol resolver.
      * @param stream Parsed Java class
+     * @param level Language level
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
-    JavaParserTestClass(final Path klass, final SymbolResolver resolver, final InputStream stream) {
-        this(klass, JavaParserTestClass.parse(stream, resolver));
+    JavaParserTestClass(
+        final Path klass,
+        final SymbolResolver resolver,
+        final InputStream stream,
+        final String level
+    ) {
+        this(klass, JavaParserTestClass.parse(stream, resolver, level));
     }
 
     /**
@@ -114,15 +127,17 @@ public final class JavaParserTestClass implements TestClass {
      * @param resolver Symbol resolver.
      * @param stream Parsed Java class.
      * @param exclusions Rules excluded for an entire project.
+     * @param level Language level
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     JavaParserTestClass(
         final Path klass,
         final SymbolResolver resolver,
         final InputStream stream,
-        final Collection<String> exclusions
+        final Collection<String> exclusions,
+        final String level
     ) {
-        this(klass, JavaParserTestClass.parse(stream, resolver), exclusions);
+        this(klass, JavaParserTestClass.parse(stream, resolver, level), exclusions);
     }
 
     /**
@@ -205,10 +220,15 @@ public final class JavaParserTestClass implements TestClass {
      *
      * @param path Path to the class.
      * @param resolver Symbol resolver.
+    * @param level Language level
      * @return Parsed class.
      */
-    private static Sticky<JavaParserClass> parse(final Path path, final SymbolResolver resolver) {
-        return new Sticky<>(() -> new JavaParserClass(path, resolver));
+    private static Sticky<JavaParserClass> parse(
+        final Path path,
+        final SymbolResolver resolver,
+        final String level
+    ) {
+        return new Sticky<>(() -> new JavaParserClass(path, resolver, level));
     }
 
     /**
@@ -216,11 +236,14 @@ public final class JavaParserTestClass implements TestClass {
      *
      * @param stream Raw class.
      * @param resolver Symbol resolver.
+     * @param level Language level
      * @return Parsed class.
      */
     private static Sticky<JavaParserClass> parse(
-        final InputStream stream, final SymbolResolver resolver
+        final InputStream stream,
+        final SymbolResolver resolver,
+        final String level
     ) {
-        return new Sticky<>(() -> new JavaParserClass(stream, resolver));
+        return new Sticky<>(() -> new JavaParserClass(stream, resolver, level));
     }
 }

@@ -66,6 +66,11 @@ public final class JavaParserProject implements Project {
     private final Collection<String> exclusions;
 
     /**
+     * Language level.
+     */
+    private final String level;
+
+    /**
      * Ctor.
      *
      * @param main The main path where production classes are placed.
@@ -77,9 +82,28 @@ public final class JavaParserProject implements Project {
         final Path test,
         final Collection<String> exclusions
     ) {
+        this(main, test, exclusions, "21");
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param main The main path where production classes are placed.
+     * @param test The test path where test classes are placed.
+     * @param exclusions The rules that have to be excluded from execution.
+     * @param level Language level.
+     * @checkstyle ParameterNumberCheck (10 lines)
+     */
+    public JavaParserProject(
+        final Path main,
+        final Path test,
+        final Collection<String> exclusions,
+        final String level
+    ) {
         this.main = main;
         this.test = test;
         this.exclusions = exclusions;
+        this.level = level;
     }
 
     /**
@@ -121,12 +145,20 @@ public final class JavaParserProject implements Project {
                     .filter(Files::exists)
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"))
-                    .filter(path -> new JavaParserClass(path, this.projectResolver()).isTest())
+                    .filter(
+                        path ->
+                            new JavaParserClass(
+                                path,
+                                this.projectResolver(),
+                                this.level
+                            ).isTest()
+                    )
                     .map(
                         klass -> new JavaParserTestClass(
                             klass,
                             this.projectResolver(),
-                            this.exclusions
+                            this.exclusions,
+                            this.level
                         )
                     )
                     .collect(Collectors.toList());

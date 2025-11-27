@@ -116,6 +116,13 @@ public final class ValidateMojo extends AbstractMojo {
     private int maxNumberOfMocks;
 
     /**
+     * Java version.
+    * @checkstyle MemberNameCheck (7 lines)
+    */
+    @Parameter(defaultValue = "21")
+    private String javaVersion;
+
+    /**
      * Skip the validation.
      */
     @Parameter(defaultValue = "false")
@@ -168,7 +175,8 @@ public final class ValidateMojo extends AbstractMojo {
                 new JavaParserProject(
                     Paths.get(this.project.getCompileSourceRoots().get(0)),
                     Paths.get(this.project.getTestCompileSourceRoots().get(0)),
-                    suppressed
+                    suppressed,
+                    this.javaVersion
                 )
             )
         ).collect(Collectors.toList());

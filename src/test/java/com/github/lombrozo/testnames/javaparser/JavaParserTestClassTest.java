@@ -29,6 +29,7 @@ import com.github.lombrozo.testnames.rules.RuleEveryTestHasProductionClass;
 import com.github.lombrozo.testnames.rules.RuleNotCamelCase;
 import com.github.lombrozo.testnames.rules.RuleNotContainsTestWord;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
@@ -105,7 +106,7 @@ final class JavaParserTestClassTest {
         final Path test = temp.resolve("TestNotFound.java");
         Assertions.assertThrows(
             IllegalStateException.class,
-            () -> new JavaParserTestClass(test).all(),
+            () -> new JavaParserTestClass(test, "17").all(),
             String.format(
                 "We expected that exception will be thrown, because file %s not found",
                 test
@@ -120,7 +121,8 @@ final class JavaParserTestClassTest {
             () -> new JavaParserTestClass(
                 temp,
                 JavaParserProject.resolver(),
-                new InputStreamOf("Not Java")
+                new InputStreamOf("Not Java"),
+                "11"
             ).all(),
             String.format(
                 "We expected that exception will be thrown, because file %s is not Java",
@@ -239,6 +241,15 @@ final class JavaParserTestClassTest {
                 .toTestClass()
                 .all(),
             Matchers.hasSize(1)
+        );
+    }
+
+    @Test
+    void doesNotRecognizeJavaVersion() {
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> new JavaParserTestClass(Paths.get("/dev/null"), "unknown").fields(),
+            "We expected that exception will be thrown, because java version is unrecognized"
         );
     }
 }
