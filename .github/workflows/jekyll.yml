@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Ruby
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
-        uses: ruby/setup-ruby@ed55d55e820a01da7d3e4863a8c51a61d73c3228
+        uses: ruby/setup-ruby@d354de180d0c9e813cfddfcbdc079945d4be589b
         with:
           ruby-version: '3.4.8' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
