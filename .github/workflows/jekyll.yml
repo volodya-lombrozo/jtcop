@@ -37,7 +37,7 @@ jobs:
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92
         with:
-          ruby-version: '4.0.2' # Not needed with a .ruby-version file
+          ruby-version: '4.0.3' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Setup Pages
