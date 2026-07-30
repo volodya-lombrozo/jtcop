@@ -64,7 +64,7 @@ SOFTWARE.
               <ignoreGeneratedTests>true</ignoreGeneratedTests>
               <exclusions>
                 <exclusion>
-                  <!--Empty exclusion-->
+                  <!-- Empty exclusion -->
                 </exclusion>
               </exclusions>
             </configuration>

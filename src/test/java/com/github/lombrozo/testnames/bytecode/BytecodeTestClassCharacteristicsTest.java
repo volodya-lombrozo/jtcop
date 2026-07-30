@@ -139,6 +139,25 @@ final class BytecodeTestClassCharacteristicsTest {
     }
 
     @Test
+    void checksIfClassWithItSuffixIsIntegrationTest(@TempDir final Path temp) throws IOException {
+        final ResourceOf resource = new ResourceOf("generated/SomeIT.class");
+        Files.write(
+            temp.resolve("SomeIT.class"),
+            new UncheckedBytes(new BytesOf(resource)).asBytes()
+        );
+        MatcherAssert.assertThat(
+            "We expect that a class named with the 'IT' suffix is an integration test, even outside an 'it' package",
+            new BytecodeProject(temp, temp)
+                .testClasses()
+                .iterator()
+                .next()
+                .characteristics()
+                .isIntegrationTest(),
+            Matchers.equalTo(true)
+        );
+    }
+
+    @Test
     void checksIfClassIsNotIntegrationTest(@TempDir final Path temp) throws IOException {
         BytecodeTestClassCharacteristicsTest.saveTestClassBinary(temp);
         MatcherAssert.assertThat(

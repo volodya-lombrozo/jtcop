@@ -122,4 +122,16 @@ final class JavaParserCharacteristicsTest {
             Matchers.is(true)
         );
     }
+
+    @Test
+    void checksIfClassWithItSuffixIsIntegrationTest() {
+        MatcherAssert.assertThat(
+            "We expect that a class named with the 'IT' suffix is an integration test, even outside an 'it' package",
+            JavaTestClasses.SUFFIX_INTEGRATION_TEST
+                .toTestClass()
+                .characteristics()
+                .isIntegrationTest(),
+            Matchers.is(true)
+        );
+    }
 }

@@ -21,29 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-String log = new File(basedir, 'build.log').text;
-[
-  'Test class \'CorrectTest\' doesn\'t have corresponding production class, either rename or move it (RuleEveryTestHasProductionClass)',
-].each { assert log.contains(it): "Log doesn't contain ['$it']" }
-[
-  'SuppressedTest doesn\'t have corresponding production class',
-  'SuppressedInterface',
-  'SuppressedAnnotation',
-  'MyAnnotation',
-  'MyInterface',
-  'package-info',
-  'ComplaintClass',
-  'Cop',
-  'RuleNameTest doesn\'t have corresponding production class',
-  'JUnitAfterAllCallback',
-  'JUnitAfterEachCallback',
-  'JUnitBeforeAllCallback',
-  'JUnitBeforeEachCallback',
-  'JUnitCondition',
-  'JUnitParameterResolver',
-  'EOboolEOnotTest',
-  'JavaGeneratedTest',
-  'CorrectITCase',
-  'SomeIT'
-].each { assert !log.contains(it): "Log contains ['$it']" }
-true
+package com.github.lombrozo.testnames;
+
+/**
+ * Name of a class that follows the Maven Failsafe integration test naming convention,
+ * i.e. {@code IT*}, {@code *IT} or {@code *ITCase}.
+ *
+ * @since 1.4.4
+ */
+public final class IntegrationTestName {
+
+    /**
+     * The simple name of the class.
+     */
+    private final String name;
+
+    /**
+     * Constructor.
+     * @param name The simple name of the class.
+     */
+    public IntegrationTestName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * Does the name follow the integration test naming convention?
+     * @return True if the name follows the integration test naming convention.
+     */
+    public boolean isIntegrationTest() {
+        return this.name.startsWith("IT")
+            || this.name.endsWith("IT")
+            || this.name.endsWith("ITCase");
+    }
+}

@@ -128,6 +128,11 @@ public enum JavaTestClasses {
     INTEGRATION_TEST("IntegrationTest.java"),
 
     /**
+     * Integration test named with the Failsafe "IT" suffix, outside of an "it" package.
+     */
+    SUFFIX_INTEGRATION_TEST("SomeIT.java"),
+
+    /**
      * Assert true line hitter for hamcrest.
      */
     HAMCREST_ASSERT_TRUE_LINE_HITTER("HamcrestAssertTrueHitter.java"),

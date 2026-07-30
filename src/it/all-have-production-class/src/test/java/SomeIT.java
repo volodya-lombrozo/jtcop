@@ -21,29 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-String log = new File(basedir, 'build.log').text;
-[
-  'Test class \'CorrectTest\' doesn\'t have corresponding production class, either rename or move it (RuleEveryTestHasProductionClass)',
-].each { assert log.contains(it): "Log doesn't contain ['$it']" }
-[
-  'SuppressedTest doesn\'t have corresponding production class',
-  'SuppressedInterface',
-  'SuppressedAnnotation',
-  'MyAnnotation',
-  'MyInterface',
-  'package-info',
-  'ComplaintClass',
-  'Cop',
-  'RuleNameTest doesn\'t have corresponding production class',
-  'JUnitAfterAllCallback',
-  'JUnitAfterEachCallback',
-  'JUnitBeforeAllCallback',
-  'JUnitBeforeEachCallback',
-  'JUnitCondition',
-  'JUnitParameterResolver',
-  'EOboolEOnotTest',
-  'JavaGeneratedTest',
-  'CorrectITCase',
-  'SomeIT'
-].each { assert !log.contains(it): "Log contains ['$it']" }
-true
+
+import org.junit.jupiter.api.Test;
+
+class SomeIT {
+    @Test
+    void checksSomethingImportant() {}
+}

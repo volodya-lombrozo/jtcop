@@ -23,6 +23,7 @@
  */
 package com.github.lombrozo.testnames.javaparser;
 
+import com.github.lombrozo.testnames.IntegrationTestName;
 import com.github.lombrozo.testnames.JUnitExtension;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
 
@@ -57,7 +58,8 @@ final class JavaParserCharacteristics implements TestClassCharacteristics {
     public boolean isIntegrationTest() {
         return this.klass.pckg()
             .map(pckg -> pckg.endsWith(".it") || "it".equals(pckg))
-            .orElse(false);
+            .orElse(false)
+            || new IntegrationTestName(this.klass.name()).isIntegrationTest();
     }
 
     @Override

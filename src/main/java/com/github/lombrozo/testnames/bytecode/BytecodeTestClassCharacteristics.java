@@ -23,9 +23,11 @@
  */
 package com.github.lombrozo.testnames.bytecode;
 
+import com.github.lombrozo.testnames.IntegrationTestName;
 import com.github.lombrozo.testnames.JUnitExtension;
 import com.github.lombrozo.testnames.TestClassCharacteristics;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Stream;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -77,8 +79,9 @@ final class BytecodeTestClassCharacteristics implements TestClassCharacteristics
 
     @Override
     public boolean isIntegrationTest() {
-        final String pckg = this.klass.getPackageName();
-        return pckg.endsWith(".it") || "it".equals(pckg);
+        final String pckg = Optional.ofNullable(this.klass.getPackageName()).orElse("");
+        return pckg.endsWith(".it") || "it".equals(pckg)
+            || new IntegrationTestName(this.klass.getSimpleName()).isIntegrationTest();
     }
 
     @Override

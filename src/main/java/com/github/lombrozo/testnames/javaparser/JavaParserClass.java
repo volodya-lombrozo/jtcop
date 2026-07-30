@@ -206,6 +206,15 @@ final class JavaParserClass {
     }
 
     /**
+     * Returns the simple name of the class.
+     *
+     * @return The simple name of the class.
+     */
+    String name() {
+        return ((TypeDeclaration<?>) this.klass).getNameAsString();
+    }
+
+    /**
      * Returns package of the class.
      *
      * @return Package of the class.
