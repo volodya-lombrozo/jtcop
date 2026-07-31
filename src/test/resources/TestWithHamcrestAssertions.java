@@ -31,6 +31,10 @@ import some.framework.HttpStatus;
 import some.framework.UnirestException;
 import some.framework.HttpResponseBodyMatcher;
 import some.framework.HttpResponseStatusMatcher;
+import some.framework.XtSticky;
+import some.framework.Xtory;
+import some.framework.XtYaml;
+import java.util.Collections;
 import java.util.function.Supplier;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -135,6 +139,20 @@ class TestWithHamcrestAssertions {
                     "Parameter 'capacity' could not be processed, it should be of type Integer"
                 )
             )
+        );
+    }
+
+    /**
+     * This is test for the issue #563.
+     * You can read more about the issue right here:
+     * https://github.com/volodya-lombrozo/jtcop/issues/563
+     */
+    @Test
+    void checksTheCaseFromThe563issue() {
+        final Xtory story = new XtSticky(new XtYaml("test"));
+        MatcherAssert.assertThat(
+            Collections.singletonList("1"),
+            Matchers.hasItem(story.map().get("line").toString())
         );
     }
 }

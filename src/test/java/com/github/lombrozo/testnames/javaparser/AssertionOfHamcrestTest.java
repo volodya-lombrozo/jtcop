@@ -189,4 +189,21 @@ final class AssertionOfHamcrestTest {
             Matchers.is(false)
         );
     }
+
+    @Test
+    void parsesAbsentAssertionMessageEvenIfArgumentTypeCantBeResolved() {
+        MatcherAssert.assertThat(
+            "We expect that assertion has no explanation message, when argument type can't be resolved",
+            JavaTestClasses.TEST_WITH_HAMCREST_ASSERTIONS
+                .method("checksTheCaseFromThe563issue")
+                .statements()
+                .map(AssertionOfHamcrest::new)
+                .filter(AssertionOfHamcrest::isAssertion)
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("No assertions found"))
+                .explanation()
+                .isPresent(),
+            Matchers.is(false)
+        );
+    }
 }
